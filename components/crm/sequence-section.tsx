@@ -325,7 +325,7 @@ export function SequenceSection() {
                                         <span className="text-[11.5px] text-slate-500 dark:text-slate-400 mt-1">Drag-drop or click here to choose a file</span>
                                     </button>
                                     <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-relaxed">
-                                        The image appears in the content, above the content text. We recommend using at least a 2160x1080px (2:1 ratio) image that's no larger than 1MB.
+                                        The image appears in the content, above the content text. We recommend using at least a 2160x1080px (2:1 ratio) image that&apos;s no larger than 1MB.
                                     </p>
                                 </section>
 

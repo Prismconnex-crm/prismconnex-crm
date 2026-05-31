@@ -905,7 +905,7 @@ function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
             const next = new Set(prev);
             if (next.has(id)) next.delete(id);
             else next.add(id);
-            localStorage.setItem('pc_liked_events', JSON.stringify([...next]));
+            localStorage.setItem('pc_liked_events', JSON.stringify(Array.from(next)));
             return next;
         });
     };
@@ -916,7 +916,7 @@ function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
             const next = new Set(prev);
             if (next.has(id)) next.delete(id);
             else next.add(id);
-            localStorage.setItem('pc_target_events', JSON.stringify([...next]));
+            localStorage.setItem('pc_target_events', JSON.stringify(Array.from(next)));
             return next;
         });
     };
@@ -1051,7 +1051,7 @@ function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                         
                         <CategoryFilterPopover 
                             value={filters.category} 
-                            onChange={(cat) => setFilters({ ...filters, category: cat })}
+                            onChange={(cat) => setFilters({ ...filters, category: cat as any })}
                         />
                     </div>
 

@@ -250,7 +250,7 @@ export function TeamSection() {
                                 <div className="flex gap-2">
                                     <div className="h-1.5 w-1.5 rounded-full bg-amber-500 dark:bg-amber-400 mt-1 shrink-0 dark:shadow-[0_0_10px_rgba(251,191,36,0.5)]"></div>
                                     <p className="text-[10px] dark:text-slate-300 text-slate-700 font-medium leading-relaxed">
-                                        <span className="font-bold dark:text-amber-400 text-amber-600">Recommendation:</span> Review 'Sales Rep' permissions for data deletion
+                                        <span className="font-bold dark:text-amber-400 text-amber-600">Recommendation:</span> Review &apos;Sales Rep&apos; permissions for data deletion
                                     </p>
                                 </div>
                             </div>

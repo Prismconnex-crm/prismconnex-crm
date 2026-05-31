@@ -126,7 +126,7 @@ export function EventRegistrationDialog({ registerUrl, eventName }: EventRegistr
               >
                 <div className="rounded-xl border border-dashed border-emerald-200/70 bg-emerald-50/50 p-4 mb-6 dark:border-emerald-500/20 dark:bg-emerald-500/5 flex items-start gap-3">
                    <div className="size-1.5 rounded-full bg-emerald-500 mt-1.5 shrink-0 animate-pulse" />
-                   <p className="text-[12.5px] text-emerald-800 dark:text-emerald-300/90 leading-relaxed font-medium">You are about to securely leave Prism Connex to purchase tickets directly from the organizer's platform.</p>
+                   <p className="text-[12.5px] text-emerald-800 dark:text-emerald-300/90 leading-relaxed font-medium">You are about to securely leave Prism Connex to purchase tickets directly from the organizer&apos;s platform.</p>
                 </div>
                 {registerUrl && (
                   <a

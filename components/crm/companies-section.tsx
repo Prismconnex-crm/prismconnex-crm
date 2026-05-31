@@ -186,10 +186,10 @@ function formatCategoryLabel(value: string) {
     .join(" ");
 }
 
-function CompanyAvatar({ name, logo }: { name: string; logo?: string }) {
+function CompanyAvatar({ name, logo, className }: { name: string; logo?: string; className?: string }) {
   if (logo) {
     return (
-      <div className="flex size-12 shrink-0 items-center justify-center rounded-[14px] border border-slate-200 bg-white shadow-sm overflow-hidden dark:border-[#22304A] dark:bg-[#0B1220]">
+      <div className={cn("flex size-12 shrink-0 items-center justify-center rounded-[14px] border border-slate-200 bg-white shadow-sm overflow-hidden dark:border-[#22304A] dark:bg-[#0B1220]", className)}>
         <img 
           src={logo} 
           alt={name} 
@@ -202,7 +202,7 @@ function CompanyAvatar({ name, logo }: { name: string; logo?: string }) {
     );
   }
   return (
-    <div className="flex size-12 shrink-0 items-center justify-center rounded-[14px] border border-indigo-200 bg-indigo-50 text-[13px] font-bold tracking-wide text-indigo-700 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300">
+    <div className={cn("flex size-12 shrink-0 items-center justify-center rounded-[14px] border border-indigo-200 bg-indigo-50 text-[13px] font-bold tracking-wide text-indigo-700 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300", className)}>
       {initialsForCompany(name)}
     </div>
   );
