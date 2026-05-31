@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import type { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/db/prisma';
 
+export const dynamic = 'force-dynamic';
+
 // Global count cache to avoid slow SQLite table scans on massive datasets (11M+ rows)
 const countCache = new Map<string, { total: number; expiresAt: number }>();
 const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
