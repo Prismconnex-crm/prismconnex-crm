@@ -1,0 +1,10 @@
+{
+  "locale": "en-US",
+  "autoDetectLanguage": true,
+  "translateCopilotReplies": false,
+  "timeZone": "America/New_York",
+  "currency": "USD",
+  "dateFormat": "MMM d, yyyy",
+  "timeFormat": "12h",
+  "showDualTime": true
+}

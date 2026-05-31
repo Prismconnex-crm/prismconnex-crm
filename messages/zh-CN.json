@@ -1,0 +1,784 @@
+{
+  "marketing": {
+    "languageSwitcher": {
+      "label": "语言",
+      "toggle": "切换语言",
+      "searchPlaceholder": "搜索语言...",
+      "empty": "未找到语言。",
+      "hint": "你的选择会为后续访问自动保存。"
+    },
+    "navbar": {
+      "searchButton": "搜索页面",
+      "searchCta": "搜索页面",
+      "searchPlaceholder": "搜索页面...",
+      "searchNoResults": "未找到结果。",
+      "searchNavigate": "导航",
+      "searchOpen": "打开",
+      "mobileMenu": "切换菜单",
+      "theme": {
+        "toggle": "切换主题",
+        "light": "浅色",
+        "dark": "深色",
+        "system": "跟随系统"
+      },
+      "links": {
+        "product": "产品",
+        "pricing": "定价",
+        "security": "安全",
+        "findShows": "Find Shows",
+        "signIn": "登录",
+        "startTrial": "开始免费试用",
+        "startTrialShort": "免费试用"
+      }
+    },
+    "footer": {
+      "description": "专为展会专业团队打造的 AI 原生 CRM。从活动发现到展后 ROI 复盘，全部集中在一个平台中完成。",
+      "sections": {
+        "product": "产品",
+        "company": "公司",
+        "legal": "法律"
+      },
+      "productLinks": {
+        "features": "功能",
+        "plans": "套餐",
+        "security": "安全"
+      },
+      "companyLinks": {
+        "about": "关于我们",
+        "blog": "博客",
+        "careers": "招聘",
+        "contact": "联系我们"
+      },
+      "legalLinks": {
+        "privacy": "隐私政策",
+        "terms": "服务条款",
+        "cookies": "Cookie 政策"
+      },
+      "copyright": "© 2026 Prismconnex。保留所有权利。",
+      "builtWithPrefix": "为全球展会专业人士打造，",
+      "builtWithSuffix": "由我们精心构建。"
+    },
+    "home": {
+      "hero": {
+        "badge": "AI 驱动的展会 CRM",
+        "headline": {
+          "prefix": "从活动到",
+          "line1": "营收",
+          "line2": "增长流程"
+        },
+        "description": "这是一款 AI 原生 CRM，可将展会中的复杂流程转化为可预测的营收增长。整合高质量线索、自动化合规触达，并在一个平台中证明 ROI。",
+        "bullets": [
+          { "icon": "shield", "text": "来源透明" },
+          { "icon": "activity", "text": "合规序列" },
+          { "icon": "chart", "text": "交易经济性（ROI）" }
+        ],
+        "primaryCta": "开始免费试用",
+        "secondaryCta": "预约演示",
+        "socialProof": {
+          "count": "2,400+",
+          "label": "展会专业人士"
+        },
+        "floatingCard": {
+          "title": "HelioGrid 交易已成交",
+          "meta": "$204K · 4.8x ROI"
+        },
+        "dashboard": {
+          "kpis": [
+            { "label": "流转额", "value": "$1.82M", "color": "text-indigo-400" },
+            { "label": "线索", "value": "428", "color": "text-emerald-400" },
+            { "label": "ROI", "value": "3.4x", "color": "text-amber-400" }
+          ],
+          "events": [
+            { "name": "Berlin Tech Week", "score": "96%" },
+            { "name": "London Retail Summit", "score": "96%" }
+          ]
+        }
+      },
+      "stats": {
+        "items": [
+          { "value": "10,000+", "label": "进行中的活动", "accent": "emerald" },
+          { "value": "2.5M+", "label": "企业档案", "accent": "indigo" },
+          { "value": "98.7%", "label": "送达率", "accent": "violet" },
+          { "value": "3.4x", "label": "平均 ROI 提升", "accent": "amber" }
+        ]
+      },
+      "personas": {
+        "eyebrow": "覆盖每一种角色",
+        "titlePrefix": "一个平台，",
+        "titleHighlight": "四种工作流",
+        "description": "无论你是参会者、参展商、主办方，还是服务提供商，Prismconnex 都能适配你的工作方式。",
+        "items": [
+          {
+            "id": "serviceProviders",
+            "title": "服务提供商",
+            "accent": "violet",
+            "description": "将服务交付流程从初始报价一路打通到长期客户留存。",
+            "flow": ["项目", "报价", "评价", "复购客户"]
+          },
+          {
+            "id": "attendees",
+            "title": "参会者",
+            "accent": "emerald",
+            "description": "发现活动、规划行程，并与参展商和同行建立高质量连接。",
+            "flow": ["活动", "行程规划", "门票", "地图", "社交连接"]
+          },
+          {
+            "id": "exhibitors",
+            "title": "参展商",
+            "accent": "amber",
+            "description": "从活动筛选到成交回款，管理完整的参展营收流程。",
+            "flow": ["活动", "目标名单", "序列", "会议", "交易到 ROI"]
+          },
+          {
+            "id": "organizers",
+            "title": "主办方",
+            "accent": "pink",
+            "description": "用更流畅的运营流程、参展商工具和赞助商管理，打造世界级活动。",
+            "flow": ["活动运营", "参展商入驻", "赞助商管理", "参会者引导"]
+          }
+        ]
+      },
+      "features": {
+        "titlePrefix": "所需功能一应俱全，",
+        "titleHighlight": "没有多余负担",
+        "description": "专为展会专业人士构建，从活动发现到展后 ROI 报告全程覆盖。",
+        "items": [
+          {
+            "icon": "calendar",
+            "name": "活动情报",
+            "desc": "AI 采集活动信息，附带置信度评分、参展商列表与来自可信源的实时更新。",
+            "accent": "indigo"
+          },
+          {
+            "icon": "building",
+            "name": "企业与人员档案",
+            "desc": "增强型联系人资料，包含验证徽章、来源链路和直接邮件操作。",
+            "accent": "violet"
+          },
+          {
+            "icon": "target",
+            "name": "交易流管理",
+            "desc": "可视化线索评分与看板式交易跟踪，支持按阶段触发自动化。",
+            "accent": "emerald"
+          },
+          {
+            "icon": "mail",
+            "name": "序列工作室",
+            "desc": "多步骤邮件序列，内置合规检查、发送排程与 A/B 测试。",
+            "accent": "cyan"
+          },
+          {
+            "icon": "chart",
+            "name": "分析与 ROI",
+            "desc": "实时 KPI、漏斗趋势图，以及按活动归因的 ROI 仪表板。",
+            "accent": "amber"
+          },
+          {
+            "icon": "bot",
+            "name": "AI 助手",
+            "desc": "通过对话式 AI 提问、起草触达内容并执行操作。",
+            "accent": "pink"
+          },
+          {
+            "icon": "zap",
+            "name": "工作流自动化",
+            "desc": "可视化工作流构建器，支持安全开关、演练模式和智能触发条件。",
+            "accent": "orange"
+          },
+          {
+            "icon": "users",
+            "name": "团队协作",
+            "desc": "面向企业展会团队的角色权限、审计日志和共享工作区。",
+            "accent": "teal"
+          }
+        ]
+      },
+      "travel": {
+        "titlePrefix": "门票与出行模式",
+        "titleHighlight": "为参会者而设",
+        "description": "在一个地方发现活动、通过合作伙伴优惠购买门票，并规划周边出行。优惠码仅对付费用户开放。",
+        "cards": [
+          {
+            "icon": "ticket",
+            "title": "购买门票（合作伙伴优惠）",
+            "bullets": [
+              "每个活动可查看购票入口",
+              "优惠码仅限付费用户",
+              "在供应商站点完成结算"
+            ],
+            "accent": "cyan"
+          },
+          {
+            "icon": "pin",
+            "title": "附近配套信息",
+            "bullets": ["场馆附近酒店", "最近机场与火车站", "附近旅游景点"],
+            "accent": "emerald"
+          },
+          {
+            "icon": "globe",
+            "title": "面向全球旅客友好",
+            "bullets": ["多语言界面", "支持时区的日程", "多币种显示"],
+            "accent": "amber"
+          }
+        ],
+        "preview": {
+          "eventName": "Berlin Tech Expo 2026",
+          "eventMeta": "6 月 15-17 日 · Messe Berlin",
+          "buyTicket": "按活动查看购票入口",
+          "applyPromo": "应用优惠码",
+          "nearbyTitle": "附近配套信息",
+          "nearby": [
+            { "icon": "hotel", "label": "酒店", "detail": "2 公里内 12 家" },
+            { "icon": "plane", "label": "机场", "detail": "BER · 22 公里" },
+            { "icon": "train", "label": "火车站", "detail": "Hbf · 4 公里" }
+          ],
+          "disclaimer": "可用性和结果取决于地图服务商数据。合作伙伴优惠因活动而异。"
+        }
+      },
+      "securityStrip": {
+        "titlePrefix": "企业级",
+        "titleHighlight": "安全与合规",
+        "description": "你的数据受行业领先标准保护。我们不做抓取，所有数据均来自经过验证且合规的渠道。",
+        "items": [
+          {
+            "icon": "shield",
+            "label": "SOC 2 Type II",
+            "desc": "经过审计的安全控制",
+            "accent": "emerald"
+          },
+          {
+            "icon": "lock",
+            "label": "GDPR 合规",
+            "desc": "完整的数据主权能力",
+            "accent": "indigo"
+          },
+          {
+            "icon": "cloud",
+            "label": "AWS 基础设施",
+            "desc": "99.99% 正常运行 SLA",
+            "accent": "violet"
+          },
+          {
+            "icon": "clock",
+            "label": "7x24 监控",
+            "desc": "实时威胁检测",
+            "accent": "amber"
+          }
+        ]
+      },
+      "finalCta": {
+        "titlePrefix": "准备好把活动转化为",
+        "titleHighlight": "营收了吗？",
+        "description": "探索 1,000+ 位使用 Prismconnex 提升成交和证明 ROI 的展会专业人士。",
+        "primaryCta": "开始免费试用",
+        "secondaryCta": "查看全部功能"
+      }
+    },
+    "product": {
+      "eyebrow": "产品",
+      "titlePrefix": "让你的团队在展会中",
+      "titleHighlight": "赢得更多机会",
+      "description": "Prismconnex 将活动情报、CRM 执行与工作流自动化整合为一体，并在每一步都提供完整的数据透明度。",
+      "sections": [
+        {
+          "icon": "calendar",
+          "title": "活动情报",
+          "desc": "发现全球展会，附带置信度评分、数据透明度条和来源链路。",
+          "accent": "indigo"
+        },
+        {
+          "icon": "building",
+          "title": "企业与人员目录",
+          "desc": "增强档案包含验证徽章、活动参与历史和活动时间线。",
+          "accent": "emerald"
+        },
+        {
+          "icon": "users",
+          "title": "线索捕获与交易流",
+          "desc": "从活动中捕获线索并自动评分，一键将合格线索转化为交易。",
+          "accent": "amber"
+        },
+        {
+          "icon": "mail",
+          "title": "序列工作室",
+          "desc": "构建多步骤邮件序列，内置合规预检和发送保护机制。",
+          "accent": "pink"
+        },
+        {
+          "icon": "bot",
+          "title": "AI 助手",
+          "desc": "通过 AI 辅助提问、起草触达内容并执行操作，同时保留确认控制。",
+          "accent": "cyan"
+        },
+        {
+          "icon": "chart",
+          "title": "ROI 与利润分析",
+          "desc": "按活动追踪交易成本、利润、利润率和 ROI。",
+          "accent": "violet"
+        },
+        {
+          "icon": "cable",
+          "title": "集成",
+          "desc": "连接你的邮件服务、日历、CRM、数据仓库和分析工具。",
+          "accent": "lime"
+        },
+        {
+          "icon": "shield",
+          "title": "送达率与安全",
+          "desc": "监控域名健康、认证检查和审计日志，确保运营可追责。",
+          "accent": "red"
+        },
+        {
+          "icon": "zap",
+          "title": "自动化",
+          "desc": "使用可视化工作流构建器，支持演练模式、限流保护和完整运行历史。",
+          "accent": "yellow"
+        },
+        {
+          "icon": "map",
+          "title": "参会者出行模式",
+          "desc": "为参会者提供活动详情、出行规划信息、附近地点和本地化格式展示。",
+          "accent": "cyan"
+        }
+      ],
+      "coreSolutions": {
+        "eyebrow": "核心解决方案",
+        "titlePrefix": "由",
+        "titleHighlight": "Prismconnex 驱动",
+        "description": "专为 CRM 延展而生的服务能力，覆盖线索生成、触达和客户支持。",
+        "items": [
+          {
+            "icon": "database",
+            "title": "B2B 参展商数据库",
+            "desc": "构建带来源追踪的高质量参展商名单。",
+            "accent": "emerald"
+          },
+          {
+            "icon": "mail",
+            "title": "B2B 邮件营销",
+            "desc": "通过序列、节流和预检机制开展合规触达。",
+            "accent": "indigo"
+          },
+          {
+            "icon": "chat",
+            "title": "B2B 在线支持",
+            "desc": "支持多语言帮助与快速响应的客服辅助能力。",
+            "accent": "violet"
+          }
+        ]
+      }
+    },
+    "pricing": {
+      "eyebrow": "定价",
+      "titlePrefix": "随你的",
+      "titleHighlight": "营收目标扩展的套餐",
+      "description": "按团队规模、工作流深度和治理需求选择套餐。所有套餐均提供 14 天免费试用。",
+      "plans": [
+        {
+          "name": "免费版",
+          "price": "$0",
+          "period": "永久",
+          "desc": "使用核心 CRM 功能快速开始。",
+          "features": [
+            "最多 100 个联系人",
+            "活动发现（仅查看）",
+            "基础交易流视图",
+            "社区支持"
+          ],
+          "cta": "开始试用",
+          "accent": "cyan"
+        },
+        {
+          "name": "入门版",
+          "price": "$29",
+          "period": "每用户 / 月",
+          "desc": "适合独立参展工作的个人用户。",
+          "features": [
+            "最多 2,500 个联系人",
+            "活动情报与导出",
+            "序列工作室（基础）",
+            "邮件支持"
+          ],
+          "cta": "立即开始",
+          "accent": "emerald"
+        },
+        {
+          "name": "专业版",
+          "price": "$79",
+          "period": "每用户 / 月",
+          "desc": "适合最大化 ROI 的营收团队。",
+          "features": [
+            "联系人数量无限制",
+            "完整序列工作室",
+            "AI 助手访问权限",
+            "交易经济性与分析",
+            "自动化",
+            "优先支持"
+          ],
+          "cta": "立即开始",
+          "accent": "violet"
+        },
+        {
+          "name": "企业版",
+          "price": "定制",
+          "period": "联系销售",
+          "desc": "适合有治理与合规需求的组织。",
+          "features": [
+            "所有功能无限制",
+            "SSO / SAML",
+            "自定义 RBAC 策略",
+            "审计日志与合规",
+            "专属成功经理",
+            "SLA 保证"
+          ],
+          "cta": "联系销售",
+          "accent": "amber"
+        }
+      ],
+      "highlights": {
+        "title": "已包含的功能亮点",
+        "description": "各套餐均可用。部分功能需要付费订阅。",
+        "items": [
+          {
+            "text": "门票与出行模式（参会者体验）",
+            "accent": "rgba(34,211,238,",
+            "accentBorder": "rgba(6,182,212,"
+          },
+          {
+            "text": "优惠码（仅限付费套餐）",
+            "accent": "rgba(99,102,241,",
+            "accentBorder": "rgba(79,70,229,"
+          },
+          {
+            "text": "附近配套信息（依赖地图服务商结果）",
+            "accent": "rgba(52,211,153,",
+            "accentBorder": "rgba(16,185,129,"
+          },
+          {
+            "text": "本地化语言、时区和货币显示",
+            "accent": "rgba(245,158,11,",
+            "accentBorder": "rgba(217,119,6,"
+          }
+        ]
+      },
+      "addons": {
+        "title": "附加组件",
+        "description": "为你的套餐扩展更多能力。",
+        "hint": "点击卡片可切换",
+        "badge": "附加组件",
+        "items": [
+          {
+            "name": "数据增强积分",
+            "desc": "批量增强企业和联系人数据，为每条线索补充可信来源与更深入洞察。",
+            "icon": "sparkles",
+            "gradient": "from-indigo-500 to-violet-600",
+            "tint": "rgba(99,102,241,"
+          },
+          {
+            "name": "AI 使用包",
+            "desc": "为高频团队补充更多 AI 助手额度，加速触达和交易分析。",
+            "icon": "zap",
+            "gradient": "from-amber-500 to-orange-600",
+            "tint": "rgba(245,158,11,"
+          },
+          {
+            "name": "额外席位",
+            "desc": "在不升级整个套餐的情况下，为团队添加更多成员席位。",
+            "icon": "users",
+            "gradient": "from-emerald-500 to-teal-600",
+            "tint": "rgba(52,211,153,"
+          }
+        ]
+      },
+      "faq": {
+        "title": "常见问题",
+        "description": "关于合规、送达率和数据透明度。",
+        "items": [
+          {
+            "question": "我的数据符合 GDPR 吗？",
+            "answer": "是的。Prismconnex 在设计时充分考虑了 GDPR，采用隐私保护优先原则，并内置抑制与合规工作流。"
+          },
+          {
+            "question": "送达率监控如何工作？",
+            "answer": "我们会监控你的发信域 SPF、DKIM 和 DMARC 认证状态，并在送达率仪表板中呈现信誉信号。"
+          },
+          {
+            "question": "什么是数据来源透明度？",
+            "answer": "每条记录都会展示来源、抓取日期和置信度评分，帮助团队在行动前判断数据质量。"
+          },
+          {
+            "question": "我可以随时切换套餐吗？",
+            "answer": "可以。你可以随时升级或降级，变更会在下一个计费周期开始时生效。"
+          }
+        ]
+      }
+    },
+    "security": {
+      "eyebrow": "安全",
+      "titlePrefix": "安全与",
+      "titleHighlight": "合规",
+      "subtitle": "信任是每一笔交易的基础。",
+      "description": "Prismconnex 采用安全优先设计、基于角色的访问控制和透明的审计轨迹，让全球团队放心协作。",
+      "disclaimer": "我们会清晰描述控制措施与架构，不夸大尚未落地的保证。",
+      "trustBadges": [
+        {
+          "icon": "shield",
+          "label": "SOC 2 就绪",
+          "desc": "与控制要求对齐的流程和可审计工作流。"
+        },
+        {
+          "icon": "eye",
+          "label": "GDPR 就绪控制",
+          "desc": "支持同意、抑制和保留控制。"
+        },
+        {
+          "icon": "lock",
+          "label": "AWS 基础设施",
+          "desc": "托管于 AWS，并支持托管安全能力。"
+        },
+        {
+          "icon": "shieldCheck",
+          "label": "SLA 就绪架构",
+          "desc": "以监控和冗余为基础设计可靠性。"
+        }
+      ],
+      "sections": [
+        {
+          "icon": "lock",
+          "title": "租户隔离",
+          "text": "基于工作区范围的访问校验与安全边界。",
+          "accent": "indigo"
+        },
+        {
+          "icon": "shieldCheck",
+          "title": "基于角色的访问控制",
+          "text": "角色与成员关系映射，并执行策略约束。",
+          "accent": "emerald"
+        },
+        {
+          "icon": "fileText",
+          "title": "审计日志",
+          "text": "关键操作记录执行时间、操作者身份与时间戳。",
+          "accent": "amber"
+        },
+        {
+          "icon": "key",
+          "title": "加密",
+          "text": "在配置到位的前提下，支持传输中和静态数据加密。",
+          "accent": "pink"
+        },
+        {
+          "icon": "mail",
+          "title": "邮件合规",
+          "text": "支持退订、抑制列表和认证检查。",
+          "accent": "cyan"
+        },
+        {
+          "icon": "branch",
+          "title": "数据链路与透明度",
+          "text": "每条记录都展示来源、抓取日期和置信度。",
+          "accent": "violet"
+        }
+      ],
+      "dataNotes": {
+        "icon": "ticket",
+        "title": "门票与附近数据说明",
+        "text": "门票结算在供应商站点完成。优惠码仅在配置后显示。附近地点来自地图服务商结果，实际可用性会有所不同。",
+        "accent": "cyan"
+      }
+    }
+  },
+  "onboarding": {
+    "header": {
+      "title": "欢迎使用 Prismconnex",
+      "badge": "预计设置时间：2 分钟",
+      "description": "通过几个简单步骤完成工作区设置。"
+    },
+    "steps": [
+      { "label": "个人角色" },
+      { "label": "工作区" },
+      { "label": "发送设置" },
+      { "label": "导入" }
+    ],
+    "role": {
+      "title": "个人角色",
+      "description": "请选择你的角色。Prismconnex 会在几秒钟内为你调整工作区。"
+    },
+    "roles": [
+      {
+        "id": "service-providers",
+        "name": "服务提供商",
+        "chips": ["项目", "报价", "发票"],
+        "recommended": "已应用推荐设置"
+      },
+      {
+        "id": "attendees",
+        "name": "参会者",
+        "chips": ["活动", "门票", "地图"],
+        "recommended": "已应用推荐设置"
+      },
+      {
+        "id": "exhibitors",
+        "name": "参展商",
+        "chips": ["目标名单", "序列", "交易"],
+        "recommended": "已应用推荐设置"
+      },
+      {
+        "id": "organizers",
+        "name": "主办方",
+        "chips": ["入驻", "赞助商", "引导"],
+        "recommended": "已应用推荐设置"
+      }
+    ],
+    "workspace": {
+      "title": "工作区",
+      "description": "创建你的工作区并确认联系信息。",
+      "fields": {
+        "workspaceName": "工作区名称",
+        "firstName": "名字",
+        "lastName": "姓氏",
+        "workEmail": "工作邮箱",
+        "phoneNumber": "电话号码",
+        "language": "语言",
+        "timeZone": "时区",
+        "currency": "货币"
+      },
+      "placeholders": {
+        "workspaceName": "例如：Acme Inc Trade Shows",
+        "firstName": "John",
+        "lastName": "Doe",
+        "workEmail": "john@company.com",
+        "phoneNumber": "+1 (555) 000-0000"
+      },
+      "timeZones": [
+        { "value": "America/New_York", "label": "America/New_York" },
+        { "value": "Europe/London", "label": "Europe/London" },
+        { "value": "Europe/Berlin", "label": "Europe/Berlin" },
+        { "value": "Asia/Kolkata", "label": "Asia/Kolkata" }
+      ],
+      "currencies": [
+        { "value": "USD", "label": "USD" },
+        { "value": "EUR", "label": "EUR" },
+        { "value": "GBP", "label": "GBP" },
+        { "value": "INR", "label": "INR" }
+      ],
+      "toggles": {
+        "dualTime": "显示活动当地时间和我的时间"
+      },
+      "preview": {
+        "title": "实时预览",
+        "time": "时间",
+        "date": "日期",
+        "currency": "货币",
+        "timezone": "时区"
+      }
+    },
+    "sending": {
+      "title": "连接发送身份",
+      "description": "为序列和营销活动设置邮件发送能力。",
+      "primary": {
+        "title": "SMTP / 邮件服务商",
+        "description": "连接你自己的邮件发送服务"
+      },
+      "secondary": {
+        "title": "稍后配置",
+        "description": "先跳过，之后随时再设置。"
+      }
+    },
+    "import": {
+      "title": "导入数据",
+      "description": "导入现有联系人，或从零开始。",
+      "primary": { "title": "上传 CSV", "description": "从文件导入联系人" },
+      "secondary": { "title": "从零开始", "description": "稍后手动添加联系人" }
+    },
+    "buttons": {
+      "back": "返回",
+      "continue": "继续",
+      "complete": "完成设置"
+    },
+    "errors": {
+      "complete": "完成引导设置失败"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "brandSubtitle": "AI 展会 CRM",
+      "heroTitleLine1": "展会情报。",
+      "heroTitleLine2": "为现代营收团队而生。",
+      "heroDescription": "在一个高品质工作区中统一管理活动、增强联系人、运行合规外联序列，并优化 ROI。",
+      "heroBadges": {
+        "aiPowered": "AI 驱动",
+        "languages": "{count} 种语言"
+      },
+      "title": "欢迎回来",
+      "subtitle": "登录你的 Prismconnex 工作区",
+      "fields": {
+        "email": "邮箱",
+        "password": "密码"
+      },
+      "actions": {
+        "submit": "登录",
+        "divider": "或继续使用",
+        "cognito": "使用 AWS Cognito 继续",
+        "forgotPassword": "忘记密码？",
+        "createAccount": "创建账户"
+      },
+      "footer": {
+        "language": "语言：{language}",
+        "region": "区域：{region}"
+      },
+      "errors": {
+        "signIn": "登录失败",
+        "cognito": "无法连接到 AWS Cognito"
+      }
+    },
+    "signUp": {
+      "title": "创建账户",
+      "subtitle": "开始你的 Prismconnex 之旅",
+      "fields": {
+        "name": "姓名",
+        "email": "邮箱地址",
+        "password": "密码"
+      },
+      "actions": {
+        "submit": "注册",
+        "signInPrompt": "已有账户？",
+        "signInLink": "登录"
+      },
+      "errors": {
+        "signUp": "注册失败"
+      }
+    },
+    "verify": {
+      "title": "验证你的邮箱",
+      "subtitle": "输入发送到邮箱的验证码",
+      "fields": {
+        "email": "邮箱地址",
+        "code": "验证码"
+      },
+      "placeholders": {
+        "code": "XXXXXX"
+      },
+      "actions": {
+        "submit": "验证"
+      },
+      "errors": {
+        "verify": "验证失败"
+      }
+    },
+    "forgotPassword": {
+      "title": "忘记密码",
+      "description": "此功能在当前 MVP 前端演示中尚未完全实现。",
+      "actions": {
+        "return": "返回登录"
+      }
+    },
+    "resetPassword": {
+      "title": "重置密码",
+      "description": "此功能在当前 MVP 前端演示中尚未完全实现。",
+      "actions": {
+        "return": "返回登录"
+      }
+    }
+  }
+}

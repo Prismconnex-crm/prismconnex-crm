@@ -1,0 +1,76 @@
+{
+  "guns-and-knife-show-franklin-franklin-nc-2026-01-24": {
+    "eventSlug": "guns-and-knife-show-franklin-franklin-nc-2026-01-24",
+    "lastFetched": "2026-04-24T06:58:45.104Z",
+    "source": "scraped",
+    "exhibitors": [
+      {
+        "id": "guns-and-knife-show-franklin-franklin-nc-2026-01-24--june-13-14-2026-monroe-nc",
+        "name": "June 13 & 14 - 2026 - Monroe, NC",
+        "logoUrl": "images/Index/AR-Atlanta%20-%20500.jpg",
+        "stand": null,
+        "website": null,
+        "description": null,
+        "profileUrl": null,
+        "country": null
+      },
+      {
+        "id": "guns-and-knife-show-franklin-franklin-nc-2026-01-24--great-country-music-shows-check-out-ron-haven-promotions",
+        "name": "\"Great Country Music Shows\" - Check out Ron Haven Promotions",
+        "logoUrl": null,
+        "stand": null,
+        "website": "http://ronhavenpromotions.com",
+        "description": null,
+        "profileUrl": null,
+        "country": null
+      },
+      {
+        "id": "guns-and-knife-show-franklin-franklin-nc-2026-01-24--table-reservations-only",
+        "name": "Table Reservations Only",
+        "logoUrl": null,
+        "stand": null,
+        "website": "http://gemcapitolshows.com/Budget%20Inn.htm",
+        "description": null,
+        "profileUrl": null,
+        "country": null
+      },
+      {
+        "id": "guns-and-knife-show-franklin-franklin-nc-2026-01-24--click-on-this-link-to-be-a-vendor",
+        "name": "Click on this link to be a vendor",
+        "logoUrl": "images/Index/VFW%20(2).png",
+        "stand": null,
+        "website": "http://gemcapitolshows.com/Vend_app.htm",
+        "description": null,
+        "profileUrl": null,
+        "country": null
+      },
+      {
+        "id": "guns-and-knife-show-franklin-franklin-nc-2026-01-24--general-info",
+        "name": "General Info",
+        "logoUrl": "images/shirts.jpg",
+        "stand": null,
+        "website": "http://gunshowtimes.com",
+        "description": null,
+        "profileUrl": null,
+        "country": null
+      }
+    ]
+  },
+  "subcon-birmingham-2026-06-03": {
+    "eventSlug": "subcon-birmingham-2026-06-03",
+    "lastFetched": "2026-04-24T06:59:48.488Z",
+    "source": "scraped",
+    "exhibitors": [
+      {
+        "id": "subcon-birmingham-2026-06-03--venue-opening-times",
+        "name": "Venue & Opening Times",
+        "logoUrl": "https://cdn.asp.events/CLIENT_Mark_All_D856883D_926F_07B7_E9D09EE4984A0639/sites/subcon-2024/media/Logos/MA_Exhibitions_WHITE&amp;PURPLE.jpg",
+        "stand": "3A",
+        "website": "https://www.linkedin.com/company/11682219/admin/feed/posts/",
+        "description": null,
+        "profileUrl": null,
+        "country": null
+      }
+    ]
+  }
+}

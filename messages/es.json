@@ -1,0 +1,800 @@
+{
+  "marketing": {
+    "languageSwitcher": {
+      "label": "Idioma",
+      "toggle": "Cambiar idioma",
+      "searchPlaceholder": "Buscar idiomas...",
+      "empty": "No se encontro ningun idioma.",
+      "hint": "Tu seleccion se guarda para futuras visitas."
+    },
+    "navbar": {
+      "searchButton": "Buscar paginas",
+      "searchCta": "Buscar paginas",
+      "searchPlaceholder": "Buscar paginas...",
+      "searchNoResults": "No se encontraron resultados.",
+      "searchNavigate": "Navegar",
+      "searchOpen": "Abrir",
+      "mobileMenu": "Abrir menu",
+      "theme": {
+        "toggle": "Cambiar tema",
+        "light": "Claro",
+        "dark": "Oscuro",
+        "system": "Sistema"
+      },
+      "links": {
+        "product": "Producto",
+        "pricing": "Precios",
+        "security": "Seguridad",
+        "findShows": "Find Shows",
+        "signIn": "Iniciar sesion",
+        "startTrial": "Comenzar prueba gratis",
+        "startTrialShort": "Prueba gratis"
+      }
+    },
+    "footer": {
+      "description": "El CRM nativo de IA creado para profesionales de ferias comerciales. Desde el descubrimiento del evento hasta el ROI posterior, todo en una sola plataforma.",
+      "sections": {
+        "product": "Producto",
+        "company": "Empresa",
+        "legal": "Legal"
+      },
+      "productLinks": {
+        "features": "Funciones",
+        "plans": "Planes",
+        "security": "Seguridad"
+      },
+      "companyLinks": {
+        "about": "Acerca de",
+        "blog": "Blog",
+        "careers": "Carreras",
+        "contact": "Contacto"
+      },
+      "legalLinks": {
+        "privacy": "Politica de privacidad",
+        "terms": "Terminos del servicio",
+        "cookies": "Politica de cookies"
+      },
+      "copyright": "Â© 2026 Prismconnex. Todos los derechos reservados.",
+      "builtWithPrefix": "Creado con",
+      "builtWithSuffix": "para profesionales de ferias comerciales de todo el mundo."
+    },
+    "home": {
+      "hero": {
+        "badge": "CRM para ferias impulsado por IA",
+        "headline": {
+          "prefix": "Del evento",
+          "line1": "al flujo de",
+          "line2": "ingresos"
+        },
+        "description": "El CRM nativo de IA que convierte el caos de las ferias en ingresos predecibles. Obtiene leads verificados, automatiza outreach conforme y demuestra ROI, todo en una sola plataforma.",
+        "bullets": [
+          { "icon": "shield", "text": "Transparencia de fuentes" },
+          { "icon": "activity", "text": "Secuencias conformes" },
+          { "icon": "chart", "text": "Economia del deal (ROI)" }
+        ],
+        "primaryCta": "Comenzar prueba gratis",
+        "secondaryCta": "Reservar una demo",
+        "socialProof": {
+          "count": "2,400+",
+          "label": "profesionales de ferias"
+        },
+        "floatingCard": {
+          "title": "Acuerdo de HelioGrid cerrado",
+          "meta": "$204K Â· 4.8x ROI"
+        },
+        "dashboard": {
+          "kpis": [
+            { "label": "Flujo", "value": "$1.82M", "color": "text-indigo-400" },
+            { "label": "Leads", "value": "428", "color": "text-emerald-400" },
+            { "label": "ROI", "value": "3.4x", "color": "text-amber-400" }
+          ],
+          "events": [
+            { "name": "Berlin Tech Week", "score": "96%" },
+            { "name": "London Retail Summit", "score": "96%" }
+          ]
+        }
+      },
+      "stats": {
+        "items": [
+          { "value": "10,000+", "label": "Eventos rastreados", "accent": "emerald" },
+          { "value": "2.5M+", "label": "Perfiles de empresas", "accent": "indigo" },
+          { "value": "98.7%", "label": "Entregabilidad", "accent": "violet" },
+          { "value": "3.4x", "label": "Aumento promedio del ROI", "accent": "amber" }
+        ]
+      },
+      "personas": {
+        "eyebrow": "Creado para cada rol",
+        "titlePrefix": "Una plataforma,",
+        "titleHighlight": "cuatro flujos",
+        "description": "Ya sea que asistas, exhibas, organices o prestes servicios, Prismconnex se adapta a tu flujo de trabajo.",
+        "items": [
+          {
+            "id": "serviceProviders",
+            "title": "Proveedores de servicios",
+            "accent": "violet",
+            "description": "Optimiza tu flujo de entrega de servicios desde la primera cotizacion hasta la retencion de clientes a largo plazo.",
+            "flow": ["Trabajos", "Cotizaciones", "Resenas", "Clientes recurrentes"]
+          },
+          {
+            "id": "attendees",
+            "title": "Asistentes",
+            "accent": "emerald",
+            "description": "Descubre eventos, planifica tu viaje y crea conexiones valiosas con expositores y colegas.",
+            "flow": ["Eventos", "Planificar viaje", "Entradas", "Mapa", "Networking"]
+          },
+          {
+            "id": "exhibitors",
+            "title": "Expositores",
+            "accent": "amber",
+            "description": "Desde la seleccion del evento hasta el cierre del trato, gestiona todo el flujo de ingresos del expositor.",
+            "flow": ["Evento", "Lista objetivo", "Secuencia", "Reuniones", "Deals a ROI"]
+          },
+          {
+            "id": "organizers",
+            "title": "Organizadores",
+            "accent": "pink",
+            "description": "Dirige eventos de clase mundial con operaciones optimizadas, herramientas para expositores y gestion de patrocinadores.",
+            "flow": [
+              "Operaciones del evento",
+              "Onboarding de expositores",
+              "Gestion de patrocinadores",
+              "Guia para asistentes"
+            ]
+          }
+        ]
+      },
+      "features": {
+        "titlePrefix": "Todo lo que necesitas,",
+        "titleHighlight": "sin lo que no necesitas",
+        "description": "Creado especificamente para profesionales de ferias, desde el descubrimiento del evento hasta los informes de ROI posteriores.",
+        "items": [
+          {
+            "icon": "calendar",
+            "name": "Inteligencia de eventos",
+            "desc": "Eventos obtenidos con IA con puntajes de confianza, listas de expositores y actualizaciones en tiempo real desde fuentes verificadas.",
+            "accent": "indigo"
+          },
+          {
+            "icon": "building",
+            "name": "Perfiles de empresas y personas",
+            "desc": "Contactos enriquecidos con insignias de verificacion, trazabilidad de origen y acciones directas por correo.",
+            "accent": "violet"
+          },
+          {
+            "icon": "target",
+            "name": "Gestion del flujo de acuerdos",
+            "desc": "Scoring visual de leads y seguimiento de deals en kanban con activadores de automatizacion por etapa.",
+            "accent": "emerald"
+          },
+          {
+            "icon": "mail",
+            "name": "Sequence Studio",
+            "desc": "Secuencias de correo de varios pasos con verificaciones de cumplimiento integradas, programacion y pruebas A/B.",
+            "accent": "cyan"
+          },
+          {
+            "icon": "chart",
+            "name": "Analitica y ROI",
+            "desc": "KPIs en tiempo real, graficos de tendencias del embudo y paneles de atribucion de ROI por evento.",
+            "accent": "amber"
+          },
+          {
+            "icon": "bot",
+            "name": "AI Copilot",
+            "desc": "Haz preguntas, redacta outreach y ejecuta acciones mediante una interfaz conversacional de IA.",
+            "accent": "pink"
+          },
+          {
+            "icon": "zap",
+            "name": "Automatizacion de flujos",
+            "desc": "Constructor visual de flujos con controles de seguridad, modo de simulacion y condiciones inteligentes.",
+            "accent": "orange"
+          },
+          {
+            "icon": "users",
+            "name": "Colaboracion de equipo",
+            "desc": "Acceso por roles, registros de auditoria y espacios compartidos para equipos empresariales de ferias.",
+            "accent": "teal"
+          }
+        ]
+      },
+      "travel": {
+        "titlePrefix": "Modo Tickets y Viaje",
+        "titleHighlight": "para asistentes",
+        "description": "Descubre eventos, compra entradas mediante ofertas de socios y planifica tu viaje con servicios cercanos en un solo lugar. Los codigos promocionales estan disponibles solo para usuarios pagos.",
+        "cards": [
+          {
+            "icon": "ticket",
+            "title": "Comprar entradas (ofertas de socios)",
+            "bullets": [
+              "Comprar entrada muestra por evento",
+              "Codigos promocionales solo para usuarios pagos",
+              "Checkout en el sitio del proveedor"
+            ],
+            "accent": "cyan"
+          },
+          {
+            "icon": "pin",
+            "title": "Servicios cercanos",
+            "bullets": ["Hoteles cerca del recinto", "Aeropuerto y estacion de tren mas cercanos"],
+            "accent": "emerald"
+          },
+          {
+            "icon": "globe",
+            "title": "Pensado para viajeros globales",
+            "bullets": [
+              "UI multilenguaje",
+              "Horarios con zona horaria",
+              "Visualizacion multimoneda"
+            ],
+            "accent": "amber"
+          }
+        ],
+        "preview": {
+          "eventName": "Berlin Tech Expo 2026",
+          "eventMeta": "15-17 Jun Â· Messe Berlin",
+          "buyTicket": "Comprar entrada muestra por evento",
+          "applyPromo": "Aplicar promo",
+          "nearbyTitle": "Servicios cercanos",
+          "nearby": [
+            { "icon": "hotel", "label": "Hoteles", "detail": "12 a menos de 2 km" },
+            { "icon": "plane", "label": "Aeropuerto", "detail": "BER Â· 22 km" },
+            { "icon": "train", "label": "Tren", "detail": "Hbf Â· 4 km" }
+          ],
+          "disclaimer": "La disponibilidad y los resultados dependen de los datos del proveedor de mapas. Las ofertas de socios varian por evento."
+        }
+      },
+      "securityStrip": {
+        "titlePrefix": "Seguridad de nivel empresarial",
+        "titleHighlight": "y cumplimiento",
+        "description": "Tus datos estan protegidos por estandares lideres de la industria. Nunca hacemos scraping; todos los datos provienen de canales verificados y conformes.",
+        "items": [
+          {
+            "icon": "shield",
+            "label": "SOC 2 Tipo II",
+            "desc": "Controles de seguridad auditados",
+            "accent": "emerald"
+          },
+          {
+            "icon": "lock",
+            "label": "Conforme con GDPR",
+            "desc": "Soberania total de datos",
+            "accent": "indigo"
+          },
+          {
+            "icon": "cloud",
+            "label": "Infraestructura AWS",
+            "desc": "SLA de disponibilidad del 99.99%",
+            "accent": "violet"
+          },
+          {
+            "icon": "clock",
+            "label": "Monitoreo 24/7",
+            "desc": "Deteccion de amenazas en tiempo real",
+            "accent": "amber"
+          }
+        ]
+      },
+      "finalCta": {
+        "titlePrefix": "Listo para convertir eventos en",
+        "titleHighlight": "ingresos?",
+        "description": "Explora a los mas de 1,000 profesionales de ferias que usan Prismconnex para cerrar mas deals y demostrar ROI.",
+        "primaryCta": "Comenzar prueba gratis",
+        "secondaryCta": "Ver todas las funciones"
+      }
+    },
+    "product": {
+      "eyebrow": "Producto",
+      "titlePrefix": "Todo lo que tu equipo necesita para",
+      "titleHighlight": "ganar en ferias",
+      "description": "Prismconnex unifica inteligencia de eventos, ejecucion CRM y automatizacion de flujos para equipos de ingresos de ferias con total transparencia de datos en cada paso.",
+      "sections": [
+        {
+          "icon": "calendar",
+          "title": "Inteligencia de eventos",
+          "desc": "Descubre ferias globales con scoring de confianza, barras de transparencia de datos y trazabilidad de origen.",
+          "accent": "indigo"
+        },
+        {
+          "icon": "building",
+          "title": "Directorio de empresas y personas",
+          "desc": "Perfiles enriquecidos con insignias de verificacion, historial de participacion en eventos y cronologias de actividad.",
+          "accent": "emerald"
+        },
+        {
+          "icon": "users",
+          "title": "Captura de leads y flujo de acuerdos",
+          "desc": "Captura leads de eventos con scoring automatico y convierte leads calificados en deals con un solo clic.",
+          "accent": "amber"
+        },
+        {
+          "icon": "mail",
+          "title": "Sequence Studio",
+          "desc": "Crea secuencias de correo de varios pasos con revisiones de cumplimiento y protecciones de envio.",
+          "accent": "pink"
+        },
+        {
+          "icon": "bot",
+          "title": "AI Copilot",
+          "desc": "Haz preguntas, redacta outreach y ejecuta acciones con ayuda de IA y controles de confirmacion.",
+          "accent": "cyan"
+        },
+        {
+          "icon": "chart",
+          "title": "Analitica de ROI y beneficios",
+          "desc": "Sigue la economia de los deals, incluidos costo, beneficio, margen y ROI por evento.",
+          "accent": "violet"
+        },
+        {
+          "icon": "cable",
+          "title": "Integraciones",
+          "desc": "Conecta tu proveedor de correo, calendario, CRM, data warehouse y herramientas de analitica.",
+          "accent": "lime"
+        },
+        {
+          "icon": "shield",
+          "title": "Entregabilidad y seguridad",
+          "desc": "Supervisa la salud del dominio, comprobaciones de autenticacion y registros de auditoria para responsabilidad operativa.",
+          "accent": "red"
+        },
+        {
+          "icon": "zap",
+          "title": "Automatizaciones",
+          "desc": "Usa un constructor visual de flujos con modo simulacion, protecciones de limite de tasa e historial completo.",
+          "accent": "yellow"
+        },
+        {
+          "icon": "map",
+          "title": "Modo viaje para asistentes",
+          "desc": "Ofrece a los asistentes detalles del evento, planificacion del viaje, lugares cercanos y formatos localizados.",
+          "accent": "cyan"
+        }
+      ],
+      "coreSolutions": {
+        "eyebrow": "Soluciones principales",
+        "titlePrefix": "Impulsado por",
+        "titleHighlight": "Prismconnex",
+        "description": "Servicios creados especificamente para extender tu CRM hacia la generacion de leads, outreach y soporte al cliente.",
+        "items": [
+          {
+            "icon": "database",
+            "title": "Base de datos B2B de expositores",
+            "desc": "Crea listas de expositores objetivo con datos verificados y trazables.",
+            "accent": "emerald"
+          },
+          {
+            "icon": "mail",
+            "title": "Email marketing B2B",
+            "desc": "Ejecuta outreach conforme con secuencias, limitacion y revisiones previas.",
+            "accent": "indigo"
+          },
+          {
+            "icon": "chat",
+            "title": "Soporte de chat B2B",
+            "desc": "Asistencia preparada para soporte con ayuda multilenguaje y respuestas rapidas.",
+            "accent": "violet"
+          }
+        ]
+      }
+    },
+    "pricing": {
+      "eyebrow": "Precios",
+      "titlePrefix": "Planes que escalan con tus",
+      "titleHighlight": "objetivos de ingresos",
+      "description": "Elige un plan segun el tamano del equipo, la profundidad del flujo y las necesidades de gobierno. Todos los planes incluyen una prueba gratis de 14 dias.",
+      "plans": [
+        {
+          "name": "Gratis",
+          "price": "$0",
+          "period": "para siempre",
+          "desc": "Empieza con las funciones principales del CRM.",
+          "features": [
+            "Hasta 100 contactos",
+            "1 asiento de usuario",
+            "Descubrimiento de eventos (solo vista)",
+            "Vista basica del flujo de acuerdos",
+            "Soporte de la comunidad"
+          ],
+          "cta": "Iniciar prueba",
+          "accent": "cyan"
+        },
+        {
+          "name": "Starter",
+          "price": "$29",
+          "period": "por usuario / mes",
+          "desc": "Para personas que trabajan en ferias.",
+          "features": [
+            "Hasta 2,500 contactos",
+            "3 asientos de usuario",
+            "Inteligencia de eventos mas exportacion",
+            "Sequence Studio (basico)",
+            "Soporte por email"
+          ],
+          "cta": "Comenzar",
+          "accent": "emerald"
+        },
+        {
+          "name": "Pro",
+          "price": "$79",
+          "period": "por usuario / mes",
+          "desc": "Para equipos de ingresos que maximizan ROI.",
+          "features": [
+            "Contactos ilimitados",
+            "10 asientos de usuario",
+            "Sequence Studio completo",
+            "Acceso a AI Copilot",
+            "Economia de deals y analitica",
+            "Automatizaciones",
+            "Soporte prioritario"
+          ],
+          "cta": "Comenzar",
+          "accent": "violet"
+        },
+        {
+          "name": "Enterprise",
+          "price": "Personalizado",
+          "period": "contacta con ventas",
+          "desc": "Para organizaciones con necesidades de gobierno.",
+          "features": [
+            "Todo ilimitado",
+            "Asientos ilimitados",
+            "SSO / SAML",
+            "Politicas RBAC personalizadas",
+            "Registro de auditoria y cumplimiento",
+            "Success manager dedicado",
+            "Garantia SLA"
+          ],
+          "cta": "Contactar ventas",
+          "accent": "amber"
+        }
+      ],
+      "highlights": {
+        "title": "Funciones destacadas incluidas",
+        "description": "Disponibles en todos los planes. Algunas funciones requieren una suscripcion paga.",
+        "items": [
+          {
+            "text": "Modo Tickets y Viaje (experiencia del asistente)",
+            "accent": "rgba(34,211,238,",
+            "accentBorder": "rgba(6,182,212,"
+          },
+          {
+            "text": "Codigos promocionales (solo planes pagos)",
+            "accent": "rgba(99,102,241,",
+            "accentBorder": "rgba(79,70,229,"
+          },
+          {
+            "text": "Servicios cercanos (resultados del proveedor de mapas)",
+            "accent": "rgba(52,211,153,",
+            "accentBorder": "rgba(16,185,129,"
+          },
+          {
+            "text": "Idioma, zona horaria y moneda localizados",
+            "accent": "rgba(245,158,11,",
+            "accentBorder": "rgba(217,119,6,"
+          }
+        ]
+      },
+      "addons": {
+        "title": "Complementos",
+        "description": "Amplia tu plan con capacidades adicionales.",
+        "hint": "Haz clic en la tarjeta para cambiar",
+        "badge": "Complemento",
+        "items": [
+          {
+            "name": "Creditos de enriquecimiento",
+            "desc": "Enriquece en bloque datos de empresas y contactos con fuentes verificadas e insights mas profundos para cada lead.",
+            "icon": "sparkles",
+            "gradient": "from-indigo-500 to-violet-600",
+            "tint": "rgba(99,102,241,"
+          },
+          {
+            "name": "Paquete de uso de IA",
+            "desc": "Tokens adicionales de AI Copilot para equipos de gran volumen que quieren acelerar outreach e inteligencia comercial.",
+            "icon": "zap",
+            "gradient": "from-amber-500 to-orange-600",
+            "tint": "rgba(245,158,11,"
+          },
+          {
+            "name": "Asientos extra",
+            "desc": "Agrega miembros del equipo por encima de los asientos incluidos en tu plan sin actualizar todo el plan.",
+            "icon": "users",
+            "gradient": "from-emerald-500 to-teal-600",
+            "tint": "rgba(52,211,153,"
+          }
+        ]
+      },
+      "faq": {
+        "title": "Preguntas frecuentes",
+        "description": "Cumplimiento, entregabilidad y transparencia de datos.",
+        "items": [
+          {
+            "question": "Mi informacion cumple con GDPR?",
+            "answer": "Si. Prismconnex esta disenado pensando en GDPR, con principios de privacidad desde el diseno y flujos de supresion integrados."
+          },
+          {
+            "question": "Como funciona el monitoreo de entregabilidad?",
+            "answer": "Supervisamos la autenticacion SPF, DKIM y DMARC de tus dominios de envio y mostramos senales de reputacion en el panel de entregabilidad."
+          },
+          {
+            "question": "Que es la transparencia de trazabilidad de datos?",
+            "answer": "Cada registro muestra su fuente, fecha de captura y puntaje de confianza para que tu equipo pueda evaluar la calidad antes de actuar."
+          },
+          {
+            "question": "Puedo cambiar de plan en cualquier momento?",
+            "answer": "Si. Puedes subir o bajar de plan en cualquier momento, y los cambios entran en vigor al inicio del siguiente ciclo de facturacion."
+          }
+        ]
+      }
+    },
+    "security": {
+      "eyebrow": "Seguridad",
+      "titlePrefix": "Seguridad y",
+      "titleHighlight": "cumplimiento",
+      "subtitle": "La confianza es la base de cada trato.",
+      "description": "Prismconnex esta construido con un diseno centrado en seguridad, acceso por roles y trazas de auditoria transparentes para que los equipos globales trabajen con confianza.",
+      "disclaimer": "Describimos controles y arquitectura con claridad, sin prometer en exceso.",
+      "trustBadges": [
+        {
+          "icon": "shield",
+          "label": "Preparacion SOC 2",
+          "desc": "Procesos alineados a controles y flujos listos para evidencias."
+        },
+        {
+          "icon": "eye",
+          "label": "Controles listos para GDPR",
+          "desc": "Controles de consentimiento, supresion y retencion."
+        },
+        {
+          "icon": "lock",
+          "label": "Infraestructura AWS",
+          "desc": "Alojado en AWS con opciones de seguridad administrada."
+        },
+        {
+          "icon": "shieldCheck",
+          "label": "Arquitectura lista para SLA",
+          "desc": "Disenada para confiabilidad con monitoreo y redundancia."
+        }
+      ],
+      "sections": [
+        {
+          "icon": "lock",
+          "title": "Aislamiento de tenants",
+          "text": "Comprobaciones de acceso por workspace y limites seguros.",
+          "accent": "indigo"
+        },
+        {
+          "icon": "shieldCheck",
+          "title": "Control de acceso por roles",
+          "text": "Roles asignados a membresias con aplicacion de politicas.",
+          "accent": "emerald"
+        },
+        {
+          "icon": "fileText",
+          "title": "Registro de auditoria",
+          "text": "Las acciones clave se registran con marca de tiempo e identidad del actor.",
+          "accent": "amber"
+        },
+        {
+          "icon": "key",
+          "title": "Cifrado",
+          "text": "Cifrado en transito y en reposo cuando esta configurado.",
+          "accent": "pink"
+        },
+        {
+          "icon": "mail",
+          "title": "Cumplimiento de email",
+          "text": "Cancelacion de suscripcion, supresion y verificaciones de autenticacion.",
+          "accent": "cyan"
+        },
+        {
+          "icon": "branch",
+          "title": "Trazabilidad y transparencia de datos",
+          "text": "La fuente, fecha de captura y confianza se muestran por registro.",
+          "accent": "violet"
+        }
+      ],
+      "dataNotes": {
+        "icon": "ticket",
+        "title": "Notas sobre tickets y datos cercanos",
+        "text": "La compra de entradas ocurre en el sitio del proveedor. Los codigos promocionales aparecen solo cuando estan configurados. Los lugares cercanos provienen del proveedor de mapas y la disponibilidad varia.",
+        "accent": "cyan"
+      }
+    }
+  },
+  "onboarding": {
+    "header": {
+      "title": "Bienvenido a Prismconnex",
+      "badge": "Configuracion estimada: 2 minutos",
+      "description": "Configuremos tu workspace en unos pocos pasos rapidos."
+    },
+    "steps": [
+      { "label": "Rol personal" },
+      { "label": "Workspace" },
+      { "label": "Envio" },
+      { "label": "Importar" }
+    ],
+    "role": {
+      "title": "Rol personal",
+      "description": "Elige un rol. Prismconnex adaptara tu workspace en segundos."
+    },
+    "roles": [
+      {
+        "id": "service-providers",
+        "name": "Proveedores de servicios",
+        "chips": ["Trabajos", "Cotizaciones", "Facturas"],
+        "recommended": "Se aplicaron ajustes recomendados"
+      },
+      {
+        "id": "attendees",
+        "name": "Asistentes",
+        "chips": ["Eventos", "Entradas", "Mapa"],
+        "recommended": "Se aplicaron ajustes recomendados"
+      },
+      {
+        "id": "exhibitors",
+        "name": "Expositores",
+        "chips": ["Lista objetivo", "Secuencia", "Deals"],
+        "recommended": "Se aplicaron ajustes recomendados"
+      },
+      {
+        "id": "organizers",
+        "name": "Organizadores",
+        "chips": ["Onboarding", "Patrocinadores", "Guia"],
+        "recommended": "Se aplicaron ajustes recomendados"
+      }
+    ],
+    "workspace": {
+      "title": "Workspace",
+      "description": "Crea tu workspace y confirma tus datos de contacto.",
+      "fields": {
+        "workspaceName": "Nombre del workspace",
+        "firstName": "Nombre",
+        "lastName": "Apellido",
+        "workEmail": "Correo laboral",
+        "phoneNumber": "Numero de telefono",
+        "language": "Idioma",
+        "timeZone": "Zona horaria",
+        "currency": "Moneda"
+      },
+      "placeholders": {
+        "workspaceName": "p. ej. Ferias Acme Inc",
+        "firstName": "Juan",
+        "lastName": "Perez",
+        "workEmail": "juan@empresa.com",
+        "phoneNumber": "+1 (555) 000-0000"
+      },
+      "timeZones": [
+        { "value": "America/New_York", "label": "America/New_York" },
+        { "value": "Europe/London", "label": "Europe/London" },
+        { "value": "Europe/Berlin", "label": "Europe/Berlin" },
+        { "value": "Asia/Kolkata", "label": "Asia/Kolkata" }
+      ],
+      "currencies": [
+        { "value": "USD", "label": "USD" },
+        { "value": "EUR", "label": "EUR" },
+        { "value": "GBP", "label": "GBP" },
+        { "value": "INR", "label": "INR" }
+      ],
+      "toggles": {
+        "dualTime": "Mostrar la hora local del evento y mi hora"
+      },
+      "preview": {
+        "title": "Vista previa en vivo",
+        "time": "Hora",
+        "date": "Fecha",
+        "currency": "Moneda",
+        "timezone": "Zona horaria"
+      }
+    },
+    "sending": {
+      "title": "Conecta tu identidad de envio",
+      "description": "Configura tu envio de correo para secuencias y campanas.",
+      "primary": {
+        "title": "SMTP / Proveedor de email",
+        "description": "Conecta tu propio servicio de correo"
+      },
+      "secondary": {
+        "title": "Configurar mas tarde",
+        "description": "Omitelo por ahora y configuralo cuando quieras."
+      }
+    },
+    "import": {
+      "title": "Importa tus datos",
+      "description": "Trae contactos existentes o empieza desde cero.",
+      "primary": { "title": "Subir CSV", "description": "Importar contactos desde un archivo" },
+      "secondary": {
+        "title": "Empezar desde cero",
+        "description": "Agregar contactos manualmente mas tarde"
+      }
+    },
+    "buttons": {
+      "back": "Atras",
+      "continue": "Continuar",
+      "complete": "Completar configuracion"
+    },
+    "errors": {
+      "complete": "No se pudo completar el onboarding"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "brandSubtitle": "CRM de ferias con IA",
+      "heroTitleLine1": "Inteligencia para ferias.",
+      "heroTitleLine2": "Hecho para equipos modernos de ingresos.",
+      "heroDescription": "Gestiona eventos, enriquece contactos, ejecuta secuencias outbound conformes y optimiza el ROI, todo en un solo workspace premium.",
+      "heroBadges": {
+        "aiPowered": "Impulsado por IA",
+        "languages": "{count} idiomas"
+      },
+      "title": "Bienvenido de nuevo",
+      "subtitle": "Inicia sesion en tu workspace de Prismconnex",
+      "fields": {
+        "email": "Correo",
+        "password": "Contrasena"
+      },
+      "actions": {
+        "submit": "Iniciar sesion",
+        "divider": "o continuar con",
+        "cognito": "Continuar con AWS Cognito",
+        "forgotPassword": "Olvidaste tu contrasena?",
+        "createAccount": "Crear cuenta"
+      },
+      "footer": {
+        "language": "Idioma: {language}",
+        "region": "Region: {region}"
+      },
+      "errors": {
+        "signIn": "No se pudo iniciar sesion",
+        "cognito": "No se pudo conectar con AWS Cognito"
+      }
+    },
+    "signUp": {
+      "title": "Crear una cuenta",
+      "subtitle": "Comienza tu camino con Prismconnex",
+      "fields": {
+        "name": "Nombre completo",
+        "email": "Correo electronico",
+        "password": "Contrasena"
+      },
+      "actions": {
+        "submit": "Registrarse",
+        "signInPrompt": "Ya tienes una cuenta?",
+        "signInLink": "Iniciar sesion"
+      },
+      "errors": {
+        "signUp": "No se pudo crear la cuenta"
+      }
+    },
+    "verify": {
+      "title": "Verifica tu correo",
+      "subtitle": "Ingresa el codigo enviado a tu correo",
+      "fields": {
+        "email": "Correo electronico",
+        "code": "Codigo de verificacion"
+      },
+      "placeholders": {
+        "code": "XXXXXX"
+      },
+      "actions": {
+        "submit": "Verificar"
+      },
+      "errors": {
+        "verify": "No se pudo verificar"
+      }
+    },
+    "forgotPassword": {
+      "title": "Olvidaste tu contrasena",
+      "description": "Esta funcion aun no esta completamente implementada en la demo frontend MVP.",
+      "actions": {
+        "return": "Volver a iniciar sesion"
+      }
+    },
+    "resetPassword": {
+      "title": "Restablecer contrasena",
+      "description": "Esta funcion aun no esta completamente implementada en la demo frontend MVP.",
+      "actions": {
+        "return": "Volver a iniciar sesion"
+      }
+    }
+  }
+}

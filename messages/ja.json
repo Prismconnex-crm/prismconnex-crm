@@ -1,0 +1,926 @@
+{
+  "marketing": {
+    "languageSwitcher": {
+      "label": "言語",
+      "toggle": "言語を変更",
+      "searchPlaceholder": "言語を検索...",
+      "empty": "言語が見つかりません。",
+      "hint": "選択した言語は次回以降の訪問でも保存されます。"
+    },
+    "navbar": {
+      "searchButton": "ページを検索",
+      "searchCta": "ページを検索",
+      "searchPlaceholder": "ページを検索...",
+      "searchNoResults": "結果が見つかりません。",
+      "searchNavigate": "移動",
+      "searchOpen": "開く",
+      "mobileMenu": "メニューを切り替える",
+      "theme": {
+        "toggle": "テーマを切り替える",
+        "light": "ライト",
+        "dark": "ダーク",
+        "system": "システム"
+      },
+      "links": {
+        "product": "製品",
+        "pricing": "料金",
+        "security": "セキュリティ",
+        "findShows": "Find Shows",
+        "signIn": "サインイン",
+        "startTrial": "無料トライアルを開始",
+        "startTrialShort": "無料トライアル"
+      }
+    },
+    "footer": {
+      "description": "Prismconnex は展示会のプロフェッショナル向けに作られた AI ネイティブ CRM です。イベントの発見から展示会後の ROI まで、すべてを 1 つのプラットフォームで管理できます。",
+      "sections": {
+        "product": "製品",
+        "company": "会社",
+        "legal": "法務"
+      },
+      "productLinks": {
+        "features": "機能",
+        "plans": "プラン",
+        "security": "セキュリティ"
+      },
+      "companyLinks": {
+        "about": "会社情報",
+        "blog": "ブログ",
+        "careers": "採用情報",
+        "contact": "お問い合わせ"
+      },
+      "legalLinks": {
+        "privacy": "プライバシーポリシー",
+        "terms": "利用規約",
+        "cookies": "クッキーポリシー"
+      },
+      "copyright": "© 2026 Prismconnex. 無断転載を禁じます。",
+      "builtWithPrefix": "愛を込めて",
+      "builtWithSuffix": "世界中の展示会プロフェッショナルのために作られています。"
+    },
+    "home": {
+      "hero": {
+        "badge": "AI 搭載展示会 CRM",
+        "headline": {
+          "prefix": "イベントから",
+          "line1": "収益へ",
+          "line2": "導くフロー"
+        },
+        "description": "展示会の混乱を予測可能な収益へ変える AI ネイティブ CRM。検証済みリードの発見、法令順守のアウトリーチ自動化、ROI の可視化を 1 つのプラットフォームで実現します。",
+        "bullets": [
+          {
+            "icon": "shield",
+            "text": "ソースの透明性"
+          },
+          {
+            "icon": "activity",
+            "text": "法令順守シーケンス"
+          },
+          {
+            "icon": "chart",
+            "text": "ディール経済性 (ROI)"
+          }
+        ],
+        "primaryCta": "無料トライアルを開始",
+        "secondaryCta": "デモを予約",
+        "socialProof": {
+          "count": "2,400+",
+          "label": "展示会プロフェッショナル"
+        },
+        "floatingCard": {
+          "title": "HelioGrid のディールが成立",
+          "meta": "$204K � 4.8x ROI"
+        },
+        "dashboard": {
+          "kpis": [
+            {
+              "label": "収益",
+              "value": "$1.82M",
+              "color": "text-indigo-400"
+            },
+            {
+              "label": "リード",
+              "value": "428",
+              "color": "text-emerald-400"
+            },
+            {
+              "label": "ROI",
+              "value": "3.4x",
+              "color": "text-amber-400"
+            }
+          ],
+          "events": [
+            {
+              "name": "Berlin Tech Week",
+              "score": "96%"
+            },
+            {
+              "name": "London Retail Summit",
+              "score": "96%"
+            }
+          ]
+        }
+      },
+      "stats": {
+        "items": [
+          {
+            "value": "10,000+",
+            "label": "追跡中のイベント",
+            "accent": "emerald"
+          },
+          {
+            "value": "2.5M+",
+            "label": "企業プロフィール",
+            "accent": "indigo"
+          },
+          {
+            "value": "98.7%",
+            "label": "到達率",
+            "accent": "violet"
+          },
+          {
+            "value": "3.4x",
+            "label": "平均 ROI 向上",
+            "accent": "amber"
+          }
+        ]
+      },
+      "personas": {
+        "eyebrow": "あらゆる役割のために設計",
+        "titlePrefix": "1 つのプラットフォーム、",
+        "titleHighlight": "4 つのワークフロー",
+        "description": "参加者、出展者、主催者、サービス提供者のいずれであっても、Prismconnex はあなたのワークフローに合わせて最適化されます。",
+        "items": [
+          {
+            "id": "serviceProviders",
+            "title": "サービス提供者",
+            "accent": "violet",
+            "description": "初回見積もりから長期的な顧客維持まで、サービス提供の流れを効率化します。",
+            "flow": [
+              "案件",
+              "見積もり",
+              "レビュー",
+              "リピート顧客"
+            ]
+          },
+          {
+            "id": "attendees",
+            "title": "参加者",
+            "accent": "emerald",
+            "description": "イベントを探し、旅程を計画し、出展者や仲間と有意義なつながりを築けます。",
+            "flow": [
+              "イベント",
+              "旅行計画",
+              "チケット",
+              "地図",
+              "ネットワーキング"
+            ]
+          },
+          {
+            "id": "exhibitors",
+            "title": "出展者",
+            "accent": "amber",
+            "description": "出展先の選定から成約まで、出展企業の収益フロー全体を管理できます。",
+            "flow": [
+              "イベント",
+              "ターゲットリスト",
+              "シーケンス",
+              "商談",
+              "ディールから ROI へ"
+            ]
+          },
+          {
+            "id": "organizers",
+            "title": "主催者",
+            "accent": "pink",
+            "description": "運営を効率化し、出展者向けツールやスポンサー管理を備えた高品質なイベントを実現します。",
+            "flow": [
+              "イベント運営",
+              "出展者オンボーディング",
+              "スポンサー管理",
+              "来場者ガイド"
+            ]
+          }
+        ]
+      },
+      "features": {
+        "titlePrefix": "必要なものはすべて、",
+        "titleHighlight": "不要なものはなし",
+        "description": "イベント発見から展示会後 ROI レポートまで、展示会プロフェッショナルのために最適化された機能群です。",
+        "items": [
+          {
+            "icon": "calendar",
+            "name": "イベントインテリジェンス",
+            "desc": "AI によって収集されたイベント情報に、信頼スコア、出展者リスト、検証済みソースからのリアルタイム更新を付加します。",
+            "accent": "indigo"
+          },
+          {
+            "icon": "building",
+            "name": "企業・人物プロフィール",
+            "desc": "検証バッジ、取得元の履歴、メールアクションを備えたリッチな連絡先データ。",
+            "accent": "violet"
+          },
+          {
+            "icon": "target",
+            "name": "ディールフロー管理",
+            "desc": "ビジュアルなリードスコアリングと、ステージ連動の自動化を備えたカンバン型ディール管理。",
+            "accent": "emerald"
+          },
+          {
+            "icon": "mail",
+            "name": "Sequence Studio",
+            "desc": "コンプライアンス確認、スケジュール設定、A/B テストを備えた複数ステップのメールシーケンス。",
+            "accent": "cyan"
+          },
+          {
+            "icon": "chart",
+            "name": "分析と ROI",
+            "desc": "リアルタイムKPI、ファネルトレンドチャート、イベントごとのROIアトリビューションダッシュボードを提供します。",
+            "accent": "amber"
+          },
+          {
+            "icon": "bot",
+            "name": "AI Copilot",
+            "desc": "質問、アウトリーチの作成、アクション実行を会話型 UI で支援します。",
+            "accent": "pink"
+          },
+          {
+            "icon": "zap",
+            "name": "ワークフロー自動化",
+            "desc": "安全スイッチ、ドライラン、インテリジェントな条件設定を備えたビジュアルビルダー。",
+            "accent": "orange"
+          },
+          {
+            "icon": "users",
+            "name": "チームコラボレーション",
+            "desc": "ロールベースアクセス、監査ログ、共有ワークスペースを備えています。",
+            "accent": "teal"
+          }
+        ]
+      },
+      "travel": {
+        "titlePrefix": "チケット & 旅行モード",
+        "titleHighlight": "参加者向け",
+        "description": "イベントを見つけ、提携オファーからチケットを購入し、周辺情報とあわせて旅行を 1 か所で計画できます。プロモコードは有料ユーザーのみ利用可能です。",
+        "cards": [
+          {
+            "icon": "ticket",
+            "title": "チケット購入 (提携オファー)",
+            "bullets": [
+              "チケット購入 イベントごとに表示",
+              "プロモコードは有料ユーザー限定",
+              "決済は提供元サイトで実施"
+            ],
+            "accent": "cyan"
+          },
+          {
+            "icon": "pin",
+            "title": "周辺施設",
+            "bullets": [
+              "会場近くのホテル",
+              "最寄り空港と駅"
+            ],
+            "accent": "emerald"
+          },
+          {
+            "icon": "globe",
+            "title": "グローバル旅行者向け",
+            "bullets": [
+              "多言語 UI",
+              "タイムゾーン対応スケジュール",
+              "多通貨表示"
+            ],
+            "accent": "amber"
+          }
+        ],
+        "preview": {
+          "eventName": "Berlin Tech Expo 2026",
+          "eventMeta": "6月15-17日 · Messe Berlin",
+          "buyTicket": "チケット購入 イベントごとに表示",
+          "applyPromo": "プロモを適用",
+          "nearbyTitle": "周辺施設",
+          "nearby": [
+            {
+              "icon": "hotel",
+              "label": "ホテル",
+              "detail": "2km 圏内に 12 件"
+            },
+            {
+              "icon": "plane",
+              "label": "空港",
+              "detail": "BER � 22km"
+            },
+            {
+              "icon": "train",
+              "label": "鉄道",
+              "detail": "Hbf � 4km"
+            }
+          ],
+          "disclaimer": "利用可能性と結果は地図プロバイダーのデータに依存します。提携オファーはイベントごとに異なります。"
+        }
+      },
+      "securityStrip": {
+        "titlePrefix": "エンタープライズ級の",
+        "titleHighlight": "セキュリティとコンプライアンス",
+        "description": "お客様のデータは業界標準に基づいて保護されています。スクレイピングは行わず、すべてのデータは検証済みで適法なチャネルから取得されます。",
+        "items": [
+          {
+            "icon": "shield",
+            "label": "SOC 2 Type II",
+            "desc": "監査済みのセキュリティ統制",
+            "accent": "emerald"
+          },
+          {
+            "icon": "lock",
+            "label": "GDPR 準拠",
+            "desc": "完全なデータ主権",
+            "accent": "indigo"
+          },
+          {
+            "icon": "cloud",
+            "label": "AWS インフラ",
+            "desc": "99.99% の稼働率 SLA",
+            "accent": "violet"
+          },
+          {
+            "icon": "clock",
+            "label": "24/7 監視",
+            "desc": "リアルタイム脅威検知",
+            "accent": "amber"
+          }
+        ]
+      },
+      "finalCta": {
+        "titlePrefix": "イベントを",
+        "titleHighlight": "収益に変える準備はできていますか？",
+        "description": "1,000 人を超える展示会プロフェッショナルが Prismconnex を利用して、より多くのディールを成立させ ROI を証明しています。",
+        "primaryCta": "無料トライアルを開始",
+        "secondaryCta": "すべての機能を見る"
+      }
+    },
+    "product": {
+      "eyebrow": "製品",
+      "titlePrefix": "チームが必要とするすべてを備え、",
+      "titleHighlight": "展示会で成果を出す",
+      "description": "Prismconnex は、イベントインテリジェンス、CRM 実行、ワークフロー自動化を 1 つに統合し、各ステップでデータ透明性を提供します。",
+      "sections": [
+        {
+          "icon": "calendar",
+          "title": "イベントインテリジェンス",
+          "desc": "信頼スコア、データ透明性、取得元情報を備えた世界中の展示会を発見できます。",
+          "accent": "indigo"
+        },
+        {
+          "icon": "building",
+          "title": "企業・人物ディレクトリ",
+          "desc": "検証バッジ、イベント参加履歴、活動タイムライン付きの強化プロフィール。",
+          "accent": "emerald"
+        },
+        {
+          "icon": "users",
+          "title": "リード獲得とディールフロー",
+          "desc": "イベントからのリードを自動採点し、適格リードをワンクリックでディールへ変換します。",
+          "accent": "amber"
+        },
+        {
+          "icon": "mail",
+          "title": "Sequence Studio",
+          "desc": "法令順守チェックと送信保護を備えた複数ステップのメールシーケンスを作成できます。",
+          "accent": "pink"
+        },
+        {
+          "icon": "bot",
+          "title": "AI Copilot",
+          "desc": "質問、アウトリーチ作成、アクション実行を AI が支援し、確認コントロールも備えます。",
+          "accent": "cyan"
+        },
+        {
+          "icon": "chart",
+          "title": "ROI と利益分析",
+          "desc": "イベントごとのコスト、利益率、利益、ROI などのディール経済性を追跡します。",
+          "accent": "violet"
+        },
+        {
+          "icon": "cable",
+          "title": "連携",
+          "desc": "メールプロバイダー、カレンダー、CRM、データウェアハウス、分析ツールを接続できます。",
+          "accent": "lime"
+        },
+        {
+          "icon": "shield",
+          "title": "到達率とセキュリティ",
+          "desc": "ドメイン状態、認証チェック、監査ログを監視して運用の説明責任を高めます。",
+          "accent": "red"
+        },
+        {
+          "icon": "zap",
+          "title": "自動化",
+          "desc": "ドライラン、レート制限ガード、完全な実行履歴を備えたビジュアルビルダー。",
+          "accent": "yellow"
+        },
+        {
+          "icon": "map",
+          "title": "参加者向け旅行モード",
+          "desc": "参加者にイベント詳細、旅行計画、周辺施設、ローカライズされた表示を提供します。",
+          "accent": "cyan"
+        }
+      ],
+      "coreSolutions": {
+        "eyebrow": "コアソリューション",
+        "titlePrefix": "Powered by",
+        "titleHighlight": "Prismconnex",
+        "description": "CRM をリード生成、アウトリーチ、カスタマーサポートまで拡張するために設計されたサービス群です。",
+        "items": [
+          {
+            "icon": "database",
+            "title": "B2B 出展者データベース",
+            "desc": "検証済みで取得元を追跡できるデータから、対象出展者リストを構築できます。",
+            "accent": "emerald"
+          },
+          {
+            "icon": "mail",
+            "title": "B2B メールマーケティング",
+            "desc": "シーケンス、送信制御、事前チェック付きで法令順守のアウトリーチを実行します。",
+            "accent": "indigo"
+          },
+          {
+            "icon": "chat",
+            "title": "B2B チャットサポート",
+            "desc": "多言語対応と高速な回答を備えたサポート向けアシスタンス。",
+            "accent": "violet"
+          }
+        ]
+      }
+    },
+    "pricing": {
+      "eyebrow": "料金",
+      "titlePrefix": "収益目標に合わせて拡張できる",
+      "titleHighlight": "プラン",
+      "description": "チーム規模、ワークフローの深さ、ガバナンス要件に応じてプランを選択できます。すべてのプランに 14 日間の無料トライアルが含まれます。",
+      "plans": [
+        {
+          "name": "Free",
+          "price": "$0",
+          "period": "永続",
+          "desc": "CRM の基本機能から始めましょう。",
+          "features": [
+            "最大 100 件の連絡先",
+            "1 ユーザー",
+            "イベント発見 (閲覧のみ)",
+            "基本的なディールフロー表示",
+            "コミュニティサポート"
+          ],
+          "cta": "トライアル開始",
+          "accent": "cyan"
+        },
+        {
+          "name": "Starter",
+          "price": "$29",
+          "period": "1 ユーザー / 月",
+          "desc": "展示会で活動する個人向け。",
+          "features": [
+            "最大 2,500 件の連絡先",
+            "3 ユーザー",
+            "Event Intelligence とエクスポート",
+            "Sequence Studio (基本)",
+            "メールサポート"
+          ],
+          "cta": "始める",
+          "accent": "emerald"
+        },
+        {
+          "name": "Pro",
+          "price": "$79",
+          "period": "1 ユーザー / 月",
+          "desc": "ROI 最大化を目指す収益チーム向け。",
+          "features": [
+            "連絡先無制限",
+            "10 ユーザー",
+            "フル Sequence Studio",
+            "AI Copilot アクセス",
+            "ディール経済性と分析",
+            "自動化",
+            "優先サポート"
+          ],
+          "cta": "始める",
+          "accent": "violet"
+        },
+        {
+          "name": "Enterprise",
+          "price": "個別見積もり",
+          "period": "営業に相談",
+          "desc": "ガバナンス要件を持つ組織向け。",
+          "features": [
+            "すべて無制限",
+            "ユーザー数無制限",
+            "SSO / SAML",
+            "カスタム RBAC ポリシー",
+            "監査ログとコンプライアンス",
+            "専任サクセスマネージャー",
+            "SLA 保証"
+          ],
+          "cta": "営業に相談",
+          "accent": "amber"
+        }
+      ],
+      "highlights": {
+        "title": "含まれる注目機能",
+        "description": "すべてのプランで利用できます。一部の機能は有料サブスクリプションが必要です。",
+        "items": [
+          {
+            "text": "チケット & 旅行モード (参加者体験)",
+            "accent": "rgba(34,211,238,",
+            "accentBorder": "rgba(6,182,212,"
+          },
+          {
+            "text": "プロモコード (有料プラン限定)",
+            "accent": "rgba(99,102,241,",
+            "accentBorder": "rgba(79,70,229,"
+          },
+          {
+            "text": "周辺施設 (地図プロバイダーの結果)",
+            "accent": "rgba(52,211,153,",
+            "accentBorder": "rgba(16,185,129,"
+          },
+          {
+            "text": "ローカライズされた言語・タイムゾーン・通貨",
+            "accent": "rgba(245,158,11,",
+            "accentBorder": "rgba(217,119,6,"
+          }
+        ]
+      },
+      "addons": {
+        "title": "アドオン",
+        "description": "追加機能でプランを拡張できます。",
+        "hint": "カードをクリックして切り替え",
+        "badge": "アドオン",
+        "items": [
+          {
+            "name": "データ強化クレジット",
+            "desc": "企業・連絡先データを検証済みソースで一括強化し、より深いインサイトを追加します。",
+            "icon": "sparkles",
+            "gradient": "from-indigo-500 to-violet-600",
+            "tint": "rgba(99,102,241,"
+          },
+          {
+            "name": "AI 利用パック",
+            "desc": "大量利用チーム向けに AI Copilot トークンを追加し、アウトリーチと営業インテリジェンスを加速します。",
+            "icon": "zap",
+            "gradient": "from-amber-500 to-orange-600",
+            "tint": "rgba(245,158,11,"
+          },
+          {
+            "name": "追加シート",
+            "desc": "プラン全体を変更せずに、含まれるユーザー数を超えてチームメンバーを追加できます。",
+            "icon": "users",
+            "gradient": "from-emerald-500 to-teal-600",
+            "tint": "rgba(52,211,153,"
+          }
+        ]
+      },
+      "faq": {
+        "title": "よくある質問",
+        "description": "コンプライアンス、到達率、データ透明性について。",
+        "items": [
+          {
+            "question": "データは GDPR に準拠していますか？",
+            "answer": "はい。Prismconnex は privacy-by-design の原則と組み込みの抑制ワークフローを備え、GDPR を意識して設計されています。"
+          },
+          {
+            "question": "到達率モニタリングはどのように機能しますか？",
+            "answer": "送信ドメインの SPF、DKIM、DMARC を監視し、到達率ダッシュボードにレピュテーションシグナルを表示します。"
+          },
+          {
+            "question": "データリネージの透明性とは何ですか？",
+            "answer": "各レコードにソース、取得日、信頼スコアが表示され、行動前に品質を判断できます。"
+          },
+          {
+            "question": "プランはいつでも変更できますか？",
+            "answer": "はい。アップグレードもダウングレードもいつでも可能で、変更は次回課金サイクルの開始時に適用されます。"
+          }
+        ]
+      }
+    },
+    "security": {
+      "eyebrow": "セキュリティ",
+      "titlePrefix": "セキュリティと",
+      "titleHighlight": "コンプライアンス",
+      "subtitle": "信頼はすべてのディールの基盤です。",
+      "description": "Prismconnex は、セキュリティファースト設計、ロールベースアクセス、透明な監査証跡により、グローバルチームが安心して働けるよう構築されています。",
+      "disclaimer": "私たちは統制とアーキテクチャを明確に説明し、過剰な約束はしません。",
+      "trustBadges": [
+        {
+          "icon": "shield",
+          "label": "SOC 2 準備",
+          "desc": "統制に沿ったプロセスと証跡対応ワークフロー。"
+        },
+        {
+          "icon": "eye",
+          "label": "GDPR 対応コントロール",
+          "desc": "同意、抑制、保持のコントロール。"
+        },
+        {
+          "icon": "lock",
+          "label": "AWS インフラ",
+          "desc": "管理型セキュリティオプション付きで AWS 上にホスト。"
+        },
+        {
+          "icon": "shieldCheck",
+          "label": "SLA 対応アーキテクチャ",
+          "desc": "監視と冗長性を備えた高信頼設計。"
+        }
+      ],
+      "sections": [
+        {
+          "icon": "lock",
+          "title": "テナント分離",
+          "text": "ワークスペース単位のアクセスチェックと安全な境界。",
+          "accent": "indigo"
+        },
+        {
+          "icon": "shieldCheck",
+          "title": "ロールベースアクセス制御",
+          "text": "メンバーシップに紐づくロールをポリシーで強制します。",
+          "accent": "emerald"
+        },
+        {
+          "icon": "fileText",
+          "title": "監査ログ",
+          "text": "重要な操作をタイムスタンプと実行者情報付きで記録します。",
+          "accent": "amber"
+        },
+        {
+          "icon": "key",
+          "title": "暗号化",
+          "text": "構成に応じて転送中・保存中の暗号化を提供します。",
+          "accent": "pink"
+        },
+        {
+          "icon": "mail",
+          "title": "メールコンプライアンス",
+          "text": "配信停止、抑制、認証チェックに対応します。",
+          "accent": "cyan"
+        },
+        {
+          "icon": "branch",
+          "title": "データリネージと透明性",
+          "text": "各レコードにソース、取得日、信頼度を表示します。",
+          "accent": "violet"
+        }
+      ],
+      "dataNotes": {
+        "icon": "ticket",
+        "title": "チケットと周辺データに関する注意",
+        "text": "チケット購入は提供元サイトで行われます。プロモコードは設定されている場合のみ表示されます。周辺施設データは地図プロバイダーに依存し、利用可能性は変動します。",
+        "accent": "cyan"
+      }
+    }
+  },
+  "onboarding": {
+    "header": {
+      "title": "Prismconnex へようこそ",
+      "badge": "想定セットアップ時間: 2 分",
+      "description": "いくつかの簡単なステップでワークスペースを設定しましょう。"
+    },
+    "steps": [
+      {
+        "label": "個人の役割"
+      },
+      {
+        "label": "ワークスペース"
+      },
+      {
+        "label": "送信設定"
+      },
+      {
+        "label": "インポート"
+      }
+    ],
+    "role": {
+      "title": "個人の役割",
+      "description": "役割を選択してください。Prismconnex が数秒でワークスペースを最適化します。"
+    },
+    "roles": [
+      {
+        "id": "service-providers",
+        "name": "サービス提供者",
+        "chips": [
+          "案件",
+          "見積もり",
+          "請求書"
+        ],
+        "recommended": "推奨設定を適用しました"
+      },
+      {
+        "id": "attendees",
+        "name": "参加者",
+        "chips": [
+          "イベント",
+          "チケット",
+          "地図"
+        ],
+        "recommended": "推奨設定を適用しました"
+      },
+      {
+        "id": "exhibitors",
+        "name": "出展者",
+        "chips": [
+          "ターゲットリスト",
+          "シーケンス",
+          "ディール"
+        ],
+        "recommended": "推奨設定を適用しました"
+      },
+      {
+        "id": "organizers",
+        "name": "主催者",
+        "chips": [
+          "オンボーディング",
+          "スポンサー",
+          "ガイダンス"
+        ],
+        "recommended": "推奨設定を適用しました"
+      }
+    ],
+    "workspace": {
+      "title": "ワークスペース",
+      "description": "ワークスペースを作成し、連絡先情報を確認してください。",
+      "fields": {
+        "workspaceName": "ワークスペース名",
+        "firstName": "名",
+        "lastName": "姓",
+        "workEmail": "勤務先メール",
+        "phoneNumber": "電話番号",
+        "language": "言語",
+        "timeZone": "タイムゾーン",
+        "currency": "通貨"
+      },
+      "placeholders": {
+        "workspaceName": "例: Acme Inc Trade Shows",
+        "firstName": "太郎",
+        "lastName": "山田",
+        "workEmail": "taro@company.com",
+        "phoneNumber": "+1 (555) 000-0000"
+      },
+      "timeZones": [
+        {
+          "value": "America/New_York",
+          "label": "America/New_York"
+        },
+        {
+          "value": "Europe/London",
+          "label": "Europe/London"
+        },
+        {
+          "value": "Europe/Berlin",
+          "label": "Europe/Berlin"
+        },
+        {
+          "value": "Asia/Kolkata",
+          "label": "Asia/Kolkata"
+        }
+      ],
+      "currencies": [
+        {
+          "value": "USD",
+          "label": "USD"
+        },
+        {
+          "value": "EUR",
+          "label": "EUR"
+        },
+        {
+          "value": "GBP",
+          "label": "GBP"
+        },
+        {
+          "value": "INR",
+          "label": "INR"
+        }
+      ],
+      "toggles": {
+        "dualTime": "イベント現地時間と自分の時間を両方表示"
+      },
+      "preview": {
+        "title": "ライブプレビュー",
+        "time": "時間",
+        "date": "日付",
+        "currency": "通貨",
+        "timezone": "タイムゾーン"
+      }
+    },
+    "sending": {
+      "title": "送信 ID を接続",
+      "description": "シーケンスやキャンペーンのためのメール送信設定を行います。",
+      "primary": {
+        "title": "SMTP / メールプロバイダー",
+        "description": "ご自身のメールサービスを接続します"
+      },
+      "secondary": {
+        "title": "後で設定する",
+        "description": "今はスキップして、後からいつでも設定できます。"
+      }
+    },
+    "import": {
+      "title": "データをインポート",
+      "description": "既存の連絡先を取り込むか、ゼロから始めます。",
+      "primary": {
+        "title": "CSV をアップロード",
+        "description": "ファイルから連絡先をインポート"
+      },
+      "secondary": {
+        "title": "最初から始める",
+        "description": "後で手動で連絡先を追加する"
+      }
+    },
+    "buttons": {
+      "back": "戻る",
+      "continue": "続行",
+      "complete": "設定を完了"
+    },
+    "errors": {
+      "complete": "オンボーディングを完了できませんでした"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "brandSubtitle": "AI展示会CRM",
+      "heroTitleLine1": "展示会インテリジェンス。",
+      "heroTitleLine2": "現代の収益チームのために。",
+      "heroDescription": "イベント管理、連絡先の強化、コンプライアンス準拠のアウトバウンド配信、ROI最適化を、1つのプレミアムワークスペースで実現します。",
+      "heroBadges": {
+        "aiPowered": "AI搭載",
+        "languages": "{count}言語"
+      },
+      "title": "おかえりなさい",
+      "subtitle": "Prismconnexワークスペースにサインイン",
+      "fields": {
+        "email": "メール",
+        "password": "パスワード"
+      },
+      "actions": {
+        "submit": "サインイン",
+        "divider": "または次で続行",
+        "cognito": "AWS Cognitoで続行",
+        "forgotPassword": "パスワードをお忘れですか？",
+        "createAccount": "アカウントを作成"
+      },
+      "footer": {
+        "language": "言語: {language}",
+        "region": "リージョン: {region}"
+      },
+      "errors": {
+        "signIn": "サインインに失敗しました",
+        "cognito": "AWS Cognitoに接続できませんでした"
+      }
+    },
+    "signUp": {
+      "title": "アカウントを作成",
+      "subtitle": "Prismconnexを始めましょう",
+      "fields": {
+        "name": "氏名",
+        "email": "メールアドレス",
+        "password": "パスワード"
+      },
+      "actions": {
+        "submit": "登録する",
+        "signInPrompt": "すでにアカウントをお持ちですか？",
+        "signInLink": "サインイン"
+      },
+      "errors": {
+        "signUp": "アカウント作成に失敗しました"
+      }
+    },
+    "verify": {
+      "title": "メールを確認してください",
+      "subtitle": "メールに送信されたコードを入力してください",
+      "fields": {
+        "email": "メールアドレス",
+        "code": "確認コード"
+      },
+      "placeholders": {
+        "code": "XXXXXX"
+      },
+      "actions": {
+        "submit": "確認する"
+      },
+      "errors": {
+        "verify": "確認に失敗しました"
+      }
+    },
+    "forgotPassword": {
+      "title": "パスワードをお忘れですか",
+      "description": "この機能はMVPフロントエンドデモではまだ完全には実装されていません。",
+      "actions": {
+        "return": "サインインに戻る"
+      }
+    },
+    "resetPassword": {
+      "title": "パスワードを再設定",
+      "description": "この機能はMVPフロントエンドデモではまだ完全には実装されていません。",
+      "actions": {
+        "return": "サインインに戻る"
+      }
+    }
+  }
+}

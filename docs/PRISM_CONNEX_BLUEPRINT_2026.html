@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Prism Connex CRM Blueprint 2026</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <style>
+  :root { color-scheme: light; --ink:#111827; --muted:#4b5563; --line:#d8dee9; --soft:#f5f7fb; --brand:#4f46e5; --accent:#0891b2; }
+  * { box-sizing: border-box; }
+  html { font-family: Inter, Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.55; color: var(--ink); background: #eef2f7; }
+  body { margin: 0 auto !important; max-width: 980px !important; background: #fff !important; min-height: 100vh; padding: 54px 64px 72px !important; box-shadow: 0 24px 80px rgba(15,23,42,.12); hyphens: none; overflow-wrap: break-word; }
+  h1 { font-size: 34px; line-height: 1.08; margin: 0 0 16px; letter-spacing: 0; color: #0f172a; }
+  h2 { font-size: 22px; margin: 34px 0 12px; padding-top: 10px; border-top: 1px solid var(--line); color:#111827; }
+  h3 { font-size: 16px; margin: 24px 0 8px; color:#1f2937; }
+  p { margin: 0 0 11px; }
+  ul, ol { margin: 0 0 14px 22px; padding: 0; }
+  li { margin: 4px 0; }
+  a { color: var(--brand); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 12.5px; }
+  th, td { border: 1px solid var(--line); padding: 8px 9px; vertical-align: top; }
+  th { background: #eef2ff; color: #111827; text-align: left; font-weight: 700; }
+  tr:nth-child(even) td { background: #fafbff; }
+  code { font-family: Consolas, Monaco, monospace; font-size: .92em; background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 4px; padding: 1px 4px; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 24px 0; }
+  blockquote { border-left: 4px solid var(--brand); margin: 14px 0; padding: 8px 14px; background: var(--soft); color: var(--muted); }
+  body::before { content: "Prism Connex CRM Blueprint 2026"; position: fixed; top: 18px; left: 50%; transform: translateX(-50%); width: 980px; max-width: calc(100% - 40px); color: #64748b; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
+  @page { size: A4; margin: 14mm 12mm; }
+  @media print {
+    html { background: #fff; font-size: 11.2px; }
+    body::before { display: none; }
+    body { box-shadow: none !important; padding: 0 !important; max-width: none !important; margin: 0 !important; }
+    h1 { font-size: 25px; page-break-after: avoid; }
+    h2 { font-size: 17px; page-break-after: avoid; break-after: avoid; margin-top: 22px; }
+    h3 { font-size: 13px; page-break-after: avoid; break-after: avoid; }
+    table { font-size: 9.2px; page-break-inside: auto; }
+    tr, td, th { page-break-inside: avoid; break-inside: avoid; }
+    a { color: #1d4ed8; }
+  }
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Prism Connex CRM Blueprint 2026</h1>
+</header>
+<h1 id="prism-connex-crm-ai-native-trade-show-crm-blueprint-2026">Prism
+Connex CRM: AI-Native Trade Show CRM Blueprint 2026</h1>
+<p>Prepared: 16 May 2026<br />
+Audience: Founder, investor, product, engineering, and go-to-market
+team<br />
+Positioning: Compliance-safe product strategy with current
+implementation status separated from roadmap intent</p>
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>Prism Connex is an AI-native, event-to-revenue CRM for the global
+trade show industry. The product should not be positioned as only
+another Apollo, HubSpot, or Pipedrive alternative. Its strongest wedge
+is narrower and more defensible: it turns trade show discovery into
+target accounts, contacts, outreach, meetings, deals, event ROI, and
+repeatable revenue operations.</p>
+<p>The current project already has a serious foundation:</p>
+<ul>
+<li>Next.js 14 full-stack application with TypeScript, Tailwind, Radix
+UI, Framer Motion, Recharts, Prisma, AWS Cognito wiring, Mapbox usage,
+CSV tooling, and <code>next-intl</code>.</li>
+<li>A current 16-module CRM shell covering Dashboard, Events, Target
+Events, Companies, People, Leads, Deals, Sequence Studio, Automation,
+Analytics, AI Copilot, Integrations, Deliverability, Team, Settings, and
+Audit Log.</li>
+<li>Event intelligence catalog data from Eventseye import workflows,
+currently represented by a seed catalog of 9,771 trade show
+records.</li>
+<li>A large local company intelligence dataset in development, with
+34,598,800 company rows in the local SQLite database and 21,000 static
+public company records.</li>
+<li>Backend foundations for multi-tenant workspaces, roles, leads,
+lead-to-deal conversion, import/export routes, audit logs, localization,
+and onboarding.</li>
+</ul>
+<p>The product should now move from a polished demo-plus-foundation into
+a durable MVP with explicit boundaries:</p>
+<ul>
+<li>Keep live claims honest.</li>
+<li>Convert mock/demo screens into API-backed workflows.</li>
+<li>Use compliant enrichment providers and user-authorized imports
+instead of private scraping.</li>
+<li>Build a practical event-to-revenue workflow before expanding every
+persona feature.</li>
+</ul>
+<h2 id="2-updated-product-mission">2. Updated Product Mission</h2>
+<p>Build the operating system for trade show revenue teams.</p>
+<p>Prism Connex helps exhibitors, organizers, service providers,
+attendees, and revenue teams answer five questions in one place:</p>
+<ol type="1">
+<li>Which trade shows should we target?</li>
+<li>Which companies and people should we approach?</li>
+<li>What message should we send before, during, and after the
+event?</li>
+<li>Which leads converted into deals?</li>
+<li>What was the profit, margin, and ROI from each event?</li>
+</ol>
+<p>The core product loop is:</p>
+<p>Event discovery -&gt; target list -&gt; company and people
+intelligence -&gt; lead capture -&gt; sequence -&gt; meeting -&gt; deal
+-&gt; profit and ROI analytics.</p>
+<h2 id="3-current-project-reality">3. Current Project Reality</h2>
+<p>This section should be used internally and in investor conversations.
+It prevents overclaiming while still showing that the project has real
+traction.</p>
+<h3 id="live-or-substantially-implemented">Live or substantially
+implemented</h3>
+<ul>
+<li>Next.js app shell and public marketing pages.</li>
+<li>Responsive CRM navigation with 16 modules.</li>
+<li>Localized routing and language files.</li>
+<li>Workspace preference storage for locale, timezone, currency, and UI
+preferences.</li>
+<li>AWS Cognito service wiring and local session fallback for MVP/demo
+authentication.</li>
+<li>Prisma schema with workspace-scoped SaaS entities.</li>
+<li>Companies API with pagination, filtering, and local database-backed
+search.</li>
+<li>Leads API, lead service, lead repository, and lead-to-deal
+conversion flow.</li>
+<li>Audit logging foundation.</li>
+<li>CSV import/export route structure.</li>
+<li>Eventseye import script and find-shows catalog.</li>
+<li>Public Find Shows pages and in-app Events/Target Events
+experience.</li>
+</ul>
+<h3 id="strong-ui-but-still-partially-demo-backed">Strong UI but still
+partially demo-backed</h3>
+<ul>
+<li>People/contact intelligence.</li>
+<li>Sequence Studio.</li>
+<li>Automation.</li>
+<li>AI Copilot.</li>
+<li>Integrations.</li>
+<li>Deliverability.</li>
+<li>Team management.</li>
+<li>Deals economics UI.</li>
+<li>Analytics dashboards.</li>
+<li>Organizer, attendee, and service provider workflows.</li>
+</ul>
+<h3 id="planned-or-needs-production-wiring">Planned or needs production
+wiring</h3>
+<ul>
+<li>Production PostgreSQL deployment.</li>
+<li>Production Cognito-only authentication flow.</li>
+<li>Real email delivery through Resend, Mailgun, SES, or another
+provider.</li>
+<li>Sequence scheduler and queue worker.</li>
+<li>OpenAI API integration for actual AI Copilot responses and email
+drafts.</li>
+<li>Provider-based company/contact enrichment.</li>
+<li>Consent, source, suppression, and retention controls.</li>
+<li>Subscription billing.</li>
+<li>Production observability, monitoring, backups, and deployment
+runbooks.</li>
+</ul>
+<h2 id="4-the-four-personas">4. The Four Personas</h2>
+<h3 id="exhibitors">Exhibitors</h3>
+<p>Primary commercial persona for MVP.</p>
+<p>Key jobs:</p>
+<ul>
+<li>Discover relevant trade shows.</li>
+<li>Build target account lists by industry, location, size, and
+event.</li>
+<li>Find buyer contacts and company context.</li>
+<li>Launch compliant pre-event and post-event outreach.</li>
+<li>Capture booth leads.</li>
+<li>Convert qualified leads into deals.</li>
+<li>Track revenue, cost, margin, and ROI by event.</li>
+</ul>
+<p>Priority modules:</p>
+<ul>
+<li>Events, Target Events, Companies, People, Leads, Deals, Sequence
+Studio, Analytics, AI Copilot.</li>
+</ul>
+<h3 id="organizers">Organizers</h3>
+<p>Second major B2B persona.</p>
+<p>Key jobs:</p>
+<ul>
+<li>Manage event profiles, exhibitors, sponsors, and attendee
+intelligence.</li>
+<li>Track exhibitor onboarding and sponsor deliverables.</li>
+<li>Understand attendee industries, companies, and locations.</li>
+<li>Provide better floor plan, ticket, and engagement workflows.</li>
+</ul>
+<p>Priority modules:</p>
+<ul>
+<li>Event Dashboard, Exhibitor Portal, Venue Map Builder, Sponsor
+Management, Attendee Analytics.</li>
+</ul>
+<h3 id="service-providers">Service Providers</h3>
+<p>Marketplace-style persona for later phases.</p>
+<p>Key jobs:</p>
+<ul>
+<li>Find upcoming events that need booth handling, logistics,
+electrical, AV, staffing, and installation support.</li>
+<li>Apply for jobs.</li>
+<li>Generate quotes and invoices.</li>
+<li>Build reviews and repeat work.</li>
+</ul>
+<p>Priority modules:</p>
+<ul>
+<li>Event Calendar, Job Board, Client Directory, Invoice Generator,
+Review System.</li>
+</ul>
+<h3 id="attendees">Attendees</h3>
+<p>Consumer-assisted and affiliate revenue persona for later phases.</p>
+<p>Key jobs:</p>
+<ul>
+<li>Discover relevant events.</li>
+<li>Get tickets or partner offers.</li>
+<li>Plan hotels, food, transport, and nearby essentials.</li>
+<li>Track expenses.</li>
+<li>Network with exhibitors before and during events.</li>
+</ul>
+<p>Priority modules:</p>
+<ul>
+<li>Discounted Tickets, Accommodation Finder, Event Schedule, Networking
+Tool, Expense Tracker.</li>
+</ul>
+<h2 id="5-current-16-crm-modules">5. Current 16 CRM Modules</h2>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Current role</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dashboard</td>
+<td>Executive KPIs, next actions, pipeline overview</td>
+<td>UI strong, needs full live data</td>
+</tr>
+<tr>
+<td>Events</td>
+<td>Trade show catalog and event detail views</td>
+<td>Catalog-backed, actions need persistence</td>
+</tr>
+<tr>
+<td>Target Events</td>
+<td>User-selected event shortlist</td>
+<td>Local/client state, needs backend model</td>
+</tr>
+<tr>
+<td>Companies</td>
+<td>Apollo-style company intelligence</td>
+<td>API-backed with large local dataset</td>
+</tr>
+<tr>
+<td>People</td>
+<td>Contact intelligence and profile workflow</td>
+<td>Mostly UI/demo-backed</td>
+</tr>
+<tr>
+<td>Leads</td>
+<td>Lead workflow and conversion foundation</td>
+<td>Backend-supported MVP foundation</td>
+</tr>
+<tr>
+<td>Deals</td>
+<td>Pipeline and profit economics</td>
+<td>UI strong, backend needs expansion</td>
+</tr>
+<tr>
+<td>Sequence Studio</td>
+<td>Email sequence builder</td>
+<td>UI/demo-backed, scheduler needed</td>
+</tr>
+<tr>
+<td>Automation</td>
+<td>Workflow orchestration</td>
+<td>UI/demo-backed, engine needed</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>KPI and funnel reporting</td>
+<td>UI strong, needs live aggregation</td>
+</tr>
+<tr>
+<td>AI Copilot</td>
+<td>Ask, draft, and action assistant</td>
+<td>UI/demo-backed, OpenAI route needed</td>
+</tr>
+<tr>
+<td>Integrations</td>
+<td>Calendar, video, Slack, webhooks, storage</td>
+<td>UI/demo-backed</td>
+</tr>
+<tr>
+<td>Deliverability</td>
+<td>Domain and sender health</td>
+<td>UI/demo-backed, provider webhooks needed</td>
+</tr>
+<tr>
+<td>Team</td>
+<td>Roles and permissions</td>
+<td>UI strong, backend wiring partial</td>
+</tr>
+<tr>
+<td>Settings</td>
+<td>Preferences and localization</td>
+<td>Partially backend-backed</td>
+</tr>
+<tr>
+<td>Audit Log</td>
+<td>Security and accountability</td>
+<td>Backend foundation exists</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-recommended-product-architecture">6. Recommended Product
+Architecture</h2>
+<h3 id="frontend">Frontend</h3>
+<p>Keep the current stack:</p>
+<ul>
+<li>Next.js 14 App Router.</li>
+<li>TypeScript.</li>
+<li>Tailwind CSS.</li>
+<li>Radix UI primitives and existing local UI components.</li>
+<li>Framer Motion for restrained workflow motion.</li>
+<li>Recharts for dashboards.</li>
+<li>TanStack Table can be added later for editable import/export grids
+if needed.</li>
+<li><code>next-intl</code> for global language support.</li>
+</ul>
+<h3 id="backend">Backend</h3>
+<p>Keep the existing MVC-style direction:</p>
+<ul>
+<li>Models: Zod DTOs and validation.</li>
+<li>Repositories: Prisma access with mandatory <code>workspaceId</code>
+boundaries.</li>
+<li>Services: business logic, RBAC, audit logging, and side
+effects.</li>
+<li>Controllers: Next.js API routes.</li>
+<li>Views: React components only responsible for display and
+interaction.</li>
+</ul>
+<h3 id="database">Database</h3>
+<p>Current development database:</p>
+<ul>
+<li>SQLite through Prisma at
+<code>DATABASE_URL="file:./dev.db"</code>.</li>
+</ul>
+<p>Production target:</p>
+<ul>
+<li>PostgreSQL, either Supabase, Neon, RDS, or another managed
+provider.</li>
+<li>Migrations should be written against PostgreSQL compatibility before
+production launch.</li>
+<li>Every tenant-owned table must preserve <code>workspaceId</code>
+isolation.</li>
+</ul>
+<h3 id="ai">AI</h3>
+<p>Replace the old fixed "GPT-4o only" language with "OpenAI API model
+selected by workflow." The current official OpenAI pricing page lists
+newer GPT-5.4 and GPT-5.4 mini pricing. The product should use a model
+router:</p>
+<ul>
+<li>Cost-efficient model for classification, rewrite, translation, and
+simple chat.</li>
+<li>Stronger model for complex account strategy, target list reasoning,
+and executive summaries.</li>
+<li>Tool/action approval layer before AI writes or sends anything.</li>
+</ul>
+<p>Source: <a
+href="https://openai.com/api/pricing/">https://openai.com/api/pricing/</a></p>
+<h3 id="email-and-sequencing">Email and sequencing</h3>
+<p>Production email should be provider-abstracted:</p>
+<ul>
+<li>Resend or Mailgun for early transactional and campaign sending.</li>
+<li>AWS SES is a later option if the team wants deeper AWS alignment and
+lower high-volume cost.</li>
+<li>Store sender identity, unsubscribe state, suppression list, sequence
+steps, enrollment state, and provider event webhooks.</li>
+</ul>
+<p>Sources:</p>
+<ul>
+<li><a
+href="https://resend.com/pricing">https://resend.com/pricing</a></li>
+<li><a
+href="https://www.mailgun.com/pricing/">https://www.mailgun.com/pricing/</a></li>
+</ul>
+<h3 id="enrichment">Enrichment</h3>
+<p>Use a provider adapter pattern instead of hardcoding one vendor:</p>
+<ul>
+<li>Apollo for sales intelligence where plan and API access allow
+it.</li>
+<li>Proxycurl/Nubela should be treated cautiously because the pricing
+page now states the service has moved/no longer operates in the same
+way.</li>
+<li>Alternative providers can be evaluated later.</li>
+<li>User-authorized CSV imports and CRM imports should remain a
+first-class path.</li>
+</ul>
+<p>Sources:</p>
+<ul>
+<li><a
+href="https://docs.apollo.io/docs/api-pricing">https://docs.apollo.io/docs/api-pricing</a></li>
+<li><a
+href="https://nubela.co/proxycurl/pricing.html">https://nubela.co/proxycurl/pricing.html</a></li>
+</ul>
+<h3 id="maps-travel-and-accommodation">Maps, travel, and
+accommodation</h3>
+<p>Current project already includes Mapbox dependencies and map
+components. Keep Mapbox for venue context unless Google Maps is required
+for specific Places/transport coverage.</p>
+<ul>
+<li>Mapbox: venue maps and event map visuals.</li>
+<li>Google Maps Platform: optional later for Places, routes, and local
+business context.</li>
+<li>Booking.com or travel affiliate APIs: optional after attendee
+monetization is validated.</li>
+</ul>
+<p>Sources:</p>
+<ul>
+<li><a
+href="https://www.mapbox.com/pricing">https://www.mapbox.com/pricing</a></li>
+<li><a
+href="https://mapsplatform.google.com/pricing">https://mapsplatform.google.com/pricing</a></li>
+</ul>
+<h2 id="7-compliance-safe-data-strategy">7. Compliance-Safe Data
+Strategy</h2>
+<p>Do not market Prism Connex as a private LinkedIn scraper. That
+creates legal, platform, and reputational risk.</p>
+<p>Use this language instead:</p>
+<ul>
+<li>Compliant company and contact enrichment.</li>
+<li>User-authorized imports.</li>
+<li>Public-source event intelligence.</li>
+<li>Provider-backed business data.</li>
+<li>Data provenance, confidence scoring, and refresh timestamps.</li>
+<li>Suppression and unsubscribe controls.</li>
+<li>GDPR-ready export, deletion, and retention workflows.</li>
+</ul>
+<p>Required controls:</p>
+<ul>
+<li>Store <code>source</code>, <code>sourceUrl</code>,
+<code>fetchedAt</code>, <code>confidence</code>, and
+<code>licenseType</code> where possible.</li>
+<li>Track enrichment provider, request cost, and allowed use.</li>
+<li>Show confidence and source transparency in UI.</li>
+<li>Add suppression checks before any campaign launch.</li>
+<li>Add audit logs for imports, exports, enrichment, bulk actions, and
+AI actions.</li>
+<li>Add workspace-level data retention settings.</li>
+</ul>
+<h2 id="8-what-to-create-next">8. What To Create Next</h2>
+<h3 id="1-target-list-builder">1. Target List Builder</h3>
+<p>Create the strongest MVP workflow:</p>
+<ul>
+<li>Start from an event or target event.</li>
+<li>Filter companies by category, size, region, and engagement
+score.</li>
+<li>Select accounts.</li>
+<li>Deduplicate by domain.</li>
+<li>Save as a target list.</li>
+<li>Push selected accounts into leads, people search, sequence audience,
+or export.</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>This turns the event catalog and company database into a clear
+revenue workflow.</li>
+</ul>
+<h3 id="2-event-roi-command-center">2. Event ROI Command Center</h3>
+<p>For each event, track:</p>
+<ul>
+<li>Booth cost.</li>
+<li>Travel and accommodation.</li>
+<li>Vendor/service cost.</li>
+<li>Leads captured.</li>
+<li>Meetings booked.</li>
+<li>Deals opened.</li>
+<li>Deals won.</li>
+<li>Revenue, net profit, margin, and ROI.</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>This is the cleanest competitive difference from generic CRMs.</li>
+</ul>
+<h3 id="3-ai-copilot-action-engine">3. AI Copilot Action Engine</h3>
+<p>Convert the current Copilot UI into controlled backend actions:</p>
+<ul>
+<li>Ask: query CRM records and summarize.</li>
+<li>Draft: generate email copy and meeting summaries.</li>
+<li>Do: propose actions, require confirmation, then execute.</li>
+</ul>
+<p>Initial safe actions:</p>
+<ul>
+<li>Draft email.</li>
+<li>Summarize company.</li>
+<li>Build target list preview.</li>
+<li>Create task.</li>
+<li>Create lead.</li>
+<li>Export CSV preview.</li>
+</ul>
+<h3 id="4-sequence-backend">4. Sequence Backend</h3>
+<p>Make Sequence Studio real:</p>
+<ul>
+<li>Save sequence templates and steps.</li>
+<li>Enroll contacts or leads.</li>
+<li>Schedule email events.</li>
+<li>Enforce send windows, daily limits, and unsubscribe rules.</li>
+<li>Receive delivery, open, click, bounce, unsubscribe, and reply
+webhooks where provider supports them.</li>
+</ul>
+<h3 id="5-contact-intelligence-layer">5. Contact Intelligence Layer</h3>
+<p>Move People from demo to real:</p>
+<ul>
+<li>Create contact API and repository.</li>
+<li>Link contacts to companies, events, target lists, leads, and
+sequences.</li>
+<li>Add verification status and enrichment source.</li>
+<li>Add merge/dedupe workflow.</li>
+</ul>
+<h3 id="6-organizer-portal">6. Organizer Portal</h3>
+<p>After exhibitor MVP is useful:</p>
+<ul>
+<li>Event profile management.</li>
+<li>Exhibitor onboarding.</li>
+<li>Booth assignment data model.</li>
+<li>Sponsor tiers and deliverables.</li>
+<li>Attendee analytics dashboard.</li>
+</ul>
+<h3 id="7-service-provider-marketplace">7. Service Provider
+Marketplace</h3>
+<p>Later marketplace expansion:</p>
+<ul>
+<li>Event service jobs.</li>
+<li>Provider profiles.</li>
+<li>Quote and invoice flow.</li>
+<li>Reviews and repeat-hire signals.</li>
+</ul>
+<h3 id="8-attendee-travel-and-ticket-module">8. Attendee Travel And
+Ticket Module</h3>
+<p>Later affiliate expansion:</p>
+<ul>
+<li>Event ticket links and promo code management.</li>
+<li>Hotel and transport recommendations.</li>
+<li>Nearby restaurants and local essentials.</li>
+<li>Expense tracker.</li>
+</ul>
+<h2 id="9-action-roadmap">9. Action Roadmap</h2>
+<h3 id="phase-0-stabilize-the-foundation---1-to-2-weeks">Phase 0:
+Stabilize The Foundation - 1 to 2 weeks</h3>
+<p>Actions:</p>
+<ul>
+<li>Update product docs to match the actual app and remove
+overclaims.</li>
+<li>Decide production database target: Supabase Postgres, Neon, RDS, or
+self-hosted Postgres.</li>
+<li>Fix environment docs so dev SQLite and production PostgreSQL are not
+confused.</li>
+<li>Create a module status system: live, beta, demo, planned.</li>
+<li>Run and repair the test suite where needed.</li>
+<li>Verify Cognito production flow versus local demo session flow.</li>
+<li>Add a simple seed/reset workflow for demo data.</li>
+</ul>
+<p>Success criteria:</p>
+<ul>
+<li>A new engineer can run the app and understand what is real.</li>
+<li>Investors can see honest progress without technical
+contradictions.</li>
+</ul>
+<h3 id="phase-1-revenue-mvp---4-weeks">Phase 1: Revenue MVP - 4
+weeks</h3>
+<p>Actions:</p>
+<ul>
+<li>Build Target List model and API.</li>
+<li>Persist Target Events server-side instead of only in local
+state.</li>
+<li>Wire Dashboard, Deals, and Analytics to real API aggregations.</li>
+<li>Expand Deals backend for stage, amount, cost, profit, margin, ROI,
+close date, and owner.</li>
+<li>Expand Contacts backend and link contacts to companies.</li>
+<li>Make CSV import create companies, contacts, and leads with import
+history.</li>
+</ul>
+<p>Success criteria:</p>
+<ul>
+<li>A user can go from event discovery to target list to lead to deal
+with persisted data.</li>
+</ul>
+<h3 id="phase-2-event-intelligence---4-to-6-weeks">Phase 2: Event
+Intelligence - 4 to 6 weeks</h3>
+<p>Actions:</p>
+<ul>
+<li>Convert event seed data into database-backed event records.</li>
+<li>Add source, confidence, fetched date, official website, venue, city,
+country, category, and organizer.</li>
+<li>Add event refresh/import jobs.</li>
+<li>Add event-to-company matching where source data supports it.</li>
+<li>Keep exhibitor scraping/import in a staging flow with review,
+source, and permission checks.</li>
+</ul>
+<p>Success criteria:</p>
+<ul>
+<li>Events are not just static catalog entries; they become pipeline
+objects.</li>
+</ul>
+<h3 id="phase-3-ai-and-email-automation---4-to-6-weeks">Phase 3: AI And
+Email Automation - 4 to 6 weeks</h3>
+<p>Actions:</p>
+<ul>
+<li>Add OpenAI API route with workspace permissions and audit
+logging.</li>
+<li>Implement prompt templates for event targeting, company summaries,
+and email drafts.</li>
+<li>Build sequence persistence and enrollment.</li>
+<li>Integrate one email provider first, preferably Resend for early
+simplicity or Mailgun for larger campaign tooling.</li>
+<li>Add suppression, unsubscribe, rate limits, and send-window
+controls.</li>
+</ul>
+<p>Success criteria:</p>
+<ul>
+<li>A user can generate a compliant event outreach sequence and send a
+controlled test campaign.</li>
+</ul>
+<h3 id="phase-4-enrichment-and-data-quality---4-to-6-weeks">Phase 4:
+Enrichment And Data Quality - 4 to 6 weeks</h3>
+<p>Actions:</p>
+<ul>
+<li>Add enrichment provider abstraction.</li>
+<li>Add provider usage/cost tracking.</li>
+<li>Add data provenance fields and refresh timestamps.</li>
+<li>Add duplicate detection for companies and contacts.</li>
+<li>Add workspace-level privacy and retention policies.</li>
+</ul>
+<p>Success criteria:</p>
+<ul>
+<li>Enrichment is useful, traceable, and defensible.</li>
+</ul>
+<h3
+id="phase-5-monetization-and-enterprise-readiness---6-to-8-weeks">Phase
+5: Monetization And Enterprise Readiness - 6 to 8 weeks</h3>
+<p>Actions:</p>
+<ul>
+<li>Add Stripe subscriptions and plan limits.</li>
+<li>Add workspace billing state.</li>
+<li>Add role-based feature gates.</li>
+<li>Add audit export.</li>
+<li>Add monitoring, error tracking, and deployment checklist.</li>
+<li>Add backup and recovery runbook.</li>
+</ul>
+<p>Success criteria:</p>
+<ul>
+<li>Prism Connex can be sold to early customers without manual
+back-office work for every account.</li>
+</ul>
+<h2 id="10-pricing-and-resource-plan">10. Pricing And Resource Plan</h2>
+<p>Pricing was checked from official vendor pages on 16 May 2026. Treat
+all numbers as planning estimates, not fixed commitments.</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th style="text-align: right;">Current official signal</th>
+<th>MVP recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vercel</td>
+<td style="text-align: right;">Pro listed at USD 20/mo plus usage</td>
+<td>Use for hosting until backend load requires split services</td>
+</tr>
+<tr>
+<td>Supabase</td>
+<td style="text-align: right;">Pro from USD 25/mo</td>
+<td>Good PostgreSQL candidate, but do not claim Supabase Auth if using
+Cognito</td>
+</tr>
+<tr>
+<td>AWS Cognito</td>
+<td style="text-align: right;">10,000 MAU free tier for user pools in
+Lite/Essentials</td>
+<td>Keep if AWS auth remains the production path</td>
+</tr>
+<tr>
+<td>OpenAI API</td>
+<td style="text-align: right;">GPT-5.4 mini listed at USD 0.75 input /
+USD 4.50 output per 1M tokens</td>
+<td>Use cost router; avoid hardcoding GPT-4o in new docs</td>
+</tr>
+<tr>
+<td>Resend</td>
+<td style="text-align: right;">Pro USD 20/mo with 50,000 emails/mo</td>
+<td>Best early provider for simple product email and light
+campaigns</td>
+</tr>
+<tr>
+<td>Mailgun</td>
+<td style="text-align: right;">Foundation shown around EUR 32/mo for
+50,000 emails/mo in official regional page</td>
+<td>Consider when campaign deliverability tooling is priority</td>
+</tr>
+<tr>
+<td>n8n</td>
+<td style="text-align: right;">Starter 20 EUR/mo annually; Pro 50 EUR/mo
+annually</td>
+<td>Optional; self-host or delay if custom automation engine is
+built</td>
+</tr>
+<tr>
+<td>Apollo</td>
+<td style="text-align: right;">API access depends on plan and
+credits</td>
+<td>Use only after ICP and enrichment ROI are validated</td>
+</tr>
+<tr>
+<td>Proxycurl/Nubela</td>
+<td style="text-align: right;">Page states Proxycurl has moved/no longer
+operates as before</td>
+<td>Do not make it a fixed dependency</td>
+</tr>
+<tr>
+<td>Mapbox</td>
+<td style="text-align: right;">Pay-as-you-go with meaningful free tiers
+by product</td>
+<td>Keep for current map components</td>
+</tr>
+<tr>
+<td>Stripe</td>
+<td style="text-align: right;">Standard cards shown at 2.9% + 30c in
+US</td>
+<td>Use for subscriptions and invoices</td>
+</tr>
+<tr>
+<td>AWS S3</td>
+<td style="text-align: right;">Usage-based storage and request
+pricing</td>
+<td>Use for attachments, exports, and imports later</td>
+</tr>
+</tbody>
+</table>
+<p>Official pricing sources:</p>
+<ul>
+<li>Vercel: <a
+href="https://vercel.com/pricing">https://vercel.com/pricing</a></li>
+<li>Supabase: <a
+href="https://supabase.com/pricing">https://supabase.com/pricing</a></li>
+<li>AWS Cognito: <a
+href="https://aws.amazon.com/cognito/pricing">https://aws.amazon.com/cognito/pricing</a></li>
+<li>OpenAI: <a
+href="https://openai.com/api/pricing/">https://openai.com/api/pricing/</a></li>
+<li>Resend: <a
+href="https://resend.com/pricing">https://resend.com/pricing</a></li>
+<li>Mailgun: <a
+href="https://www.mailgun.com/pricing/">https://www.mailgun.com/pricing/</a></li>
+<li>n8n: <a
+href="https://n8n.io/pricing/">https://n8n.io/pricing/</a></li>
+<li>Apollo API: <a
+href="https://docs.apollo.io/docs/api-pricing">https://docs.apollo.io/docs/api-pricing</a></li>
+<li>Proxycurl/Nubela: <a
+href="https://nubela.co/proxycurl/pricing.html">https://nubela.co/proxycurl/pricing.html</a></li>
+<li>Mapbox: <a
+href="https://www.mapbox.com/pricing">https://www.mapbox.com/pricing</a></li>
+<li>Stripe: <a
+href="https://stripe.com/pricing">https://stripe.com/pricing</a></li>
+<li>AWS S3: <a
+href="https://aws.amazon.com/s3/pricing">https://aws.amazon.com/s3/pricing</a></li>
+</ul>
+<h3 id="monthly-cost-estimate-by-stage">Monthly cost estimate by
+stage</h3>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th style="text-align: right;">Expected monthly range</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bootstrap demo</td>
+<td style="text-align: right;">USD 0 to 75</td>
+<td>Vercel free/pro, local SQLite, low email/AI usage</td>
+</tr>
+<tr>
+<td>MVP pilot</td>
+<td style="text-align: right;">USD 100 to 300</td>
+<td>Hosted Postgres, Vercel Pro, Resend/Mailgun, OpenAI usage</td>
+</tr>
+<tr>
+<td>Growth beta</td>
+<td style="text-align: right;">USD 300 to 900</td>
+<td>Enrichment credits, monitoring, storage, higher email volume</td>
+</tr>
+<tr>
+<td>Scale</td>
+<td style="text-align: right;">USD 1,000+</td>
+<td>Dedicated database, queue workers, higher AI/email/enrichment
+volume</td>
+</tr>
+</tbody>
+</table>
+<h2 id="11-monetization-strategy">11. Monetization Strategy</h2>
+<p>Keep pricing simple until usage data proves otherwise.</p>
+<table>
+<thead>
+<tr>
+<th>Plan</th>
+<th style="text-align: right;">Price target</th>
+<th>Best for</th>
+<th>Limits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free</td>
+<td style="text-align: right;">USD 0</td>
+<td>Demos and small trials</td>
+<td>50 contacts, 25 emails/mo, 1 user, limited event tracking</td>
+</tr>
+<tr>
+<td>Starter</td>
+<td style="text-align: right;">USD 29/mo</td>
+<td>Solo exhibitor or small service team</td>
+<td>1,000 contacts, 500 emails/mo, 4 users</td>
+</tr>
+<tr>
+<td>Professional</td>
+<td style="text-align: right;">USD 79/mo</td>
+<td>Exhibitor sales team</td>
+<td>10,000 contacts, 5,000 emails/mo, AI Copilot, event ROI</td>
+</tr>
+<tr>
+<td>Business</td>
+<td style="text-align: right;">USD 149 to 249/mo</td>
+<td>Multi-user event revenue teams</td>
+<td>Advanced sequences, enrichment credits, analytics</td>
+</tr>
+<tr>
+<td>Enterprise</td>
+<td style="text-align: right;">Custom</td>
+<td>Organizers and large teams</td>
+<td>SSO, custom limits, compliance, dedicated support</td>
+</tr>
+</tbody>
+</table>
+<p>Add-ons:</p>
+<ul>
+<li>Enrichment credits.</li>
+<li>Additional email volume.</li>
+<li>Extra workspace seats.</li>
+<li>Advanced analytics.</li>
+<li>Organizer portal.</li>
+<li>Service provider marketplace access.</li>
+<li>Attendee travel/ticket affiliate package.</li>
+</ul>
+<h2 id="12-competitive-edge">12. Competitive Edge</h2>
+<p>Prism Connex should compete by being specialized, not by copying
+every general CRM feature.</p>
+<table>
+<thead>
+<tr>
+<th>Capability</th>
+<th>Prism Connex direction</th>
+<th>Generic CRM weakness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trade show database</td>
+<td>Native event discovery and target events</td>
+<td>Usually external spreadsheet or plugin</td>
+</tr>
+<tr>
+<td>Event ROI</td>
+<td>Revenue, cost, margin, and ROI by event</td>
+<td>Often generic pipeline only</td>
+</tr>
+<tr>
+<td>Pre-event targeting</td>
+<td>Event-to-account workflows</td>
+<td>Requires manual list building</td>
+</tr>
+<tr>
+<td>Post-event follow-up</td>
+<td>Sequences tied to event context</td>
+<td>Generic automation lacks event context</td>
+</tr>
+<tr>
+<td>Data transparency</td>
+<td>Source, confidence, fetched date</td>
+<td>Many tools hide provenance</td>
+</tr>
+<tr>
+<td>Personas</td>
+<td>Exhibitors, organizers, attendees, service providers</td>
+<td>Usually sales-only</td>
+</tr>
+<tr>
+<td>Compliance controls</td>
+<td>Suppression, audit, approvals</td>
+<td>Often scattered across tools</td>
+</tr>
+</tbody>
+</table>
+<h2 id="13-risks-and-controls">13. Risks And Controls</h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Control</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Overclaiming AI or integrations</td>
+<td>Use module status labels and honest roadmap language</td>
+</tr>
+<tr>
+<td>Scraping or terms-of-service exposure</td>
+<td>Use compliant enrichment, official APIs, user-authorized imports,
+and public-source rules</td>
+</tr>
+<tr>
+<td>Email deliverability damage</td>
+<td>Add domain authentication, rate limits, warmup guidance,
+suppression, unsubscribe, bounce handling</td>
+</tr>
+<tr>
+<td>Data leakage across workspaces</td>
+<td>Enforce <code>workspaceId</code> in repositories and tests</td>
+</tr>
+<tr>
+<td>Large dataset performance</td>
+<td>Add indexes, pagination, caching, and production database
+planning</td>
+</tr>
+<tr>
+<td>AI taking unsafe actions</td>
+<td>Require confirmation, permissions, and audit logs</td>
+</tr>
+<tr>
+<td>Cost overrun</td>
+<td>Track provider usage per workspace and cap enrichment/email/AI
+limits by plan</td>
+</tr>
+</tbody>
+</table>
+<h2 id="14-30-day-execution-checklist">14. 30-Day Execution
+Checklist</h2>
+<p>Week 1:</p>
+<ul>
+<li>Publish this blueprint and align the team.</li>
+<li>Add current/planned badges to modules.</li>
+<li>Choose production database path.</li>
+<li>Fix environment documentation.</li>
+<li>Confirm test status.</li>
+</ul>
+<p>Week 2:</p>
+<ul>
+<li>Add Target List model and API.</li>
+<li>Persist Target Events server-side.</li>
+<li>Add basic deal economics API.</li>
+<li>Start replacing demo data in Dashboard and Deals.</li>
+</ul>
+<p>Week 3:</p>
+<ul>
+<li>Add Contacts API and company-contact linking.</li>
+<li>Improve CSV import into actual records.</li>
+<li>Add source/confidence fields where missing.</li>
+<li>Add initial suppression list model.</li>
+</ul>
+<p>Week 4:</p>
+<ul>
+<li>Add OpenAI draft endpoint behind a feature flag.</li>
+<li>Add sequence save/load backend.</li>
+<li>Add email provider spike with test sending only.</li>
+<li>Prepare first pilot demo: event -&gt; target list -&gt; sequence
+draft -&gt; lead -&gt; deal -&gt; ROI.</li>
+</ul>
+<h2 id="15-final-positioning-statement">15. Final Positioning
+Statement</h2>
+<p>Prism Connex is an AI-native event-to-revenue CRM for trade show
+teams. It helps users discover global events, build target company
+lists, manage contacts and leads, automate compliant outreach, convert
+opportunities into deals, and measure revenue, profit, and ROI by event.
+The product already has a strong full-stack foundation and polished
+workflow coverage; the next milestone is converting the highest-value
+demo modules into production-backed workflows for exhibitor revenue
+teams.</p>
+</body>
+</html>

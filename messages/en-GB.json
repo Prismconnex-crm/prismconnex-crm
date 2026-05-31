@@ -1,0 +1,784 @@
+{
+  "marketing": {
+    "languageSwitcher": {
+      "label": "Language",
+      "toggle": "Change language",
+      "searchPlaceholder": "Search languages...",
+      "empty": "No language found.",
+      "hint": "Your selection is saved for future visits."
+    },
+    "navbar": {
+      "searchButton": "Search pages",
+      "searchCta": "Search pages",
+      "searchPlaceholder": "Search pages...",
+      "searchNoResults": "No results found.",
+      "searchNavigate": "Navigate",
+      "searchOpen": "Open",
+      "mobileMenu": "Toggle menu",
+      "theme": {
+        "toggle": "Toggle theme",
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      },
+      "links": {
+        "product": "Product",
+        "pricing": "Pricing",
+        "security": "Security",
+        "findShows": "Find Shows",
+        "signIn": "Sign In",
+        "startTrial": "Start Free Trial",
+        "startTrialShort": "Free Trial"
+      }
+    },
+    "footer": {
+      "description": "The AI-native CRM built for trade show professionals. From event discovery to post-show ROI, all in one platform.",
+      "sections": {
+        "product": "Product",
+        "company": "Company",
+        "legal": "Legal"
+      },
+      "productLinks": {
+        "features": "Features",
+        "plans": "Plans",
+        "security": "Security"
+      },
+      "companyLinks": {
+        "about": "About",
+        "blog": "Blog",
+        "careers": "Careers",
+        "contact": "Contact"
+      },
+      "legalLinks": {
+        "privacy": "Privacy Policy",
+        "terms": "Terms of Service",
+        "cookies": "Cookie Policy"
+      },
+      "copyright": "� 2026 Prismconnex. All rights reserved.",
+      "builtWithPrefix": "Built with",
+      "builtWithSuffix": "for trade show professionals worldwide."
+    },
+    "home": {
+      "hero": {
+        "badge": "AI-Powered Trade Show CRM",
+        "headline": {
+          "prefix": "Event-to-",
+          "line1": "Revenue",
+          "line2": "Flow"
+        },
+        "description": "The AI-native CRM that turns trade show chaos into predictable revenue. Source verified leads, automate compliant outreach, and prove ROI, all in one platform.",
+        "bullets": [
+          { "icon": "shield", "text": "Source transparency" },
+          { "icon": "activity", "text": "Compliant sequences" },
+          { "icon": "chart", "text": "Deal economics (ROI)" }
+        ],
+        "primaryCta": "Start Free Trial",
+        "secondaryCta": "Book a Demo",
+        "socialProof": {
+          "count": "2,400+",
+          "label": "trade show professionals"
+        },
+        "floatingCard": {
+          "title": "HelioGrid deal closed",
+          "meta": "$204K � 4.8x ROI"
+        },
+        "dashboard": {
+          "kpis": [
+            { "label": "Flow", "value": "$1.82M", "color": "text-indigo-400" },
+            { "label": "Leads", "value": "428", "color": "text-emerald-400" },
+            { "label": "ROI", "value": "3.4x", "color": "text-amber-400" }
+          ],
+          "events": [
+            { "name": "Berlin Tech Week", "score": "96%" },
+            { "name": "London Retail Summit", "score": "96%" }
+          ]
+        }
+      },
+      "stats": {
+        "items": [
+          { "value": "10,000+", "label": "Events Running", "accent": "emerald" },
+          { "value": "2.5M+", "label": "Company Profiles", "accent": "indigo" },
+          { "value": "98.7%", "label": "Deliverability", "accent": "violet" },
+          { "value": "3.4x", "label": "Avg ROI Lift", "accent": "amber" }
+        ]
+      },
+      "personas": {
+        "eyebrow": "Built for every role",
+        "titlePrefix": "One platform,",
+        "titleHighlight": "four workflows",
+        "description": "Whether you are attending, exhibiting, organizing, or servicing, Prismconnex adapts to your workflow.",
+        "items": [
+          {
+            "id": "serviceProviders",
+            "title": "Service Providers",
+            "accent": "violet",
+            "description": "Streamline your service delivery flow from initial quote to long-term client retention.",
+            "flow": ["Jobs", "Quotes", "Reviews", "Repeat Clients"]
+          },
+          {
+            "id": "attendees",
+            "title": "Attendees",
+            "accent": "emerald",
+            "description": "Discover events, plan your trip, and build meaningful connections with exhibitors and peers.",
+            "flow": ["Events", "Plan Trip", "Tickets", "Map", "Networking"]
+          },
+          {
+            "id": "exhibitors",
+            "title": "Exhibitors",
+            "accent": "amber",
+            "description": "From event selection to closed deals, manage the full exhibitor revenue flow.",
+            "flow": ["Event", "Target List", "Sequence", "Meetings", "Deals to ROI"]
+          },
+          {
+            "id": "organizers",
+            "title": "Organizers",
+            "accent": "pink",
+            "description": "Run world-class events with streamlined operations, exhibitor tools, and sponsor management.",
+            "flow": ["Event Ops", "Exhibitor Onboarding", "Sponsor Management", "Attendee Guidance"]
+          }
+        ]
+      },
+      "features": {
+        "titlePrefix": "Everything you need,",
+        "titleHighlight": "nothing you do not",
+        "description": "Purpose-built for trade show professionals, from event discovery to post-show ROI reporting.",
+        "items": [
+          {
+            "icon": "calendar",
+            "name": "Event Intelligence",
+            "desc": "AI-sourced events with confidence scores, exhibitor lists, and real-time updates from verified feeds.",
+            "accent": "indigo"
+          },
+          {
+            "icon": "building",
+            "name": "Company and People Profiles",
+            "desc": "Enriched contacts with verification badges, sourcing lineage, and direct email actions.",
+            "accent": "violet"
+          },
+          {
+            "icon": "target",
+            "name": "Deal Flow Management",
+            "desc": "Visual lead scoring and kanban-based deal tracking with stage-aware automation triggers.",
+            "accent": "emerald"
+          },
+          {
+            "icon": "mail",
+            "name": "Sequence Studio",
+            "desc": "Multi-step email sequences with built-in compliance checks, scheduling, and A/B testing.",
+            "accent": "cyan"
+          },
+          {
+            "icon": "chart",
+            "name": "Analytics and ROI",
+            "desc": "Real-time KPIs, funnel trend charts, and per-event ROI attribution dashboards.",
+            "accent": "amber"
+          },
+          {
+            "icon": "bot",
+            "name": "AI Copilot",
+            "desc": "Ask questions, draft outreach, and trigger actions through a conversational AI interface.",
+            "accent": "pink"
+          },
+          {
+            "icon": "zap",
+            "name": "Workflow Automation",
+            "desc": "Visual workflow builder with safety toggles, dry-run mode, and smart trigger conditions.",
+            "accent": "orange"
+          },
+          {
+            "icon": "users",
+            "name": "Team Collaboration",
+            "desc": "Role-based access, audit logs, and shared workspaces for enterprise trade show teams.",
+            "accent": "teal"
+          }
+        ]
+      },
+      "travel": {
+        "titlePrefix": "Tickets and Travel Mode",
+        "titleHighlight": "for Attendees",
+        "description": "Discover events, buy tickets through partner offers, and plan your trip with nearby essentials in one place. Promo codes are available for paid users only.",
+        "cards": [
+          {
+            "icon": "ticket",
+            "title": "Buy Tickets (Partner Offers)",
+            "bullets": [
+              "Buy Ticket Shows per event",
+              "Promo codes for paid users only",
+              "Checkout on provider site"
+            ],
+            "accent": "cyan"
+          },
+          {
+            "icon": "pin",
+            "title": "Nearby Essentials",
+            "bullets": ["Hotels near venue", "Nearest airport and railway station", "Near Tourist Spot"],
+            "accent": "emerald"
+          },
+          {
+            "icon": "globe",
+            "title": "Global Traveller Friendly",
+            "bullets": ["Multi-language UI", "Timezone-aware schedules", "Multi-currency display"],
+            "accent": "amber"
+          }
+        ],
+        "preview": {
+          "eventName": "Berlin Tech Expo 2026",
+          "eventMeta": "Jun 15-17 � Messe Berlin",
+          "buyTicket": "Buy Ticket Shows per event",
+          "applyPromo": "Apply Promo",
+          "nearbyTitle": "Nearby Essentials",
+          "nearby": [
+            { "icon": "hotel", "label": "Hotels", "detail": "12 within 2km" },
+            { "icon": "plane", "label": "Airport", "detail": "BER � 22km" },
+            { "icon": "train", "label": "Railway", "detail": "Hbf � 4km" }
+          ],
+          "disclaimer": "Availability and results depend on map provider data. Partner offers vary by event."
+        }
+      },
+      "securityStrip": {
+        "titlePrefix": "Enterprise-grade",
+        "titleHighlight": "security and compliance",
+        "description": "Your data is protected by industry-leading standards. We never scrape; all data is sourced through verified, compliant channels.",
+        "items": [
+          {
+            "icon": "shield",
+            "label": "SOC 2 Type II",
+            "desc": "Audited security controls",
+            "accent": "emerald"
+          },
+          {
+            "icon": "lock",
+            "label": "GDPR Compliant",
+            "desc": "Full data sovereignty",
+            "accent": "indigo"
+          },
+          {
+            "icon": "cloud",
+            "label": "AWS Infrastructure",
+            "desc": "99.99% uptime SLA",
+            "accent": "violet"
+          },
+          {
+            "icon": "clock",
+            "label": "24/7 Monitoring",
+            "desc": "Real-time threat detection",
+            "accent": "amber"
+          }
+        ]
+      },
+      "finalCta": {
+        "titlePrefix": "Ready to turn events into",
+        "titleHighlight": "revenue?",
+        "description": "Explore 1,000+ trade show professionals who use Prismconnex to close more deals and prove ROI.",
+        "primaryCta": "Start Free Trial",
+        "secondaryCta": "View All Features"
+      }
+    },
+    "product": {
+      "eyebrow": "Product",
+      "titlePrefix": "Everything your team needs to",
+      "titleHighlight": "win at trade shows",
+      "description": "Prismconnex unifies event intelligence, CRM execution, and workflow automation for trade show revenue teams with full data transparency at every step.",
+      "sections": [
+        {
+          "icon": "calendar",
+          "title": "Events Intelligence",
+          "desc": "Discover global trade shows with confidence scoring, data transparency bars, and source lineage.",
+          "accent": "indigo"
+        },
+        {
+          "icon": "building",
+          "title": "Company and People Directory",
+          "desc": "Enriched profiles with verification badges, event participation history, and activity timelines.",
+          "accent": "emerald"
+        },
+        {
+          "icon": "users",
+          "title": "Lead Capture and Deal Flow",
+          "desc": "Capture leads from events with automatic scoring and convert qualified leads to deals with a single click.",
+          "accent": "amber"
+        },
+        {
+          "icon": "mail",
+          "title": "Sequence Studio",
+          "desc": "Build multi-step email sequences with compliance preflight checks and sending safeguards.",
+          "accent": "pink"
+        },
+        {
+          "icon": "bot",
+          "title": "AI Copilot",
+          "desc": "Ask questions, draft outreach, and execute actions with AI assistance and confirmation controls.",
+          "accent": "cyan"
+        },
+        {
+          "icon": "chart",
+          "title": "ROI and Profit Analytics",
+          "desc": "Track deal economics including cost, profit, margin, and ROI per event.",
+          "accent": "violet"
+        },
+        {
+          "icon": "cable",
+          "title": "Integrations",
+          "desc": "Connect your email provider, calendar, CRM, data warehouse, and analytics tools.",
+          "accent": "lime"
+        },
+        {
+          "icon": "shield",
+          "title": "Deliverability and Security",
+          "desc": "Monitor domain health, authentication checks, and audit logging for operational accountability.",
+          "accent": "red"
+        },
+        {
+          "icon": "zap",
+          "title": "Automations",
+          "desc": "Use a visual workflow builder with dry-run mode, rate-limit guards, and full run history.",
+          "accent": "yellow"
+        },
+        {
+          "icon": "map",
+          "title": "Attendee Travel Mode",
+          "desc": "Give attendees event details, travel planning essentials, nearby places, and localized formatting.",
+          "accent": "cyan"
+        }
+      ],
+      "coreSolutions": {
+        "eyebrow": "Core Solutions",
+        "titlePrefix": "Powered by",
+        "titleHighlight": "Prismconnex",
+        "description": "Purpose-built services that extend your CRM into lead generation, outreach, and customer support.",
+        "items": [
+          {
+            "icon": "database",
+            "title": "B2B Exhibitors Database",
+            "desc": "Build targeted exhibitor lists with verified, source-tracked data.",
+            "accent": "emerald"
+          },
+          {
+            "icon": "mail",
+            "title": "B2B Email Marketing",
+            "desc": "Run compliant outreach with sequences, throttling, and preflight checks.",
+            "accent": "indigo"
+          },
+          {
+            "icon": "chat",
+            "title": "B2B Chat Support",
+            "desc": "Support-ready assistance with multi-language help and fast responses.",
+            "accent": "violet"
+          }
+        ]
+      }
+    },
+    "pricing": {
+      "eyebrow": "Pricing",
+      "titlePrefix": "Plans that scale with your",
+      "titleHighlight": "revenue goals",
+      "description": "Choose a plan by team size, workflow depth, and governance needs. All plans include a 14-day free trial.",
+      "plans": [
+        {
+          "name": "Free",
+          "price": "$0",
+          "period": "forever",
+          "desc": "Get started with core CRM features.",
+          "features": [
+            "Up to 100 contacts",
+            "Events discovery (view only)",
+            "Basic deal flow view",
+            "Community support"
+          ],
+          "cta": "Start Trial",
+          "accent": "cyan"
+        },
+        {
+          "name": "Starter",
+          "price": "$29",
+          "period": "per user / month",
+          "desc": "For individuals working trade shows.",
+          "features": [
+            "Up to 2,500 contacts",
+            "Events intelligence plus export",
+            "Sequence Studio (basic)",
+            "Email support"
+          ],
+          "cta": "Get Started",
+          "accent": "emerald"
+        },
+        {
+          "name": "Pro",
+          "price": "$79",
+          "period": "per user / month",
+          "desc": "For revenue teams maximizing ROI.",
+          "features": [
+            "Unlimited contacts",
+            "Full Sequence Studio",
+            "AI Copilot access",
+            "Deal economics and analytics",
+            "Automations",
+            "Priority support"
+          ],
+          "cta": "Get Started",
+          "accent": "violet"
+        },
+        {
+          "name": "Enterprise",
+          "price": "Custom",
+          "period": "contact sales",
+          "desc": "For organizations with governance needs.",
+          "features": [
+            "Unlimited everything",
+            "SSO / SAML",
+            "Custom RBAC policies",
+            "Audit log and compliance",
+            "Dedicated success manager",
+            "SLA guarantee"
+          ],
+          "cta": "Contact Sales",
+          "accent": "amber"
+        }
+      ],
+      "highlights": {
+        "title": "Included Feature Highlights",
+        "description": "Available across plans. Some features require a paid subscription.",
+        "items": [
+          {
+            "text": "Tickets and Travel Mode (attendee experience)",
+            "accent": "rgba(34,211,238,",
+            "accentBorder": "rgba(6,182,212,"
+          },
+          {
+            "text": "Promo codes (paid plans only)",
+            "accent": "rgba(99,102,241,",
+            "accentBorder": "rgba(79,70,229,"
+          },
+          {
+            "text": "Nearby essentials (map provider results)",
+            "accent": "rgba(52,211,153,",
+            "accentBorder": "rgba(16,185,129,"
+          },
+          {
+            "text": "Localized language, timezone, and currency",
+            "accent": "rgba(245,158,11,",
+            "accentBorder": "rgba(217,119,6,"
+          }
+        ]
+      },
+      "addons": {
+        "title": "Add-ons",
+        "description": "Extend your plan with additional capabilities.",
+        "hint": "Click the card to cycle ?",
+        "badge": "Add-on",
+        "items": [
+          {
+            "name": "Enrichment Credits",
+            "desc": "Bulk enrich company and contact data with verified sources and deeper insights on every lead.",
+            "icon": "sparkles",
+            "gradient": "from-indigo-500 to-violet-600",
+            "tint": "rgba(99,102,241,"
+          },
+          {
+            "name": "AI Usage Pack",
+            "desc": "Additional AI Copilot tokens for high-volume teams to accelerate outreach and deal intelligence.",
+            "icon": "zap",
+            "gradient": "from-amber-500 to-orange-600",
+            "tint": "rgba(245,158,11,"
+          },
+          {
+            "name": "Extra Seats",
+            "desc": "Add team members beyond your plan's included seats without upgrading your entire plan.",
+            "icon": "users",
+            "gradient": "from-emerald-500 to-teal-600",
+            "tint": "rgba(52,211,153,"
+          }
+        ]
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "description": "Compliance, deliverability, and data transparency.",
+        "items": [
+          {
+            "question": "Is my data GDPR compliant?",
+            "answer": "Yes. Prismconnex is designed with GDPR in mind, with privacy-by-design principles and built-in suppression workflows."
+          },
+          {
+            "question": "How does deliverability monitoring work?",
+            "answer": "We monitor SPF, DKIM, and DMARC authentication for your sending domains and surface reputation signals in the deliverability dashboard."
+          },
+          {
+            "question": "What is data lineage transparency?",
+            "answer": "Every record shows its source, fetched date, and confidence score so your team can judge quality before acting."
+          },
+          {
+            "question": "Can I switch plans at any time?",
+            "answer": "Yes. You can upgrade or downgrade at any time, and changes take effect at the start of the next billing cycle."
+          }
+        ]
+      }
+    },
+    "security": {
+      "eyebrow": "Security",
+      "titlePrefix": "Security and",
+      "titleHighlight": "compliance",
+      "subtitle": "Trust is the foundation of every deal.",
+      "description": "Prismconnex is built with security-first design, role-based access, and transparent audit trails so global teams can work confidently.",
+      "disclaimer": "We describe controls and architecture clearly, without overpromising guarantees.",
+      "trustBadges": [
+        {
+          "icon": "shield",
+          "label": "SOC 2 Readiness",
+          "desc": "Control-aligned processes and evidence-ready workflows."
+        },
+        {
+          "icon": "eye",
+          "label": "GDPR-ready Controls",
+          "desc": "Consent, suppression, and retention controls."
+        },
+        {
+          "icon": "lock",
+          "label": "AWS Infrastructure",
+          "desc": "Hosted on AWS with managed security options."
+        },
+        {
+          "icon": "shieldCheck",
+          "label": "SLA-ready Architecture",
+          "desc": "Designed for reliability with monitoring and redundancy."
+        }
+      ],
+      "sections": [
+        {
+          "icon": "lock",
+          "title": "Tenant Isolation",
+          "text": "Workspace-scoped access checks and secure boundaries.",
+          "accent": "indigo"
+        },
+        {
+          "icon": "shieldCheck",
+          "title": "Role-Based Access Control",
+          "text": "Roles mapped to memberships with policy enforcement.",
+          "accent": "emerald"
+        },
+        {
+          "icon": "fileText",
+          "title": "Audit Logging",
+          "text": "Key actions logged with timestamps and actor identity.",
+          "accent": "amber"
+        },
+        {
+          "icon": "key",
+          "title": "Encryption",
+          "text": "Encryption in transit and at rest where configured.",
+          "accent": "pink"
+        },
+        {
+          "icon": "mail",
+          "title": "Email Compliance",
+          "text": "Unsubscribe, suppression, and authentication checks.",
+          "accent": "cyan"
+        },
+        {
+          "icon": "branch",
+          "title": "Data Lineage and Transparency",
+          "text": "Source, fetched date, and confidence shown per record.",
+          "accent": "violet"
+        }
+      ],
+      "dataNotes": {
+        "icon": "ticket",
+        "title": "Tickets and Nearby Data Notes",
+        "text": "Ticket checkout happens on the provider site. Promo codes appear only when configured. Nearby places come from map provider results, and availability varies.",
+        "accent": "cyan"
+      }
+    }
+  },
+  "onboarding": {
+    "header": {
+      "title": "Welcome to Prismconnex",
+      "badge": "Estimated setup: 2 minutes",
+      "description": "Let's set up your workspace in a few quick steps."
+    },
+    "steps": [
+      { "label": "Personal Role" },
+      { "label": "Workspace" },
+      { "label": "Sending" },
+      { "label": "Import" }
+    ],
+    "role": {
+      "title": "Personal Role",
+      "description": "Pick a role. Prismconnex will tailor your workspace in seconds."
+    },
+    "roles": [
+      {
+        "id": "service-providers",
+        "name": "Service Providers",
+        "chips": ["Jobs", "Quotes", "Invoices"],
+        "recommended": "Recommended settings applied"
+      },
+      {
+        "id": "attendees",
+        "name": "Attendees",
+        "chips": ["Events", "Tickets", "Map"],
+        "recommended": "Recommended settings applied"
+      },
+      {
+        "id": "exhibitors",
+        "name": "Exhibitors",
+        "chips": ["Target list", "Sequence", "Deals"],
+        "recommended": "Recommended settings applied"
+      },
+      {
+        "id": "organizers",
+        "name": "Organizers",
+        "chips": ["Onboarding", "Sponsors", "Guidance"],
+        "recommended": "Recommended settings applied"
+      }
+    ],
+    "workspace": {
+      "title": "Workspace",
+      "description": "Create your workspace and confirm your contact details.",
+      "fields": {
+        "workspaceName": "Workspace Name",
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "workEmail": "Work Email ID",
+        "phoneNumber": "Phone Number",
+        "language": "Language",
+        "timeZone": "Time Zone",
+        "currency": "Currency"
+      },
+      "placeholders": {
+        "workspaceName": "e.g. Acme Inc Trade Shows",
+        "firstName": "John",
+        "lastName": "Doe",
+        "workEmail": "john@company.com",
+        "phoneNumber": "+1 (555) 000-0000"
+      },
+      "timeZones": [
+        { "value": "America/New_York", "label": "America/New_York" },
+        { "value": "Europe/London", "label": "Europe/London" },
+        { "value": "Europe/Berlin", "label": "Europe/Berlin" },
+        { "value": "Asia/Kolkata", "label": "Asia/Kolkata" }
+      ],
+      "currencies": [
+        { "value": "USD", "label": "USD" },
+        { "value": "EUR", "label": "EUR" },
+        { "value": "GBP", "label": "GBP" },
+        { "value": "INR", "label": "INR" }
+      ],
+      "toggles": {
+        "dualTime": "Show event local time plus my time"
+      },
+      "preview": {
+        "title": "Live Preview",
+        "time": "Time",
+        "date": "Date",
+        "currency": "Currency",
+        "timezone": "Timezone"
+      }
+    },
+    "sending": {
+      "title": "Connect sending identity",
+      "description": "Set up your email sending for sequences and campaigns.",
+      "primary": {
+        "title": "SMTP / Email Provider",
+        "description": "Connect your own email service"
+      },
+      "secondary": {
+        "title": "Configure Later",
+        "description": "Skip for now and set it up anytime."
+      }
+    },
+    "import": {
+      "title": "Import your data",
+      "description": "Bring in existing contacts or start fresh.",
+      "primary": { "title": "Upload CSV", "description": "Import contacts from a file" },
+      "secondary": { "title": "Start Fresh", "description": "Add contacts manually later" }
+    },
+    "buttons": {
+      "back": "Back",
+      "continue": "Continue",
+      "complete": "Complete Setup"
+    },
+    "errors": {
+      "complete": "Failed to complete onboarding"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "brandSubtitle": "AI Trade Shows CRM",
+      "heroTitleLine1": "Trade Show Intelligence.",
+      "heroTitleLine2": "Built for Modern Revenue Teams.",
+      "heroDescription": "Manage events, enrich contacts, run compliant outbound sequences, and optimise ROI - all in one premium workspace.",
+      "heroBadges": {
+        "aiPowered": "AI-Powered",
+        "languages": "{count} Languages"
+      },
+      "title": "Welcome back",
+      "subtitle": "Sign in to your Prismconnex workspace",
+      "fields": {
+        "email": "Email",
+        "password": "Password"
+      },
+      "actions": {
+        "submit": "Sign In",
+        "divider": "or continue with",
+        "cognito": "Continue with AWS Cognito",
+        "forgotPassword": "Forgot password?",
+        "createAccount": "Create account"
+      },
+      "footer": {
+        "language": "Language: {language}",
+        "region": "Region: {region}"
+      },
+      "errors": {
+        "signIn": "Failed to sign in",
+        "cognito": "Could not connect to AWS Cognito"
+      }
+    },
+    "signUp": {
+      "title": "Create an account",
+      "subtitle": "Start your journey with Prismconnex",
+      "fields": {
+        "name": "Full Name",
+        "email": "Email address",
+        "password": "Password"
+      },
+      "actions": {
+        "submit": "Sign up",
+        "signInPrompt": "Already have an account?",
+        "signInLink": "Sign in"
+      },
+      "errors": {
+        "signUp": "Failed to sign up"
+      }
+    },
+    "verify": {
+      "title": "Verify your email",
+      "subtitle": "Enter the code sent to your email",
+      "fields": {
+        "email": "Email address",
+        "code": "Verification Code"
+      },
+      "placeholders": {
+        "code": "XXXXXX"
+      },
+      "actions": {
+        "submit": "Verify"
+      },
+      "errors": {
+        "verify": "Failed to verify"
+      }
+    },
+    "forgotPassword": {
+      "title": "Forgot Password",
+      "description": "This feature is not fully implemented in the MVP frontend demo.",
+      "actions": {
+        "return": "Return to Sign In"
+      }
+    },
+    "resetPassword": {
+      "title": "Reset Password",
+      "description": "This feature is not fully implemented in the MVP frontend demo.",
+      "actions": {
+        "return": "Return to Sign In"
+      }
+    }
+  }
+}
