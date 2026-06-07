@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect, useCallback } from "react";
+import { useMemo, useState, useEffect, useCallback, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Activity,
@@ -186,8 +186,19 @@ function formatCategoryLabel(value: string) {
     .join(" ");
 }
 
+function isRealDomain(domain: string | undefined): boolean {
+  if (!domain) return false;
+  // Generated domains look like "sharmatech123456.co.in" — they have a long numeric suffix
+  // Real domains look like "tcs.com", "infosys.com", "bighaat.com"
+  return !/\d{4,}/.test(domain);
+}
+
 function CompanyAvatar({ name, logo, className }: { name: string; logo?: string; className?: string }) {
-  if (logo) {
+  // Extract domain from logo URL to check if it's a real domain
+  const domain = logo?.replace('https://logo.clearbit.com/', '');
+  const uselogo = logo && isRealDomain(domain);
+
+  if (uselogo) {
     return (
       <div className={cn("flex size-12 shrink-0 items-center justify-center rounded-[14px] border border-slate-200 bg-white shadow-sm overflow-hidden dark:border-[#22304A] dark:bg-[#0B1220]", className)}>
         <img 
@@ -207,6 +218,7 @@ function CompanyAvatar({ name, logo, className }: { name: string; logo?: string;
     </div>
   );
 }
+
 
 function formatCompactNumber(n: number): string {
   if (n >= 1_000_000) return (n / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'M';
@@ -414,6 +426,8 @@ export function CompaniesSection() {
   const [isDetailView, setIsDetailView] = useState(false);
   const [activeTab, setActiveTab] = useState("Overview");
   const [companySearch, setCompanySearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [showCategoryFilter, setShowCategoryFilter] = useState(false);
   const [categorySearch, setCategorySearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -422,39 +436,103 @@ export function CompaniesSection() {
   const [showLocationFilter, setShowLocationFilter] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [filterOrder, setFilterOrder] = useState<string[]>([]);
+  const [searchTookMs, setSearchTookMs] = useState<number | null>(null);
+
+  // Debounce search input (200ms)
+  useEffect(() => {
+    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    debounceTimer.current = setTimeout(() => {
+      setDebouncedSearch(companySearch);
+    }, 200);
+    return () => {
+      if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    };
+  }, [companySearch]);
 
   useEffect(() => {
     const controller = new AbortController();
 
     async function loadCompanies() {
       setIsLoading(true);
-      const params = new URLSearchParams();
-      params.set('page', String(tablePage));
-      params.set('limit', String(tablePageSize));
-      if (companySearch) params.set('search', companySearch);
-      if (selectedCategory) params.set('category', selectedCategory);
-      if (selectedEmployeeRange) params.set('employeeRange', selectedEmployeeRange);
-      if (selectedLocation) params.set('location', selectedLocation);
+      setSearchTookMs(null);
 
       try {
-        const response = await fetch(`/api/companies?${params.toString()}`, {
-          signal: controller.signal,
-        });
+        let data: Record<string, unknown>;
 
-        const data = await response.json().catch(() => ({}));
+        if (debouncedSearch.trim()) {
+          // ── Search mode: use /api/companies/search (OpenSearch or SQLite prefix) ──
+          const params = new URLSearchParams();
+          params.set("q", debouncedSearch.trim());
+          params.set("size", String(tablePageSize));
+          if (selectedCategory) params.set("category", selectedCategory);
+          if (selectedEmployeeRange) params.set("employeeRange", selectedEmployeeRange);
+          if (selectedLocation) params.set("region", selectedLocation);
 
-        if (!response.ok) {
-          throw new Error(data.error ?? `Companies request failed with ${response.status}`);
+          const response = await fetch(`/api/companies/search?${params.toString()}`, {
+            signal: controller.signal,
+          });
+          data = await response.json().catch(() => ({}));
+
+          if (!response.ok) {
+            throw new Error((data.error as string) ?? `Search failed with ${response.status}`);
+          }
+
+          // Map search results to Company format
+          const items = Array.isArray(data.items) ? data.items : [];
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const mapped: Company[] = items.map((item: any) => ({
+            id: String(item.id || ""),
+            name: String(item.name || ""),
+            category: String(item.category || ""),
+            description: String(item.description || ""),
+            domain: String(item.domainNorm || ""),
+            website: String(item.website || ""),
+            founded: String(item.founded || ""),
+            employeeRange: String(item.employeeRange || ""),
+            headquarters: String(item.headquarters || ""),
+            region: String(item.region || ""),
+            revenueRange: String(item.revenueRange || ""),
+            engagementScore: Number(item.popularityScore) || 0,
+            trustSignals: String(item.trustSignals || ""),
+            tags: Array.isArray(item.tags) ? item.tags : (typeof item.tags === "string" ? item.tags.split(",").map((t: string) => t.trim()) : []),
+            email: String(item.email || ""),
+            phone: String(item.phone || ""),
+            highlights: Array.isArray(item.highlights) ? item.highlights : (typeof item.highlights === "string" ? item.highlights.split(",").map((t: string) => t.trim()) : []),
+            insights: Array.isArray(item.insights) ? item.insights : (typeof item.insights === "string" ? item.insights.split(",").map((t: string) => t.trim()) : []),
+            events: [],
+            deals: [],
+            activity: [],
+          }));
+
+          setCompanies(mapped);
+          setTotalCompanies(typeof data.total === "number" ? data.total : mapped.length);
+          setSearchTookMs(typeof data.tookMs === "number" ? data.tookMs : null);
+        } else {
+          // ── Browse mode: use /api/companies (SQLite with pagination) ──
+          const params = new URLSearchParams();
+          params.set("page", String(tablePage));
+          params.set("limit", String(tablePageSize));
+          if (selectedCategory) params.set("category", selectedCategory);
+          if (selectedEmployeeRange) params.set("employeeRange", selectedEmployeeRange);
+          if (selectedLocation) params.set("location", selectedLocation);
+
+          const response = await fetch(`/api/companies?${params.toString()}`, {
+            signal: controller.signal,
+          });
+          data = await response.json().catch(() => ({}));
+
+          if (!response.ok) {
+            throw new Error((data.error as string) ?? `Companies request failed with ${response.status}`);
+          }
+
+          setCompanies(Array.isArray(data.companies) ? data.companies : []);
+          setTotalCompanies(typeof data.total === "number" ? data.total : 0);
         }
-
-        setCompanies(Array.isArray(data.companies) ? data.companies : []);
-        setTotalCompanies(typeof data.total === "number" ? data.total : 0);
       } catch (err) {
         if ((err as Error).name === "AbortError") {
           return;
         }
-
-        console.error('Failed to load companies:', err);
+        console.error("Failed to load companies:", err);
         setCompanies([]);
         setTotalCompanies(0);
       } finally {
@@ -469,12 +547,12 @@ export function CompaniesSection() {
     return () => {
       controller.abort();
     };
-  }, [companySearch, selectedCategory, selectedEmployeeRange, selectedLocation, tablePage, tablePageSize]);
+  }, [debouncedSearch, selectedCategory, selectedEmployeeRange, selectedLocation, tablePage, tablePageSize]);
 
   // Reset page when filters change
   useEffect(() => {
     setTablePage(1);
-  }, [companySearch, selectedCategory, selectedEmployeeRange, selectedLocation]);
+  }, [debouncedSearch, selectedCategory, selectedEmployeeRange, selectedLocation]);
 
   const filteredCategories = useMemo(() => {
     const query = categorySearch.trim().toLowerCase();
