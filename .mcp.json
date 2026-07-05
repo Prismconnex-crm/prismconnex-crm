@@ -13,6 +13,13 @@
         "postgresql://postgres:prismconnex_local@localhost:5432/prismconnex_dev"
       ],
       "env": {}
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_PAT}"
+      }
     }
   }
 }
