@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { fortune500Data } from "./fortune500Data";
 
 const prisma = new PrismaClient();
 
@@ -50,7 +51,19 @@ async function main() {
     },
   });
 
-  console.log("Seed completed: Created 1 Workspace, 1 Admin User");
+  console.log("Seeding Fortune 500 Companies...");
+  let createdCount = 0;
+  for (const company of fortune500Data) {
+    await prisma.company.create({
+      data: {
+        workspaceId: workspace.id,
+        ...company
+      }
+    });
+    createdCount++;
+  }
+
+  console.log(`Seed completed: Created 1 Workspace, 1 Admin User, ${createdCount} Companies`);
 }
 
 main()
