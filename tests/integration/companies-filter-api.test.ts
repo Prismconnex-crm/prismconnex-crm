@@ -5,7 +5,7 @@ const mocks = vi.hoisted(() => ({
   queryRawUnsafe: vi.fn(),
 }));
 
-vi.mock("@/lib/db/prisma", () => ({
+vi.mock("@/lib/db/sqlite-companies", () => ({
   ensureSQLiteReadPragmas: mocks.ensureSQLiteReadPragmas,
   prisma: {
     $queryRawUnsafe: mocks.queryRawUnsafe,

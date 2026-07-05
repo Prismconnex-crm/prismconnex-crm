@@ -8,7 +8,7 @@
  * we null them explicitly since FK enforcement is disabled for the fast wipe.
  */
 const { performance } = require("node:perf_hooks");
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require("../lib/generated/sqlite-client");
 
 const prisma = new PrismaClient({ log: ["error"] });
 

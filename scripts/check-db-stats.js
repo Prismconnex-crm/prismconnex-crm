@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require("../lib/generated/sqlite-client");
 const p = new PrismaClient();
 
 async function main() {

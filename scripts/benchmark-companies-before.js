@@ -1,5 +1,5 @@
 const { performance } = require("node:perf_hooks");
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require("../lib/generated/sqlite-client");
 
 const prisma = new PrismaClient();
 

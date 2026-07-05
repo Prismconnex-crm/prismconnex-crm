@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { fortune500Data } from "./fortune500Data";
+import { fortune500Data } from "./fortune500Data.ts";
 
 const prisma = new PrismaClient();
 

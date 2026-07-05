@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate && prisma generate --schema prisma/sqlite-companies.prisma",
+    "generate:sqlite": "prisma generate --schema prisma/sqlite-companies.prisma",
+    "db:seed": "node --experimental-strip-types prisma/seed.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

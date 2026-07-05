@@ -11,16 +11,19 @@ Multi-tenant B2B CRM built with **Next.js 14 (App Router) + TypeScript + Prisma 
 - `npm run lint` — next lint
 - `npm test` — vitest in **watch mode**; use `npx vitest run` for one-shot (tests in `tests/integration`, node environment, `@/` alias = repo root, setup in `tests/setup.ts`)
 - `npx vitest run tests/integration/rbac.test.ts` — run a single test file
-- `npm run sqlite:optimize` — apply SQLite pragmas/indexes for the Company table
+- `npm run db:seed` — seed demo user/workspace + 500 companies into Postgres
+- `npm run generate:sqlite` — regenerate the SQLite companies client (also runs on `postinstall`)
+- `npm run sqlite:optimize` — apply SQLite pragmas/indexes for the Company table (heavy — see Database)
 - `npm run benchmark:companies:before|after` — company query benchmarks
 
 ## Database (important)
 
-- SQLite via Prisma. `DATABASE_URL="file:./dev.db"` resolves **relative to `prisma/`**, so the live DB is `prisma/dev.db` — it is **~27 GB** with millions of seeded Company rows. Never copy/back it up casually, never run `prisma migrate reset` or destructive commands against it without explicit user confirmation.
-- The root-level `dev.db` (168 KB) is stale/unused.
-- Prisma client singleton: `lib/db/prisma.ts` (applies WAL/cache PRAGMAs on startup).
-- Company perf work: raw SQL in `app/api/companies/route.ts` (cursor pagination on `rowid`, NOCASE prefix search on `name`), indexes in `prisma/migrations/20260616000000_optimize_company_sqlite/`. OpenSearch was tried and removed (see git history).
-- `prisma/seed-*.ts` — many one-off seed scripts from scaling experiments; `scripts/` has similar one-off utilities.
+**Two databases** since the 2026-07 Postgres migration:
+
+- **CRM data → local PostgreSQL 17** (portable install, nothing on C:): binaries `D:\PostgreSQL\pgsql`, data `D:\PostgreSQL\data`, start/stop via `D:\PostgreSQL\start-postgres.cmd` / `stop-postgres.cmd` (must be running for the app). DB `prismconnex_dev`, user `postgres`, password `prismconnex_local`, `DATABASE_URL` in `.env`. Prisma client singleton: `lib/db/prisma.ts`. Migrations in `prisma/migrations/` (fresh Postgres baseline; the old SQLite one is archived in `prisma/migrations-sqlite-archive/`).
+- **Company discovery dataset (~34.6M rows) → still SQLite** `prisma/dev.db` (**~27 GB**). Accessed ONLY via the second generated client (`prisma/sqlite-companies.prisma` → `lib/generated/sqlite-client`, gitignored, rebuilt by `postinstall` or `npm run generate:sqlite`); app code goes through `lib/db/sqlite-companies.ts` (applies WAL/cache PRAGMAs). Never copy/back it up casually, never run destructive commands against it without explicit user confirmation. The root-level `dev.db` (168 KB) is stale/unused.
+- Company perf: raw SQL in `app/api/companies/route.ts` (cursor pagination on `rowid`, NOCASE prefix search on `name`). ⚠️ The live `dev.db` currently has **no index on `name`** (only category/employeeRange/region/filters), so prefix search full-scans (~60 s cold). `npm run sqlite:optimize` builds `idx_company_name_nocase` — heavy multi-minute write on the 27 GB file, run only when explicitly asked (checkpoint the WAL afterwards). OpenSearch was tried and removed (see git history).
+- `prisma/seed.ts` (`npm run db:seed`, runs via node type-stripping) seeds demo user/workspace + 500 companies into Postgres. `prisma/seed-*.ts` — one-off scripts from SQLite scaling experiments; `scripts/*.js` SQLite utilities now require `lib/generated/sqlite-client`.
 
 ## Architecture (docs/ARCHITECTURE.md; see also docs/ENV.md, docs/RUNBOOK.md, docs/TENANCY_RBAC.md)
 
@@ -31,11 +34,11 @@ MVC-ish layering, only fully realized for Leads so far:
 - `app/api/*/route.ts` — controllers: `resolveTenant()` → `validateBody()` → service → `jsonOk`/`jsonError` (`lib/http/`)
 - `components/` — UI only
 
-**Exception:** `/api/companies` intentionally bypasses tenancy/Prisma and queries the whole Company table with raw SQL for speed (it's a shared discovery dataset, not workspace data).
+**Exception:** `/api/companies` intentionally bypasses tenancy and queries the whole SQLite Company dataset with raw SQL via `lib/db/sqlite-companies.ts` for speed (it's a shared discovery dataset, not workspace data).
 
 ## Auth & tenancy
 
-- AWS Cognito intended for prod (`lib/auth/cognito.ts`, `aws-jwt-verify`), but currently **demo mode**: `/api/auth/sign-in` signs a local HS256 JWT (`lib/auth.ts`, fallback secret `prismconnex-dev-secret`) into the `pcx_session` cookie. All Cognito env vars are optional (`lib/env.ts`).
+- AWS Cognito intended for prod (`lib/auth/cognito.ts`, `aws-jwt-verify`), but currently **demo mode**: `/api/auth/sign-in` signs a local HS256 JWT (`lib/auth.ts`, fallback secret `prismconnex-dev-secret`) into the `pcx_session` cookie; `getSessionPayload` verifies Cognito first, then falls back to the local HS256 session. All Cognito env vars are optional (`lib/env.ts`). Demo sign-in email must be `demo@prismconnex.com` (the seeded user) for tenant-scoped APIs to resolve.
 - `lib/auth/tenant.ts` → `resolveTenant()` returns `{userId, email, workspaceId, role}`; uses the user's **first** membership (no workspace switching yet).
 - RBAC: `lib/rbac/authorize.ts` — role hierarchy VIEWER < SUPPORT < SALES_REP < ADMIN.
 - `middleware.ts` handles locale redirects + auth gating via cookies (`pcx_session`, `pcx_onboarded`, `pc_locale`/`pcx_locale`); API routes are excluded from middleware.

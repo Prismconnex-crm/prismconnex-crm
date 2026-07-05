@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import { verifyLocalSession } from "@/lib/auth";
 import { verifyCognitoToken } from "./cognito";
 
 export const SESSION_COOKIE_NAME = "pcx_session";
@@ -24,5 +25,13 @@ export async function getSessionPayload() {
     if (!token) return null;
 
     const payload = await verifyCognitoToken(token);
-    return payload;
+    if (payload) return payload;
+
+    // Demo mode: no Cognito configured — verify the local HS256 session
+    // signed by /api/auth/sign-in instead.
+    try {
+        return await verifyLocalSession(token);
+    } catch {
+        return null;
+    }
 }

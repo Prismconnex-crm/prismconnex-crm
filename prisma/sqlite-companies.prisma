@@ -1,0 +1,45 @@
+// Dedicated schema for the shared company-discovery dataset (~34.6M rows)
+// which stays in SQLite (prisma/dev.db) while the CRM tables live in
+// PostgreSQL (see schema.prisma). Client generation only — never migrated.
+
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "library"
+  output     = "../lib/generated/sqlite-client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Company {
+  id              String   @id @default(cuid())
+  workspaceId     String
+  name            String
+  category        String?
+  description     String?
+  domain          String?
+  website         String?
+  founded         String?
+  employeeRange   String?
+  headquarters    String?
+  region          String?
+  revenueRange    String?
+  engagementScore Int?     @default(0)
+  trustSignals    String?
+  tags            String?
+  email           String?
+  phone           String?
+  highlights      String?
+  insights        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([name], map: "idx_company_name")
+  @@index([category], map: "idx_company_category")
+  @@index([employeeRange], map: "idx_company_employee")
+  @@index([region], map: "idx_company_region")
+  @@index([category, employeeRange, region], map: "idx_company_filters")
+  @@index([workspaceId])
+}

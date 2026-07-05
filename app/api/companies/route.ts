@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { ensureSQLiteReadPragmas, prisma } from "@/lib/db/prisma";
+import { ensureSQLiteReadPragmas, prisma } from "@/lib/db/sqlite-companies";
 
 export const dynamic = "force-dynamic";
 
