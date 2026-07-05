@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { z } from "zod";
 import { validateBody } from "@/lib/http/validate";
+import { UnauthorizedError } from "@/lib/http/errors";
 import { jsonOk, jsonError } from "@/lib/http/response";
 import { prisma } from "@/lib/db/prisma";
 import { getSessionPayload } from "@/lib/auth/session";
@@ -17,7 +18,7 @@ export async function POST(req: NextRequest) {
     try {
         const payload = await getSessionPayload();
         if (!payload || !payload.sub || !payload.email) {
-            return jsonError(new Error("Unauthorized"));
+            return jsonError(new UnauthorizedError());
         }
 
         const email = payload.email as string;

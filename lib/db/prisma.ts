@@ -11,6 +11,20 @@ function createPrismaClient() {
   });
 }
 
+// Lightweight PRAGMAs that won't fail on large databases
+const sqliteReadPragmas = [
+  "PRAGMA journal_mode=WAL",
+  "PRAGMA synchronous=NORMAL",
+  "PRAGMA temp_store=MEMORY",
+  "PRAGMA cache_size=-64000",  // 64MB cache (safe for any machine)
+];
+
+let pragmasApplied = false;
+
+function usesSQLite() {
+  return (process.env.DATABASE_URL ?? "").startsWith("file:");
+}
+
 // Ensure global.prisma is set in dev
 if (process.env.NODE_ENV !== "production") {
   if (!global.prisma) {
@@ -20,70 +34,25 @@ if (process.env.NODE_ENV !== "production") {
 
 const client = global.prisma || createPrismaClient();
 
-// Export a proxy that catches "Connection has not been opened" and automatically re-creates the client!
-export const prisma = new Proxy(client, {
-  get(target, prop, receiver) {
-    const value = Reflect.get(target, prop, receiver);
-    
-    if (typeof value === "function" && !["$connect", "$disconnect"].includes(prop as string)) {
-      return async function (...args: any[]) {
-        try {
-          return await value.apply(target, args);
-        } catch (error: any) {
-          const errMsg = error?.message || "";
-          if (
-            errMsg.includes("Connection has not been opened") ||
-            errMsg.includes("engine is not running") ||
-            errMsg.includes("Connection closed")
-          ) {
-            console.warn("⚠️ Prisma query engine connection lost. Re-initializing client...");
-            const newClient = createPrismaClient();
-            if (process.env.NODE_ENV !== "production") {
-              global.prisma = newClient;
-            }
-            target = newClient;
-            const newFunc = Reflect.get(newClient, prop);
-            return await newFunc.apply(newClient, args);
-          }
-          throw error;
-        }
-      };
-    }
-    
-    // For nested property access like prisma.company.findMany, wrap the model delegate dynamically
-    if (value && typeof value === "object" && prop !== "_custom") {
-      return new Proxy(value, {
-        get(modelTarget, modelProp) {
-          const modelValue = Reflect.get(modelTarget, modelProp);
-          if (typeof modelValue === "function") {
-            return async function (...args: any[]) {
-              try {
-                return await modelValue.apply(modelTarget, args);
-              } catch (error: any) {
-                const errMsg = error?.message || "";
-                if (
-                  errMsg.includes("Connection has not been opened") ||
-                  errMsg.includes("engine is not running") ||
-                  errMsg.includes("Connection closed")
-                ) {
-                  console.warn("⚠️ Prisma model query engine connection lost. Re-initializing client...");
-                  const newClient = createPrismaClient();
-                  if (process.env.NODE_ENV !== "production") {
-                    global.prisma = newClient;
-                  }
-                  const freshModel = Reflect.get(newClient, prop);
-                  const freshFunc = Reflect.get(freshModel, modelProp);
-                  return await freshFunc.apply(freshModel, args);
-                }
-                throw error;
-              }
-            };
-          }
-          return modelValue;
-        }
-      });
-    }
-
-    return value;
+export async function ensureSQLiteReadPragmas(target: PrismaClient = client) {
+  if (!usesSQLite() || pragmasApplied) {
+    return;
   }
-});
+
+  try {
+    for (const pragma of sqliteReadPragmas) {
+      await target.$queryRawUnsafe(pragma);
+    }
+    pragmasApplied = true;
+  } catch (error) {
+    // Don't throw — PRAGMAs are optimizations, not requirements.
+    // The database will still work without them.
+    console.warn("SQLite PRAGMAs skipped (non-fatal):", (error as Error).message?.slice(0, 100));
+    pragmasApplied = true; // Don't retry every request
+  }
+}
+
+// Apply PRAGMAs at startup (fire-and-forget, non-blocking)
+void ensureSQLiteReadPragmas().catch(() => {});
+
+export const prisma = client;

@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { resolveTenant } from "@/lib/auth/tenant";
+import { UnauthorizedError } from "@/lib/http/errors";
 import { jsonOk, jsonError } from "@/lib/http/response";
 import { validateBody } from "@/lib/http/validate";
 import { ConvertLeadToDealSchema } from "@/models/lead";
@@ -8,7 +9,7 @@ import { LeadService } from "@/services/lead.service";
 export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
     try {
         const tenant = await resolveTenant();
-        if (!tenant) throw new Error("Unauthorized");
+        if (!tenant) throw new UnauthorizedError();
 
         const body = await req.json();
         const data = validateBody(ConvertLeadToDealSchema, body);

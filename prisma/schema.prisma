@@ -128,13 +128,11 @@ model Company {
   leads     Lead[]
   deals     Deal[]
 
-  @@index([category])
-  @@index([employeeRange])
-  @@index([region])
-  @@index([engagementScore])
-  @@index([name])
-  @@index([category, employeeRange])
-  @@index([category, employeeRange, region, engagementScore])
+  @@index([name], map: "idx_company_name")
+  @@index([category], map: "idx_company_category")
+  @@index([employeeRange], map: "idx_company_employee")
+  @@index([region], map: "idx_company_region")
+  @@index([category, employeeRange, region], map: "idx_company_filters")
   @@index([workspaceId])
 }
 

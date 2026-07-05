@@ -1,99 +1,203 @@
-import { NextResponse } from 'next/server';
-import type { Prisma } from '@prisma/client';
-import { prisma } from '@/lib/db/prisma';
+import { NextResponse } from "next/server";
+import { ensureSQLiteReadPragmas, prisma } from "@/lib/db/prisma";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
-// Global count cache to avoid slow SQLite table scans on massive datasets (11M+ rows)
-const countCache = new Map<string, { total: number; expiresAt: number }>();
-const CACHE_TTL = 30 * 60 * 1000; // 30 minutes
+const DEFAULT_LIMIT = 30;
+const MAX_LIMIT = 100;
+
+// Only select columns we actually need for the list view (faster I/O)
+const LIST_COLUMNS = `
+  rowid AS rowCursor,
+  id,
+  name,
+  category,
+  domain,
+  founded,
+  employeeRange,
+  headquarters,
+  region,
+  engagementScore,
+  tags,
+  highlights,
+  insights
+`;
+
+// Full columns for detail view (when needed)
+const DETAIL_COLUMNS = `
+  rowid AS rowCursor,
+  id,
+  name,
+  category,
+  description,
+  domain,
+  website,
+  founded,
+  employeeRange,
+  headquarters,
+  region,
+  revenueRange,
+  engagementScore,
+  trustSignals,
+  tags,
+  email,
+  phone,
+  highlights,
+  insights
+`;
+
+type CompanyRow = {
+  rowCursor: number;
+  id: string;
+  name: string;
+  category: string | null;
+  description?: string | null;
+  domain: string | null;
+  website?: string | null;
+  founded: string | null;
+  employeeRange: string | null;
+  headquarters: string | null;
+  region: string | null;
+  revenueRange?: string | null;
+  engagementScore: number | null;
+  trustSignals?: string | null;
+  tags: string | null;
+  email?: string | null;
+  phone?: string | null;
+  highlights: string | null;
+  insights: string | null;
+};
+
+type SqlParam = string | number;
+
+function cleanParam(value: string | null) {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : null;
+}
+
+function parseLimit(value: string | null) {
+  const requested = Number.parseInt(value || String(DEFAULT_LIMIT), 10);
+  if (!Number.isFinite(requested)) return DEFAULT_LIMIT;
+  return Math.min(MAX_LIMIT, Math.max(1, requested));
+}
+
+function splitList(value: string | null) {
+  return value ? value.split(",").map((item) => item.trim()).filter(Boolean) : [];
+}
+
+function formatCompany(row: CompanyRow) {
+  return {
+    ...row,
+    name: row.name.replace(/\s+\d+$/, ""),
+    category: row.category ?? "",
+    description: row.description ?? "",
+    domain: row.domain ?? "",
+    website: row.website ?? "",
+    founded: row.founded ?? "",
+    employeeRange: row.employeeRange ?? "",
+    headquarters: row.headquarters ?? "",
+    region: row.region ?? "",
+    revenueRange: row.revenueRange ?? "",
+    engagementScore: row.engagementScore ?? 0,
+    trustSignals: row.trustSignals ?? "",
+    tags: splitList(row.tags),
+    email: row.email ?? "",
+    phone: row.phone ?? "",
+    highlights: splitList(row.highlights),
+    insights: splitList(row.insights),
+    events: [],
+    deals: [],
+    activity: [],
+  };
+}
 
 export async function GET(request: Request) {
   try {
+    await ensureSQLiteReadPragmas();
+
     const { searchParams } = new URL(request.url);
-    
-    // Pagination
-    const page = Math.max(1, Number.parseInt(searchParams.get('page') || '1', 10) || 1);
-    const limit = Math.max(1, Number.parseInt(searchParams.get('limit') || '50', 10) || 50);
-    const skip = (page - 1) * limit;
+    const limit = parseLimit(searchParams.get("limit"));
+    const page = Math.max(1, Number.parseInt(searchParams.get("page") || "1", 10) || 1);
+    const search = cleanParam(searchParams.get("search"));
+    const category = cleanParam(searchParams.get("category"));
+    const employeeRange = cleanParam(searchParams.get("employeeRange"));
+    const region = cleanParam(searchParams.get("location"));
+    const afterRowid = Number.parseInt(searchParams.get("cursor") || "0", 10) || 0;
 
-    // Filtering
-    const search = searchParams.get('search') || '';
-    const category = searchParams.get('category');
-    const employeeRange = searchParams.get('employeeRange');
-    const location = searchParams.get('location');
+    const where: string[] = [];
+    const params: SqlParam[] = [];
 
-    // Build where clause
-    const where: Prisma.CompanyWhereInput = {};
-    
+    // ── Search mode: case-insensitive prefix search via the NOCASE name index ──
     if (search) {
-      where.name = { contains: search };
-    }
-    
-    if (category) {
-      where.category = category;
-    }
-    
-    if (employeeRange) {
-      where.employeeRange = employeeRange;
-    }
-    
-    if (location) {
-      where.region = location;
-    }
+      const upperBound = search.slice(0, -1) + String.fromCharCode(search.charCodeAt(search.length - 1) + 1);
+      where.push("name >= ? COLLATE NOCASE AND name < ? COLLATE NOCASE");
+      params.push(search, upperBound);
 
-    // Resolve count from cache or database
-    const cacheKey = JSON.stringify(where);
-    const cached = countCache.get(cacheKey);
-    let total = 0;
+      // Add other filters on top of search
+      if (category) { where.push("category = ?"); params.push(category); }
+      if (employeeRange) { where.push("employeeRange = ?"); params.push(employeeRange); }
+      if (region) { where.push("region = ?"); params.push(region); }
 
-    if (cached && cached.expiresAt > Date.now()) {
-      total = cached.total;
-    } else {
-      if (search) {
-        // Skip massive table-scan counting when performing text searches
-        total = 1000; 
-      } else if (category) {
-        // Skip exact counting for categories to avoid slow index scans (categories have 500k+ rows)
-        // Set an estimated max value so pagination works without the slow COUNT query
-        total = 500000;
-      } else {
-        total = await prisma.company.count({ where });
-      }
-      countCache.set(cacheKey, { total, expiresAt: Date.now() + CACHE_TTL });
+      const sql = `
+        SELECT ${LIST_COLUMNS}
+        FROM Company
+        WHERE ${where.join(" AND ")}
+        ORDER BY name COLLATE NOCASE ASC
+        LIMIT ?
+      `;
+
+      const rows = await prisma.$queryRawUnsafe<CompanyRow[]>(sql, ...params, limit + 1);
+      const pageRows = rows.slice(0, limit);
+      const hasNextPage = rows.length > limit;
+
+      return NextResponse.json({
+        companies: pageRows.map(formatCompany),
+        pagination: "cursor",
+        nextCursor: hasNextPage ? String(pageRows[pageRows.length - 1]?.rowCursor ?? "") : null,
+        hasNextPage,
+        page,
+        limit,
+        total: null,
+        totalPages: null,
+      });
     }
 
-    // Dynamic query options to bypass `orderBy` full-table sorts during search
-    const queryOptions: Prisma.CompanyFindManyArgs = {
-      where,
-      skip,
-      take: limit,
-    };
+    // ── Browse mode: use rowid for instant pagination ──
+    // rowid DESC shows newest companies first (Indian MNCs were inserted last = highest rowids)
+    if (category) { where.push("category = ?"); params.push(category); }
+    if (employeeRange) { where.push("employeeRange = ?"); params.push(employeeRange); }
+    if (region) { where.push("region = ?"); params.push(region); }
 
-    if (!search) {
-      queryOptions.orderBy = { engagementScore: 'desc' };
+    // Cursor-based pagination using rowid
+    if (afterRowid > 0) {
+      where.push("rowid < ?");
+      params.push(afterRowid);
     }
 
-    // Fetch paginated companies
-    const companies = await prisma.company.findMany(queryOptions);
+    const whereClause = where.length > 0 ? where.join(" AND ") : "1 = 1";
 
-    // Prisma returns arrays as strings, but frontend expects arrays
-    const formattedCompanies = companies.map((c) => ({
-      ...c,
-      name: c.name.replace(/\s+\d+$/, ''), // Remove unique generation digits from display name
-      tags: c.tags ? c.tags.split(',').map((t) => t.trim()) : [],
-      highlights: c.highlights ? c.highlights.split(',').map((t) => t.trim()) : [],
-      insights: c.insights ? c.insights.split(',').map((t) => t.trim()) : [],
-      events: [],
-      deals: [],
-      activity: []
-    }));
+    const sql = `
+      SELECT ${LIST_COLUMNS}
+      FROM Company
+      WHERE ${whereClause}
+      ORDER BY rowid DESC
+      LIMIT ?
+    `;
+
+    const rows = await prisma.$queryRawUnsafe<CompanyRow[]>(sql, ...params, limit + 1);
+    const pageRows = rows.slice(0, limit);
+    const hasNextPage = rows.length > limit;
+    const lastRow = pageRows[pageRows.length - 1];
 
     return NextResponse.json({
-      companies: formattedCompanies,
-      total,
+      companies: pageRows.map(formatCompany),
+      pagination: "cursor",
+      nextCursor: hasNextPage ? String(lastRow?.rowCursor ?? "") : null,
+      hasNextPage,
       page,
-      totalPages: Math.ceil(total / limit)
+      limit,
+      total: null,
+      totalPages: null,
     });
   } catch (error) {
     console.error("Failed to fetch companies:", error);

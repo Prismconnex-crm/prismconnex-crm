@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect, useCallback, useRef } from "react";
+import { useMemo, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Activity,
@@ -76,6 +76,27 @@ type Company = {
   deals: CompanyDeal[];
   activity: CompanyActivity[];
 };
+
+// Website link with a search-fallback: link straight to the real domain when it
+// looks like a valid domain, otherwise fall back to a web search for the company
+// name so the button never lands on a dead ("can't reach this page") domain.
+function isLikelyRealDomain(domain?: string) {
+  if (!domain) return false;
+  return /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9-]+)*\.[a-z]{2,}$/i.test(domain.trim());
+}
+
+function companyWebsiteLink(company: { domain?: string; website?: string; name: string }) {
+  const domain = (company.domain ?? "").trim();
+  const website = (company.website ?? "").trim();
+  if (isLikelyRealDomain(domain)) {
+    return { href: website || `https://${domain}`, label: domain, isSearch: false };
+  }
+  return {
+    href: `https://www.google.com/search?q=${encodeURIComponent(company.name)}`,
+    label: "Search the web",
+    isSearch: true,
+  };
+}
 
 type Employee = {
   id: string;
@@ -226,30 +247,49 @@ function formatCompactNumber(n: number): string {
   return n.toLocaleString();
 }
 
+function useDebouncedValue<T>(value: T, delayMs: number) {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => {
+      setDebouncedValue(value);
+    }, delayMs);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [delayMs, value]);
+
+  return debouncedValue;
+}
+
 function CompanyTable({
   companies,
   onSelect,
   page,
   pageSize,
   total,
-  onPageChange,
+  hasNextPage,
+  onNextPage,
+  onPreviousPage,
   onPageSizeChange,
 }: {
   companies: Company[];
   onSelect: (id: string) => void;
   page: number;
   pageSize: number;
-  total: number;
-  onPageChange: (page: number) => void;
+  total: number | null;
+  hasNextPage: boolean;
+  onNextPage: () => void;
+  onPreviousPage: () => void;
   onPageSizeChange: (size: number) => void;
 }) {
   const [showPageSizeDropdown, setShowPageSizeDropdown] = useState(false);
   const pageSizeOptions = [30, 50, 100];
   const rangeStart = (page - 1) * pageSize + 1;
-  const rangeEnd = Math.min(page * pageSize, total);
-  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const rangeEnd = companies.length > 0 ? rangeStart + companies.length - 1 : 0;
   const canGoPrev = page > 1;
-  const canGoNext = page < totalPages;
+  const canGoNext = hasNextPage;
 
   return (
     <motion.div
@@ -311,7 +351,7 @@ function CompanyTable({
         {/* Left Arrow */}
         <button
           disabled={!canGoPrev}
-          onClick={() => onPageChange(page - 1)}
+          onClick={onPreviousPage}
           className={cn(
             "inline-flex size-8 items-center justify-center rounded-md border transition-colors",
             canGoPrev
@@ -329,7 +369,7 @@ function CompanyTable({
               onClick={() => setShowPageSizeDropdown(!showPageSizeDropdown)}
               className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:border-[#22304A] dark:bg-[#111B2E] dark:text-slate-200 dark:hover:bg-[#16233A]"
             >
-              {page}
+              {pageSize} per page
               <ChevronDown className="size-3" />
             </button>
             {showPageSizeDropdown && (
@@ -358,7 +398,7 @@ function CompanyTable({
           {/* Right Arrow */}
           <button
             disabled={!canGoNext}
-            onClick={() => onPageChange(page + 1)}
+            onClick={onNextPage}
             className={cn(
               "inline-flex size-8 items-center justify-center rounded-md border transition-colors",
               canGoNext
@@ -371,7 +411,8 @@ function CompanyTable({
 
           {/* Range Label */}
           <span className="text-[12px] text-slate-500 dark:text-slate-400">
-            {rangeStart} - {rangeEnd} of {formatCompactNumber(total)}
+            Page {page} - {companies.length > 0 ? `${rangeStart} - ${rangeEnd}` : "0"}
+            {typeof total === "number" ? ` of ${formatCompactNumber(total)}` : ""}
           </span>
         </div>
       </div>
@@ -382,11 +423,15 @@ function CompanyTable({
 export function CompaniesSection() {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(null);
 
-  const [totalCompanies, setTotalCompanies] = useState(0);
+  const [totalCompanies, setTotalCompanies] = useState<number | null>(null);
   const [tablePage, setTablePage] = useState(1);
   const [tablePageSize, setTablePageSize] = useState(30);
+  const [pageCursors, setPageCursors] = useState<(string | null)[]>([null]);
+  const [nextCursor, setNextCursor] = useState<string | null>(null);
+  const [hasNextPage, setHasNextPage] = useState(false);
 
   const [mainTab, setMainTab] = useState<"companies" | "saved">("companies");
   const [savedCompanies, setSavedCompanies] = useState<Company[]>(() => {
@@ -426,8 +471,6 @@ export function CompaniesSection() {
   const [isDetailView, setIsDetailView] = useState(false);
   const [activeTab, setActiveTab] = useState("Overview");
   const [companySearch, setCompanySearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
-  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [showCategoryFilter, setShowCategoryFilter] = useState(false);
   const [categorySearch, setCategorySearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -436,107 +479,89 @@ export function CompaniesSection() {
   const [showLocationFilter, setShowLocationFilter] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [filterOrder, setFilterOrder] = useState<string[]>([]);
-  const [searchTookMs, setSearchTookMs] = useState<number | null>(null);
+  const debouncedCompanySearch = useDebouncedValue(companySearch.trim(), 300);
+  const isSearchPending = companySearch.trim() !== debouncedCompanySearch;
+  const currentCursor = pageCursors[tablePage - 1] ?? null;
 
-  // Debounce search input (200ms)
-  useEffect(() => {
-    if (debounceTimer.current) clearTimeout(debounceTimer.current);
-    debounceTimer.current = setTimeout(() => {
-      setDebouncedSearch(companySearch);
-    }, 200);
-    return () => {
-      if (debounceTimer.current) clearTimeout(debounceTimer.current);
-    };
-  }, [companySearch]);
+  const resetCompanyPagination = useCallback(() => {
+    setTablePage(1);
+    setPageCursors([null]);
+    setNextCursor(null);
+    setHasNextPage(false);
+  }, []);
+
+  const handleNextCompanyPage = useCallback(() => {
+    if (!nextCursor) {
+      return;
+    }
+
+    setPageCursors((prev) => {
+      const next = prev.slice(0, tablePage);
+      next[tablePage] = nextCursor;
+      return next;
+    });
+    setTablePage((page) => page + 1);
+  }, [nextCursor, tablePage]);
+
+  const handlePreviousCompanyPage = useCallback(() => {
+    setTablePage((page) => Math.max(1, page - 1));
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
+    let cancelled = false;
 
-    async function loadCompanies() {
+    async function loadCompanies(attempt = 1) {
+      if (cancelled) return;
       setIsLoading(true);
-      setSearchTookMs(null);
+      if (attempt === 1) setLoadError(null);
+
+      const params = new URLSearchParams();
+      params.set('page', String(tablePage));
+      params.set('limit', String(tablePageSize));
+      if (currentCursor) params.set('cursor', currentCursor);
+      if (debouncedCompanySearch) params.set('search', debouncedCompanySearch);
+      if (selectedCategory) params.set('category', selectedCategory);
+      if (selectedEmployeeRange) params.set('employeeRange', selectedEmployeeRange);
+      if (selectedLocation) params.set('location', selectedLocation);
 
       try {
-        let data: Record<string, unknown>;
+        const response = await fetch(`/api/companies?${params.toString()}`, {
+          signal: controller.signal,
+        });
 
-        if (debouncedSearch.trim()) {
-          // ── Search mode: use /api/companies/search (OpenSearch or SQLite prefix) ──
-          const params = new URLSearchParams();
-          params.set("q", debouncedSearch.trim());
-          params.set("size", String(tablePageSize));
-          if (selectedCategory) params.set("category", selectedCategory);
-          if (selectedEmployeeRange) params.set("employeeRange", selectedEmployeeRange);
-          if (selectedLocation) params.set("region", selectedLocation);
+        const data = await response.json().catch(() => ({}));
 
-          const response = await fetch(`/api/companies/search?${params.toString()}`, {
-            signal: controller.signal,
-          });
-          data = await response.json().catch(() => ({}));
-
-          if (!response.ok) {
-            throw new Error((data.error as string) ?? `Search failed with ${response.status}`);
-          }
-
-          // Map search results to Company format
-          const items = Array.isArray(data.items) ? data.items : [];
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const mapped: Company[] = items.map((item: any) => ({
-            id: String(item.id || ""),
-            name: String(item.name || ""),
-            category: String(item.category || ""),
-            description: String(item.description || ""),
-            domain: String(item.domainNorm || ""),
-            website: String(item.website || ""),
-            founded: String(item.founded || ""),
-            employeeRange: String(item.employeeRange || ""),
-            headquarters: String(item.headquarters || ""),
-            region: String(item.region || ""),
-            revenueRange: String(item.revenueRange || ""),
-            engagementScore: Number(item.popularityScore) || 0,
-            trustSignals: String(item.trustSignals || ""),
-            tags: Array.isArray(item.tags) ? item.tags : (typeof item.tags === "string" ? item.tags.split(",").map((t: string) => t.trim()) : []),
-            email: String(item.email || ""),
-            phone: String(item.phone || ""),
-            highlights: Array.isArray(item.highlights) ? item.highlights : (typeof item.highlights === "string" ? item.highlights.split(",").map((t: string) => t.trim()) : []),
-            insights: Array.isArray(item.insights) ? item.insights : (typeof item.insights === "string" ? item.insights.split(",").map((t: string) => t.trim()) : []),
-            events: [],
-            deals: [],
-            activity: [],
-          }));
-
-          setCompanies(mapped);
-          setTotalCompanies(typeof data.total === "number" ? data.total : mapped.length);
-          setSearchTookMs(typeof data.tookMs === "number" ? data.tookMs : null);
-        } else {
-          // ── Browse mode: use /api/companies (SQLite with pagination) ──
-          const params = new URLSearchParams();
-          params.set("page", String(tablePage));
-          params.set("limit", String(tablePageSize));
-          if (selectedCategory) params.set("category", selectedCategory);
-          if (selectedEmployeeRange) params.set("employeeRange", selectedEmployeeRange);
-          if (selectedLocation) params.set("location", selectedLocation);
-
-          const response = await fetch(`/api/companies?${params.toString()}`, {
-            signal: controller.signal,
-          });
-          data = await response.json().catch(() => ({}));
-
-          if (!response.ok) {
-            throw new Error((data.error as string) ?? `Companies request failed with ${response.status}`);
-          }
-
-          setCompanies(Array.isArray(data.companies) ? data.companies : []);
-          setTotalCompanies(typeof data.total === "number" ? data.total : 0);
+        if (!response.ok) {
+          throw new Error(data.error ?? `Request failed (${response.status})`);
         }
+
+        if (cancelled) return;
+        setCompanies(Array.isArray(data.companies) ? data.companies : []);
+        setTotalCompanies(typeof data.total === "number" ? data.total : null);
+        setNextCursor(typeof data.nextCursor === "string" ? data.nextCursor : null);
+        setHasNextPage(Boolean(data.hasNextPage));
+        setLoadError(null);
+        setIsLoading(false);
       } catch (err) {
-        if ((err as Error).name === "AbortError") {
+        if ((err as Error).name === "AbortError" || cancelled) return;
+
+        console.error(`Failed to load companies (attempt ${attempt}):`, err);
+
+        // Retry up to 3 times with delay
+        if (attempt < 3) {
+          await new Promise((r) => setTimeout(r, 2000));
+          if (!cancelled) loadCompanies(attempt + 1);
           return;
         }
-        console.error("Failed to load companies:", err);
-        setCompanies([]);
-        setTotalCompanies(0);
-      } finally {
-        if (!controller.signal.aborted) {
+
+        // After all retries failed
+        if (!cancelled) {
+          setCompanies([]);
+          setTotalCompanies(null);
+          setNextCursor(null);
+          setHasNextPage(false);
+          setLoadError("Unable to load companies. Please refresh the page.");
           setIsLoading(false);
         }
       }
@@ -545,14 +570,10 @@ export function CompaniesSection() {
     loadCompanies();
 
     return () => {
+      cancelled = true;
       controller.abort();
     };
-  }, [debouncedSearch, selectedCategory, selectedEmployeeRange, selectedLocation, tablePage, tablePageSize]);
-
-  // Reset page when filters change
-  useEffect(() => {
-    setTablePage(1);
-  }, [debouncedSearch, selectedCategory, selectedEmployeeRange, selectedLocation]);
+  }, [debouncedCompanySearch, currentCursor, selectedCategory, selectedEmployeeRange, selectedLocation, tablePage, tablePageSize]);
 
   const filteredCategories = useMemo(() => {
     const query = categorySearch.trim().toLowerCase();
@@ -564,9 +585,11 @@ export function CompaniesSection() {
   }, [categorySearch]);
 
   const filteredCompanies = companies;
+  const isCompaniesBusy = isLoading || isSearchPending;
 
   const activeCompany =
     filteredCompanies.find((company) => company.id === selectedCompanyId) ??
+    savedCompanies.find((company) => company.id === selectedCompanyId) ??
     filteredCompanies[0] ??
     null;
 
@@ -683,7 +706,16 @@ export function CompaniesSection() {
                   </thead>
                   <tbody className="divide-y divide-slate-100 dark:divide-[#1A2740]">
                     {savedCompanies.map((company) => (
-                      <tr key={company.id} className="group transition-colors hover:bg-slate-50 dark:hover:bg-[#16233A]">
+                      <tr
+                        key={company.id}
+                        onClick={() => {
+                          setSelectedCompanyId(company.id);
+                          setMainTab("companies");
+                          setIsDetailView(true);
+                          setActiveTab("Overview");
+                        }}
+                        className="group cursor-pointer transition-colors hover:bg-slate-50 dark:hover:bg-[#16233A]"
+                      >
                         <td className="px-4 py-3" style={{width: '60px'}}>
                           <CompanyAvatar name={company.name} logo={`https://logo.clearbit.com/${company.domain}`} />
                         </td>
@@ -707,7 +739,10 @@ export function CompaniesSection() {
                         </td>
                         <td className="px-4 py-3" style={{width: '100px'}}>
                           <button
-                            onClick={() => handleRemoveFromCrm(company.id)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleRemoveFromCrm(company.id);
+                            }}
                             className="inline-flex items-center gap-1 rounded-[8px] border border-red-200 bg-red-50 px-2.5 py-1.5 text-[11px] font-medium text-red-600 transition-colors hover:bg-red-100 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20"
                           >
                             <Trash2 className="size-3" />
@@ -737,8 +772,13 @@ export function CompaniesSection() {
               <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
               <input
                 value={companySearch}
-                onChange={(event) => setCompanySearch(event.target.value)}
-                placeholder="Search company, domain, location..."
+                onChange={(event) => {
+                  setCompanySearch(event.target.value);
+                  setSelectedCompanyId(null);
+                  setIsDetailView(false);
+                  resetCompanyPagination();
+                }}
+                placeholder="Search company name..."
                 className="h-10 w-full rounded-[10px] border border-slate-200 bg-slate-50 pl-10 pr-3 text-[13px] text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white dark:placeholder:text-slate-500"
               />
             </div>
@@ -752,6 +792,7 @@ export function CompaniesSection() {
                   setSelectedCompanyId(null);
                   setIsDetailView(false);
                   setFilterOrder([]);
+                  resetCompanyPagination();
                 }}
                 className={cn(
                   "rounded-full border px-3 py-1 text-[11px] font-semibold transition-colors",
@@ -807,6 +848,7 @@ export function CompaniesSection() {
                     setFilterOrder(newOrder);
                     setSelectedCompanyId(null);
                     setIsDetailView(false);
+                    resetCompanyPagination();
                   }}
                   className="rounded-full border border-slate-900 bg-slate-900 px-3 py-1 text-[11px] font-semibold text-white transition-colors hover:bg-slate-800 dark:border-white dark:bg-white dark:text-[#0B1220] dark:hover:bg-slate-100"
                 >
@@ -859,6 +901,7 @@ export function CompaniesSection() {
                               setShowCategoryFilter(false);
                               setSelectedCompanyId(null);
                               setIsDetailView(false);
+                              resetCompanyPagination();
                               setFilterOrder((prev) => [...prev.filter((f) => f !== 'category'), 'category']);
                             }}
                             className="flex w-full items-center justify-between rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
@@ -905,6 +948,7 @@ export function CompaniesSection() {
                             setShowEmployeeFilter(false);
                             setSelectedCompanyId(null);
                             setIsDetailView(false);
+                            resetCompanyPagination();
                             setFilterOrder((prev) => [...prev.filter((f) => f !== 'employeeRange'), 'employeeRange']);
                           }}
                           className="flex w-full rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
@@ -945,6 +989,7 @@ export function CompaniesSection() {
                             setShowLocationFilter(false);
                             setSelectedCompanyId(null);
                             setIsDetailView(false);
+                            resetCompanyPagination();
                             setFilterOrder((prev) => [...prev.filter((f) => f !== 'location'), 'location']);
                           }}
                           className="flex w-full rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
@@ -970,10 +1015,15 @@ export function CompaniesSection() {
             </div>
 
             <div className="max-h-[720px] overflow-y-auto p-3">
-              {isLoading ? (
+              {loadError ? (
+                <div className="rounded-[12px] border border-red-200 bg-red-50 px-4 py-8 text-center text-red-700 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300">
+                  <p className="text-[14px] font-semibold">Could not load companies</p>
+                  <p className="mt-1 text-[12px]">{loadError}</p>
+                </div>
+              ) : isCompaniesBusy ? (
                 <div className="flex flex-col items-center justify-center p-10 text-slate-500">
                   <div className="size-8 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-600 mb-4" />
-                  <p className="text-[13px] font-semibold">Loading Companies...</p>
+                  <p className="text-[13px] font-semibold">{isSearchPending ? "Searching Companies..." : "Loading Companies..."}</p>
                 </div>
               ) : filteredCompanies.length === 0 ? (
                 <div className="rounded-[12px] border border-dashed border-slate-300 px-4 py-10 text-center dark:border-[#22304A]">
@@ -1043,7 +1093,7 @@ export function CompaniesSection() {
             </div>
 
             <div className="border-t border-slate-200 px-4 py-3 text-[12px] text-slate-500 dark:border-[#22304A] dark:text-slate-400">
-              Showing {filteredCompanies.length} of {totalCompanies >= 1000000 ? (totalCompanies / 1000000).toFixed(2) + "M" : totalCompanies.toLocaleString()} companies
+              Showing {filteredCompanies.length} companies{hasNextPage ? " - more available" : ""}
             </div>
           </div>
         </motion.div>
@@ -1061,8 +1111,13 @@ export function CompaniesSection() {
               page={tablePage}
               pageSize={tablePageSize}
               total={totalCompanies}
-              onPageChange={(p) => setTablePage(p)}
-              onPageSizeChange={(s) => { setTablePageSize(s); setTablePage(1); }}
+              hasNextPage={hasNextPage}
+              onNextPage={handleNextCompanyPage}
+              onPreviousPage={handlePreviousCompanyPage}
+              onPageSizeChange={(s) => {
+                setTablePageSize(s);
+                resetCompanyPagination();
+              }}
               onSelect={(id) => {
                 setSelectedCompanyId(id);
                 setIsDetailView(true);
@@ -1092,16 +1147,21 @@ export function CompaniesSection() {
                         {activeCompany.description}
                       </p>
                       <div className="mt-2.5 flex flex-wrap items-center gap-3 text-[12px] text-slate-600 dark:text-slate-300">
-                        <a
-                          href={`https://${activeCompany.domain}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300"
-                        >
-                          <Globe className="size-3.5" />
-                          {activeCompany.domain}
-                          <ExternalLink className="size-3" />
-                        </a>
+                        {(() => {
+                          const link = companyWebsiteLink(activeCompany);
+                          return (
+                            <a
+                              href={link.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300"
+                            >
+                              <Globe className="size-3.5" />
+                              {link.label}
+                              <ExternalLink className="size-3" />
+                            </a>
+                          );
+                        })()}
                         <span className="inline-flex items-center gap-1.5">
                           <Mail className="size-3.5 text-slate-400" />
                           {activeCompany.email}
