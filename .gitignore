@@ -44,3 +44,6 @@ dev.db
 
 # generated Prisma clients (rebuilt via postinstall)
 /lib/generated/
+
+# Playwright MCP session artifacts
+/.playwright-mcp/

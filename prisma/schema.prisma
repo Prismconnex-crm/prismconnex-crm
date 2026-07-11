@@ -41,6 +41,7 @@ model Workspace {
   audits      AuditLog[]
   enrollments SequenceEnrollment[]
   emailEvents EmailEvent[]
+  savedCompanies SavedCompany[]
 }
 
 model Membership {
@@ -133,6 +134,21 @@ model Company {
   @@index([employeeRange], map: "idx_company_employee")
   @@index([region], map: "idx_company_region")
   @@index([category, employeeRange, region], map: "idx_company_filters")
+  @@index([workspaceId])
+}
+
+// Bookmarks into the shared SQLite discovery dataset. `snapshot` carries the
+// company card data because the discovery DB is a separate (non-relational) source.
+model SavedCompany {
+  id          String   @id @default(cuid())
+  workspaceId String
+  companyId   String
+  snapshot    Json
+  createdAt   DateTime @default(now())
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, companyId])
   @@index([workspaceId])
 }
 

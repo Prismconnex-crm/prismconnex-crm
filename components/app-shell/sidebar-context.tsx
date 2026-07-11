@@ -19,19 +19,19 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
     setIsMounted(true);
     const savedState = localStorage.getItem("prism-sidebar-collapsed");
     if (savedState) {
-        try {
-            setIsCollapsed(JSON.parse(savedState));
-        } catch (e) {
-            console.error("Failed to parse sidebar state");
-        }
+      try {
+        setIsCollapsed(JSON.parse(savedState));
+      } catch (e) {
+        console.error("Failed to parse sidebar state");
+      }
     }
   }, []);
 
   const toggleSidebar = () => {
     setIsCollapsed((prev) => {
-        const newState = !prev;
-        localStorage.setItem("prism-sidebar-collapsed", JSON.stringify(newState));
-        return newState;
+      const newState = !prev;
+      localStorage.setItem("prism-sidebar-collapsed", JSON.stringify(newState));
+      return newState;
     });
   };
 
@@ -42,11 +42,11 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
 
   // Prevent hydration mismatch by rendering default on server, then updating
   if (!isMounted) {
-      return (
-        <SidebarContext.Provider value={{ isCollapsed: false, toggleSidebar, setCollapsed }}>
-           {children}
-        </SidebarContext.Provider>
-      )
+    return (
+      <SidebarContext.Provider value={{ isCollapsed: false, toggleSidebar, setCollapsed }}>
+        {children}
+      </SidebarContext.Provider>
+    )
   }
 
   return (

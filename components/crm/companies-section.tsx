@@ -18,7 +18,6 @@ import {
   Filter,
   Globe,
   Mail,
-  MapPin,
   Phone,
   Search,
   Sparkles,
@@ -27,6 +26,7 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { EnrichedLeadsFinderPanel } from "@/components/crm/enriched-leads-finder-panel";
 import {
   COMPANY_CATEGORIES,
   COMPANY_EMPLOYEE_RANGES,
@@ -85,10 +85,26 @@ function isLikelyRealDomain(domain?: string) {
   return /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9-]+)*\.[a-z]{2,}$/i.test(domain.trim());
 }
 
+function slugifyName(name: string) {
+  return name.toLowerCase().replace(/[^a-z0-9]/g, "");
+}
+
+// Seeded domains are derived from the company name and betray themselves three ways:
+// a long digit run, a name-slug followed by digits, or a mid-word truncation of the slug.
+function isGeneratedDomain(domain: string, name: string): boolean {
+  if (/\d{4,}/.test(domain)) return true; // mittalnair1890000.co.in
+  const label = domain.split(".")[0];
+  const slug = slugifyName(name);
+  const labelNoDigits = label.replace(/\d+$/, "");
+  if (label !== labelNoDigits && slug.startsWith(labelNoDigits)) return true; // eliteconsultingllc10.co
+  if (label.length >= 15 && slug.startsWith(label) && slug !== label) return true; // dependablesolut.net (truncated)
+  return false;
+}
+
 function companyWebsiteLink(company: { domain?: string; website?: string; name: string }) {
   const domain = (company.domain ?? "").trim();
   const website = (company.website ?? "").trim();
-  if (isLikelyRealDomain(domain)) {
+  if (isLikelyRealDomain(domain) && !isGeneratedDomain(domain.toLowerCase(), company.name)) {
     return { href: website || `https://${domain}`, label: domain, isSearch: false };
   }
   return {
@@ -96,6 +112,67 @@ function companyWebsiteLink(company: { domain?: string; website?: string; name: 
     label: "Search the web",
     isSearch: true,
   };
+}
+
+// Client-side cache of resolved websites so switching between companies doesn't re-query.
+const resolvedWebsiteCache = new Map<string, string | null>();
+
+// Website link that upgrades itself: seeded/dead domains trigger a server-side
+// lookup (/api/companies/resolve-website) for the real official site; while it
+// runs — and if nothing is found — the Google-search fallback stays clickable.
+function CompanyWebsiteLink({ company }: { company: { id: string; domain?: string; website?: string; name: string } }) {
+  const base = companyWebsiteLink(company);
+  const cached = resolvedWebsiteCache.get(company.id);
+  const [resolved, setResolved] = useState<string | null | undefined>(cached);
+  const [isResolving, setIsResolving] = useState(false);
+
+  useEffect(() => {
+    if (!base.isSearch || resolvedWebsiteCache.has(company.id)) {
+      setResolved(resolvedWebsiteCache.get(company.id));
+      return;
+    }
+    const controller = new AbortController();
+    setIsResolving(true);
+    setResolved(undefined);
+    const params = new URLSearchParams({ name: company.name, domain: company.domain ?? "" });
+    fetch(`/api/companies/resolve-website?${params.toString()}`, { signal: controller.signal })
+      .then((response) => (response.ok ? response.json() : { website: null }))
+      .then((data: { website?: string | null }) => {
+        const website = typeof data.website === "string" ? data.website : null;
+        resolvedWebsiteCache.set(company.id, website);
+        setResolved(website);
+        setIsResolving(false);
+      })
+      .catch((err) => {
+        if ((err as Error).name === "AbortError") return;
+        setResolved(null);
+        setIsResolving(false);
+      });
+    return () => controller.abort();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [company.id]);
+
+  const href = base.isSearch && resolved ? resolved : base.href;
+  const label = base.isSearch
+    ? resolved
+      ? resolved.replace(/^https?:\/\/(www\.)?/, "")
+      : isResolving
+        ? "Finding website…"
+        : base.label
+    : base.label;
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1 font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300"
+    >
+      <Globe className={cn("size-3.5", isResolving && "animate-pulse")} />
+      {label}
+      <ExternalLink className="size-3" />
+    </a>
+  );
 }
 
 type Employee = {
@@ -214,21 +291,27 @@ function isRealDomain(domain: string | undefined): boolean {
   return !/\d{4,}/.test(domain);
 }
 
-function CompanyAvatar({ name, logo, className }: { name: string; logo?: string; className?: string }) {
-  // Extract domain from logo URL to check if it's a real domain
-  const domain = logo?.replace('https://logo.clearbit.com/', '');
-  const uselogo = logo && isRealDomain(domain);
+// Official favicon straight from the company's live website via Google's favicon
+// resolver (Clearbit's logo API was shut down). Returns 404 for dead/generated
+// domains, which triggers the initials fallback below.
+function companyLogoUrl(domain: string) {
+  return `https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${domain}&size=128`;
+}
 
-  if (uselogo) {
+function CompanyAvatar({ name, domain, className }: { name: string; domain?: string; className?: string }) {
+  // Track which domain failed so a reused component instance retries when the row changes
+  const [failedDomain, setFailedDomain] = useState<string | null>(null);
+  const useLogo = domain && isRealDomain(domain) && failedDomain !== domain;
+
+  if (useLogo) {
     return (
       <div className={cn("flex size-12 shrink-0 items-center justify-center rounded-[14px] border border-slate-200 bg-white shadow-sm overflow-hidden dark:border-[#22304A] dark:bg-[#0B1220]", className)}>
-        <img 
-          src={logo} 
-          alt={name} 
-          className="size-8 object-contain" 
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=f0f7ff&color=4f46e5&bold=true`;
-          }}
+        <img
+          src={companyLogoUrl(domain)}
+          alt={name}
+          loading="lazy"
+          className="size-8 object-contain"
+          onError={() => setFailedDomain(domain)}
         />
       </div>
     );
@@ -262,6 +345,34 @@ function useDebouncedValue<T>(value: T, delayMs: number) {
 
   return debouncedValue;
 }
+
+// Left-rail filter catalogue. "location", "employee-headcount" and "industry"
+// are wired to the live /api/companies query params; the rest are placeholders
+// awaiting data sources.
+const FILTER_OPTIONS: { key: string; label: string }[] = [
+  { key: "ai-lookalikes", label: "AI Lookalikes" },
+  { key: "category", label: "Category" },
+  { key: "location", label: "Location" },
+  { key: "type-business-model", label: "Type & Business Model" },
+  { key: "keywords", label: "Keywords" },
+  { key: "employee-headcount", label: "Employee Headcount" },
+  { key: "industry", label: "Industry" },
+  { key: "buying-intent", label: "Buying Intent" },
+  { key: "technologies", label: "Technologies" },
+  { key: "revenue", label: "Revenue" },
+  { key: "funding", label: "Funding" },
+  { key: "headcount-growth", label: "Headcount Growth" },
+  { key: "headcount-department", label: "Headcount by Department" },
+  { key: "headcount-location", label: "Headcount by Location" },
+  { key: "founded-year", label: "Founded Year" },
+  { key: "job-posting", label: "Job Posting" },
+  { key: "ai-attributes", label: "AI Attributes" },
+  { key: "email-provider", label: "Company Email Provider" },
+  { key: "awards-certs", label: "Company Awards & Certs" },
+  { key: "website-traffic", label: "Website Traffic" },
+  { key: "key-executives-events", label: "Key Executives Events" },
+  { key: "company-news", label: "Company News" },
+];
 
 function CompanyTable({
   companies,
@@ -323,7 +434,7 @@ function CompanyTable({
                 className="group cursor-pointer transition-colors hover:bg-slate-50 dark:hover:bg-[#16233A]"
               >
                 <td className="px-4 py-3" style={{width: '60px'}}>
-                  <CompanyAvatar name={company.name} logo={`https://logo.clearbit.com/${company.domain}`} />
+                  <CompanyAvatar name={company.name} domain={company.domain} />
                 </td>
                 <td className="px-4 py-3 font-semibold text-slate-900 dark:text-white" style={{minWidth: '180px'}}>
                   {company.name}
@@ -434,22 +545,52 @@ export function CompaniesSection() {
   const [hasNextPage, setHasNextPage] = useState(false);
 
   const [mainTab, setMainTab] = useState<"companies" | "saved">("companies");
-  const [savedCompanies, setSavedCompanies] = useState<Company[]>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const stored = localStorage.getItem("prismconnex_saved_companies");
-        return stored ? JSON.parse(stored) : [];
-      } catch { return []; }
-    }
-    return [];
-  });
+  // Saved companies are workspace-scoped in Postgres (/api/saved-companies);
+  // localStorage is only read once to migrate pre-existing browser-local saves.
+  const [savedCompanies, setSavedCompanies] = useState<Company[]>([]);
   const [justSavedId, setJustSavedId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("prismconnex_saved_companies", JSON.stringify(savedCompanies));
+    let cancelled = false;
+
+    async function loadSaved() {
+      try {
+        const response = await fetch("/api/saved-companies");
+        if (!response.ok) return;
+        const rows = await response.json();
+        const fromServer: Company[] = Array.isArray(rows)
+          ? rows.map((row: { snapshot: Company }) => row.snapshot).filter(Boolean)
+          : [];
+        if (cancelled) return;
+        setSavedCompanies(fromServer);
+
+        // One-time migration of old browser-local saves.
+        const stored = localStorage.getItem("prismconnex_saved_companies");
+        if (stored) {
+          localStorage.removeItem("prismconnex_saved_companies");
+          const local: Company[] = JSON.parse(stored);
+          const missing = local.filter((c) => c?.id && !fromServer.some((s) => s.id === c.id));
+          for (const company of missing) {
+            await fetch("/api/saved-companies", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ companyId: company.id, snapshot: company }),
+            });
+          }
+          if (!cancelled && missing.length > 0) {
+            setSavedCompanies((prev) => [...prev, ...missing]);
+          }
+        }
+      } catch {
+        // keep whatever we have; saved tab just shows empty on network failure
+      }
     }
-  }, [savedCompanies]);
+
+    loadSaved();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleAddToCrm = useCallback((company: Company) => {
     setSavedCompanies((prev) => {
@@ -458,10 +599,20 @@ export function CompaniesSection() {
     });
     setJustSavedId(company.id);
     setTimeout(() => setJustSavedId(null), 2000);
+    fetch("/api/saved-companies", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ companyId: company.id, snapshot: company }),
+    }).catch(() => {
+      // optimistic UI; a failed save will disappear on next load
+    });
   }, []);
 
   const handleRemoveFromCrm = useCallback((companyId: string) => {
     setSavedCompanies((prev) => prev.filter((c) => c.id !== companyId));
+    fetch(`/api/saved-companies/${encodeURIComponent(companyId)}`, { method: "DELETE" }).catch(() => {
+      // optimistic UI; a failed delete will reappear on next load
+    });
   }, []);
 
   const isCompanySaved = useCallback((companyId: string) => {
@@ -471,12 +622,10 @@ export function CompaniesSection() {
   const [isDetailView, setIsDetailView] = useState(false);
   const [activeTab, setActiveTab] = useState("Overview");
   const [companySearch, setCompanySearch] = useState("");
-  const [showCategoryFilter, setShowCategoryFilter] = useState(false);
+  const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [categorySearch, setCategorySearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [showEmployeeFilter, setShowEmployeeFilter] = useState(false);
   const [selectedEmployeeRange, setSelectedEmployeeRange] = useState<string | null>(null);
-  const [showLocationFilter, setShowLocationFilter] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [filterOrder, setFilterOrder] = useState<string[]>([]);
   const debouncedCompanySearch = useDebouncedValue(companySearch.trim(), 300);
@@ -489,6 +638,29 @@ export function CompaniesSection() {
     setNextCursor(null);
     setHasNextPage(false);
   }, []);
+
+  // Global topbar search: apply ?q= from the URL on mount, and react live to
+  // searches submitted from the topbar while this section is already rendered.
+  useEffect(() => {
+    const applyGlobalSearch = (query: string) => {
+      const value = query.trim();
+      if (!value) return;
+      setMainTab("companies");
+      setCompanySearch(value);
+      setIsDetailView(false);
+      setSelectedCompanyId(null);
+      resetCompanyPagination();
+    };
+
+    const fromUrl = new URLSearchParams(window.location.search).get("q");
+    if (fromUrl) applyGlobalSearch(fromUrl);
+
+    const onGlobalSearch = (event: Event) => {
+      applyGlobalSearch((event as CustomEvent<string>).detail ?? "");
+    };
+    window.addEventListener("pcx:company-search", onGlobalSearch);
+    return () => window.removeEventListener("pcx:company-search", onGlobalSearch);
+  }, [resetCompanyPagination]);
 
   const handleNextCompanyPage = useCallback(() => {
     if (!nextCursor) {
@@ -511,19 +683,43 @@ export function CompaniesSection() {
     const controller = new AbortController();
     let cancelled = false;
 
+    const params = new URLSearchParams();
+    params.set('page', String(tablePage));
+    params.set('limit', String(tablePageSize));
+    if (currentCursor) params.set('cursor', currentCursor);
+    if (debouncedCompanySearch) params.set('search', debouncedCompanySearch);
+    if (selectedCategory) params.set('category', selectedCategory);
+    if (selectedEmployeeRange) params.set('employeeRange', selectedEmployeeRange);
+    if (selectedLocation) params.set('location', selectedLocation);
+
+    // Instant paint on reload: serve the last response for this exact query from
+    // sessionStorage (5 min TTL), then revalidate against the API in the background.
+    const cacheKey = `pcx_companies:${params.toString()}`;
+    let paintedFromCache = false;
+    try {
+      const raw = sessionStorage.getItem(cacheKey);
+      if (raw) {
+        const cached = JSON.parse(raw);
+        if (Date.now() - cached.ts < 5 * 60 * 1000 && Array.isArray(cached.companies)) {
+          setCompanies(cached.companies);
+          setTotalCompanies(cached.total ?? null);
+          setNextCursor(cached.nextCursor ?? null);
+          setHasNextPage(Boolean(cached.hasNextPage));
+          setLoadError(null);
+          setIsLoading(false);
+          paintedFromCache = true;
+        } else {
+          sessionStorage.removeItem(cacheKey);
+        }
+      }
+    } catch {
+      // corrupt cache entry — fall through to a normal fetch
+    }
+
     async function loadCompanies(attempt = 1) {
       if (cancelled) return;
-      setIsLoading(true);
-      if (attempt === 1) setLoadError(null);
-
-      const params = new URLSearchParams();
-      params.set('page', String(tablePage));
-      params.set('limit', String(tablePageSize));
-      if (currentCursor) params.set('cursor', currentCursor);
-      if (debouncedCompanySearch) params.set('search', debouncedCompanySearch);
-      if (selectedCategory) params.set('category', selectedCategory);
-      if (selectedEmployeeRange) params.set('employeeRange', selectedEmployeeRange);
-      if (selectedLocation) params.set('location', selectedLocation);
+      if (!paintedFromCache) setIsLoading(true);
+      if (attempt === 1 && !paintedFromCache) setLoadError(null);
 
       try {
         const response = await fetch(`/api/companies?${params.toString()}`, {
@@ -543,6 +739,17 @@ export function CompaniesSection() {
         setHasNextPage(Boolean(data.hasNextPage));
         setLoadError(null);
         setIsLoading(false);
+        try {
+          sessionStorage.setItem(cacheKey, JSON.stringify({
+            companies: data.companies,
+            total: data.total,
+            nextCursor: data.nextCursor,
+            hasNextPage: data.hasNextPage,
+            ts: Date.now(),
+          }));
+        } catch {
+          // sessionStorage full — skip caching this response
+        }
       } catch (err) {
         if ((err as Error).name === "AbortError" || cancelled) return;
 
@@ -555,8 +762,8 @@ export function CompaniesSection() {
           return;
         }
 
-        // After all retries failed
-        if (!cancelled) {
+        // After all retries failed; if we already painted from cache, keep showing it.
+        if (!cancelled && !paintedFromCache) {
           setCompanies([]);
           setTotalCompanies(null);
           setNextCursor(null);
@@ -587,6 +794,12 @@ export function CompaniesSection() {
   const filteredCompanies = companies;
   const isCompaniesBusy = isLoading || isSearchPending;
 
+  // Any live filter/search means the right panel shows matching companies;
+  // with nothing active it shows the enriched-leads finder instead.
+  const hasActiveCriteria = Boolean(
+    selectedCategory || selectedEmployeeRange || selectedLocation || companySearch.trim()
+  );
+
   const activeCompany =
     filteredCompanies.find((company) => company.id === selectedCompanyId) ??
     savedCompanies.find((company) => company.id === selectedCompanyId) ??
@@ -606,8 +819,47 @@ export function CompaniesSection() {
         className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
       >
         <div>
-          <h1 className="text-[24px] font-bold tracking-tight text-slate-900 dark:text-white">
-            Companies
+          <h1 className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1 text-[24px] font-bold tracking-tight">
+            <button
+              type="button"
+              onClick={() => {
+                setIsDetailView(false);
+                setSelectedCompanyId(null);
+              }}
+              className={cn(
+                "tracking-tight transition-colors duration-300",
+                mainTab === "companies" && isDetailView && activeCompany
+                  ? "text-slate-400 hover:text-slate-700 dark:text-slate-500 dark:hover:text-slate-200 cursor-pointer"
+                  : "text-slate-900 dark:text-white cursor-default"
+              )}
+            >
+              Companies
+            </button>
+            <AnimatePresence mode="popLayout">
+              {mainTab === "companies" && isDetailView && activeCompany ? (
+                <motion.span
+                  key={activeCompany.id}
+                  initial={{ opacity: 0, x: -14, filter: "blur(6px)" }}
+                  animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, x: 10, filter: "blur(6px)" }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className="inline-flex items-baseline gap-2.5"
+                >
+                  <span className="select-none bg-gradient-to-b from-indigo-400 to-fuchsia-500 bg-clip-text font-black italic text-transparent">
+                    //
+                  </span>
+                  <span className="relative bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent dark:from-indigo-400 dark:via-violet-400 dark:to-fuchsia-400">
+                    {activeCompany.name}
+                    <motion.span
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.45, delay: 0.15, ease: "easeOut" }}
+                      className="absolute -bottom-1 left-0 h-[2px] w-full origin-left rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-transparent"
+                    />
+                  </span>
+                </motion.span>
+              ) : null}
+            </AnimatePresence>
           </h1>
           <p className="text-[13px] text-slate-600 dark:text-slate-400">
             Discover target accounts, inspect firmographics, and move buyers into CRM workflows.
@@ -717,7 +969,7 @@ export function CompaniesSection() {
                         className="group cursor-pointer transition-colors hover:bg-slate-50 dark:hover:bg-[#16233A]"
                       >
                         <td className="px-4 py-3" style={{width: '60px'}}>
-                          <CompanyAvatar name={company.name} logo={`https://logo.clearbit.com/${company.domain}`} />
+                          <CompanyAvatar name={company.name} domain={company.domain} />
                         </td>
                         <td className="px-4 py-3" style={{minWidth: '200px'}}>
                           <p className="font-semibold text-slate-900 dark:text-white">{company.name}</p>
@@ -765,9 +1017,9 @@ export function CompaniesSection() {
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.35, delay: 0.05 }}
-          className="flex flex-col space-y-4"
+          className="flex flex-col"
         >
-          <div className="rounded-[14px] border border-slate-200 bg-white p-4 shadow-sm dark:border-[#22304A] dark:bg-[#111B2E]">
+          <div className="flex h-full flex-col rounded-[14px] border border-slate-200 bg-white p-4 shadow-sm dark:border-[#22304A] dark:bg-[#111B2E]">
             <div className="relative">
               <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
               <input
@@ -860,242 +1112,153 @@ export function CompaniesSection() {
               ) : null}
             </div>
 
-            <div className="mt-4 space-y-3">
-              <div className="relative">
-                <button
-                  onClick={() => {
-                    setShowCategoryFilter((value) => !value);
-                    setShowEmployeeFilter(false);
-                    setShowLocationFilter(false);
-                  }}
-                  className="flex h-10 w-full items-center justify-between rounded-[10px] border border-slate-200 bg-slate-50 px-3 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-200 dark:hover:bg-[#16233A]"
-                >
-                  <span className="truncate">
-                    {selectedCategory ? formatCategoryLabel(selectedCategory) : "Category"}
-                  </span>
-                  <ChevronDown className="size-4 text-slate-400" />
-                </button>
-                <AnimatePresence>
-                  {showCategoryFilter ? (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      className="absolute z-20 mt-2 w-full rounded-[12px] border border-slate-200 bg-white p-3 shadow-xl dark:border-[#22304A] dark:bg-[#111B2E]"
+            <div className="mt-4 flex-1 space-y-1.5">
+              {FILTER_OPTIONS.map((option) => {
+                const isOpen = openFilter === option.key;
+                const activeValue =
+                  option.key === "category" && selectedCategory
+                    ? formatCategoryLabel(selectedCategory)
+                    : option.key === "employee-headcount" && selectedEmployeeRange
+                      ? selectedEmployeeRange
+                      : option.key === "location" && selectedLocation
+                        ? selectedLocation
+                        : null;
+
+                return (
+                  <div
+                    key={option.key}
+                    className={cn(
+                      "rounded-[10px] border transition-colors",
+                      isOpen
+                        ? "border-indigo-300 bg-white shadow-sm dark:border-indigo-500/30 dark:bg-[#0E1830]"
+                        : "border-slate-200 bg-slate-50 hover:border-indigo-200 dark:border-[#22304A] dark:bg-[#0B1220] dark:hover:border-indigo-500/30"
+                    )}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setOpenFilter(isOpen ? null : option.key)}
+                      className="flex h-10 w-full items-center justify-between gap-2 px-3 text-[13px] font-medium text-slate-700 transition-colors dark:text-slate-200"
                     >
-                      <div className="relative">
-                        <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
-                        <input
-                          value={categorySearch}
-                          onChange={(event) => setCategorySearch(event.target.value)}
-                          placeholder="Search category..."
-                          className="h-9 w-full rounded-[9px] border border-slate-200 bg-slate-50 pl-9 pr-3 text-[12px] text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
+                      <span className="truncate">{option.label}</span>
+                      <span className="flex shrink-0 items-center gap-1.5">
+                        {activeValue ? (
+                          <span className="max-w-[110px] truncate rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300">
+                            {activeValue}
+                          </span>
+                        ) : null}
+                        <ChevronDown
+                          className={cn(
+                            "size-4 text-slate-400 transition-transform duration-200",
+                            isOpen && "rotate-180 text-indigo-500"
+                          )}
                         />
-                      </div>
-                      <div className="mt-3 max-h-56 space-y-1 overflow-y-auto">
-                        {filteredCategories.map((category) => (
-                          <button
-                            key={category}
-                            onClick={() => {
-                              setSelectedCategory(category);
-                              setShowCategoryFilter(false);
-                              setSelectedCompanyId(null);
-                              setIsDetailView(false);
-                              resetCompanyPagination();
-                              setFilterOrder((prev) => [...prev.filter((f) => f !== 'category'), 'category']);
-                            }}
-                            className="flex w-full items-center justify-between rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
-                          >
-                            <span>{formatCategoryLabel(category)}</span>
-                            {selectedCategory === category ? (
-                              <span className="text-[11px] text-indigo-600 dark:text-indigo-300">
-                                Selected
-                              </span>
-                            ) : null}
-                          </button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
-              </div>
-
-              <div className="relative">
-                <button
-                  onClick={() => {
-                    setShowEmployeeFilter((value) => !value);
-                    setShowCategoryFilter(false);
-                    setShowLocationFilter(false);
-                  }}
-                  className="flex h-10 w-full items-center justify-between rounded-[10px] border border-slate-200 bg-slate-50 px-3 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-200 dark:hover:bg-[#16233A]"
-                >
-                  <span>{selectedEmployeeRange ?? "Employee Range"}</span>
-                  <ChevronDown className="size-4 text-slate-400" />
-                </button>
-                <AnimatePresence>
-                  {showEmployeeFilter ? (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      className="absolute z-20 mt-2 w-full rounded-[12px] border border-slate-200 bg-white p-2 shadow-xl dark:border-[#22304A] dark:bg-[#111B2E]"
-                    >
-                      {COMPANY_EMPLOYEE_RANGES.map((range) => (
-                        <button
-                          key={range}
-                          onClick={() => {
-                            setSelectedEmployeeRange(range);
-                            setShowEmployeeFilter(false);
-                            setSelectedCompanyId(null);
-                            setIsDetailView(false);
-                            resetCompanyPagination();
-                            setFilterOrder((prev) => [...prev.filter((f) => f !== 'employeeRange'), 'employeeRange']);
-                          }}
-                          className="flex w-full rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
+                      </span>
+                    </button>
+                    <AnimatePresence initial={false}>
+                      {isOpen ? (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2, ease: "easeOut" }}
+                          className="overflow-hidden"
                         >
-                          {range}
-                        </button>
-                      ))}
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
-              </div>
-
-              <div className="relative">
-                <button
-                  onClick={() => {
-                    setShowLocationFilter((value) => !value);
-                    setShowCategoryFilter(false);
-                    setShowEmployeeFilter(false);
-                  }}
-                  className="flex h-10 w-full items-center justify-between rounded-[10px] border border-slate-200 bg-slate-50 px-3 text-[13px] font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-200 dark:hover:bg-[#16233A]"
-                >
-                  <span>{selectedLocation ?? "Location"}</span>
-                  <ChevronDown className="size-4 text-slate-400" />
-                </button>
-                <AnimatePresence>
-                  {showLocationFilter ? (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 8 }}
-                      className="absolute z-20 mt-2 w-full rounded-[12px] border border-slate-200 bg-white p-2 shadow-xl dark:border-[#22304A] dark:bg-[#111B2E]"
-                    >
-                      {COMPANY_LOCATION_REGIONS.map((region) => (
-                        <button
-                          key={region}
-                          onClick={() => {
-                            setSelectedLocation(region);
-                            setShowLocationFilter(false);
-                            setSelectedCompanyId(null);
-                            setIsDetailView(false);
-                            resetCompanyPagination();
-                            setFilterOrder((prev) => [...prev.filter((f) => f !== 'location'), 'location']);
-                          }}
-                          className="flex w-full rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
-                        >
-                          {region}
-                        </button>
-                      ))}
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
-              </div>
-            </div>
-          </div>
-
-          <div className="rounded-[14px] border border-slate-200 bg-white shadow-sm dark:border-[#22304A] dark:bg-[#111B2E]">
-            <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3 dark:border-[#22304A]">
-              <div>
-                <h2 className="text-[14px] font-bold text-slate-900 dark:text-white">Results</h2>
-                <p className="text-[12px] text-slate-500 dark:text-slate-400">
-                  Company matches based on the current filters
-                </p>
-              </div>
-            </div>
-
-            <div className="max-h-[720px] overflow-y-auto p-3">
-              {loadError ? (
-                <div className="rounded-[12px] border border-red-200 bg-red-50 px-4 py-8 text-center text-red-700 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-300">
-                  <p className="text-[14px] font-semibold">Could not load companies</p>
-                  <p className="mt-1 text-[12px]">{loadError}</p>
-                </div>
-              ) : isCompaniesBusy ? (
-                <div className="flex flex-col items-center justify-center p-10 text-slate-500">
-                  <div className="size-8 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-600 mb-4" />
-                  <p className="text-[13px] font-semibold">{isSearchPending ? "Searching Companies..." : "Loading Companies..."}</p>
-                </div>
-              ) : filteredCompanies.length === 0 ? (
-                <div className="rounded-[12px] border border-dashed border-slate-300 px-4 py-10 text-center dark:border-[#22304A]">
-                  <p className="text-[14px] font-semibold text-slate-900 dark:text-white">
-                    No companies found
-                  </p>
-                  <p className="mt-1 text-[12px] text-slate-500 dark:text-slate-400">
-                    Adjust the filters to view companies again.
-                  </p>
-                </div>
-              ) : (
-                <div className="space-y-2">
-                  {filteredCompanies.map((company) => {
-                    const isActive = company.id === activeCompany?.id;
-
-                    return (
-                      <button
-                        key={company.id}
-                        onClick={() => {
-                          setSelectedCompanyId(company.id);
-                          setIsDetailView(true);
-                          setActiveTab("Overview");
-                        }}
-                        className={cn(
-                          "w-full rounded-[12px] border p-3 text-left transition-all",
-                          isActive
-                            ? "border-indigo-300 bg-indigo-50/80 shadow-sm dark:border-indigo-500/30 dark:bg-indigo-500/10"
-                            : "border-slate-200 bg-white hover:border-indigo-200 hover:bg-slate-50 dark:border-[#22304A] dark:bg-[#111B2E] dark:hover:bg-[#16233A]"
-                        )}
-                      >
-                        <div className="flex items-start gap-3">
-                          <CompanyAvatar name={company.name} logo={`https://logo.clearbit.com/${company.domain}`} />
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-start justify-between gap-3">
-                              <div className="min-w-0">
-                                <p className="truncate text-[14px] font-semibold text-slate-900 dark:text-white">
-                                  {company.name}
-                                </p>
-                                <p className="mt-1 truncate text-[12px] text-slate-500 dark:text-slate-400">
-                                  {company.domain}
-                                </p>
+                          <div className="border-t border-slate-200 p-2 dark:border-[#22304A]">
+                            {option.key === "category" ? (
+                              <>
+                                <div className="relative">
+                                  <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
+                                  <input
+                                    value={categorySearch}
+                                    onChange={(event) => setCategorySearch(event.target.value)}
+                                    placeholder="Search category..."
+                                    className="h-9 w-full rounded-[9px] border border-slate-200 bg-slate-50 pl-9 pr-3 text-[12px] text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
+                                  />
+                                </div>
+                                <div className="mt-2 max-h-52 space-y-1 overflow-y-auto">
+                                  {filteredCategories.map((category) => (
+                                    <button
+                                      key={category}
+                                      type="button"
+                                      onClick={() => {
+                                        setSelectedCategory(category);
+                                        setOpenFilter(null);
+                                        setSelectedCompanyId(null);
+                                        setIsDetailView(false);
+                                        resetCompanyPagination();
+                                        setFilterOrder((prev) => [...prev.filter((f) => f !== 'category'), 'category']);
+                                      }}
+                                      className="flex w-full items-center justify-between rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
+                                    >
+                                      <span>{formatCategoryLabel(category)}</span>
+                                      {selectedCategory === category ? (
+                                        <Check className="size-3.5 text-indigo-500" />
+                                      ) : null}
+                                    </button>
+                                  ))}
+                                </div>
+                              </>
+                            ) : option.key === "employee-headcount" ? (
+                              <div className="space-y-1">
+                                {COMPANY_EMPLOYEE_RANGES.map((range) => (
+                                  <button
+                                    key={range}
+                                    type="button"
+                                    onClick={() => {
+                                      setSelectedEmployeeRange(range);
+                                      setOpenFilter(null);
+                                      setSelectedCompanyId(null);
+                                      setIsDetailView(false);
+                                      resetCompanyPagination();
+                                      setFilterOrder((prev) => [...prev.filter((f) => f !== 'employeeRange'), 'employeeRange']);
+                                    }}
+                                    className="flex w-full items-center justify-between rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
+                                  >
+                                    <span>{range}</span>
+                                    {selectedEmployeeRange === range ? (
+                                      <Check className="size-3.5 text-indigo-500" />
+                                    ) : null}
+                                  </button>
+                                ))}
                               </div>
-                              <span className="rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-semibold text-slate-600 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300">
-                                {company.engagementScore}
-                              </span>
-                            </div>
-                            <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-slate-500 dark:text-slate-400">
-                              <span className="inline-flex items-center gap-1">
-                                <MapPin className="size-3.5" />
-                                {company.headquarters}
-                              </span>
-                              <span className="inline-flex items-center gap-1">
-                                <Users className="size-3.5" />
-                                {company.employeeRange}
-                              </span>
-                            </div>
-                            <p className="mt-2 text-[11px] font-medium text-slate-600 dark:text-slate-300">
-                              {formatCategoryLabel(company.category)}
-                            </p>
+                            ) : option.key === "location" ? (
+                              <div className="space-y-1">
+                                {COMPANY_LOCATION_REGIONS.map((region) => (
+                                  <button
+                                    key={region}
+                                    type="button"
+                                    onClick={() => {
+                                      setSelectedLocation(region);
+                                      setOpenFilter(null);
+                                      setSelectedCompanyId(null);
+                                      setIsDetailView(false);
+                                      resetCompanyPagination();
+                                      setFilterOrder((prev) => [...prev.filter((f) => f !== 'location'), 'location']);
+                                    }}
+                                    className="flex w-full items-center justify-between rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
+                                  >
+                                    <span>{region}</span>
+                                    {selectedLocation === region ? (
+                                      <Check className="size-3.5 text-indigo-500" />
+                                    ) : null}
+                                  </button>
+                                ))}
+                              </div>
+                            ) : (
+                              <p className="px-3 py-3 text-center text-[12px] text-slate-400 dark:text-slate-500">
+                                Coming soon — this filter unlocks with a connected data source.
+                              </p>
+                            )}
                           </div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-
-            <div className="border-t border-slate-200 px-4 py-3 text-[12px] text-slate-500 dark:border-[#22304A] dark:text-slate-400">
-              Showing {filteredCompanies.length} companies{hasNextPage ? " - more available" : ""}
+                        </motion.div>
+                      ) : null}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
             </div>
           </div>
+
         </motion.div>
 
         <motion.div
@@ -1105,8 +1268,10 @@ export function CompaniesSection() {
           className="flex flex-col min-h-[600px] xl:min-h-0 xl:relative"
         >
           <div className="flex h-full w-full flex-col xl:absolute xl:inset-0">
-          {!isDetailView ? (
-            <CompanyTable 
+          {!isDetailView && !hasActiveCriteria ? (
+            <EnrichedLeadsFinderPanel />
+          ) : !isDetailView ? (
+            <CompanyTable
               companies={filteredCompanies}
               page={tablePage}
               pageSize={tablePageSize}
@@ -1128,7 +1293,7 @@ export function CompaniesSection() {
               <div className="rounded-[10px] border border-slate-200 bg-white p-3.5 shadow-sm dark:border-[#22304A] dark:bg-[#111B2E]">
                 <div className="flex flex-col gap-3 xl:flex-row xl:items-start xl:justify-between">
                   <div className="flex items-start gap-3">
-                    <CompanyAvatar name={activeCompany.name} logo={`https://logo.clearbit.com/${activeCompany.domain}`} className="size-14 rounded-[10px]" />
+                    <CompanyAvatar name={activeCompany.name} domain={activeCompany.domain} className="size-14 rounded-[10px]" />
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
                         <h2 className="text-[18px] font-bold tracking-tight text-slate-900 dark:text-white">
@@ -1147,21 +1312,7 @@ export function CompaniesSection() {
                         {activeCompany.description}
                       </p>
                       <div className="mt-2.5 flex flex-wrap items-center gap-3 text-[12px] text-slate-600 dark:text-slate-300">
-                        {(() => {
-                          const link = companyWebsiteLink(activeCompany);
-                          return (
-                            <a
-                              href={link.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 font-semibold text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300"
-                            >
-                              <Globe className="size-3.5" />
-                              {link.label}
-                              <ExternalLink className="size-3" />
-                            </a>
-                          );
-                        })()}
+                        <CompanyWebsiteLink company={activeCompany} />
                         <span className="inline-flex items-center gap-1.5">
                           <Mail className="size-3.5 text-slate-400" />
                           {activeCompany.email}

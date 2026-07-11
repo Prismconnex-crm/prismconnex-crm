@@ -13,13 +13,22 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Mic2, ChevronDown } from "lucide-react";
 
 export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
   const router = useRouter();
   const [searchFocused, setSearchFocused] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [newMenuOpen, setNewMenuOpen] = useState(false);
+
+  const submitSearch = () => {
+    const query = searchValue.trim();
+    if (!query) return;
+    // Companies section listens for this when already mounted; the ?q= param
+    // covers the case where the search triggers a navigation to the page.
+    router.push(`/app/companies?q=${encodeURIComponent(query)}`);
+    window.dispatchEvent(new CustomEvent("pcx:company-search", { detail: query }));
+  };
 
   const handleSignOut = async () => {
     await fetch("/api/auth/sign-out", { method: "POST" });
@@ -44,6 +53,11 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
           <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-500 z-10" />
           <input
             type="text"
+            value={searchValue}
+            onChange={(event) => setSearchValue(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === "Enter") submitSearch();
+            }}
             placeholder="Search events, companies, people, deals..."
             className="w-full h-10 rounded-xl border border-white/[0.08] bg-[#141A2D] pl-10 pr-4 text-sm text-slate-200 placeholder:text-slate-500 focus:border-indigo-500/50 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all shadow-inner"
             onFocus={() => setSearchFocused(true)}
@@ -90,14 +104,6 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
             <span className="absolute inline-flex size-full animate-ping rounded-full bg-accent/75" />
             <span className="relative inline-flex size-2 rounded-full bg-accent" />
           </span>
-        </div>
-
-        {/* Intelligence Icon (Pinterest Style) */}
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all cursor-pointer group">
-          <div className="relative flex items-center justify-center size-8 rounded-full bg-gradient-to-tr from-indigo-500 to-cyan-400 p-1.5 shadow-glow-sm transition-transform group-hover:scale-110">
-             <Mic2 className="size-full text-white" strokeWidth={2.5} />
-          </div>
-          <span className="text-[11px] font-black uppercase tracking-wider text-slate-400 group-hover:text-white transition-colors">Event Intel</span>
         </div>
 
         {/* ThemeToggle is kept from custom component but enclosed visually */}
