@@ -193,7 +193,7 @@ export function EnrichedLeadsFinderPanel() {
             <Wand2 className="size-5 text-white" />
           </div>
           <h2 className="mt-4 bg-gradient-to-r from-slate-900 via-indigo-700 to-slate-900 bg-clip-text text-[26px] font-bold tracking-tight text-transparent dark:from-white dark:via-indigo-200 dark:to-white">
-            Find your enrich Leads
+            Find anything
           </h2>
           <p className="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">
             Describe your ideal buyers in simple terms and we&apos;ll generate a precise lead search.
