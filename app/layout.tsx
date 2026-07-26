@@ -4,7 +4,7 @@ import "./globals.css";
 import { AppProviders } from "@/components/providers/app-providers";
 import { getMessages, getRequestLocale } from "@/lib/i18n";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   title: "Prismconnex CRM",
@@ -17,7 +17,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang={locale} suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={`${inter.className} ${inter.variable}`}>
         <AppProviders locale={locale} messages={messages}>
           {children}
         </AppProviders>

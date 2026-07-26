@@ -1,47 +1,26 @@
 import { NextResponse } from "next/server";
-import { ensureSQLiteReadPragmas, prisma } from "@/lib/db/sqlite-companies";
+import { prisma } from "@/lib/db/prisma";
 
 export const dynamic = "force-dynamic";
 
 const DEFAULT_LIMIT = 30;
 const MAX_LIMIT = 100;
 
-// Only select columns we actually need for the list view (faster I/O)
+// Only select columns we actually need for the list view (faster I/O).
+// rowCursor is bigint in Postgres; cast to int so JSON serialization works
+// (max value ~36.5M fits comfortably).
 const LIST_COLUMNS = `
-  rowid AS rowCursor,
+  "rowCursor"::int AS "rowCursor",
   id,
   name,
   category,
   domain,
   founded,
-  employeeRange,
+  "employeeRange",
   headquarters,
   region,
-  engagementScore,
+  "engagementScore",
   tags,
-  highlights,
-  insights
-`;
-
-// Full columns for detail view (when needed)
-const DETAIL_COLUMNS = `
-  rowid AS rowCursor,
-  id,
-  name,
-  category,
-  description,
-  domain,
-  website,
-  founded,
-  employeeRange,
-  headquarters,
-  region,
-  revenueRange,
-  engagementScore,
-  trustSignals,
-  tags,
-  email,
-  phone,
   highlights,
   insights
 `;
@@ -113,8 +92,6 @@ function formatCompany(row: CompanyRow) {
 
 export async function GET(request: Request) {
   try {
-    await ensureSQLiteReadPragmas();
-
     const { searchParams } = new URL(request.url);
     const limit = parseLimit(searchParams.get("limit"));
     const page = Math.max(1, Number.parseInt(searchParams.get("page") || "1", 10) || 1);
@@ -122,31 +99,89 @@ export async function GET(request: Request) {
     const category = cleanParam(searchParams.get("category"));
     const employeeRange = cleanParam(searchParams.get("employeeRange"));
     const region = cleanParam(searchParams.get("location"));
+    const country = cleanParam(searchParams.get("country"));
     const afterRowid = Number.parseInt(searchParams.get("cursor") || "0", 10) || 0;
 
     const where: string[] = [];
     const params: SqlParam[] = [];
+    // Postgres positional placeholders: push the value, use the returned $n.
+    const p = (value: SqlParam) => {
+      params.push(value);
+      return `$${params.length}`;
+    };
 
-    // ── Search mode: case-insensitive prefix search via the NOCASE name index ──
+    // headquarters is stored as "City, Country" (occasionally "City, State,
+    // Country"), so the country is the last comma-segment. Matching the extracted
+    // country by equality (rather than a leading-wildcard `LIKE '%, X'`, which can
+    // never use an index and full-scans 36M rows) lets the query hit
+    // idx_discovery_cat_region_country_emp. The expression MUST match the index's
+    // expression exactly. The dataset mixes short/long country names, so match both.
+    const COUNTRY_EXPR = `trim(split_part(headquarters, ',', -1))`;
+    const COUNTRY_ALIASES: Record<string, string[]> = {
+      USA: ["USA", "United States"],
+      UK: ["UK", "United Kingdom"],
+    };
+    // Each country lives in exactly one region; pinning it lets the query
+    // planner use the (category, region, ...) composite indexes instead
+    // of probing the whole table for the headquarters suffix.
+    const COUNTRY_REGION: Record<string, string> = {
+      USA: "Americas",
+      Canada: "Americas",
+      UK: "Europe",
+      Germany: "Europe",
+      France: "Europe",
+      India: "Asia-Pacific",
+      Japan: "Asia-Pacific",
+      Singapore: "Asia-Pacific",
+      Australia: "Asia-Pacific",
+    };
+    // The dataset mixes coarse and fine-grained headcount bands; expand the
+    // coarse ones so e.g. "51-200" also matches rows stored as "51-100"/"101-200".
+    const EMPLOYEE_RANGE_EXPANSION: Record<string, string[]> = {
+      "51-200": ["51-200", "51-100", "101-200"],
+      "1001-5000": ["1001-5000", "1001-2000", "2001-5000"],
+      "1001+": ["1001+", "1001-2000", "2001-5000", "1001-5000", "5001-10000", "10001+"],
+    };
+    const applyEmployeeFilter = () => {
+      if (!employeeRange) return;
+      const values = EMPLOYEE_RANGE_EXPANSION[employeeRange] ?? [employeeRange];
+      where.push(`"employeeRange" IN (${values.map((v) => p(v)).join(",")})`);
+    };
+    const applyCountryFilter = () => {
+      if (!country) return;
+      const names = COUNTRY_ALIASES[country] ?? [country];
+      where.push(`${COUNTRY_EXPR} IN (${names.map((n) => p(n)).join(",")})`);
+      const inferredRegion = COUNTRY_REGION[country];
+      if (inferredRegion && !region) {
+        where.push(`region = ${p(inferredRegion)}`);
+      }
+    };
+
+    // ── Search mode: case-insensitive prefix search via the lower(name) index ──
+    // idx_discovery_name_lower_pattern is a text_pattern_ops index, which only
+    // serves the pattern operators (~>=~ / ~<~), not collation-aware >= / < —
+    // and unlike a parameterized LIKE it stays index-scannable with bound
+    // parameters. ORDER BY must use the same operator ordering to stay sorted.
     if (search) {
-      const upperBound = search.slice(0, -1) + String.fromCharCode(search.charCodeAt(search.length - 1) + 1);
-      where.push("name >= ? COLLATE NOCASE AND name < ? COLLATE NOCASE");
-      params.push(search, upperBound);
+      const lower = search.toLowerCase();
+      const upperBound = lower.slice(0, -1) + String.fromCharCode(lower.charCodeAt(lower.length - 1) + 1);
+      where.push(`lower(name) ~>=~ ${p(lower)} AND lower(name) ~<~ ${p(upperBound)}`);
 
       // Add other filters on top of search
-      if (category) { where.push("category = ?"); params.push(category); }
-      if (employeeRange) { where.push("employeeRange = ?"); params.push(employeeRange); }
-      if (region) { where.push("region = ?"); params.push(region); }
+      if (category) where.push(`category = ${p(category)}`);
+      applyEmployeeFilter();
+      if (region) where.push(`region = ${p(region)}`);
+      applyCountryFilter();
 
       const sql = `
         SELECT ${LIST_COLUMNS}
-        FROM Company
+        FROM "DiscoveryCompany"
         WHERE ${where.join(" AND ")}
-        ORDER BY name COLLATE NOCASE ASC
-        LIMIT ?
+        ORDER BY lower(name) USING ~<~
+        LIMIT ${p(limit + 1)}
       `;
 
-      const rows = await prisma.$queryRawUnsafe<CompanyRow[]>(sql, ...params, limit + 1);
+      const rows = await prisma.$queryRawUnsafe<CompanyRow[]>(sql, ...params);
       const pageRows = rows.slice(0, limit);
       const hasNextPage = rows.length > limit;
 
@@ -162,29 +197,30 @@ export async function GET(request: Request) {
       });
     }
 
-    // ── Browse mode: use rowid for instant pagination ──
-    // rowid DESC shows newest companies first (Indian MNCs were inserted last = highest rowids)
-    if (category) { where.push("category = ?"); params.push(category); }
-    if (employeeRange) { where.push("employeeRange = ?"); params.push(employeeRange); }
-    if (region) { where.push("region = ?"); params.push(region); }
+    // ── Browse mode: use rowCursor for instant pagination ──
+    // rowCursor DESC shows newest companies first (Indian MNCs were inserted
+    // last = highest cursors; rowCursor mirrors the original SQLite rowid).
+    if (category) where.push(`category = ${p(category)}`);
+    applyEmployeeFilter();
+    if (region) where.push(`region = ${p(region)}`);
+    applyCountryFilter();
 
-    // Cursor-based pagination using rowid
+    // Cursor-based pagination using rowCursor
     if (afterRowid > 0) {
-      where.push("rowid < ?");
-      params.push(afterRowid);
+      where.push(`"rowCursor" < ${p(afterRowid)}`);
     }
 
     const whereClause = where.length > 0 ? where.join(" AND ") : "1 = 1";
 
     const sql = `
       SELECT ${LIST_COLUMNS}
-      FROM Company
+      FROM "DiscoveryCompany"
       WHERE ${whereClause}
-      ORDER BY rowid DESC
-      LIMIT ?
+      ORDER BY "DiscoveryCompany"."rowCursor" DESC
+      LIMIT ${p(limit + 1)}
     `;
 
-    const rows = await prisma.$queryRawUnsafe<CompanyRow[]>(sql, ...params, limit + 1);
+    const rows = await prisma.$queryRawUnsafe<CompanyRow[]>(sql, ...params);
     const pageRows = rows.slice(0, limit);
     const hasNextPage = rows.length > limit;
     const lastRow = pageRows[pageRows.length - 1];

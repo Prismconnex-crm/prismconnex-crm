@@ -15,6 +15,19 @@ export const COMPANY_EMPLOYEE_RANGES = [
   "1001+",
 ] as const;
 
+// Countries present in the discovery dataset's `headquarters` values ("City, Country")
+export const COMPANY_COUNTRIES = [
+  "Australia",
+  "Canada",
+  "France",
+  "Germany",
+  "India",
+  "Japan",
+  "Singapore",
+  "UK",
+  "USA",
+] as const;
+
 export const COMPANY_LOCATION_REGIONS = [
   "Americas",
   "Europe",

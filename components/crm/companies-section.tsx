@@ -29,9 +29,11 @@ import { cn } from "@/lib/utils";
 import { EnrichedLeadsFinderPanel } from "@/components/crm/enriched-leads-finder-panel";
 import {
   COMPANY_CATEGORIES,
+  COMPANY_COUNTRIES,
   COMPANY_EMPLOYEE_RANGES,
   COMPANY_LOCATION_REGIONS,
 } from "@/lib/company-classification";
+import { parseLeadQuery } from "@/lib/lead-query";
 
 type CompanyEvent = {
   name: string;
@@ -353,7 +355,7 @@ const FILTER_OPTIONS: { key: string; label: string }[] = [
   { key: "ai-lookalikes", label: "AI Lookalikes" },
   { key: "category", label: "Category" },
   { key: "location", label: "Location" },
-  { key: "type-business-model", label: "Type & Business Model" },
+  { key: "country", label: "Country" },
   { key: "keywords", label: "Keywords" },
   { key: "employee-headcount", label: "Employee Headcount" },
   { key: "industry", label: "Industry" },
@@ -361,17 +363,11 @@ const FILTER_OPTIONS: { key: string; label: string }[] = [
   { key: "technologies", label: "Technologies" },
   { key: "revenue", label: "Revenue" },
   { key: "funding", label: "Funding" },
-  { key: "headcount-growth", label: "Headcount Growth" },
-  { key: "headcount-department", label: "Headcount by Department" },
-  { key: "headcount-location", label: "Headcount by Location" },
   { key: "founded-year", label: "Founded Year" },
   { key: "job-posting", label: "Job Posting" },
   { key: "ai-attributes", label: "AI Attributes" },
-  { key: "email-provider", label: "Company Email Provider" },
-  { key: "awards-certs", label: "Company Awards & Certs" },
   { key: "website-traffic", label: "Website Traffic" },
   { key: "key-executives-events", label: "Key Executives Events" },
-  { key: "company-news", label: "Company News" },
 ];
 
 function CompanyTable({
@@ -627,6 +623,7 @@ export function CompaniesSection() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedEmployeeRange, setSelectedEmployeeRange] = useState<string | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [filterOrder, setFilterOrder] = useState<string[]>([]);
   const debouncedCompanySearch = useDebouncedValue(companySearch.trim(), 300);
   const isSearchPending = companySearch.trim() !== debouncedCompanySearch;
@@ -662,6 +659,33 @@ export function CompaniesSection() {
     return () => window.removeEventListener("pcx:company-search", onGlobalSearch);
   }, [resetCompanyPagination]);
 
+  // "Find your enrich Leads" prompt: translate the free-text query into the
+  // same filters the left rail uses, so the applied changes stay visible there.
+  const handleLeadQuery = useCallback((raw: string) => {
+    const parsed = parseLeadQuery(raw);
+    const matchedAnyFilter =
+      parsed.category || parsed.country || parsed.region || parsed.employeeRange || parsed.limit;
+
+    setMainTab("companies");
+    setIsDetailView(false);
+    setSelectedCompanyId(null);
+
+    const order: string[] = [];
+    if (parsed.category) { setSelectedCategory(parsed.category); order.push("category"); }
+    if (parsed.employeeRange) { setSelectedEmployeeRange(parsed.employeeRange); order.push("employeeRange"); }
+    if (parsed.region) { setSelectedLocation(parsed.region); order.push("location"); }
+    if (parsed.country) { setSelectedCountry(parsed.country); order.push("country"); }
+    if (order.length) {
+      setFilterOrder((prev) => [...prev.filter((f) => !order.includes(f)), ...order]);
+    }
+    if (parsed.limit) setTablePageSize(Math.min(100, Math.max(1, parsed.limit)));
+
+    // Nothing recognized — treat the text as a company-name search instead.
+    if (!matchedAnyFilter) setCompanySearch(raw);
+
+    resetCompanyPagination();
+  }, [resetCompanyPagination]);
+
   const handleNextCompanyPage = useCallback(() => {
     if (!nextCursor) {
       return;
@@ -691,6 +715,7 @@ export function CompaniesSection() {
     if (selectedCategory) params.set('category', selectedCategory);
     if (selectedEmployeeRange) params.set('employeeRange', selectedEmployeeRange);
     if (selectedLocation) params.set('location', selectedLocation);
+    if (selectedCountry) params.set('country', selectedCountry);
 
     // Instant paint on reload: serve the last response for this exact query from
     // sessionStorage (5 min TTL), then revalidate against the API in the background.
@@ -780,7 +805,7 @@ export function CompaniesSection() {
       cancelled = true;
       controller.abort();
     };
-  }, [debouncedCompanySearch, currentCursor, selectedCategory, selectedEmployeeRange, selectedLocation, tablePage, tablePageSize]);
+  }, [debouncedCompanySearch, currentCursor, selectedCategory, selectedEmployeeRange, selectedLocation, selectedCountry, tablePage, tablePageSize]);
 
   const filteredCategories = useMemo(() => {
     const query = categorySearch.trim().toLowerCase();
@@ -797,7 +822,7 @@ export function CompaniesSection() {
   // Any live filter/search means the right panel shows matching companies;
   // with nothing active it shows the enriched-leads finder instead.
   const hasActiveCriteria = Boolean(
-    selectedCategory || selectedEmployeeRange || selectedLocation || companySearch.trim()
+    selectedCategory || selectedEmployeeRange || selectedLocation || selectedCountry || companySearch.trim()
   );
 
   const activeCompany =
@@ -861,7 +886,7 @@ export function CompaniesSection() {
               ) : null}
             </AnimatePresence>
           </h1>
-          <p className="text-[13px] text-slate-600 dark:text-slate-400">
+          <p className="text-[13px] text-slate-900 dark:text-slate-400">
             Discover target accounts, inspect firmographics, and move buyers into CRM workflows.
           </p>
         </div>
@@ -1041,6 +1066,7 @@ export function CompaniesSection() {
                   setSelectedCategory(null);
                   setSelectedEmployeeRange(null);
                   setSelectedLocation(null);
+                  setSelectedCountry(null);
                   setSelectedCompanyId(null);
                   setIsDetailView(false);
                   setFilterOrder([]);
@@ -1048,7 +1074,7 @@ export function CompaniesSection() {
                 }}
                 className={cn(
                   "rounded-full border px-3 py-1 text-[11px] font-semibold transition-colors",
-                  !selectedCategory && !selectedEmployeeRange && !selectedLocation
+                  !selectedCategory && !selectedEmployeeRange && !selectedLocation && !selectedCountry
                     ? "border-slate-900 bg-slate-900 text-white dark:border-white dark:bg-white dark:text-[#0B1220]"
                     : "border-slate-200 bg-white text-slate-600 hover:border-indigo-300 hover:text-slate-900 dark:border-[#22304A] dark:bg-[#111B2E] dark:text-slate-300 dark:hover:text-white"
                 )}
@@ -1070,14 +1096,22 @@ export function CompaniesSection() {
                   {selectedLocation}
                 </span>
               ) : null}
-              {(selectedCategory || selectedEmployeeRange || selectedLocation) ? (
+              {selectedCountry ? (
+                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold text-slate-700 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300">
+                  {selectedCountry}
+                </span>
+              ) : null}
+              {(selectedCategory || selectedEmployeeRange || selectedLocation || selectedCountry) ? (
                 <button
                   onClick={() => {
                     const newOrder = [...filterOrder];
                     let cleared = false;
                     while (newOrder.length > 0 && !cleared) {
                       const last = newOrder.pop()!;
-                      if (last === 'location' && selectedLocation) {
+                      if (last === 'country' && selectedCountry) {
+                        setSelectedCountry(null);
+                        cleared = true;
+                      } else if (last === 'location' && selectedLocation) {
                         setSelectedLocation(null);
                         cleared = true;
                       } else if (last === 'employeeRange' && selectedEmployeeRange) {
@@ -1089,7 +1123,9 @@ export function CompaniesSection() {
                       }
                     }
                     if (!cleared) {
-                      if (selectedLocation) {
+                      if (selectedCountry) {
+                        setSelectedCountry(null);
+                      } else if (selectedLocation) {
                         setSelectedLocation(null);
                       } else if (selectedEmployeeRange) {
                         setSelectedEmployeeRange(null);
@@ -1122,7 +1158,9 @@ export function CompaniesSection() {
                       ? selectedEmployeeRange
                       : option.key === "location" && selectedLocation
                         ? selectedLocation
-                        : null;
+                        : option.key === "country" && selectedCountry
+                          ? selectedCountry
+                          : null;
 
                 return (
                   <div
@@ -1137,7 +1175,7 @@ export function CompaniesSection() {
                     <button
                       type="button"
                       onClick={() => setOpenFilter(isOpen ? null : option.key)}
-                      className="flex h-10 w-full items-center justify-between gap-2 px-3 text-[13px] font-medium text-slate-700 transition-colors dark:text-slate-200"
+                      className="flex h-10 w-full items-center justify-between gap-2 px-3 text-[13px] font-medium text-slate-700 transition-colors [font-family:var(--font-inter),'Inter',sans-serif] dark:text-slate-200"
                     >
                       <span className="truncate">{option.label}</span>
                       <span className="flex shrink-0 items-center gap-1.5">
@@ -1244,6 +1282,29 @@ export function CompaniesSection() {
                                   </button>
                                 ))}
                               </div>
+                            ) : option.key === "country" ? (
+                              <div className="max-h-52 space-y-1 overflow-y-auto">
+                                {COMPANY_COUNTRIES.map((countryName) => (
+                                  <button
+                                    key={countryName}
+                                    type="button"
+                                    onClick={() => {
+                                      setSelectedCountry(countryName);
+                                      setOpenFilter(null);
+                                      setSelectedCompanyId(null);
+                                      setIsDetailView(false);
+                                      resetCompanyPagination();
+                                      setFilterOrder((prev) => [...prev.filter((f) => f !== 'country'), 'country']);
+                                    }}
+                                    className="flex w-full items-center justify-between rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
+                                  >
+                                    <span>{countryName}</span>
+                                    {selectedCountry === countryName ? (
+                                      <Check className="size-3.5 text-indigo-500" />
+                                    ) : null}
+                                  </button>
+                                ))}
+                              </div>
                             ) : (
                               <p className="px-3 py-3 text-center text-[12px] text-slate-400 dark:text-slate-500">
                                 Coming soon — this filter unlocks with a connected data source.
@@ -1269,7 +1330,7 @@ export function CompaniesSection() {
         >
           <div className="flex h-full w-full flex-col xl:absolute xl:inset-0">
           {!isDetailView && !hasActiveCriteria ? (
-            <EnrichedLeadsFinderPanel />
+            <EnrichedLeadsFinderPanel onQuery={handleLeadQuery} />
           ) : !isDetailView ? (
             <CompanyTable
               companies={filteredCompanies}

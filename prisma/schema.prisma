@@ -4,8 +4,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ─── Foundation (user-provided) ───────────────────────────────
@@ -135,6 +136,43 @@ model Company {
   @@index([region], map: "idx_company_region")
   @@index([category, employeeRange, region], map: "idx_company_filters")
   @@index([workspaceId])
+}
+
+// Shared company discovery dataset (34.6M rows), migrated off the local-only
+// SQLite dev.db so every team member can query it without the 27GB file.
+// Unscoped (no workspaceId) — same shared-across-tenants dataset SQLite was.
+model DiscoveryCompany {
+  rowCursor       BigInt   @id @default(autoincrement())
+  id              String   @unique
+  name            String
+  category        String?
+  description     String?
+  domain          String?
+  website         String?
+  founded         String?
+  employeeRange   String?
+  headquarters    String?
+  region          String?
+  revenueRange    String?
+  engagementScore Int?     @default(0)
+  trustSignals    String?
+  tags            String?
+  email           String?
+  phone           String?
+  highlights      String?
+  insights        String?
+
+  @@index([employeeRange], map: "idx_discovery_employee")
+  @@index([region], map: "idx_discovery_region")
+  // Progressive filter workflow (Category -> Location -> Country -> Headcount),
+  // list ordered by rowCursor DESC. Trailing rowCursor lets the Category(+Location)
+  // step be a pre-sorted index scan that stops at LIMIT.
+  @@index([category, region, rowCursor(sort: Desc)], map: "idx_discovery_cat_region_cursor")
+  // NOTE: an expression index also exists on the extracted country for the
+  // Country/Headcount steps — Prisma can't express it, so it lives only in
+  // prisma/migrations/20260725_add_discovery_filter_workflow_indexes:
+  //   ("category","region",(trim(split_part("headquarters",',',-1))),"employeeRange")
+  //   as idx_discovery_cat_region_country_emp
 }
 
 // Bookmarks into the shared SQLite discovery dataset. `snapshot` carries the

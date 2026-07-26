@@ -118,7 +118,7 @@ function SearchCard({ search, tab }: { search: FinderSearch; tab: FinderTabKey }
             <LeadIcon className="size-3.5" />
           </span>
           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px]">
-            <span className="font-medium text-slate-500 dark:text-slate-400">{search.when}</span>
+            <span className="font-medium text-slate-800 dark:text-slate-400">{search.when}</span>
             <span className="text-slate-300 dark:text-slate-600">•</span>
             <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2 py-0.5 font-semibold text-indigo-700 dark:border-indigo-500/25 dark:bg-indigo-500/10 dark:text-indigo-300">
               {search.kind}
@@ -135,7 +135,7 @@ function SearchCard({ search, tab }: { search: FinderSearch; tab: FinderTabKey }
       </div>
 
       <div className="relative mt-3">
-        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+        <p className="text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-500">
           Your query
         </p>
         <p className="mt-1 truncate text-[13px] font-medium text-slate-800 dark:text-slate-100">
@@ -147,9 +147,9 @@ function SearchCard({ search, tab }: { search: FinderSearch; tab: FinderTabKey }
         {visibleChips.map((chip) => (
           <span
             key={`${chip.label}-${chip.value}`}
-            className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] text-slate-600 dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-slate-300"
+            className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] text-slate-800 dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-slate-300"
           >
-            <span className="text-slate-400 dark:text-slate-500">{chip.label}:</span>
+            <span className="text-slate-700 dark:text-slate-500">{chip.label}:</span>
             <span className="font-semibold text-slate-700 dark:text-slate-100">{chip.value}</span>
           </span>
         ))}
@@ -167,10 +167,20 @@ function SearchCard({ search, tab }: { search: FinderSearch; tab: FinderTabKey }
   );
 }
 
-export function EnrichedLeadsFinderPanel() {
+export function EnrichedLeadsFinderPanel({
+  onQuery,
+}: {
+  onQuery?: (raw: string) => void;
+}) {
   const [prompt, setPrompt] = useState("");
   const [activeTab, setActiveTab] = useState<FinderTabKey>("recent");
   const searches = activeTab === "saved" ? SAVED_SEARCHES : RECENT_SEARCHES;
+
+  const submitPrompt = () => {
+    const raw = prompt.trim();
+    if (!raw || !onQuery) return;
+    onQuery(raw);
+  };
 
   return (
     <motion.div
@@ -195,7 +205,7 @@ export function EnrichedLeadsFinderPanel() {
           <h2 className="mt-4 bg-gradient-to-r from-slate-900 via-indigo-700 to-slate-900 bg-clip-text text-[26px] font-bold tracking-tight text-transparent dark:from-white dark:via-indigo-200 dark:to-white">
             Find anything
           </h2>
-          <p className="mt-1.5 text-[13px] text-slate-500 dark:text-slate-400">
+          <p className="mt-1.5 text-[13px] text-slate-900 dark:text-slate-400">
             Describe your ideal buyers in simple terms and we&apos;ll generate a precise lead search.
           </p>
         </div>
@@ -208,6 +218,12 @@ export function EnrichedLeadsFinderPanel() {
               <textarea
                 value={prompt}
                 onChange={(event) => setPrompt(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" && !event.shiftKey) {
+                    event.preventDefault();
+                    submitPrompt();
+                  }
+                }}
                 rows={2}
                 placeholder="e.g., VP Marketing at B2B SaaS in India with 100+ employees..."
                 className="min-h-[48px] w-full resize-none bg-transparent pr-10 text-[13px] leading-6 text-slate-900 outline-none placeholder:text-slate-400 dark:text-white dark:placeholder:text-slate-500"
@@ -215,6 +231,7 @@ export function EnrichedLeadsFinderPanel() {
               <button
                 type="button"
                 aria-label="Generate lead search"
+                onClick={submitPrompt}
                 className={cn(
                   "absolute bottom-3 right-3 flex size-8 items-center justify-center rounded-full transition-all",
                   prompt.trim()
@@ -242,7 +259,7 @@ export function EnrichedLeadsFinderPanel() {
                     "relative flex items-center gap-1.5 px-4 py-2.5 text-[13px] font-semibold transition-colors",
                     isActive
                       ? "text-indigo-600 dark:text-indigo-300"
-                      : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
+                      : "text-slate-800 hover:text-slate-950 dark:text-slate-400 dark:hover:text-slate-200"
                   )}
                 >
                   {tab.key === "saved" ? <Bookmark className="size-3.5" /> : <Clock className="size-3.5" />}
