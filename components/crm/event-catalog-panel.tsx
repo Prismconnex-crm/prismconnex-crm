@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Building2, Calendar, Check, Heart, MapPin, Sparkles, X } from "lucide-react";
+import { Calendar, Check, Heart, MapPin, Sparkles, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { EventFilters, EventResult } from "@/models/event-query";
 
@@ -70,8 +70,20 @@ export function EventCatalogPanel({
   useEffect(() => {
     const savedLiked = localStorage.getItem("pc_liked_events");
     const savedTarget = localStorage.getItem("pc_target_events");
-    if (savedLiked) setLikedIds(new Set(JSON.parse(savedLiked)));
-    if (savedTarget) setTargetIds(new Set(JSON.parse(savedTarget)));
+    if (savedLiked) {
+      try {
+        setLikedIds(new Set(JSON.parse(savedLiked)));
+      } catch {
+        setLikedIds(new Set());
+      }
+    }
+    if (savedTarget) {
+      try {
+        setTargetIds(new Set(JSON.parse(savedTarget)));
+      } catch {
+        setTargetIds(new Set());
+      }
+    }
   }, []);
 
   const toggleLike = (e: React.MouseEvent, id: string) => {
@@ -219,12 +231,6 @@ export function EventCatalogPanel({
                         <MapPin className="size-3.5 text-slate-400 transition-colors group-hover:text-indigo-500" />
                         {event.city}, {event.country}
                       </div>
-                      {event.venue && event.venue !== "?" ? (
-                        <div className="mt-0.5 flex items-center gap-2 pl-[22px] text-[11px] text-slate-400 dark:text-slate-500">
-                          <Building2 className="size-3 shrink-0" />
-                          <span className="line-clamp-1">{event.venue}</span>
-                        </div>
-                      ) : null}
                     </td>
                     <td className="whitespace-nowrap px-4 py-4">
                       <div className="flex items-center gap-2 text-[12px] font-black text-slate-600 dark:text-[#E5E7EB]">
