@@ -37,6 +37,17 @@ export const eventFiltersSchema = z.object({
 
 export type EventFilters = z.infer<typeof eventFiltersSchema>;
 
+/**
+ * Body for the non-LLM paging route. The client replays the filters Claude
+ * already extracted, so Prev/Next never costs another model call.
+ */
+export const eventSearchSchema = z.object({
+  filters: eventFiltersSchema,
+  page: z.number().int().min(1).default(1),
+});
+
+export type EventSearchInput = z.infer<typeof eventSearchSchema>;
+
 export const companyQuerySchema = z.object({
   name: z.string().nullable().optional(),
 });
