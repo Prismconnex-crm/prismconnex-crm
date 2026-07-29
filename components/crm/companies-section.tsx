@@ -27,6 +27,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { EnrichedLeadsFinderPanel } from "@/components/crm/enriched-leads-finder-panel";
+import { EventResultsPanel } from "@/components/crm/event-results-panel";
+import type { EventResult } from "@/models/event-query";
 import {
   COMPANY_CATEGORIES,
   COMPANY_COUNTRIES,
@@ -34,6 +36,13 @@ import {
   COMPANY_LOCATION_REGIONS,
 } from "@/lib/company-classification";
 import { parseLeadQuery } from "@/lib/lead-query";
+
+type EventSearchState = {
+  query: string;
+  answer: string;
+  events: EventResult[];
+  totalMatched: number;
+};
 
 type CompanyEvent = {
   name: string;
@@ -618,6 +627,11 @@ export function CompaniesSection() {
   const [isDetailView, setIsDetailView] = useState(false);
   const [activeTab, setActiveTab] = useState("Overview");
   const [companySearch, setCompanySearch] = useState("");
+  // Natural-language search: Enter sends the query to /api/companies/ask, which
+  // decides whether it's about trade shows or companies. Never fires per
+  // keystroke — that would be one model call per character.
+  const [eventSearch, setEventSearch] = useState<EventSearchState | null>(null);
+  const [isAsking, setIsAsking] = useState(false);
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [categorySearch, setCategorySearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -818,6 +832,59 @@ export function CompaniesSection() {
 
   const filteredCompanies = companies;
   const isCompaniesBusy = isLoading || isSearchPending;
+
+  /**
+   * Sends the raw query to the assistant. On an event query the right pane
+   * swaps to the trade-show results; on a company query (or any failure —
+   * missing API key, rate limit, network) we quietly fall back to the existing
+   * prefix search so the box never feels broken.
+   */
+  const runAsk = useCallback(
+    async (rawQuery: string) => {
+      const query = rawQuery.trim();
+      if (query.length < 2) return;
+
+      setIsAsking(true);
+      try {
+        const response = await fetch("/api/companies/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ q: query }),
+        });
+
+        if (!response.ok) {
+          setEventSearch(null);
+          return;
+        }
+
+        const result = await response.json();
+
+        if (result.intent === "events") {
+          setEventSearch({
+            query,
+            answer: result.answer,
+            events: result.events,
+            totalMatched: result.totalMatched,
+          });
+          setSelectedCompanyId(null);
+          setIsDetailView(false);
+          return;
+        }
+
+        setEventSearch(null);
+        if (result.intent === "companies" && result.name && result.name !== query) {
+          setCompanySearch(result.name);
+          resetCompanyPagination();
+        }
+      } catch {
+        // Network failure — leave the prefix search in charge.
+        setEventSearch(null);
+      } finally {
+        setIsAsking(false);
+      }
+    },
+    [resetCompanyPagination]
+  );
 
   // Any live filter/search means the right panel shows matching companies;
   // with nothing active it shows the enriched-leads finder instead.
@@ -1053,12 +1120,25 @@ export function CompaniesSection() {
                   setCompanySearch(event.target.value);
                   setSelectedCompanyId(null);
                   setIsDetailView(false);
+                  setEventSearch(null);
                   resetCompanyPagination();
                 }}
-                placeholder="Search company name..."
-                className="h-10 w-full rounded-[10px] border border-slate-200 bg-slate-50 pl-10 pr-3 text-[13px] text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white dark:placeholder:text-slate-500"
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    void runAsk(companySearch);
+                  }
+                }}
+                placeholder="Search companies, or ask about events..."
+                className="h-10 w-full rounded-[10px] border border-slate-200 bg-slate-50 pl-10 pr-9 text-[13px] text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white dark:placeholder:text-slate-500"
               />
+              {isAsking ? (
+                <Sparkles className="absolute right-3 top-1/2 size-4 -translate-y-1/2 animate-pulse text-indigo-500" />
+              ) : null}
             </div>
+            <p className="mt-1.5 text-[10px] text-slate-400 dark:text-slate-500">
+              Press Enter to ask — e.g. &ldquo;shows happening in London UK&rdquo;
+            </p>
 
             <div className="mt-4 flex flex-wrap items-center gap-2">
               <button
@@ -1329,7 +1409,21 @@ export function CompaniesSection() {
           className="flex flex-col min-h-[600px] xl:min-h-0 xl:relative"
         >
           <div className="flex h-full w-full flex-col xl:absolute xl:inset-0">
-          {!isDetailView && !hasActiveCriteria ? (
+          {!isDetailView && eventSearch ? (
+            <div className="flex-1 overflow-y-auto pr-1">
+              <EventResultsPanel
+                query={eventSearch.query}
+                answer={eventSearch.answer}
+                events={eventSearch.events}
+                totalMatched={eventSearch.totalMatched}
+                onClear={() => {
+                  setEventSearch(null);
+                  setCompanySearch("");
+                  resetCompanyPagination();
+                }}
+              />
+            </div>
+          ) : !isDetailView && !hasActiveCriteria ? (
             <EnrichedLeadsFinderPanel onQuery={handleLeadQuery} />
           ) : !isDetailView ? (
             <CompanyTable
