@@ -32,6 +32,7 @@ function buildSystemPrompt(): string {
     '',
     `Today is ${today}. Resolve relative timing against it: "next March" is March of the coming year, "this autumn" is months 9 to 11, "Q1" is months 1 to 3.`,
     'Set a field to null whenever the query does not constrain it. Do not guess a country from a city unless you are confident (London -> United Kingdom is fine; Springfield is not).',
+    'A query that says "all categories", "any category", "under all the category" or similar is explicitly asking NOT to filter by industry — set category to null. Never pick an enum value to represent "all".',
     'Never invent or name specific events — you only produce filters.',
   ].join('\n');
 }
