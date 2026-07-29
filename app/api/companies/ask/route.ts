@@ -14,9 +14,12 @@ import { askAboutCompaniesOrEvents, isConfigured } from '@/services/event-query.
 export async function POST(request: NextRequest) {
   try {
     if (!isConfigured()) {
-      // No API key configured: tell the UI to fall back to plain prefix search
-      // rather than surfacing an error to the user.
-      return jsonOk({ intent: 'unavailable' as const }, 503);
+      // Surfaced in the UI rather than silently falling back: a dormant
+      // feature with no explanation is indistinguishable from a broken one.
+      return jsonOk(
+        { intent: 'unavailable' as const, reason: 'missing_api_key' as const },
+        503
+      );
     }
 
     const body = await request.json();
