@@ -839,7 +839,8 @@
       "complete": "設定を完了"
     },
     "errors": {
-      "complete": "オンボーディングを完了できませんでした"
+      "complete": "オンボーディングを完了できませんでした",
+      "workspaceName": "ワークスペース名は2文字以上で入力してください"
     }
   },
   "auth": {
@@ -856,14 +857,22 @@
       "subtitle": "Prismconnexワークスペースにサインイン",
       "fields": {
         "email": "メール",
-        "password": "パスワード"
+        "password": "パスワード",
+        "identifier": "メールアドレスまたは電話番号",
+        "secret": "パスワードまたはOTP"
       },
       "actions": {
         "submit": "サインイン",
         "divider": "または次で続行",
         "cognito": "AWS Cognitoで続行",
         "forgotPassword": "パスワードをお忘れですか？",
-        "createAccount": "アカウントを作成"
+        "createAccount": "アカウントを作成",
+        "showPassword": "パスワードを表示",
+        "hidePassword": "パスワードを非表示",
+        "google": "Googleで続行",
+        "microsoft": "Microsoftで続行",
+        "signUpPrompt": "アカウントをお持ちでないですか？",
+        "signUpLink": "新規登録"
       },
       "footer": {
         "language": "言語: {language}",
@@ -872,23 +881,58 @@
       "errors": {
         "signIn": "サインインに失敗しました",
         "cognito": "AWS Cognitoに接続できませんでした"
+      },
+      "placeholders": {
+        "identifier": "you@company.com",
+        "secret": "パスワードまたはOTPを入力"
+      },
+      "validation": {
+        "identifierRequired": "メールアドレスまたは電話番号を入力してください",
+        "identifierInvalid": "有効なメールアドレスまたはインドの電話番号を入力してください",
+        "passwordRequired": "パスワードを入力してください"
+      },
+      "status": {
+        "signedOut": "ログアウトしました。"
       }
     },
     "signUp": {
-      "title": "アカウントを作成",
+      "title": "新規登録",
       "subtitle": "Prismconnexを始めましょう",
       "fields": {
         "name": "氏名",
         "email": "メールアドレス",
-        "password": "パスワード"
+        "password": "パスワード",
+        "firstName": "名",
+        "middleName": "ミドルネーム",
+        "lastName": "姓",
+        "phone": "電話番号",
+        "confirmPassword": "パスワードの確認",
+        "optional": "(任意)"
       },
       "actions": {
-        "submit": "登録する",
+        "submit": "アカウントを作成",
         "signInPrompt": "すでにアカウントをお持ちですか？",
-        "signInLink": "サインイン"
+        "signInLink": "ログイン",
+        "showPassword": "パスワードを表示",
+        "hidePassword": "パスワードを非表示"
       },
       "errors": {
         "signUp": "アカウント作成に失敗しました"
+      },
+      "placeholders": {
+        "email": "you@company.com",
+        "phone": "+91 98765 43210"
+      },
+      "validation": {
+        "firstNameRequired": "名を入力してください",
+        "lastNameRequired": "姓を入力してください",
+        "emailRequired": "メールアドレスを入力してください",
+        "emailInvalid": "有効なメールアドレスを入力してください",
+        "phoneRequired": "電話番号を入力してください",
+        "phoneInvalid": "有効なインドの電話番号を入力してください",
+        "passwordMin": "パスワードは8文字以上で入力してください",
+        "confirmPasswordRequired": "確認用パスワードを入力してください",
+        "passwordMismatch": "パスワードが一致しません"
       }
     },
     "verify": {

@@ -12,10 +12,7 @@ export default function ResetPasswordPage() {
         </h2>
         <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{t('description')}</p>
         <div className="mt-6">
-          <Link
-            href="/auth/sign-in"
-            className="font-medium font-semibold text-blue-600 hover:text-blue-500"
-          >
+          <Link href="/auth/sign-in" className="font-semibold text-blue-600 hover:text-blue-500">
             {t('actions.return')}
           </Link>
         </div>

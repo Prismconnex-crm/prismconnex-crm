@@ -697,7 +697,8 @@
       "complete": "Complete Setup"
     },
     "errors": {
-      "complete": "Failed to complete onboarding"
+      "complete": "Failed to complete onboarding",
+      "workspaceName": "Enter a workspace name with at least 2 characters"
     }
   },
   "auth": {
@@ -714,14 +715,22 @@
       "subtitle": "Sign in to your Prismconnex workspace",
       "fields": {
         "email": "Email",
-        "password": "Password"
+        "password": "Password",
+        "identifier": "Email or Phone Number",
+        "secret": "Password or OTP"
       },
       "actions": {
         "submit": "Sign In",
         "divider": "or continue with",
         "cognito": "Continue with AWS Cognito",
         "forgotPassword": "Forgot password?",
-        "createAccount": "Create account"
+        "createAccount": "Create account",
+        "showPassword": "Show password",
+        "hidePassword": "Hide password",
+        "google": "Continue with Google",
+        "microsoft": "Continue with Microsoft",
+        "signUpPrompt": "Don't have an account?",
+        "signUpLink": "Sign Up"
       },
       "footer": {
         "language": "Language: {language}",
@@ -730,23 +739,58 @@
       "errors": {
         "signIn": "Failed to sign in",
         "cognito": "Could not connect to AWS Cognito"
+      },
+      "placeholders": {
+        "identifier": "you@company.com",
+        "secret": "Enter your password or OTP"
+      },
+      "validation": {
+        "identifierRequired": "Email or phone number is required",
+        "identifierInvalid": "Enter a valid email address or Indian phone number",
+        "passwordRequired": "Password is required"
+      },
+      "status": {
+        "signedOut": "You have been signed out successfully."
       }
     },
     "signUp": {
-      "title": "Create an account",
+      "title": "Sign Up",
       "subtitle": "Start your journey with Prismconnex",
       "fields": {
         "name": "Full Name",
         "email": "Email address",
-        "password": "Password"
+        "password": "Password",
+        "firstName": "First Name",
+        "middleName": "Middle Name",
+        "lastName": "Last Name",
+        "phone": "Phone Number",
+        "confirmPassword": "Confirm Password",
+        "optional": "(Optional)"
       },
       "actions": {
-        "submit": "Sign up",
+        "submit": "Create Account",
         "signInPrompt": "Already have an account?",
-        "signInLink": "Sign in"
+        "signInLink": "Login",
+        "showPassword": "Show password",
+        "hidePassword": "Hide password"
       },
       "errors": {
         "signUp": "Failed to sign up"
+      },
+      "placeholders": {
+        "email": "you@company.com",
+        "phone": "+91 98765 43210"
+      },
+      "validation": {
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Enter a valid email address",
+        "phoneRequired": "Phone number is required",
+        "phoneInvalid": "Enter a valid Indian phone number",
+        "passwordMin": "Password must be at least 8 characters",
+        "confirmPasswordRequired": "Please confirm your password",
+        "passwordMismatch": "Passwords do not match"
       }
     },
     "verify": {

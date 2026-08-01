@@ -697,7 +697,8 @@
       "complete": "完成设置"
     },
     "errors": {
-      "complete": "完成引导设置失败"
+      "complete": "完成引导设置失败",
+      "workspaceName": "请输入至少 2 个字符的工作区名称"
     }
   },
   "auth": {
@@ -714,14 +715,22 @@
       "subtitle": "登录你的 Prismconnex 工作区",
       "fields": {
         "email": "邮箱",
-        "password": "密码"
+        "password": "密码",
+        "identifier": "邮箱或手机号",
+        "secret": "密码或验证码"
       },
       "actions": {
         "submit": "登录",
         "divider": "或继续使用",
         "cognito": "使用 AWS Cognito 继续",
         "forgotPassword": "忘记密码？",
-        "createAccount": "创建账户"
+        "createAccount": "创建账户",
+        "showPassword": "显示密码",
+        "hidePassword": "隐藏密码",
+        "google": "使用 Google 继续",
+        "microsoft": "使用 Microsoft 继续",
+        "signUpPrompt": "还没有账号？",
+        "signUpLink": "注册"
       },
       "footer": {
         "language": "语言：{language}",
@@ -730,23 +739,58 @@
       "errors": {
         "signIn": "登录失败",
         "cognito": "无法连接到 AWS Cognito"
+      },
+      "placeholders": {
+        "identifier": "you@company.com",
+        "secret": "请输入密码或验证码"
+      },
+      "validation": {
+        "identifierRequired": "请输入邮箱或手机号",
+        "identifierInvalid": "请输入有效的邮箱地址或印度手机号",
+        "passwordRequired": "请输入密码"
+      },
+      "status": {
+        "signedOut": "您已成功退出登录。"
       }
     },
     "signUp": {
-      "title": "创建账户",
+      "title": "注册",
       "subtitle": "开始你的 Prismconnex 之旅",
       "fields": {
         "name": "姓名",
         "email": "邮箱地址",
-        "password": "密码"
+        "password": "密码",
+        "firstName": "名字",
+        "middleName": "中间名",
+        "lastName": "姓氏",
+        "phone": "手机号",
+        "confirmPassword": "确认密码",
+        "optional": "（选填）"
       },
       "actions": {
-        "submit": "注册",
+        "submit": "创建账号",
         "signInPrompt": "已有账户？",
-        "signInLink": "登录"
+        "signInLink": "登录",
+        "showPassword": "显示密码",
+        "hidePassword": "隐藏密码"
       },
       "errors": {
         "signUp": "注册失败"
+      },
+      "placeholders": {
+        "email": "you@company.com",
+        "phone": "+91 98765 43210"
+      },
+      "validation": {
+        "firstNameRequired": "请输入名字",
+        "lastNameRequired": "请输入姓氏",
+        "emailRequired": "请输入邮箱",
+        "emailInvalid": "请输入有效的邮箱地址",
+        "phoneRequired": "请输入手机号",
+        "phoneInvalid": "请输入有效的印度手机号",
+        "passwordMin": "密码至少需要 8 个字符",
+        "confirmPasswordRequired": "请确认密码",
+        "passwordMismatch": "两次输入的密码不一致"
       }
     },
     "verify": {

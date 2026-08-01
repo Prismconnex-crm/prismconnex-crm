@@ -713,7 +713,8 @@
       "complete": "Completar configuracion"
     },
     "errors": {
-      "complete": "No se pudo completar el onboarding"
+      "complete": "No se pudo completar el onboarding",
+      "workspaceName": "Introduce un nombre de workspace de al menos 2 caracteres"
     }
   },
   "auth": {
@@ -730,14 +731,22 @@
       "subtitle": "Inicia sesion en tu workspace de Prismconnex",
       "fields": {
         "email": "Correo",
-        "password": "Contrasena"
+        "password": "Contrasena",
+        "identifier": "Correo electrónico o número de teléfono",
+        "secret": "Contraseña o OTP"
       },
       "actions": {
         "submit": "Iniciar sesion",
         "divider": "o continuar con",
         "cognito": "Continuar con AWS Cognito",
         "forgotPassword": "Olvidaste tu contrasena?",
-        "createAccount": "Crear cuenta"
+        "createAccount": "Crear cuenta",
+        "showPassword": "Mostrar contraseña",
+        "hidePassword": "Ocultar contraseña",
+        "google": "Continuar con Google",
+        "microsoft": "Continuar con Microsoft",
+        "signUpPrompt": "¿No tienes una cuenta?",
+        "signUpLink": "Regístrate"
       },
       "footer": {
         "language": "Idioma: {language}",
@@ -746,23 +755,58 @@
       "errors": {
         "signIn": "No se pudo iniciar sesion",
         "cognito": "No se pudo conectar con AWS Cognito"
+      },
+      "placeholders": {
+        "identifier": "tu@empresa.com",
+        "secret": "Introduce tu contraseña u OTP"
+      },
+      "validation": {
+        "identifierRequired": "El correo electrónico o el teléfono es obligatorio",
+        "identifierInvalid": "Introduce un correo válido o un número de teléfono indio",
+        "passwordRequired": "La contraseña es obligatoria"
+      },
+      "status": {
+        "signedOut": "Has cerrado sesión correctamente."
       }
     },
     "signUp": {
-      "title": "Crear una cuenta",
+      "title": "Registrarse",
       "subtitle": "Comienza tu camino con Prismconnex",
       "fields": {
         "name": "Nombre completo",
         "email": "Correo electronico",
-        "password": "Contrasena"
+        "password": "Contrasena",
+        "firstName": "Nombre",
+        "middleName": "Segundo nombre",
+        "lastName": "Apellido",
+        "phone": "Número de teléfono",
+        "confirmPassword": "Confirmar contraseña",
+        "optional": "(Opcional)"
       },
       "actions": {
-        "submit": "Registrarse",
+        "submit": "Crear cuenta",
         "signInPrompt": "Ya tienes una cuenta?",
-        "signInLink": "Iniciar sesion"
+        "signInLink": "Iniciar sesión",
+        "showPassword": "Mostrar contraseña",
+        "hidePassword": "Ocultar contraseña"
       },
       "errors": {
         "signUp": "No se pudo crear la cuenta"
+      },
+      "placeholders": {
+        "email": "tu@empresa.com",
+        "phone": "+91 98765 43210"
+      },
+      "validation": {
+        "firstNameRequired": "El nombre es obligatorio",
+        "lastNameRequired": "El apellido es obligatorio",
+        "emailRequired": "El correo electrónico es obligatorio",
+        "emailInvalid": "Introduce un correo electrónico válido",
+        "phoneRequired": "El número de teléfono es obligatorio",
+        "phoneInvalid": "Introduce un número de teléfono indio válido",
+        "passwordMin": "La contraseña debe tener al menos 8 caracteres",
+        "confirmPasswordRequired": "Confirma tu contraseña",
+        "passwordMismatch": "Las contraseñas no coinciden"
       }
     },
     "verify": {

@@ -716,7 +716,8 @@
       "complete": "Terminer la configuration"
     },
     "errors": {
-      "complete": "Echec de la finalisation de l'onboarding"
+      "complete": "Echec de la finalisation de l'onboarding",
+      "workspaceName": "Saisissez un nom d'espace de travail d'au moins 2 caracteres"
     }
   },
   "auth": {
@@ -733,14 +734,22 @@
       "subtitle": "Connectez-vous a votre workspace Prismconnex",
       "fields": {
         "email": "Email",
-        "password": "Mot de passe"
+        "password": "Mot de passe",
+        "identifier": "E-mail ou numéro de téléphone",
+        "secret": "Mot de passe ou OTP"
       },
       "actions": {
         "submit": "Se connecter",
         "divider": "ou continuer avec",
         "cognito": "Continuer avec AWS Cognito",
         "forgotPassword": "Mot de passe oublie ?",
-        "createAccount": "Creer un compte"
+        "createAccount": "Creer un compte",
+        "showPassword": "Afficher le mot de passe",
+        "hidePassword": "Masquer le mot de passe",
+        "google": "Continuer avec Google",
+        "microsoft": "Continuer avec Microsoft",
+        "signUpPrompt": "Vous n'avez pas de compte ?",
+        "signUpLink": "S'inscrire"
       },
       "footer": {
         "language": "Langue : {language}",
@@ -749,23 +758,58 @@
       "errors": {
         "signIn": "Connexion impossible",
         "cognito": "Connexion a AWS Cognito impossible"
+      },
+      "placeholders": {
+        "identifier": "vous@entreprise.com",
+        "secret": "Saisissez votre mot de passe ou OTP"
+      },
+      "validation": {
+        "identifierRequired": "L'e-mail ou le numéro de téléphone est requis",
+        "identifierInvalid": "Saisissez une adresse e-mail valide ou un numéro de téléphone indien",
+        "passwordRequired": "Le mot de passe est requis"
+      },
+      "status": {
+        "signedOut": "Vous avez été déconnecté avec succès."
       }
     },
     "signUp": {
-      "title": "Creer un compte",
+      "title": "Inscription",
       "subtitle": "Commencez votre parcours avec Prismconnex",
       "fields": {
         "name": "Nom complet",
         "email": "Adresse email",
-        "password": "Mot de passe"
+        "password": "Mot de passe",
+        "firstName": "Prénom",
+        "middleName": "Deuxième prénom",
+        "lastName": "Nom",
+        "phone": "Numéro de téléphone",
+        "confirmPassword": "Confirmer le mot de passe",
+        "optional": "(Facultatif)"
       },
       "actions": {
-        "submit": "S'inscrire",
+        "submit": "Créer un compte",
         "signInPrompt": "Vous avez deja un compte ?",
-        "signInLink": "Se connecter"
+        "signInLink": "Connexion",
+        "showPassword": "Afficher le mot de passe",
+        "hidePassword": "Masquer le mot de passe"
       },
       "errors": {
         "signUp": "Inscription impossible"
+      },
+      "placeholders": {
+        "email": "vous@entreprise.com",
+        "phone": "+91 98765 43210"
+      },
+      "validation": {
+        "firstNameRequired": "Le prénom est requis",
+        "lastNameRequired": "Le nom est requis",
+        "emailRequired": "L'e-mail est requis",
+        "emailInvalid": "Saisissez une adresse e-mail valide",
+        "phoneRequired": "Le numéro de téléphone est requis",
+        "phoneInvalid": "Saisissez un numéro de téléphone indien valide",
+        "passwordMin": "Le mot de passe doit contenir au moins 8 caractères",
+        "confirmPasswordRequired": "Confirmez votre mot de passe",
+        "passwordMismatch": "Les mots de passe ne correspondent pas"
       }
     },
     "verify": {

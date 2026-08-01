@@ -709,7 +709,8 @@
       "complete": "Setup abschliessen"
     },
     "errors": {
-      "complete": "Onboarding konnte nicht abgeschlossen werden"
+      "complete": "Onboarding konnte nicht abgeschlossen werden",
+      "workspaceName": "Bitte einen Workspace-Namen mit mindestens 2 Zeichen eingeben"
     }
   },
   "auth": {
@@ -726,14 +727,22 @@
       "subtitle": "Melden Sie sich in Ihrem Prismconnex-Workspace an",
       "fields": {
         "email": "E-Mail",
-        "password": "Passwort"
+        "password": "Passwort",
+        "identifier": "E-Mail oder Telefonnummer",
+        "secret": "Passwort oder OTP"
       },
       "actions": {
         "submit": "Anmelden",
         "divider": "oder weiter mit",
         "cognito": "Mit AWS Cognito fortfahren",
         "forgotPassword": "Passwort vergessen?",
-        "createAccount": "Konto erstellen"
+        "createAccount": "Konto erstellen",
+        "showPassword": "Passwort anzeigen",
+        "hidePassword": "Passwort verbergen",
+        "google": "Weiter mit Google",
+        "microsoft": "Weiter mit Microsoft",
+        "signUpPrompt": "Noch kein Konto?",
+        "signUpLink": "Registrieren"
       },
       "footer": {
         "language": "Sprache: {language}",
@@ -742,23 +751,58 @@
       "errors": {
         "signIn": "Anmeldung fehlgeschlagen",
         "cognito": "Verbindung zu AWS Cognito konnte nicht hergestellt werden"
+      },
+      "placeholders": {
+        "identifier": "du@firma.com",
+        "secret": "Passwort oder OTP eingeben"
+      },
+      "validation": {
+        "identifierRequired": "E-Mail oder Telefonnummer ist erforderlich",
+        "identifierInvalid": "Gib eine gültige E-Mail-Adresse oder indische Telefonnummer ein",
+        "passwordRequired": "Passwort ist erforderlich"
+      },
+      "status": {
+        "signedOut": "Sie wurden erfolgreich abgemeldet."
       }
     },
     "signUp": {
-      "title": "Konto erstellen",
+      "title": "Registrieren",
       "subtitle": "Starten Sie Ihre Reise mit Prismconnex",
       "fields": {
         "name": "Vollstaendiger Name",
         "email": "E-Mail-Adresse",
-        "password": "Passwort"
+        "password": "Passwort",
+        "firstName": "Vorname",
+        "middleName": "Zweiter Vorname",
+        "lastName": "Nachname",
+        "phone": "Telefonnummer",
+        "confirmPassword": "Passwort bestätigen",
+        "optional": "(Optional)"
       },
       "actions": {
-        "submit": "Registrieren",
+        "submit": "Konto erstellen",
         "signInPrompt": "Sie haben bereits ein Konto?",
-        "signInLink": "Anmelden"
+        "signInLink": "Anmelden",
+        "showPassword": "Passwort anzeigen",
+        "hidePassword": "Passwort verbergen"
       },
       "errors": {
         "signUp": "Registrierung fehlgeschlagen"
+      },
+      "placeholders": {
+        "email": "du@firma.com",
+        "phone": "+91 98765 43210"
+      },
+      "validation": {
+        "firstNameRequired": "Vorname ist erforderlich",
+        "lastNameRequired": "Nachname ist erforderlich",
+        "emailRequired": "E-Mail ist erforderlich",
+        "emailInvalid": "Gib eine gültige E-Mail-Adresse ein",
+        "phoneRequired": "Telefonnummer ist erforderlich",
+        "phoneInvalid": "Gib eine gültige indische Telefonnummer ein",
+        "passwordMin": "Das Passwort muss mindestens 8 Zeichen lang sein",
+        "confirmPasswordRequired": "Bitte bestätige dein Passwort",
+        "passwordMismatch": "Die Passwörter stimmen nicht überein"
       }
     },
     "verify": {

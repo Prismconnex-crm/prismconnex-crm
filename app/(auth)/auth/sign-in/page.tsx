@@ -1,12 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
-import { Globe, Loader2, Server } from 'lucide-react';
-import { getLocaleNativeLabel, localeDetails, localizePathname } from '@/lib/locale';
+import { Loader2, Server } from 'lucide-react';
+import {
+  AuthCard,
+  AuthDivider,
+  AuthErrorBanner,
+  AuthSuccessBanner,
+} from '@/components/auth/auth-card';
+import { GoogleIcon, MicrosoftIcon } from '@/components/auth/brand-icons';
+import { FormField, PasswordField } from '@/components/auth/form-field';
+import { createSignInSchema, toFieldErrors } from '@/models/auth';
+import { localizePathname } from '@/lib/locale';
 import type { Locale } from '@/types';
 
 export default function SignInPage() {
@@ -15,15 +23,38 @@ export default function SignInPage() {
   const t = useTranslations('auth.signIn');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [notice, setNotice] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  // Two redirects land here with a query flag: /auth/callback on a failed
+  // Google/Microsoft sign-in (?error=<reason>), and the topbar's Sign Out
+  // (?signedOut=1). Read from location rather than useSearchParams so the page
+  // needs no Suspense boundary.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error')) setError(t('errors.signIn'));
+    if (params.get('signedOut')) setNotice(t('status.signedOut'));
+  }, [t]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+    setFieldErrors({});
 
     const formData = new FormData(e.currentTarget);
-    const email = formData.get('email');
-    const password = formData.get('password');
+    const parsed = createSignInSchema(t).safeParse({
+      email: String(formData.get('email') || ''),
+      password: String(formData.get('password') || ''),
+    });
+
+    if (!parsed.success) {
+      setFieldErrors(toFieldErrors(parsed.error));
+      setLoading(false);
+      return;
+    }
+
+    const { email, password } = parsed.data;
 
     try {
       const res = await fetch('/api/auth/sign-in', {
@@ -37,12 +68,25 @@ export default function SignInPage() {
         throw new Error(data.error?.message || t('errors.signIn'));
       }
 
-      router.push(localizePathname('/onboarding', locale));
+      // `data.profile` is the user's public.profiles row, loaded by the API on
+      // successful authentication. `onboarded` reflects real workspace
+      // membership: sending an already-onboarded user back through /onboarding
+      // would create a second workspace.
+      router.push(
+        data.onboarded ? '/app/dashboard' : localizePathname('/onboarding', locale)
+      );
     } catch (err) {
       setError(err instanceof Error ? err.message : t('errors.signIn'));
     } finally {
       setLoading(false);
     }
+  };
+
+  // Google / Microsoft sign-in via Supabase. A full navigation (not fetch) is
+  // required: the route responds with a redirect to the provider's consent
+  // screen, and it sets the httpOnly PKCE cookie the callback needs.
+  const handleOAuthLogin = (provider: 'google' | 'microsoft') => {
+    window.location.href = `/api/auth/oauth/${provider}`;
   };
 
   const handleCognitoLogin = async () => {
@@ -57,144 +101,93 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-slate-50 dark:bg-[#0a0e1a]">
-      <div className="relative hidden overflow-hidden p-10 lg:flex lg:w-1/2 lg:flex-col lg:justify-between">
-        <div className="absolute left-[10%] top-[15%] h-72 w-72 rounded-full bg-indigo-600/15 blur-[120px]" />
-        <div className="absolute bottom-[20%] right-[5%] h-80 w-80 rounded-full bg-purple-600/10 blur-[140px]" />
+    <AuthCard
+      title={t('title')}
+      subtitle={t('subtitle')}
+      footer={
+        <>
+          {t('actions.signUpPrompt')}{' '}
+          <Link
+            href="/auth/sign-up"
+            className="font-semibold text-indigo-400 transition-colors hover:text-indigo-300"
+          >
+            {t('actions.signUpLink')}
+          </Link>
+        </>
+      }
+    >
+      {notice ? <AuthSuccessBanner message={notice} /> : null}
+      {error ? <AuthErrorBanner message={error} /> : null}
 
-        <div className="relative z-10">
-          <Link href="/" className="inline-flex items-center gap-3 group">
-            <div className="relative h-10 w-10 overflow-hidden rounded-xl border border-slate-200 dark:border-white/10 bg-white shadow-sm">
-              <Image
-                src="/prismconnex-logo.jpeg"
-                alt="Prismconnex"
-                fill
-                sizes="40px"
-                className="object-contain p-0.5"
-                priority
-              />
-            </div>
-            <div className="leading-tight">
-              <p className="text-sm font-bold tracking-wide text-slate-900 dark:text-white">
-                Prism<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-cyan-500 font-extrabold inline-block">connex</span>
-              </p>
-              <p className="text-[10px] text-slate-500 dark:text-slate-400">{t('brandSubtitle')}</p>
-            </div>
+      <form onSubmit={onSubmit} noValidate className="space-y-4">
+        <FormField
+          name="email"
+          label={t('fields.identifier')}
+          placeholder={t('placeholders.identifier')}
+          autoComplete="username"
+          defaultValue="owner@prismconnex.demo"
+          error={fieldErrors.email}
+        />
+
+        <PasswordField
+          name="password"
+          label={t('fields.secret')}
+          placeholder={t('placeholders.secret')}
+          autoComplete="current-password"
+          defaultValue="Prism123!"
+          showLabel={t('actions.showPassword')}
+          hideLabel={t('actions.hidePassword')}
+          error={fieldErrors.password}
+        />
+
+        <div className="flex justify-end">
+          <Link
+            href="/auth/forgot-password"
+            className="text-[13px] text-slate-400 transition-colors hover:text-indigo-400"
+          >
+            {t('actions.forgotPassword')}
           </Link>
         </div>
 
-        <div className="relative z-10 space-y-6">
-          <h1 className="text-4xl font-bold leading-tight text-slate-900 dark:text-white">
-            {t('heroTitleLine1')}
-            <br />
-            <span className="bg-gradient-to-r from-indigo-500 to-purple-500 dark:from-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
-              {t('heroTitleLine2')}
-            </span>
-          </h1>
-          <p className="max-w-md text-base leading-relaxed text-slate-600 dark:text-slate-400">
-            {t('heroDescription')}
-          </p>
-          <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3 py-1 text-xs font-medium text-indigo-300">
-              {t('heroBadges.aiPowered')}
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300">
-              <Globe className="h-3 w-3" />
-              {t('heroBadges.languages', { count: localeDetails.length })}
-            </span>
-          </div>
-        </div>
+        <button
+          type="submit"
+          disabled={loading}
+          className="flex w-full items-center justify-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition-all hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-[#111B2E] disabled:opacity-50"
+        >
+          {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : t('actions.submit')}
+        </button>
+      </form>
 
-        <div className="relative z-10" />
+      <AuthDivider label={t('actions.divider')} />
+
+      <div className="space-y-3">
+        <button
+          type="button"
+          onClick={() => handleOAuthLogin('google')}
+          className="flex w-full items-center justify-center gap-2.5 rounded-lg border border-[#22304A] bg-[#0F1829] px-4 py-2.5 text-sm font-medium text-slate-200 transition-colors hover:border-[#2C3B57] hover:bg-[#16223A] focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+        >
+          <GoogleIcon />
+          {t('actions.google')}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => handleOAuthLogin('microsoft')}
+          className="flex w-full items-center justify-center gap-2.5 rounded-lg border border-[#22304A] bg-[#0F1829] px-4 py-2.5 text-sm font-medium text-slate-200 transition-colors hover:border-[#2C3B57] hover:bg-[#16223A] focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+        >
+          <MicrosoftIcon />
+          {t('actions.microsoft')}
+        </button>
+
+        <button
+          type="button"
+          onClick={handleCognitoLogin}
+          className="flex w-full items-center justify-center gap-2.5 rounded-lg border border-[#22304A] bg-[#0F1829] px-4 py-2.5 text-sm font-medium text-slate-400 transition-colors hover:border-[#2C3B57] hover:bg-[#16223A] hover:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/40"
+        >
+          <Server className="h-4 w-4" />
+          {t('actions.cognito')}
+        </button>
       </div>
-
-      <div className="flex w-full items-center justify-center p-6 lg:w-1/2">
-        <div className="w-full max-w-sm space-y-7 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 p-8 shadow-2xl backdrop-blur-sm">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">{t('title')}</h2>
-            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{t('subtitle')}</p>
-          </div>
-
-          {error ? (
-            <div className="rounded-lg border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-400">
-              {error}
-            </div>
-          ) : null}
-
-          <form onSubmit={onSubmit} className="space-y-5">
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium uppercase tracking-wide text-slate-400">
-                {t('fields.email')}
-              </label>
-              <input
-                name="email"
-                type="email"
-                defaultValue="owner@prismconnex.demo"
-                required
-                className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800/60 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500/40"
-              />
-            </div>
-
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium uppercase tracking-wide text-slate-400">
-                {t('fields.password')}
-              </label>
-              <input
-                name="password"
-                type="password"
-                defaultValue="Prism123!"
-                required
-                className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800/60 px-4 py-2.5 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500/40"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="flex w-full items-center justify-center rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/20 transition-all hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-50"
-            >
-              {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : t('actions.submit')}
-            </button>
-          </form>
-
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-slate-200 dark:border-slate-800" />
-            </div>
-            <div className="relative flex justify-center text-xs">
-              <span className="bg-white dark:bg-slate-900 px-2 text-slate-500">{t('actions.divider')}</span>
-            </div>
-          </div>
-
-          <button
-            onClick={handleCognitoLogin}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 px-4 py-2.5 text-sm font-medium text-slate-700 dark:text-slate-300 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white focus:outline-none"
-          >
-            <Server className="h-4 w-4" />
-            {t('actions.cognito')}
-          </button>
-
-          <div className="flex items-center justify-between text-xs text-slate-500">
-            <Link href="/auth/forgot-password" className="transition-colors hover:text-slate-300">
-              {t('actions.forgotPassword')}
-            </Link>
-            <Link href="/auth/sign-up" className="transition-colors hover:text-slate-300">
-              {t('actions.createAccount')}
-            </Link>
-          </div>
-
-          <div className="flex items-center justify-between border-t border-slate-200 dark:border-slate-800 pt-4 text-[11px] text-slate-500">
-            <span className="inline-flex items-center gap-1">
-              <Globe className="h-3 w-3" />
-              {t('footer.language', { language: getLocaleNativeLabel(locale) })}
-            </span>
-            <span className="inline-flex items-center gap-1">
-              <Server className="h-3 w-3" />
-              {t('footer.region', { region: 'US-East' })}
-            </span>
-          </div>
-        </div>
-      </div>
-    </div>
+    </AuthCard>
   );
 }
