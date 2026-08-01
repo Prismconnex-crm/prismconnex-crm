@@ -27,9 +27,24 @@ Two separate causes, both verified against the running system:
    non-stopword tokens and puts them in `filters.keywords`. Keywords are
    AND-ed with `.every()` against each event's `searchText`
    (`lib/events/filters.ts:183`). For *"plastics trade shows in Europe in Q1
-   2026"* the fallback produces `["plastics", "europe", "2026"]`; no event's
-   `searchText` contains the literal word "europe" (region is a separate
-   field), so **every** event is excluded and the table renders empty.
+   2026"* the fallback produces `["plastics", "europe", "2026"]`.
+
+   Measured against the real catalog (9,771 events):
+
+   | Keywords AND-ed | Matches |
+   |---|---|
+   | `plastics` | 359 |
+   | `europe` | 196 |
+   | `2026` | **1** |
+   | `plastics` + `europe` | 25 |
+   | `plastics` + `europe` + `2026` | **0** |
+
+   The year is what empties the table. `searchText` is built from name, city,
+   country, venue, organizer and categories — **it contains no dates** — so
+   `2026` matches a single event by coincidence and the `.every()` collapses
+   the set to nothing. Note `europe` is *not* a dead term (196 matches: it
+   occurs in event names and category text), and `plastics` + `europe` alone
+   would have returned a perfectly reasonable 25 rows.
 
 Cause 2 is the one that makes the feature useless, and it is fixable today
 without any credential.
@@ -83,6 +98,11 @@ prompt so later stages cannot re-read it as a place name:
 | `this year`, `next year`, `this month`, `next month` | calendar bounds |
 | `next 30 days`, `next 3 months`, `next 6 months` | delegates to the existing `dateRangeForPreset` |
 | `spring`/`summer`/`autumn`/`fall`/`winter` | Mar–May / Jun–Aug / Sep–Nov / Dec–Feb |
+| a bare 4-digit year, 2020–2100, not already consumed above | that whole calendar year |
+
+The bare-year rule is load-bearing, not a nicety: it is what stops `2026`
+reaching Stage 5, and an unconsumed year is the single most destructive
+keyword the current fallback can emit (1 match out of 9,771).
 
 Bounds are emitted as inclusive `YYYY-MM-DD` strings and validated with the
 existing `isValidIsoDate` before being returned. If `dateFrom > dateTo` the
@@ -140,14 +160,23 @@ Remaining tokens are lowercased, stripped of the existing `STOPWORDS` set
 (which already covers *show*, *shows*, *event*, *expo*, *fair*, *exhibition*,
 *conference* and friends), and filtered to length > 3.
 
-**Each surviving token is kept only if it actually occurs in some event's
-`searchText`.** The check is an O(1) lookup against a lazily-built `Set` of
-every word token across the catalog, built on first use and memoised.
+Surviving tokens are then admitted **one at a time, cheapest guard first**:
 
-This guard is the fix for the reported bug. Keywords are AND-ed, so a single
-term that matches nothing empties the entire result set; discarding dead terms
-degrades the query to a broader-but-useful one instead of a silent zero. At
-most 3 keywords are kept, preserving the current behaviour.
+1. **Occurrence guard** — drop the token outright if it appears in no event's
+   `searchText`. O(1) against a lazily-built, memoised `Set` of every word
+   token in the catalog.
+2. **Collapse guard** — tentatively add the token to the filters, re-run
+   `filterEventList`, and **drop it if the match count falls to zero**. Keep it
+   only if the narrowed set is still non-empty.
+
+Guard 1 alone is *not sufficient*, which the measurements above demonstrate:
+`2026` occurs in exactly one event, so it passes an occurrence check and still
+empties the table when AND-ed with anything else. Guard 2 is what actually
+holds the invariant **"a question that matches something never renders an
+empty table"**.
+
+At most 3 keywords are kept, preserving the current behaviour. Cost is at most
+three extra `filterEventList` passes.
 
 #### Output
 
@@ -166,9 +195,12 @@ state, and performs no I/O.
 ### Performance
 
 Stage 2 is ~4,300 boundary-matched `includes` calls against a prompt capped at
-500 characters; Stage 5 is a `Set` lookup per token. Ranking follow-ups adds
-one `filterEventList` pass (9,771 events) and one `computeEventFacets` pass
-(5 dimensions × 9,771). All of it runs once per submitted question, on a
+500 characters; Stage 5 is a `Set` lookup plus at most three `filterEventList`
+passes (one per admitted keyword). Ranking follow-ups adds one more
+`filterEventList` pass (9,771 events) and one `computeEventFacets` pass
+(5 dimensions × 9,771) — at most five passes total. A pass measured **138 ms
+for five passes** in a cold vitest run against the real catalog. All of it runs
+once per submitted question, on a
 catalog already in memory, and is comfortably within a frame — the section
 already runs `filterEventList` and `computeEventFacets` on every keystroke in
 the sidebar's `useMemo`s today. No new data is loaded and the 27 GB SQLite
@@ -209,14 +241,20 @@ New `tests/integration/event-query-parse.test.ts`, run with `npx vitest run`
 - word-boundary safety: `"diesel"` does not yield `Manufacturing & Engineering` via the `die` rule
 - `"all categories"` clears rather than sets `categories`
 - favourites phrases set `favouritesOnly`
-- a nonsense token (`"zzzqqq"`) is dropped from `keywords` rather than kept
+- a bare year (`"shows in 2026"`) becomes a date range and **never** appears in `keywords`
+- occurrence guard: a nonsense token (`"zzzqqq"`) is dropped from `keywords`
+- collapse guard: a token that occurs but would zero the set (the `2026` case,
+  asserted directly by feeding `keywords: ["plastics","europe","2026"]` past
+  Stage 1) is dropped, and the surviving filters still match > 0 events
 
 **Regression — the reported bug, asserted end-to-end against the real catalog:**
 for each of *"plastics trade shows in Europe in Q1 2026"*, *"packaging expos in
 India next year"* and *"medical trade fairs in Germany"*, feed
 `parseEventQuery` into `filterEventList(findShowEvents, …)` and assert the
 result is **non-empty** and that every returned event satisfies the parsed
-constraint (region/category/country as applicable).
+constraint (region/category/country as applicable). The first of these is the
+exact query measured at 0 matches today, so it fails against `keywordFallback`
+and passes against `parseEventQuery` — pin it with that comment.
 
 The existing `tests/integration/event-filters.test.ts` must continue to pass
 unchanged.
