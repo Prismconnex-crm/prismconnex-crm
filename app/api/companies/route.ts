@@ -22,7 +22,9 @@ const LIST_COLUMNS = `
   "engagementScore",
   tags,
   highlights,
-  insights
+  insights,
+  email,
+  phone
 `;
 
 type CompanyRow = {

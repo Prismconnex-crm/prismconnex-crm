@@ -30,9 +30,20 @@ export function resolveAuthRedirect({
     return "/auth/sign-in";
   }
 
-  if (session && !onboarded && isAppRoute) {
-    return localizePathname("/onboarding", locale);
+  // ── ONBOARDING DISABLED ──────────────────────────────────────────────
+  // Signed-in users go straight to the dashboard; the onboarding flow is
+  // parked, not removed (page + components are still in the repo).
+  // TO RE-ENABLE: delete the redirect below and uncomment the block after it.
+  // App routes are not locale-prefixed, so return the plain path here
+  // (matching the isSignIn rule below) — localizing it 404s.
+  if (session && isOnboarding) {
+    return "/app/dashboard";
   }
+
+  // if (session && !onboarded && isAppRoute) {
+  //   return localizePathname("/onboarding", locale);
+  // }
+  // ─────────────────────────────────────────────────────────────────────
 
   if (session && isSignIn && !forceSignIn) {
     return "/app/dashboard";

@@ -37,7 +37,10 @@ export default function SignInPage() {
         throw new Error(data.error?.message || t('errors.signIn'));
       }
 
-      router.push(localizePathname('/onboarding', locale));
+      // ONBOARDING DISABLED — go straight to the dashboard after sign-in.
+      // TO RE-ENABLE: swap the line below back to '/onboarding'.
+      router.push('/app/dashboard');
+      // router.push(localizePathname('/onboarding', locale));
     } catch (err) {
       setError(err instanceof Error ? err.message : t('errors.signIn'));
     } finally {

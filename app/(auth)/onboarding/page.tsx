@@ -1,5 +1,17 @@
 "use client";
 
+// ─────────────────────────────────────────────────────────────────────────────
+// ONBOARDING IS CURRENTLY DISABLED (kept intentionally for future use).
+// Sign-in now sends users straight to /app/dashboard, and middleware redirects
+// any direct visit to /onboarding over to the dashboard, so this page is
+// unreachable at runtime. Nothing here has been deleted.
+//
+// TO RE-ENABLE:
+//   1. lib/auth/routing.ts  — remove the isOnboarding redirect, uncomment the
+//      `session && !onboarded && isAppRoute` block.
+//   2. app/(auth)/auth/sign-in/page.tsx — restore the '/onboarding' router.push.
+// ─────────────────────────────────────────────────────────────────────────────
+
 import { useMemo, useState, useTransition, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
