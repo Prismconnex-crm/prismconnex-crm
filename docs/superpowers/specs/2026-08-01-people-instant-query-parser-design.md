@@ -1,7 +1,18 @@
 # Instant contact search on the People page (no model call)
 
 **Date:** 2026-08-01
-**Status:** Approved for planning
+**Status:** Superseded by
+[`2026-08-01-people-explorer-design.md`](./2026-08-01-people-explorer-design.md)
+
+> Superseded on 2026-08-01, before implementation began, after a "People
+> Explorer" HTML prototype re-scoped the page around a conversational assistant.
+> The successor keeps this spec's data model, `lib/search/` + `lib/people/`
+> split, parser stages and URL-as-source-of-truth, and reverses four decisions:
+> the assistant now returns a locally-composed prose answer (this spec: "no
+> prose answer", "No `answer` field"), the person detail is a persistent right
+> column rather than a slide-over drawer, sources are the prototype's three, and
+> the rail shows six facets with five behind a disclosure. Read the successor;
+> this file is kept only for the reasoning behind the parts that carried over.
 
 ## Problem
 
