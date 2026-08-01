@@ -13,6 +13,15 @@ const nextConfig = {
     workerThreads: true,
     cpus: 1,
   },
+  async redirects() {
+    return [
+      // The login page lives at /auth/sign-in alongside the other auth screens.
+      // /login is kept as an alias so the conventional path works; Next
+      // preserves the query string, so /login?signedOut=1 still shows the
+      // sign-out confirmation.
+      { source: '/login', destination: '/auth/sign-in', permanent: false },
+    ];
+  },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'eventseye.com' },
