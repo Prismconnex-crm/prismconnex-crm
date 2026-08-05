@@ -57,6 +57,30 @@ export function isConfigured(): boolean {
   return Boolean(process.env.ANTHROPIC_API_KEY);
 }
 
+export type AssistantFailure =
+  | { kind: 'unavailable'; reason: 'invalid_api_key' }
+  | { kind: 'degraded'; reason: 'assistant_error' };
+
+/**
+ * Sorts an upstream failure into "someone has to fix the config" versus "try
+ * again later". A key that is present but rejected is the same class of
+ * problem as no key at all, so it gets the same visible treatment as
+ * `missing_api_key` — everything else degrades quietly to prefix search.
+ *
+ * Duck-typed rather than `instanceof AuthenticationError`: the SDK is loaded
+ * at request time via a webpackIgnore'd dynamic import (see `loadClient`), so
+ * its error classes are deliberately not available statically here.
+ */
+export function describeAssistantFailure(error: unknown): AssistantFailure {
+  const status = (error as { status?: unknown } | null)?.status;
+
+  if (status === 401 || status === 403) {
+    return { kind: 'unavailable', reason: 'invalid_api_key' };
+  }
+
+  return { kind: 'degraded', reason: 'assistant_error' };
+}
+
 /**
  * Loads the SDK at request time. The specifier is held in a variable and
  * marked webpackIgnore so bundlers leave it alone — see the import comment.

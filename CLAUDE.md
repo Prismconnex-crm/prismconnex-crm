@@ -27,7 +27,7 @@ Multi-tenant B2B CRM built with **Next.js 14 (App Router) + TypeScript + Prisma 
 
 ## Architecture (docs/ARCHITECTURE.md; see also docs/ENV.md, docs/RUNBOOK.md, docs/TENANCY_RBAC.md)
 
-MVC-ish layering, only fully realized for Leads so far:
+MVC-ish layering, only fully realized for Leads and Saved Companies so far:
 - `models/` — Zod schemas + DTO types (e.g. `models/lead.ts`)
 - `repositories/` — Prisma queries, tenant-scoped by `workspaceId`
 - `services/` — business logic + audit logging (`lib/audit/audit.service.ts`)

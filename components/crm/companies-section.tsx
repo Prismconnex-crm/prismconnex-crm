@@ -27,8 +27,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { EnrichedLeadsFinderPanel } from "@/components/crm/enriched-leads-finder-panel";
-import { EventResultsPanel } from "@/components/crm/event-results-panel";
-import type { EventResult } from "@/models/event-query";
+import { EventCatalogPanel } from "@/components/crm/event-catalog-panel";
+import type { EventFilters, EventResult } from "@/models/event-query";
 import {
   COMPANY_CATEGORIES,
   COMPANY_COUNTRIES,
@@ -40,8 +40,11 @@ import { parseLeadQuery } from "@/lib/lead-query";
 type EventSearchState = {
   query: string;
   answer: string;
+  filters: EventFilters;
   events: EventResult[];
   totalMatched: number;
+  page: number;
+  pageSize: number;
 };
 
 type CompanyEvent = {
@@ -632,6 +635,9 @@ export function CompaniesSection() {
   // keystroke — that would be one model call per character.
   const [eventSearch, setEventSearch] = useState<EventSearchState | null>(null);
   const [isAsking, setIsAsking] = useState(false);
+  // Set when /api/companies/ask reports no ANTHROPIC_API_KEY, so the UI can
+  // explain why an event question did nothing instead of failing silently.
+  const [askUnavailable, setAskUnavailable] = useState(false);
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [categorySearch, setCategorySearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -845,6 +851,7 @@ export function CompaniesSection() {
       if (query.length < 2) return;
 
       setIsAsking(true);
+      setAskUnavailable(false);
       try {
         const response = await fetch("/api/companies/ask", {
           method: "POST",
@@ -852,19 +859,28 @@ export function CompaniesSection() {
           body: JSON.stringify({ q: query }),
         });
 
+        const result = await response.json().catch(() => null);
+
         if (!response.ok) {
+          // A missing or rejected API key is a configuration problem worth
+          // surfacing. Everything else (rate limit, overload, network) comes
+          // back as a 200 with `degraded` and stays silent.
+          if (result?.intent === "unavailable") {
+            setAskUnavailable(true);
+          }
           setEventSearch(null);
           return;
         }
-
-        const result = await response.json();
 
         if (result.intent === "events") {
           setEventSearch({
             query,
             answer: result.answer,
+            filters: result.filters,
             events: result.events,
             totalMatched: result.totalMatched,
+            page: 1,
+            pageSize: result.events.length || (result.filters?.limit ?? 25),
           });
           setSelectedCompanyId(null);
           setIsDetailView(false);
@@ -884,6 +900,44 @@ export function CompaniesSection() {
       }
     },
     [resetCompanyPagination]
+  );
+
+  /**
+   * Pages through matches by replaying the filters Claude already extracted.
+   * Deliberately hits /api/events/search, not /ask — no model call per page.
+   */
+  const handleEventPageChange = useCallback(
+    async (nextPage: number) => {
+      if (!eventSearch || nextPage < 1 || isAsking) return;
+
+      setIsAsking(true);
+      try {
+        const response = await fetch("/api/events/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ filters: eventSearch.filters, page: nextPage }),
+        });
+        if (!response.ok) return;
+
+        const result = await response.json();
+        setEventSearch((prev) =>
+          prev
+            ? {
+                ...prev,
+                events: result.events,
+                totalMatched: result.totalMatched,
+                page: result.page,
+                pageSize: result.pageSize,
+              }
+            : prev
+        );
+      } catch {
+        // Keep the current page on a network failure.
+      } finally {
+        setIsAsking(false);
+      }
+    },
+    [eventSearch, isAsking]
   );
 
   // Any live filter/search means the right panel shows matching companies;
@@ -1104,7 +1158,14 @@ export function CompaniesSection() {
       ) : null}
 
       {mainTab === "companies" ? (
-      <div className="grid grid-cols-1 items-stretch gap-5 xl:grid-cols-[360px_1fr] 2xl:grid-cols-[390px_1fr]">
+      <div
+        className={cn(
+          "grid grid-cols-1 items-stretch gap-5",
+          // Event results take the whole width — the 7-column catalog table
+          // needs the same room it gets on the Events page.
+          !eventSearch && "xl:grid-cols-[360px_1fr] 2xl:grid-cols-[390px_1fr]"
+        )}
+      >
         <motion.div
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
@@ -1139,8 +1200,13 @@ export function CompaniesSection() {
             <p className="mt-1.5 text-[10px] text-slate-400 dark:text-slate-500">
               Press Enter to ask — e.g. &ldquo;shows happening in London UK&rdquo;
             </p>
+            {askUnavailable ? (
+              <p className="mt-2 rounded-[8px] border border-amber-200 bg-amber-50 px-2.5 py-2 text-[11px] font-medium text-amber-700 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-400">
+                Event search is unavailable — ANTHROPIC_API_KEY is not configured.
+              </p>
+            ) : null}
 
-            <div className="mt-4 flex flex-wrap items-center gap-2">
+            <div className={cn("mt-4 flex flex-wrap items-center gap-2", eventSearch && "hidden")}>
               <button
                 onClick={() => {
                   setSelectedCategory(null);
@@ -1228,7 +1294,7 @@ export function CompaniesSection() {
               ) : null}
             </div>
 
-            <div className="mt-4 flex-1 space-y-1.5">
+            <div className={cn("mt-4 flex-1 space-y-1.5", eventSearch && "hidden")}>
               {FILTER_OPTIONS.map((option) => {
                 const isOpen = openFilter === option.key;
                 const activeValue =
@@ -1406,16 +1472,21 @@ export function CompaniesSection() {
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.35, delay: 0.1 }}
-          className="flex flex-col min-h-[600px] xl:min-h-0 xl:relative"
+          className={cn("flex flex-col", !eventSearch && "min-h-[600px] xl:min-h-0 xl:relative")}
         >
-          <div className="flex h-full w-full flex-col xl:absolute xl:inset-0">
+          <div className={cn("flex h-full w-full flex-col", !eventSearch && "xl:absolute xl:inset-0")}>
           {!isDetailView && eventSearch ? (
             <div className="flex-1 overflow-y-auto pr-1">
-              <EventResultsPanel
+              <EventCatalogPanel
                 query={eventSearch.query}
                 answer={eventSearch.answer}
+                filters={eventSearch.filters}
                 events={eventSearch.events}
                 totalMatched={eventSearch.totalMatched}
+                page={eventSearch.page}
+                pageSize={eventSearch.pageSize}
+                isLoading={isAsking}
+                onPageChange={handleEventPageChange}
                 onClear={() => {
                   setEventSearch(null);
                   setCompanySearch("");

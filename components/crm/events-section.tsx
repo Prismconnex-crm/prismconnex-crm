@@ -1,25 +1,14 @@
-import { useState, useMemo, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useMemo, useEffect, useCallback } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
     Calendar,
     ChevronDown,
-    Search,
     MapPin,
     ArrowLeft,
     ImageIcon,
     ExternalLink,
-    Building2,
-    Check,
-    X,
-    Filter,
-    Download,
-    Mail,
-    Plus,
-    MoreVertical,
     FileText,
     TrendingUp,
-    Heart,
-    Target,
     Save,
     Ticket,
     Activity,
@@ -33,24 +22,26 @@ import {
     ArrowRight,
     Users,
     Share2,
-    Loader2,
-} from "lucide-react";
-import { useRouter } from "next/navigation";
-import { findShowEvents, findShowsCategories, findShowsRegions, countryStatsByRegion } from "@/lib/find-shows/catalog";
-import type { FindShowEvent, FindShowsRegion, FindShowsCategory } from "@/types/find-shows";
-import type { WorkspacePreferences } from "@/types";
-import type { Exhibitor } from "@/types/exhibitors";
-import { cn } from "@/lib/utils";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+} from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { findShowEvents } from '@/lib/find-shows/catalog';
+import type { FindShowEvent } from '@/types/find-shows';
+import type { WorkspacePreferences } from '@/types';
+import type { Exhibitor } from '@/types/exhibitors';
+import { cn } from '@/lib/utils';
+import { EventsFilterSidebar } from '@/components/events/events-filter-sidebar';
+import { EventsAiSearch } from '@/components/events/events-ai-search';
+import { EventsResultsTable } from '@/components/events/events-results-table';
+import { buildEventFilterChips, removeEventFilterChip } from '@/lib/events/chips';
 import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
-import { EventMap } from "./event-map";
+    computeEventFacets,
+    filterEventList,
+    parseEventQueryState,
+    serializeEventQueryState,
+    type EventQueryState,
+} from '@/lib/events/filters';
+import { emptyEventFilters, type EventAnswerRow, type EventFilters } from '@/types/events';
+import { EventMap } from './event-map';
 
 const containerVariants = {
     hidden: {},
@@ -710,516 +701,327 @@ function TicketBookingView({ event, onBack }: { event: typeof findShowEvents[0],
 }
 
 // ----------------------------------------------------------------------
-// New Local Components for Advanced Filtering (Replica of Find-Shows)
+// EVENT LIST VIEW — two-column Companies-style layout
 // ----------------------------------------------------------------------
 
-function RegionMegaMenuPopover({
-  region,
-  filters,
-  onFiltersChange,
-}: {
-  region: FindShowsRegion;
-  filters: any;
-  onFiltersChange: (nextFilters: any) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const isActive = filters.region === region;
+const PAGE_SIZE = 25;
+/** How many rows the answering model is allowed to see. */
+const ANSWER_ROW_LIMIT = 40;
 
-  let label: string = region;
-  if (isActive && filters.country) {
-    label = `${region}: ${filters.country}`;
-  }
-
-  return (
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <button
-            type="button"
-            className={cn(
-              'group inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-[12px] font-bold transition-all duration-200',
-              isActive
-                ? 'border-indigo-500/60 bg-indigo-50/50 text-indigo-600 shadow-sm dark:border-indigo-400/40 dark:bg-indigo-400/10 dark:text-indigo-300'
-                : 'border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#111B2E] text-slate-600 dark:text-slate-400 hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:text-slate-900 dark:hover:text-white'
-            )}
-          >
-            <span className="truncate">{label}</span>
-            <ChevronDown className="size-3 shrink-0 opacity-60 group-data-[state=open]:rotate-180" />
-          </button>
-        </PopoverTrigger>
-        <PopoverContent
-          align="start"
-          sideOffset={8}
-          className="z-[100] w-[90vw] max-w-[800px] rounded-[16px] border border-slate-200 dark:border-[#22304A] bg-white/95 dark:bg-[#0B1220]/95 p-5 shadow-2xl backdrop-blur-xl outline-none"
-        >
-        {region === 'All Regions' ? (
-           <div className="space-y-4">
-             <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/10 pb-3">
-               <h3 className="text-[16px] font-black text-slate-900 dark:text-white">Global Regions</h3>
-               <button
-                 onClick={() => {
-                   onFiltersChange({ ...filters, region: 'All Regions', country: '' });
-                   setOpen(false);
-                 }}
-                 className="text-[11px] font-bold text-slate-500 hover:text-indigo-600 transition-colors uppercase tracking-wider"
-               >
-                 Reset
-               </button>
-             </div>
-             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {findShowsRegions.filter(r => r !== 'All Regions').map(subRegion => (
-                     <button
-                       key={subRegion}
-                       onClick={() => {
-                         onFiltersChange({ ...filters, region: subRegion, country: '' });
-                         setOpen(false);
-                       }}
-                       className="group flex flex-col items-center justify-center gap-2 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/5 p-4 transition-all hover:border-indigo-300 dark:hover:border-indigo-500/30 hover:bg-white dark:hover:bg-white/10"
-                     >
-                       <Globe2 className="size-5 text-indigo-500" />
-                       <span className="text-[12px] font-bold text-slate-900 dark:text-white">{subRegion}</span>
-                     </button>
-                ))}
-             </div>
-           </div>
-        ) : (
-           <div className="space-y-4">
-             <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/10 pb-3">
-               <h3 className="text-[16px] font-black text-slate-900 dark:text-white">{region} Countries</h3>
-               <button
-                 onClick={() => {
-                   onFiltersChange({ ...filters, region, country: '' });
-                   setOpen(false);
-                 }}
-                 className="px-3 py-1 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 text-[11px] font-bold rounded-full transition-all hover:bg-indigo-600 hover:text-white"
-               >
-                 View All {region}
-               </button>
-             </div>
-             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-               {countryStatsByRegion[region]?.map(stat => (
-                 <button
-                   key={stat.country}
-                   onClick={() => {
-                     onFiltersChange({ ...filters, region, country: stat.country });
-                     setOpen(false);
-                   }}
-                   className={cn(
-                     "flex items-center gap-2 rounded-lg border border-transparent p-2 text-left transition-all hover:bg-slate-100 dark:hover:bg-white/5",
-                     isActive && filters.country === stat.country && "bg-indigo-50 dark:bg-indigo-500/10 border-indigo-200 dark:border-indigo-500/30 font-bold"
-                   )}
-                 >
-                   <span className="text-[16px]">{stat.flag}</span>
-                   <span className="truncate text-[12px] text-slate-900 dark:text-white">{stat.country}</span>
-                 </button>
-               ))}
-             </div>
-           </div>
-        )}
-      </PopoverContent>
-    </Popover>
-  );
+function readSlugSet(key: string): Set<string> {
+    if (typeof window === 'undefined') return new Set();
+    try {
+        const raw = window.localStorage.getItem(key);
+        if (!raw) return new Set();
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? new Set(parsed as string[]) : new Set();
+    } catch {
+        return new Set();
+    }
 }
 
-function CategoryFilterPopover({ value, onChange }: { value: string, onChange: (val: string) => void }) {
-  const [open, setOpen] = useState(false);
-  const categories = [
-    { label: 'All Categories', value: 'All Categories' },
-    { label: 'Technology', value: 'Technology' },
-    { label: 'Manufacturing', value: 'Manufacturing' },
-    { label: 'Healthcare', value: 'Healthcare' },
-    { label: 'Energy', value: 'Energy' },
-    { label: 'Retail', value: 'Retail' },
-    { label: 'Finance', value: 'Finance' },
-  ];
-
-  const selected = categories.find(c => c.value === value) || categories[0];
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <button className={cn(
-          "inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-[12px] font-bold transition-all",
-          value !== 'All Categories' 
-            ? "border-indigo-500/60 bg-indigo-50/50 text-indigo-600 shadow-sm dark:border-indigo-400/40 dark:bg-indigo-400/10 dark:text-indigo-300"
-            : "border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#111B2E] text-slate-600 dark:text-slate-400 hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:text-slate-900 dark:hover:text-white"
-        )}>
-          <span className="truncate">{selected.label}</span>
-          <ChevronDown className="size-3 shrink-0 opacity-60 data-[state=open]:rotate-180 transition-transform" />
-        </button>
-      </PopoverTrigger>
-      <PopoverContent align="start" className="w-[240px] p-0 rounded-xl overflow-hidden border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#0B1220]">
-        <Command>
-          <CommandInput placeholder="Search category..." className="h-9 text-[12px]" />
-          <CommandList>
-            <CommandEmpty className="py-2 text-center text-[12px] text-slate-500">No category found.</CommandEmpty>
-            <CommandGroup>
-              {categories.map((cat) => (
-                <CommandItem
-                  key={cat.value}
-                  value={cat.value}
-                  onSelect={() => {
-                    onChange(cat.value);
-                    setOpen(false);
-                  }}
-                  className="px-3 py-2 text-[12px] font-bold cursor-pointer"
-                >
-                  <span className="flex-1">{cat.label}</span>
-                  {value === cat.value && <Check className="size-3.5 text-indigo-600" />}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
-}
-
-// ----------------------------------------------------------------------
 function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
-    const router = useRouter();
-    const [searchQuery, setSearchQuery] = useState("");
-    const [filters, setFilters] = useState({
-        region: 'All Regions' as FindShowsRegion,
-        country: '',
-        category: 'All Categories' as FindShowsCategory
-    });
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 15;
+    // Filter state is read from — and written back to — the URL, so a search is
+    // shareable and the AI panel and the left rail read the same source.
+    const [queryState, setQueryState] = useState<EventQueryState>(() => ({
+        filters: emptyEventFilters(),
+        search: '',
+    }));
+    // The URL is read after mount rather than in the initializer above: parsing
+    // it during render would have the server produce an unfiltered list and the
+    // client a filtered one, which is a hydration mismatch.
+    const [isHydrated, setIsHydrated] = useState(false);
+    const [page, setPage] = useState(1);
 
-    // Liked & Target State (Local persistence)
     const [likedIds, setLikedIds] = useState<Set<string>>(new Set());
     const [targetIds, setTargetIds] = useState<Set<string>>(new Set());
-    const [showOnlyLiked, setShowOnlyLiked] = useState(false);
+
+    // The question behind the current result set, and the grounded answer to it.
+    const [question, setQuestion] = useState<string | null>(null);
+    const [answer, setAnswer] = useState<string | null>(null);
+    const [isAnswering, setIsAnswering] = useState(false);
 
     useEffect(() => {
-        const savedLiked = localStorage.getItem('pc_liked_events');
-        const savedTarget = localStorage.getItem('pc_target_events');
-        if (savedLiked) setLikedIds(new Set(JSON.parse(savedLiked)));
-        if (savedTarget) setTargetIds(new Set(JSON.parse(savedTarget)));
+        setQueryState(parseEventQueryState(window.location.search));
+        setLikedIds(readSlugSet('pc_liked_events'));
+        setTargetIds(readSlugSet('pc_target_events'));
+        setIsHydrated(true);
     }, []);
 
-    const toggleLike = (e: React.MouseEvent, id: string) => {
-        e.stopPropagation();
-        setLikedIds(prev => {
+    // history.replaceState rather than router.replace: this only needs to keep
+    // the address bar shareable, and avoids re-running the RSC payload on every
+    // checkbox click. Skipped until the URL has been read, so the first paint
+    // cannot blank out an incoming shared link.
+    useEffect(() => {
+        if (!isHydrated) return;
+        const query = serializeEventQueryState(queryState);
+        window.history.replaceState(null, '', `${window.location.pathname}${query}`);
+    }, [queryState, isHydrated]);
+
+    const toggleLike = (slug: string) => {
+        setLikedIds((prev) => {
             const next = new Set(prev);
-            if (next.has(id)) next.delete(id);
-            else next.add(id);
+            if (next.has(slug)) next.delete(slug);
+            else next.add(slug);
             localStorage.setItem('pc_liked_events', JSON.stringify(Array.from(next)));
             return next;
         });
     };
 
-    const toggleTarget = (e: React.MouseEvent, id: string) => {
-        e.stopPropagation();
-        setTargetIds(prev => {
+    const toggleTarget = (slug: string) => {
+        setTargetIds((prev) => {
             const next = new Set(prev);
-            if (next.has(id)) next.delete(id);
-            else next.add(id);
+            if (next.has(slug)) next.delete(slug);
+            else next.add(slug);
             localStorage.setItem('pc_target_events', JSON.stringify(Array.from(next)));
             return next;
         });
     };
 
-    // Advanced Filter Logic
-    const filteredEvents = useMemo(() => {
-        let results = findShowEvents;
+    // The Target Events route filters the catalog down before anything else, so
+    // facet counts and the assistant's answer both reflect that subset.
+    const baseEvents = useMemo(
+        () => (mode === 'target' ? findShowEvents.filter((e) => targetIds.has(e.slug)) : findShowEvents),
+        [mode, targetIds]
+    );
 
-        // Mode Filter (Target Events)
-        if (mode === 'target') {
-            results = results.filter(e => targetIds.has(e.slug));
-        }
+    const filteredEvents = useMemo(
+        () => filterEventList(baseEvents, queryState.filters, queryState.search, likedIds),
+        [baseEvents, queryState, likedIds]
+    );
 
-        // Liked Filter
-        if (showOnlyLiked) {
-            results = results.filter(e => likedIds.has(e.slug));
-        }
+    const facets = useMemo(
+        () => computeEventFacets(baseEvents, queryState.filters, queryState.search, likedIds),
+        [baseEvents, queryState, likedIds]
+    );
 
-        // Search Query (Name, City, Venue)
-        if (searchQuery.trim()) {
-            const query = searchQuery.toLowerCase();
-            results = results.filter(e => e.searchText.includes(query));
-        }
+    const pageCount = Math.max(1, Math.ceil(filteredEvents.length / PAGE_SIZE));
+    const safePage = Math.min(page, pageCount);
+    const pagedEvents = useMemo(
+        () => filteredEvents.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE),
+        [filteredEvents, safePage]
+    );
 
-        // Region Filter
-        if (filters.region !== 'All Regions') {
-            results = results.filter(e => e.region === filters.region);
-        }
-
-        // Country Filter
-        if (filters.country) {
-            results = results.filter(e => e.country === filters.country);
-        }
-
-        // Category Filter
-        if (filters.category !== 'All Categories') {
-            results = results.filter(e => e.categories.includes(filters.category as any));
-        }
-
-        return results;
-    }, [searchQuery, filters, mode, targetIds, likedIds, showOnlyLiked]);
-
-    // Pagination Calculation
-    const totalPages = Math.ceil(filteredEvents.length / itemsPerPage);
-    const paginatedEvents = useMemo(() => {
-        const start = (currentPage - 1) * itemsPerPage;
-        return filteredEvents.slice(start, start + itemsPerPage);
-    }, [filteredEvents, currentPage]);
-
-    const [selectedId, setSelectedId] = useState<string | null>(null);
-
-    const activeEvent = useMemo(() => {
-        return findShowEvents.find((e) => e.slug === selectedId) || paginatedEvents[0];
-    }, [selectedId, paginatedEvents]);
-
-    // Reset page on filter change
+    // Answer the user's question from the rows that actually matched. Runs after
+    // filtering, and re-runs if the filters are then adjusted by hand.
     useEffect(() => {
-        setCurrentPage(1);
-    }, [searchQuery, filters]);
+        if (!question) return;
+
+        const controller = new AbortController();
+        setIsAnswering(true);
+
+        const rows: EventAnswerRow[] = filteredEvents.slice(0, ANSWER_ROW_LIMIT).map((event) => ({
+            name: event.name,
+            organizer: event.organizer === '?' ? '' : event.organizer,
+            city: event.city,
+            country: event.country,
+            dates: event.displayDate,
+            category: event.primaryCategory,
+        }));
+
+        fetch('/api/ai/event-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question, totalMatched: filteredEvents.length, rows }),
+            signal: controller.signal,
+        })
+            .then((response) => (response.ok ? response.json() : { answer: null }))
+            .then((data: { answer?: string | null }) => {
+                setAnswer(typeof data.answer === 'string' ? data.answer : null);
+                setIsAnswering(false);
+            })
+            .catch((error) => {
+                if ((error as Error).name === 'AbortError') return;
+                // The table is already on screen; a missing summary is not worth
+                // an error state.
+                setAnswer(null);
+                setIsAnswering(false);
+            });
+
+        return () => controller.abort();
+    }, [question, filteredEvents]);
+
+    const applyQueryState = useCallback((next: EventQueryState, asked: string | null) => {
+        setQueryState(next);
+        setPage(1);
+        if (asked !== null) {
+            setQuestion(asked);
+            setAnswer(null);
+        }
+    }, []);
+
+    const updateFilters = (filters: EventFilters) => {
+        setQueryState((prev) => ({ ...prev, filters }));
+        setPage(1);
+    };
+
+    const updateSearch = (search: string) => {
+        setQueryState((prev) => ({ ...prev, search }));
+        setPage(1);
+    };
+
+    const clearAll = () => {
+        setQueryState({ filters: emptyEventFilters(), search: '' });
+        setPage(1);
+        setQuestion(null);
+        setAnswer(null);
+    };
+
+    // Emptying the compact box drops the question, but leaves filters the user
+    // set by hand in the rail — those still have results worth showing.
+    const clearQuery = () => {
+        setQueryState((prev) => ({ ...prev, search: '' }));
+        setPage(1);
+        setQuestion(null);
+        setAnswer(null);
+    };
+
+    const removeChip = (chipId: string) => {
+        setQueryState((prev) => removeEventFilterChip(prev.filters, prev.search, chipId));
+        setPage(1);
+    };
+
+    const chips = buildEventFilterChips(queryState.filters, queryState.search);
+
+    // The hero and the results share one slot. Anything narrowing the catalog —
+    // a typed question or a single filter — means the rows are what the user
+    // came for, so the pitch collapses to a one-line bar. Target Events is a
+    // curated list rather than a search, so it skips the hero entirely.
+    const isSearchActive = mode === 'target' || chips.length > 0 || question !== null;
 
     return (
-        <div className="space-y-5 w-full pb-8">
-            {/* Header Section */}
+        <div className="mx-auto w-full max-w-[1600px] space-y-5 pb-8">
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4 }}
-                className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 py-2"
+                className="flex flex-col items-start justify-between gap-4 py-2 sm:flex-row sm:items-center"
             >
                 <div>
-                    <h1 className="text-[24px] font-bold tracking-tight text-slate-900 dark:text-white mb-1 flex items-center gap-2">
+                    <h1 className="mb-1 flex items-center gap-2 text-[24px] font-bold tracking-tight text-slate-900 dark:text-white">
                         <Calendar className="size-6 text-indigo-500" />
                         {mode === 'target' ? 'Target Events' : 'Events Explorer'}
                     </h1>
                     <p className="text-[13px] text-slate-600 dark:text-slate-400">
-                        {mode === 'target' ? 'Focused tracking for high-priority shows' : '9,771+ premium trade show intelligence nodes'}
+                        {mode === 'target'
+                            ? 'Focused tracking for high-priority shows'
+                            : `${findShowEvents.length.toLocaleString()} trade shows — filter them, or just ask`}
                     </p>
                 </div>
-                <div className="flex items-center gap-2">
-                    <button className="h-9 px-4 rounded-[8px] bg-indigo-600 dark:bg-indigo-500 text-[13px] font-semibold text-white shadow-sm hover:bg-indigo-700 dark:hover:bg-indigo-400 transition-colors">
-                        Add New Event
-                    </button>
-                </div>
+                <button className="h-9 rounded-[8px] bg-indigo-600 px-4 text-[13px] font-semibold text-white shadow-sm transition-colors hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400">
+                    Add New Event
+                </button>
             </motion.div>
 
-            {/* Filter Bar */}
-            <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.2 }}
-                className="flex flex-col gap-5 rounded-[12px] border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#111B2E] p-4 shadow-sm"
-            >
-                {/* Search Row */}
-                <div className="relative w-full">
-                    <Search className="absolute left-3.5 top-1/2 size-[15px] -translate-y-1/2 text-slate-400 dark:text-[#9CA3AF] opacity-70" />
-                    <input
-                        type="text"
-                        placeholder="Search events by name, city, or venue..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full h-11 rounded-[10px] border border-slate-200 dark:border-[#22304A] bg-slate-50/50 dark:bg-[#0B1220]/50 pl-10 pr-4 text-[13px] text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-[#9CA3AF] focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/20 focus:bg-white dark:focus:bg-[#0B1220] transition-all font-semibold outline-none shadow-inner"
+            <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[340px_1fr]">
+                <motion.div
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.35, delay: 0.05 }}
+                    className="xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)]"
+                >
+                    <EventsFilterSidebar
+                        filters={queryState.filters}
+                        search={queryState.search}
+                        facets={facets}
+                        resultCount={filteredEvents.length}
+                        onFiltersChange={updateFilters}
+                        onSearchChange={updateSearch}
+                        onClear={clearAll}
                     />
-                </div>
-                
-                {/* Filters Row */}
-                <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                        {/* ❤️ Events Filter */}
-                        <button 
-                            onClick={() => setShowOnlyLiked(!showOnlyLiked)}
-                            className={cn(
-                                "inline-flex items-center gap-2 h-9 px-4 rounded-full border transition-all font-bold text-[12px]",
-                                showOnlyLiked 
-                                    ? "bg-red-500 text-white border-transparent shadow-lg shadow-red-500/20" 
-                                    : "bg-white dark:bg-[#111B2E] border-slate-200 dark:border-[#22304A] text-slate-600 dark:text-slate-400 hover:border-red-300 dark:hover:border-red-500/50"
-                            )}
-                        >
-                            <Heart className={cn("size-3.5 transition-transform", showOnlyLiked ? "fill-white scale-110" : "text-red-500")} />
-                            Events
-                        </button>
+                </motion.div>
 
-                        <div className="w-px h-4 bg-slate-200 dark:bg-[#22304A] mx-1" />
+                <motion.div
+                    initial={{ opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.35, delay: 0.1 }}
+                    className="min-w-0"
+                >
+                    <AnimatePresence mode="wait" initial={false}>
+                        {isSearchActive ? (
+                            <motion.div
+                                key="events-results"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.2 }}
+                                // The panel owns its scroll: the bar and chips
+                                // stay pinned while the rows run under them,
+                                // and the page keeps its single scrollbar.
+                                className="flex flex-col overflow-y-auto rounded-[16px] border border-slate-200 bg-white shadow-sm dark:border-[#22304A] dark:bg-[#111B2E] xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)]"
+                            >
+                                <EventsAiSearch
+                                    variant="compact"
+                                    filters={queryState.filters}
+                                    search={queryState.search}
+                                    question={question}
+                                    onApply={applyQueryState}
+                                    onRemoveChip={removeChip}
+                                    onClearAll={clearAll}
+                                    onClearQuery={clearQuery}
+                                    answer={answer}
+                                    isAnswering={isAnswering}
+                                />
 
-                        {findShowsRegions.map((region) => (
-                            <RegionMegaMenuPopover
-                                key={region}
-                                region={region}
-                                filters={filters}
-                                onFiltersChange={(next) => setFilters(next)}
-                            />
-                        ))}
-                        
-                        <CategoryFilterPopover 
-                            value={filters.category} 
-                            onChange={(cat) => setFilters({ ...filters, category: cat as any })}
-                        />
-                    </div>
+                                <div className="flex shrink-0 items-center justify-between gap-3 border-b border-slate-200 px-4 py-3 dark:border-[#22304A]">
+                                    <span className="text-[13px] font-bold text-slate-900 dark:text-white">
+                                        {filteredEvents.length.toLocaleString()}{' '}
+                                        <span className="font-semibold text-slate-500 dark:text-[#9CA3AF]">
+                                            {filteredEvents.length === 1 ? 'event' : 'events'}
+                                        </span>
+                                    </span>
+                                    {/* The empty state carries its own reset, so this
+                                        only appears when there are rows to clear. */}
+                                    {chips.length > 0 && filteredEvents.length > 0 ? (
+                                        <button
+                                            type="button"
+                                            onClick={clearAll}
+                                            className="text-[12px] font-semibold text-slate-500 transition-colors hover:text-indigo-600 dark:text-[#9CA3AF] dark:hover:text-indigo-400"
+                                        >
+                                            Clear all
+                                        </button>
+                                    ) : null}
+                                </div>
 
-                    { (filters.region !== 'All Regions' || filters.country !== '' || filters.category !== 'All Categories' || showOnlyLiked) && (
-                        <button 
-                            onClick={() => {
-                                setFilters({ region: 'All Regions', country: '', category: 'All Categories' });
-                                setShowOnlyLiked(false);
-                            }}
-                            className="flex items-center gap-2 h-9 px-4 rounded-full border border-red-200 dark:border-red-500/20 bg-red-50 dark:bg-red-500/5 text-red-600 dark:text-red-400 text-[12px] font-bold hover:bg-red-100 dark:hover:bg-red-500/10 transition-all shadow-sm"
-                        >
-                            <X className="size-3.5" />
-                            Clear filters
-                        </button>
-                    )}
-                </div>
-            </motion.div>
-
-            {/* Results Table - Full Width */}
-            <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.3 }}
-                className="flex flex-col rounded-[12px] border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#111B2E] overflow-hidden shadow-sm"
-            >
-                {/* Table Header Row */}
-                <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-[#22304A] bg-slate-50/10">
-                    <div className="flex items-center gap-2.5">
-                       <h2 className="text-[14px] font-bold text-slate-900 dark:text-white uppercase tracking-wider">
-                           {mode === 'target' ? 'Targeted Events' : 'Event Catalog'}
-                       </h2>
-                       <span className="rounded-full bg-indigo-50 dark:bg-indigo-500/10 px-2.5 py-0.5 text-[11px] font-black text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-500/20">
-                           {filteredEvents.length.toLocaleString()} events
-                       </span>
-                    </div>
-                </div>
-
-                <div className="overflow-x-auto min-h-[500px]">
-                    <table className="w-full text-left text-[12px]">
-                        <thead className="bg-slate-50 dark:bg-[#0B1220] sticky top-0 z-10">
-                            <tr className="border-b border-slate-200 dark:border-[#22304A] text-slate-500 dark:text-[#9CA3AF]">
-                                <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px] w-8 text-center bg-slate-50/50 dark:bg-[#0B1220]/50">❤️</th>
-                                <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px] w-16 text-center">Logo</th>
-                                <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px]">Event Details</th>
-                                <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px]">Location</th>
-                                <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px] w-32">Dates</th>
-                                <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px] hidden md:table-cell w-32">Category</th>
-                                <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px] text-right">Action</th>
-                            </tr>
-                        </thead>
-                        <motion.tbody className="divide-y divide-slate-100 dark:divide-[#22304A]">
-                            {paginatedEvents.map((event) => {
-                                const isLiked = likedIds.has(event.slug);
-                                const isTargeted = targetIds.has(event.slug);
-                                return (
-                                    <motion.tr
-                                        key={event.slug}
-                                        className={cn(
-                                            "group cursor-pointer transition-all duration-200 hover:bg-slate-50 dark:hover:bg-[#16233A]/40",
-                                            isTargeted && "bg-indigo-50/20 dark:bg-indigo-500/5 shadow-inner"
-                                        )}
-                                        onClick={() => router.push(`/app/events/${event.slug}`)}
-                                    >
-                                        <td className="px-4 py-4 text-center">
-                                            <button 
-                                                onClick={(e) => toggleLike(e, event.slug)}
-                                                className="group/heart relative p-1 transition-transform active:scale-75"
-                                            >
-                                                <Heart 
-                                                    className={cn(
-                                                        "size-5 transition-all duration-300",
-                                                        isLiked 
-                                                            ? "fill-red-500 text-red-500 scale-110 drop-shadow-[0_0_8px_rgba(239,68,68,0.4)]" 
-                                                            : "text-slate-300 dark:text-[#22304A] group-hover/heart:text-red-400"
-                                                    )} 
-                                                />
-                                            </button>
-                                        </td>
-                                        <td className="px-4 py-4 text-center">
-                                            <div className="size-11 rounded-xl border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#0B1220] p-1.5 shadow-glow-sm overflow-hidden flex items-center justify-center mx-auto transition-transform group-hover:scale-105">
-                                                {event.seedAsset.logoUrl ? (
-                                                    <img src={event.seedAsset.logoUrl} alt="" className="size-full object-contain" />
-                                                ) : (
-                                                    <span className="text-[14px] font-black text-indigo-500/40 uppercase">
-                                                        {event.name.substring(0, 2)}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-4">
-                                            <div className="flex flex-col">
-                                                <span className="text-[14px] font-black text-slate-900 dark:text-white line-clamp-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                                                    {event.name}
-                                                </span>
-                                                <span className="text-[11px] font-bold text-slate-500 dark:text-[#9CA3AF] line-clamp-1 uppercase tracking-tight">
-                                                    {event.organizer}
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-4 whitespace-nowrap">
-                                            <div className="flex items-center gap-2 text-[12px] text-slate-600 dark:text-[#E5E7EB] font-bold">
-                                                <MapPin className="size-3.5 text-slate-400 group-hover:text-indigo-500 transition-colors" />
-                                                {event.city}, {event.country}
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-4 whitespace-nowrap">
-                                            <div className="flex items-center gap-2 text-[12px] text-slate-600 dark:text-[#E5E7EB] font-black">
-                                                <Calendar className="size-3.5 text-indigo-500/60" />
-                                                {event.displayDate}
-                                            </div>
-                                        </td>
-                                        <td className="px-4 py-4 hidden md:table-cell">
-                                            <span className="inline-flex px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-[#0B1220] text-[10px] font-black text-slate-600 dark:text-[#9CA3AF] border border-slate-200 dark:border-[#22304A] uppercase tracking-wider">
-                                                {event.primaryCategory}
-                                            </span>
-                                        </td>
-                                        <td className="px-4 py-4 text-right">
-                                            <button 
-                                                onClick={(e) => toggleTarget(e, event.slug)}
-                                                className={cn(
-                                                    "h-8 px-4 rounded-lg text-[10px] font-black uppercase tracking-[0.1em] transition-all relative overflow-hidden",
-                                                    isTargeted 
-                                                        ? "bg-slate-100 dark:bg-[#0B1220] text-indigo-600 dark:text-indigo-400 border border-indigo-200/50" 
-                                                        : "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 hover:scale-105 active:scale-95"
-                                                )}
-                                            >
-                                                {isTargeted ? (
-                                                    <span className="flex items-center gap-1.5 focus:outline-none">
-                                                        <Check className="size-3" /> Targeted
-                                                    </span>
-                                                ) : (
-                                                    "Add To target events"
-                                                )}
-                                            </button>
-                                        </td>
-                                    </motion.tr>
-                                );
-                            })}
-                        </motion.tbody>
-                    </table>
-                </div>
-
-                {/* Table Footer */}
-                <div className="px-4 py-4 border-t border-slate-200 dark:border-[#22304A] bg-slate-50/50 dark:bg-[#0B1220]/50 flex items-center justify-between text-[11px] font-black text-slate-500 dark:text-[#9CA3AF] uppercase tracking-widest">
-                    <span>Showing {paginatedEvents.length} of {filteredEvents.length.toLocaleString()} events</span>
-                    <div className="flex items-center gap-3">
-                         <button 
-                            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                            disabled={currentPage === 1}
-                            className="h-9 px-4 rounded-xl border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#111B2E] text-slate-600 dark:text-[#E5E7EB] hover:bg-slate-50 dark:hover:bg-[#16233A] disabled:opacity-50 transition-all font-black shadow-sm"
-                         >
-                            Prev
-                         </button>
-                         <div className="flex items-center gap-2 text-[14px]">
-                            <span className="text-indigo-600 dark:text-indigo-400 font-black">{currentPage}</span>
-                            <span className="opacity-20">/</span>
-                            <span>{totalPages}</span>
-                         </div>
-                         <button 
-                            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                            disabled={currentPage === totalPages}
-                            className="h-9 px-4 rounded-xl border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#111B2E] text-slate-600 dark:text-[#E5E7EB] hover:bg-slate-50 dark:hover:bg-[#16233A] disabled:opacity-50 transition-all font-black shadow-sm"
-                         >
-                            Next
-                         </button>
-                    </div>
-                </div>
-            </motion.div>
+                                <EventsResultsTable
+                                    events={pagedEvents}
+                                    totalMatched={filteredEvents.length}
+                                    page={safePage}
+                                    pageSize={PAGE_SIZE}
+                                    onPageChange={(next) => setPage(Math.min(Math.max(1, next), pageCount))}
+                                    likedIds={likedIds}
+                                    targetIds={targetIds}
+                                    onToggleLike={toggleLike}
+                                    onToggleTarget={toggleTarget}
+                                    chips={chips}
+                                    onRemoveChip={removeChip}
+                                    onClearAll={clearAll}
+                                />
+                            </motion.div>
+                        ) : (
+                            <motion.div
+                                key="events-hero"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.2 }}
+                            >
+                                <EventsAiSearch
+                                    filters={queryState.filters}
+                                    search={queryState.search}
+                                    question={question}
+                                    onApply={applyQueryState}
+                                    onRemoveChip={removeChip}
+                                    onClearAll={clearAll}
+                                    onClearQuery={clearQuery}
+                                    answer={answer}
+                                    isAnswering={isAnswering}
+                                />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
+            </div>
         </div>
     );
 }
