@@ -449,8 +449,6 @@ export const findShowsCategories: FindShowsCategory[] = [
   'General',
 ];
 
-export const findShowCountryOptions: FindShowFilterOption[] = [];
-
 export const findShowCategoryOptions: FindShowFilterOption<FindShowsCategory>[] =
   findShowsCategories.map((category) => ({
     label: category,
@@ -490,6 +488,13 @@ export const findShowEventsBySlug = Object.fromEntries(
 export const findShowCountries = Array.from(
   new Set(findShowEvents.map((event) => event.country))
 ).sort();
+
+// Declared here rather than beside `findShowCategoryOptions` because it derives
+// from `findShowEvents`, which is only built further down the module.
+export const findShowCountryOptions: FindShowFilterOption[] = findShowCountries.map((country) => ({
+  label: country,
+  value: country,
+}));
 
 export const findShowStats = {
   totalEvents: findShowEvents.length,
