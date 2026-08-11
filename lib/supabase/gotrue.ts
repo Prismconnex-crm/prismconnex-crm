@@ -5,6 +5,7 @@ import {
     InternalServerError,
     UnauthorizedError,
 } from "@/lib/http/errors";
+import { authDebug, maskEmail, maskToken } from "@/lib/auth/auth-debug";
 
 /**
  * Thin wrapper over the Supabase Auth (GoTrue) REST API.
@@ -99,6 +100,21 @@ async function request<T>(
     if (!res.ok) {
         const message = extractMessage(json, "Authentication request failed");
 
+        // Log exactly what Supabase said, to the server console only.
+        //
+        // The mappings below deliberately re-word the response (a 401 becomes
+        // "Invalid email or password"), which is right for the UI but erases
+        // what is needed to tell a bad password from an expired recovery token.
+        // This is logged rather than attached to the thrown error because
+        // jsonError() serialises ApiError.details straight to the client, so
+        // anything put there would leak the upstream body to the browser on
+        // every failed sign-in.
+        authDebug("supabase responded with an error", {
+            endpoint: path,
+            status: res.status,
+            body: json ?? text ?? null,
+        });
+
         // 400 from GoTrue covers both "bad credentials" and "bad input"; map the
         // credential cases to 401 so the UI can distinguish them.
         if (res.status === 401 || /invalid login credentials/i.test(message)) {
@@ -115,7 +131,7 @@ async function request<T>(
         // ("email rate limit exceeded") reads like an application bug.
         if (res.status === 429) {
             throw new ApiError(
-                "Too many confirmation emails have been sent from this Supabase project. " +
+                "Too many emails have been sent from this Supabase project. " +
                     "The built-in email service allows only a few per hour — wait and retry, " +
                     "or configure a custom SMTP provider in the Supabase dashboard.",
                 429
@@ -175,7 +191,18 @@ export async function verifySignUpOtp(email: string, token: string) {
 /** Sends the password-recovery email. */
 export async function sendRecoveryEmail(email: string, redirectTo?: string) {
     const query = redirectTo ? `?redirect_to=${encodeURIComponent(redirectTo)}` : "";
+
+    // redirectTo is logged in full and unmasked on purpose: a wrong or
+    // non-allow-listed value is the failure that cannot be seen any other way,
+    // because Supabase answers 200 either way and silently substitutes its own
+    // Site URL when the value is not on the dashboard allow-list.
+    authDebug("POST /recover -> supabase", { email: maskEmail(email), redirectTo });
+
     await request<unknown>(`/recover${query}`, { method: "POST", body: { email } });
+
+    authDebug("supabase accepted the recovery request (HTTP 200)", {
+        note: "200 means queued for delivery, not that SMTP succeeded",
+    });
 }
 
 /** Exchanges a recovery OTP for a session so the password can be changed. */
@@ -186,13 +213,45 @@ export async function verifyRecoveryOtp(email: string, token: string) {
     });
 }
 
+/**
+ * Exchanges the `token_hash` from a recovery email link for a session — the
+ * wire equivalent of `supabase.auth.verifyOtp({ type: 'recovery', token_hash })`.
+ *
+ * Unlike verifyRecoveryOtp above this takes no email: the hash already
+ * identifies the user, which is what lets the reset page work from the link
+ * alone without asking the user to re-type the address they just requested it
+ * for (and without letting a caller aim a token at a different account).
+ *
+ * Only reachable when the project's recovery template emits `{{ .TokenHash }}`.
+ * With the stock `{{ .ConfirmationURL }}` template GoTrue verifies the token
+ * itself and hands us an access token instead — see lib/auth/recovery-link.ts.
+ */
+export async function verifyRecoveryTokenHash(tokenHash: string) {
+    authDebug("POST /verify (type=recovery) -> supabase", { tokenHash: maskToken(tokenHash) });
+
+    const session = await request<SupabaseSession>("/verify", {
+        method: "POST",
+        body: { type: "recovery", token_hash: tokenHash },
+    });
+
+    authDebug("recovery token exchanged for a session", { userId: session.user?.id });
+    return session;
+}
+
 /** Sets a new password using a session obtained from a recovery token. */
 export async function updatePassword(accessToken: string, password: string) {
-    return request<SupabaseUser>("/user", {
+    authDebug("PUT /user (set new password) -> supabase", {
+        accessToken: maskToken(accessToken),
+    });
+
+    const user = await request<SupabaseUser>("/user", {
         method: "PUT",
         body: { password },
         accessToken,
     });
+
+    authDebug("supabase updated the password", { userId: user.id, email: user.email });
+    return user;
 }
 
 export async function getUser(accessToken: string) {
@@ -244,6 +303,77 @@ export function isOAuthProviderKey(value: string): value is OAuthProviderKey {
     return Object.prototype.hasOwnProperty.call(OAUTH_PROVIDERS, value);
 }
 
+/**
+ * Per-provider scope overrides.
+ *
+ * Microsoft is the one that needs this. Entra ID will happily issue a token
+ * with no email claim under its default scopes, and GoTrue then rejects the
+ * code exchange with "Error getting user email from external provider" —
+ * *after* the user has already signed in and consented, so it presents as a
+ * broken callback rather than as a missing scope. Asking for `email` up front
+ * is what Supabase's own Azure documentation prescribes.
+ *
+ * Google returns the email under its defaults, so it gets no override.
+ */
+export const OAUTH_SCOPES: Partial<Record<OAuthProviderKey, string>> = {
+    microsoft: "email",
+};
+
+/**
+ * The `external` map from GET /auth/v1/settings — which providers the project
+ * actually has switched on. Keyed by Supabase's slug (so `azure`, not
+ * `microsoft`).
+ */
+export type GoTrueSettings = { external?: Record<string, boolean> } | null | undefined;
+
+/**
+ * Whether `provider` is enabled, given a settings payload.
+ *
+ * Fails OPEN. This lookup exists only to turn a dead-end Supabase error page
+ * into a sentence on our own sign-in page; if the payload is missing, malformed
+ * or from a GoTrue version that renames the field, the right move is to let the
+ * authorize request proceed and have Supabase be the judge — never to block a
+ * login that would otherwise have worked.
+ */
+export function readEnabledProviders(
+    settings: GoTrueSettings,
+    provider: OAuthProviderKey
+): boolean {
+    const external = settings?.external;
+    if (!external || typeof external !== "object") return true;
+
+    const value = external[OAUTH_PROVIDERS[provider]];
+    return typeof value === "boolean" ? value : true;
+}
+
+/**
+ * Cached because every sign-in click would otherwise pay a round trip to
+ * Supabase before the redirect. Sixty seconds is short enough that flipping the
+ * provider on in the dashboard takes effect while you are still looking at the
+ * page.
+ */
+let settingsCache: { value: GoTrueSettings; expiresAt: number } | null = null;
+
+export async function fetchGoTrueSettings(): Promise<GoTrueSettings> {
+    if (settingsCache && settingsCache.expiresAt > Date.now()) return settingsCache.value;
+
+    try {
+        const value = await request<GoTrueSettings>("/settings", { method: "GET" });
+        settingsCache = { value, expiresAt: Date.now() + 60_000 };
+        return value;
+    } catch (error) {
+        authDebug("could not read /auth/v1/settings; skipping the provider check", {
+            error: error instanceof Error ? error.message : String(error),
+        });
+        return null;
+    }
+}
+
+/** Whether the Supabase dashboard has this provider enabled. Fails open. */
+export async function isProviderEnabled(provider: OAuthProviderKey): Promise<boolean> {
+    return readEnabledProviders(await fetchGoTrueSettings(), provider);
+}
+
 function base64Url(input: Buffer) {
     return input.toString("base64url");
 }
@@ -271,7 +401,11 @@ export function buildAuthorizeUrl(options: {
     authorize.searchParams.set("redirect_to", options.redirectTo);
     authorize.searchParams.set("code_challenge", options.codeChallenge);
     authorize.searchParams.set("code_challenge_method", "S256");
-    if (options.scopes) authorize.searchParams.set("scopes", options.scopes);
+
+    // Explicit scopes win; otherwise fall back to the provider's own
+    // requirement (see OAUTH_SCOPES — Microsoft needs `email`).
+    const scopes = options.scopes ?? OAUTH_SCOPES[options.provider];
+    if (scopes) authorize.searchParams.set("scopes", scopes);
 
     return authorize.toString();
 }

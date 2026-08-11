@@ -68,9 +68,18 @@
         },
         "description": "The AI-native CRM that turns trade show chaos into predictable revenue. Source verified leads, automate compliant outreach, and prove ROI, all in one platform.",
         "bullets": [
-          { "icon": "shield", "text": "Source transparency" },
-          { "icon": "activity", "text": "Compliant sequences" },
-          { "icon": "chart", "text": "Deal economics (ROI)" }
+          {
+            "icon": "shield",
+            "text": "Source transparency"
+          },
+          {
+            "icon": "activity",
+            "text": "Compliant sequences"
+          },
+          {
+            "icon": "chart",
+            "text": "Deal economics (ROI)"
+          }
         ],
         "primaryCta": "Start Free Trial",
         "secondaryCta": "Book a Demo",
@@ -84,22 +93,56 @@
         },
         "dashboard": {
           "kpis": [
-            { "label": "Flow", "value": "$1.82M", "color": "text-indigo-400" },
-            { "label": "Leads", "value": "428", "color": "text-emerald-400" },
-            { "label": "ROI", "value": "3.4x", "color": "text-amber-400" }
+            {
+              "label": "Flow",
+              "value": "$1.82M",
+              "color": "text-indigo-400"
+            },
+            {
+              "label": "Leads",
+              "value": "428",
+              "color": "text-emerald-400"
+            },
+            {
+              "label": "ROI",
+              "value": "3.4x",
+              "color": "text-amber-400"
+            }
           ],
           "events": [
-            { "name": "Berlin Tech Week", "score": "96%" },
-            { "name": "London Retail Summit", "score": "96%" }
+            {
+              "name": "Berlin Tech Week",
+              "score": "96%"
+            },
+            {
+              "name": "London Retail Summit",
+              "score": "96%"
+            }
           ]
         }
       },
       "stats": {
         "items": [
-          { "value": "10,000+", "label": "Events Running", "accent": "emerald" },
-          { "value": "2.5M+", "label": "Company Profiles", "accent": "indigo" },
-          { "value": "98.7%", "label": "Deliverability", "accent": "violet" },
-          { "value": "3.4x", "label": "Avg ROI Lift", "accent": "amber" }
+          {
+            "value": "10,000+",
+            "label": "Events Running",
+            "accent": "emerald"
+          },
+          {
+            "value": "2.5M+",
+            "label": "Company Profiles",
+            "accent": "indigo"
+          },
+          {
+            "value": "98.7%",
+            "label": "Deliverability",
+            "accent": "violet"
+          },
+          {
+            "value": "3.4x",
+            "label": "Avg ROI Lift",
+            "accent": "amber"
+          }
         ]
       },
       "personas": {
@@ -113,28 +156,50 @@
             "title": "Service Providers",
             "accent": "violet",
             "description": "Streamline your service delivery flow from initial quote to long-term client retention.",
-            "flow": ["Jobs", "Quotes", "Reviews", "Repeat Clients"]
+            "flow": [
+              "Jobs",
+              "Quotes",
+              "Reviews",
+              "Repeat Clients"
+            ]
           },
           {
             "id": "attendees",
             "title": "Attendees",
             "accent": "emerald",
             "description": "Discover events, plan your trip, and build meaningful connections with exhibitors and peers.",
-            "flow": ["Events", "Plan Trip", "Tickets", "Map", "Networking"]
+            "flow": [
+              "Events",
+              "Plan Trip",
+              "Tickets",
+              "Map",
+              "Networking"
+            ]
           },
           {
             "id": "exhibitors",
             "title": "Exhibitors",
             "accent": "amber",
             "description": "From event selection to closed deals, manage the full exhibitor revenue flow.",
-            "flow": ["Event", "Target List", "Sequence", "Meetings", "Deals to ROI"]
+            "flow": [
+              "Event",
+              "Target List",
+              "Sequence",
+              "Meetings",
+              "Deals to ROI"
+            ]
           },
           {
             "id": "organizers",
             "title": "Organizers",
             "accent": "pink",
             "description": "Run world-class events with streamlined operations, exhibitor tools, and sponsor management.",
-            "flow": ["Event Ops", "Exhibitor Onboarding", "Sponsor Management", "Attendee Guidance"]
+            "flow": [
+              "Event Ops",
+              "Exhibitor Onboarding",
+              "Sponsor Management",
+              "Attendee Guidance"
+            ]
           }
         ]
       },
@@ -211,13 +276,21 @@
           {
             "icon": "pin",
             "title": "Nearby Essentials",
-            "bullets": ["Hotels near venue", "Nearest airport and railway station", "Near Tourist Spot"],
+            "bullets": [
+              "Hotels near venue",
+              "Nearest airport and railway station",
+              "Near Tourist Spot"
+            ],
             "accent": "emerald"
           },
           {
             "icon": "globe",
             "title": "Global Traveller Friendly",
-            "bullets": ["Multi-language UI", "Timezone-aware schedules", "Multi-currency display"],
+            "bullets": [
+              "Multi-language UI",
+              "Timezone-aware schedules",
+              "Multi-currency display"
+            ],
             "accent": "amber"
           }
         ],
@@ -228,9 +301,21 @@
           "applyPromo": "Apply Promo",
           "nearbyTitle": "Nearby Essentials",
           "nearby": [
-            { "icon": "hotel", "label": "Hotels", "detail": "12 within 2km" },
-            { "icon": "plane", "label": "Airport", "detail": "BER � 22km" },
-            { "icon": "train", "label": "Railway", "detail": "Hbf � 4km" }
+            {
+              "icon": "hotel",
+              "label": "Hotels",
+              "detail": "12 within 2km"
+            },
+            {
+              "icon": "plane",
+              "label": "Airport",
+              "detail": "BER � 22km"
+            },
+            {
+              "icon": "train",
+              "label": "Railway",
+              "detail": "Hbf � 4km"
+            }
           ],
           "disclaimer": "Availability and results depend on map provider data. Partner offers vary by event."
         }
@@ -595,10 +680,18 @@
       "description": "Let's set up your workspace in a few quick steps."
     },
     "steps": [
-      { "label": "Personal Role" },
-      { "label": "Workspace" },
-      { "label": "Sending" },
-      { "label": "Import" }
+      {
+        "label": "Personal Role"
+      },
+      {
+        "label": "Workspace"
+      },
+      {
+        "label": "Sending"
+      },
+      {
+        "label": "Import"
+      }
     ],
     "role": {
       "title": "Personal Role",
@@ -608,25 +701,41 @@
       {
         "id": "service-providers",
         "name": "Service Providers",
-        "chips": ["Jobs", "Quotes", "Invoices"],
+        "chips": [
+          "Jobs",
+          "Quotes",
+          "Invoices"
+        ],
         "recommended": "Recommended settings applied"
       },
       {
         "id": "attendees",
         "name": "Attendees",
-        "chips": ["Events", "Tickets", "Map"],
+        "chips": [
+          "Events",
+          "Tickets",
+          "Map"
+        ],
         "recommended": "Recommended settings applied"
       },
       {
         "id": "exhibitors",
         "name": "Exhibitors",
-        "chips": ["Target list", "Sequence", "Deals"],
+        "chips": [
+          "Target list",
+          "Sequence",
+          "Deals"
+        ],
         "recommended": "Recommended settings applied"
       },
       {
         "id": "organizers",
         "name": "Organizers",
-        "chips": ["Onboarding", "Sponsors", "Guidance"],
+        "chips": [
+          "Onboarding",
+          "Sponsors",
+          "Guidance"
+        ],
         "recommended": "Recommended settings applied"
       }
     ],
@@ -651,16 +760,40 @@
         "phoneNumber": "+1 (555) 000-0000"
       },
       "timeZones": [
-        { "value": "America/New_York", "label": "America/New_York" },
-        { "value": "Europe/London", "label": "Europe/London" },
-        { "value": "Europe/Berlin", "label": "Europe/Berlin" },
-        { "value": "Asia/Kolkata", "label": "Asia/Kolkata" }
+        {
+          "value": "America/New_York",
+          "label": "America/New_York"
+        },
+        {
+          "value": "Europe/London",
+          "label": "Europe/London"
+        },
+        {
+          "value": "Europe/Berlin",
+          "label": "Europe/Berlin"
+        },
+        {
+          "value": "Asia/Kolkata",
+          "label": "Asia/Kolkata"
+        }
       ],
       "currencies": [
-        { "value": "USD", "label": "USD" },
-        { "value": "EUR", "label": "EUR" },
-        { "value": "GBP", "label": "GBP" },
-        { "value": "INR", "label": "INR" }
+        {
+          "value": "USD",
+          "label": "USD"
+        },
+        {
+          "value": "EUR",
+          "label": "EUR"
+        },
+        {
+          "value": "GBP",
+          "label": "GBP"
+        },
+        {
+          "value": "INR",
+          "label": "INR"
+        }
       ],
       "toggles": {
         "dualTime": "Show event local time plus my time"
@@ -688,8 +821,14 @@
     "import": {
       "title": "Import your data",
       "description": "Bring in existing contacts or start fresh.",
-      "primary": { "title": "Upload CSV", "description": "Import contacts from a file" },
-      "secondary": { "title": "Start Fresh", "description": "Add contacts manually later" }
+      "primary": {
+        "title": "Upload CSV",
+        "description": "Import contacts from a file"
+      },
+      "secondary": {
+        "title": "Start Fresh",
+        "description": "Add contacts manually later"
+      }
     },
     "buttons": {
       "back": "Back",
@@ -702,6 +841,11 @@
     }
   },
   "auth": {
+    "tabs": {
+      "login": "Login",
+      "signUp": "Sign Up",
+      "ariaLabel": "Authentication"
+    },
     "signIn": {
       "brandSubtitle": "AI Trade Shows CRM",
       "heroTitleLine1": "Trade Show Intelligence.",
@@ -722,7 +866,6 @@
       "actions": {
         "submit": "Sign In",
         "divider": "or continue with",
-        "cognito": "Continue with AWS Cognito",
         "forgotPassword": "Forgot password?",
         "createAccount": "Create account",
         "showPassword": "Show password",
@@ -738,7 +881,16 @@
       },
       "errors": {
         "signIn": "Failed to sign in",
-        "cognito": "Could not connect to AWS Cognito"
+        "oauth": {
+          "provider_unavailable": "Social sign-in isn’t configured for this environment. Sign in with your email and password instead.",
+          "unsupported_provider": "That sign-in provider isn’t supported.",
+          "provider_disabled": "{provider} sign-in isn’t enabled for this project yet. Enable the provider in Supabase (Authentication → Providers), or sign in with your email and password.",
+          "missing_code": "The sign-in provider didn’t send an authorisation code. Please try again.",
+          "expired_oauth_state": "That sign-in attempt expired. Please click the button again and complete it within 10 minutes.",
+          "oauth_exchange_failed": "We couldn’t complete sign-in with that provider. Please try again, or use your email and password.",
+          "access_denied": "Sign-in was cancelled. Please try again to continue.",
+          "unknown": "Social sign-in failed. Please try again, or use your email and password."
+        }
       },
       "placeholders": {
         "identifier": "you@company.com",
@@ -754,9 +906,13 @@
       }
     },
     "signUp": {
+      "hints": {
+        "companyDetected": "Detected from your email domain. You can change it."
+      },
       "title": "Sign Up",
       "subtitle": "Start your journey with Prismconnex",
       "fields": {
+        "companyName": "Company Name",
         "name": "Full Name",
         "email": "Email address",
         "password": "Password",
@@ -778,6 +934,7 @@
         "signUp": "Failed to sign up"
       },
       "placeholders": {
+        "companyName": "Acme Ltd.",
         "email": "you@company.com",
         "phone": "+91 98765 43210"
       },
@@ -811,17 +968,73 @@
       }
     },
     "forgotPassword": {
-      "title": "Forgot Password",
-      "description": "This feature is not fully implemented in the MVP frontend demo.",
+      "title": "Forgot password?",
+      "subtitle": "Enter the email address for your account and we'll send you a link to reset your password.",
+      "fields": {
+        "email": "Email address"
+      },
+      "placeholders": {
+        "email": "you@company.com"
+      },
       "actions": {
-        "return": "Return to Sign In"
+        "submit": "Send reset link",
+        "return": "Back to sign in",
+        "useDifferentEmail": "Use a different email address"
+      },
+      "sent": {
+        "title": "Check your email",
+        "description": "If an account exists for {email}, a password reset link is on its way.",
+        "hint": "The link expires in one hour. If it hasn't arrived in a few minutes, check your spam folder."
+      },
+      "validation": {
+        "emailRequired": "Email address is required",
+        "emailInvalid": "Enter a valid email address"
+      },
+      "errors": {
+        "send": "We couldn't send the reset email. Please try again."
       }
     },
     "resetPassword": {
-      "title": "Reset Password",
-      "description": "This feature is not fully implemented in the MVP frontend demo.",
+      "title": "Set a new password",
+      "subtitle": "Choose a new password for your account. It must be at least 8 characters.",
+      "fields": {
+        "password": "New password",
+        "confirmPassword": "Confirm new password"
+      },
+      "placeholders": {
+        "password": "At least 8 characters",
+        "confirmPassword": "Re-enter your new password"
+      },
       "actions": {
-        "return": "Return to Sign In"
+        "submit": "Update password",
+        "signIn": "Continue to sign in",
+        "requestNew": "Request a new link",
+        "return": "Back to sign in",
+        "showPassword": "Show password",
+        "hidePassword": "Hide password"
+      },
+      "status": {
+        "checking": "Checking your reset link"
+      },
+      "success": {
+        "title": "Password updated",
+        "description": "Your password has been changed. Taking you to sign in..."
+      },
+      "invalid": {
+        "missingTitle": "Your password reset session is missing or has expired",
+        "missingDescription": "Open the most recent link from your password reset email, or request a new one below.",
+        "title": "Invalid reset link",
+        "description": "This page can only be opened from the link in your password reset email.",
+        "expiredTitle": "This link has expired",
+        "expiredDescription": "Password reset links can only be used once and expire after one hour. Request a new one to continue."
+      },
+      "validation": {
+        "passwordMin": "Password must be at least 8 characters",
+        "confirmPasswordRequired": "Please confirm your new password",
+        "passwordMismatch": "Passwords do not match"
+      },
+      "errors": {
+        "update": "We couldn't update your password. Please try again."
       }
     }
   }

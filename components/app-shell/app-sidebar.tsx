@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, PanelLeftClose, PanelLeft, Building, X } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 import { navItems } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { WorkspaceSwitcher } from "./workspace-switcher";
@@ -60,15 +60,8 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
                 isCollapsed ? "opacity-0 pointer-events-none" : "opacity-100"
              )}
           >
-            <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white shadow-sm transition-all duration-300 group-hover:shadow-glow-sm group-hover:scale-105">
-              <Image
-                src="/prismconnex-logo.jpeg"
-                alt="Prismconnex Global Solutions"
-                fill
-                sizes="36px"
-                className="object-contain p-0.5"
-                priority
-              />
+            <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-xl border border-white/10 shadow-sm transition-all duration-300 group-hover:shadow-glow-sm group-hover:scale-105">
+              <BrandLogo fill sizes="36px" className="object-contain p-0.5" priority />
             </div>
             
             <div className="leading-tight overflow-hidden whitespace-nowrap">

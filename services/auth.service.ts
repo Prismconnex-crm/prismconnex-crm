@@ -1,7 +1,7 @@
 import * as gotrue from "@/lib/supabase/gotrue";
 import type { OAuthProviderKey, SupabaseSession } from "@/lib/supabase/gotrue";
 import { ProfileService } from "@/services/profile.service";
-import { UnauthorizedError } from "@/lib/http/errors";
+import { BadRequestError, UnauthorizedError } from "@/lib/http/errors";
 import type { ProfileDTO } from "@/models/profile";
 
 /**
@@ -144,6 +144,15 @@ export class AuthService {
         }
     }
 
+    /**
+     * Sends the "reset your password" email.
+     *
+     * `redirectTo` must be an absolute URL that is listed under Authentication →
+     * URL Configuration → Redirect URLs in the Supabase dashboard. Supabase
+     * silently substitutes the project's Site URL for anything not on that list,
+     * which surfaces as a reset link that drops the user on the wrong page —
+     * so the caller passes an explicit URL built from APP_URL.
+     */
     static async requestPasswordReset(email: string, redirectTo?: string) {
         await gotrue.sendRecoveryEmail(email, redirectTo);
     }
@@ -152,5 +161,98 @@ export class AuthService {
         const session = await gotrue.verifyRecoveryOtp(email, code);
         await gotrue.updatePassword(session.access_token, newPassword);
         return session;
+    }
+
+    /**
+     * Completes a reset from the emailed link.
+     *
+     * Accepts any of the link shapes described in lib/auth/recovery-link.ts:
+     *   - `tokenHash`   — not yet verified, so exchange it for a session first.
+     *   - `accessToken` — GoTrue already verified the link and handed us the
+     *                     session in the redirect fragment; use it directly.
+     *   - `code`        — PKCE authorization code, exchanged at /token.
+     *
+     * All end at the same place: PUT /auth/v1/user with the new password, which
+     * is what `supabase.auth.updateUser({ password })` does on the wire. The
+     * password is only ever stored by Supabase, never in our Postgres.
+     */
+    static async resetPasswordFromLink(
+        token: { tokenHash?: string; accessToken?: string; code?: string },
+        newPassword: string
+    ) {
+        const accessToken = token.tokenHash
+            ? (await this.exchangeRecoveryToken(token.tokenHash)).access_token
+            : token.code
+              ? (await this.exchangeRecoveryCode(token.code)).access_token
+              : token.accessToken;
+
+        if (!accessToken) {
+            throw new UnauthorizedError(
+                "This password reset link is invalid. Please request a new one."
+            );
+        }
+
+        try {
+            await gotrue.updatePassword(accessToken, newPassword);
+        } catch (error) {
+            // A stale fragment (link opened long after it was issued, or the
+            // page left sitting open) fails here rather than at verify time.
+            throw AuthService.asRecoveryError(error);
+        }
+    }
+
+    /**
+     * Wraps the token exchange so an expired link reads as an expired link.
+     *
+     * gotrue.request() maps every 401 to "Invalid email or password" because
+     * that is the right message on the sign-in path, which is the only caller it
+     * was written for. On a reset page that text is actively misleading — the
+     * user is not entering a password at that point — so it is translated here
+     * instead of changing the shared helper and disturbing sign-in.
+     */
+    private static async exchangeRecoveryToken(tokenHash: string) {
+        try {
+            return await gotrue.verifyRecoveryTokenHash(tokenHash);
+        } catch (error) {
+            throw AuthService.asRecoveryError(error);
+        }
+    }
+
+    /**
+     * Exchanges a PKCE `?code=` from a recovery link for a session.
+     *
+     * This app asks for the recovery email over the REST API without sending a
+     * `code_challenge`, so GoTrue answers with the implicit shapes (fragment
+     * tokens, or `token_hash` when the template emits `{{ .TokenHash }}`) and a
+     * `code` should not normally arrive. It can if the project is reconfigured
+     * to the PKCE flow, and before this branch existed such a link parsed as
+     * "no token at all" and rendered as "Invalid reset link" — the failure this
+     * whole path was added to stop.
+     *
+     * The exchange is attempted with an empty verifier because we never issued a
+     * challenge to match. GoTrue rejects that when the code genuinely was
+     * PKCE-issued, so the message below is what the user sees: it names the
+     * mismatch instead of blaming the link, which is the actionable difference.
+     */
+    private static async exchangeRecoveryCode(code: string) {
+        try {
+            return await gotrue.exchangeCodeForSession(code, "");
+        } catch {
+            throw new UnauthorizedError(
+                "This reset link uses the PKCE flow, which this app did not start. " +
+                    "Set the recovery email template to {{ .TokenHash }} " +
+                    "(or {{ .ConfirmationURL }}) and request a new link."
+            );
+        }
+    }
+
+    private static asRecoveryError(error: unknown) {
+        if (error instanceof UnauthorizedError || error instanceof BadRequestError) {
+            return new UnauthorizedError(
+                "This password reset link has expired or has already been used. " +
+                    "Please request a new one."
+            );
+        }
+        return error;
     }
 }

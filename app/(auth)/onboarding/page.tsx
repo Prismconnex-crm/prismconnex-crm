@@ -18,7 +18,6 @@
 
 import { useEffect, useMemo, useState, useTransition, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import Image from "next/image";
 import {
   Loader2,
   Check,
@@ -35,6 +34,7 @@ import {
   Target,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { BrandLogo } from "@/components/brand-logo";
 import { localizePathname, localeDetails } from "@/lib/locale";
 import type { Locale } from "@/types";
 
@@ -317,8 +317,8 @@ export default function OnboardingPage() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <div className="flex size-10 items-center justify-center overflow-hidden rounded-xl bg-white shadow-sm dark:shadow-md">
-                  <Image src="/prismconnex-logo.jpeg" alt="Prismconnex" width={36} height={36} style={{ width: "auto", height: "auto" }} className="object-contain" />
+                <div className="flex size-10 items-center justify-center overflow-hidden rounded-xl shadow-sm dark:shadow-md">
+                  <BrandLogo alt="Prismconnex" width={36} height={36} style={{ width: "auto", height: "auto" }} className="object-contain" />
                 </div>
                 <div className="flex flex-col leading-tight">
                   <span className="text-[14px] font-bold tracking-tight text-slate-900 dark:text-white">Prism<span className="text-gradient">connex</span></span>

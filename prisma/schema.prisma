@@ -166,6 +166,13 @@ model Company {
   @@index([region], map: "idx_company_region")
   @@index([category, employeeRange, region], map: "idx_company_filters")
   @@index([workspaceId])
+  // NOTE: an expression index on the lowercased domain also exists, for the
+  // sign-up company auto-detection lookup in /api/companies/by-domain. Prisma
+  // can't express lower(domain), so it lives only in the migration
+  // prisma/migrations/20260805000000_add_company_domain_index:
+  //   (lower("domain"), "createdAt") as idx_company_domain_lower
+  // The matching indexes on DiscoveryCompany and CompanyContact are in
+  // prisma/migrations/20260804000000_add_discovery_domain_index.
 }
 
 // Shared company discovery dataset (34.6M rows), migrated off the local-only

@@ -74,8 +74,43 @@ export function createSignUpSchema(t: Translator) {
     });
 }
 
+/**
+ * Forgot Password takes an email only — no phone. The sign-in field accepts an
+ * Indian mobile number as an alternative identifier, but Supabase's recovery
+ * endpoint can only deliver to an email address, so accepting a phone number
+ * here would produce a silent no-op the user reads as success.
+ */
+export function createForgotPasswordSchema(t: Translator) {
+  return z.object({
+    email: z
+      .string()
+      .trim()
+      .min(1, t('validation.emailRequired'))
+      .refine(isEmail, { message: t('validation.emailInvalid') }),
+  });
+}
+
+/**
+ * Mirrors the server rule in app/api/auth/reset-password/route.ts (min 8), which
+ * in turn mirrors sign-up — a password accepted here must be one sign-up would
+ * also have accepted.
+ */
+export function createResetPasswordSchema(t: Translator) {
+  return z
+    .object({
+      password: z.string().min(8, t('validation.passwordMin')),
+      confirmPassword: z.string().min(1, t('validation.confirmPasswordRequired')),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t('validation.passwordMismatch'),
+      path: ['confirmPassword'],
+    });
+}
+
 export type SignInInput = z.infer<ReturnType<typeof createSignInSchema>>;
 export type SignUpInput = z.infer<ReturnType<typeof createSignUpSchema>>;
+export type ForgotPasswordInput = z.infer<ReturnType<typeof createForgotPasswordSchema>>;
+export type ResetPasswordInput = z.infer<ReturnType<typeof createResetPasswordSchema>>;
 
 /** Flattens a ZodError into the `{ field: message }` shape the forms render. */
 export function toFieldErrors(error: z.ZodError): Record<string, string> {

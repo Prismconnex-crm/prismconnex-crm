@@ -74,6 +74,14 @@ const config: Config = {
           foreground: "rgb(var(--muted) / <alpha-value>)",
         },
         accent: "rgb(var(--accent) / <alpha-value>)",
+        // Primary brand colour (#2563EB), defined once in app/globals.css.
+        // `bg-brand`, `text-brand`, `ring-brand`, `shadow-brand/20` etc. all
+        // resolve through it, and the `/<alpha-value>` form keeps Tailwind's
+        // opacity modifiers working.
+        brand: {
+          DEFAULT: "rgb(var(--brand) / <alpha-value>)",
+          hover: "rgb(var(--brand-hover) / <alpha-value>)",
+        },
         success: "rgb(var(--success) / <alpha-value>)",
         warning: "rgb(var(--warning) / <alpha-value>)",
         danger: "rgb(var(--danger) / <alpha-value>)",

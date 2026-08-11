@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Menu, X, ArrowRight, Sun, MoonStar, Monitor } from 'lucide-react';
@@ -10,6 +9,7 @@ import { useTheme } from 'next-themes';
 import { useLocale, useTranslations } from 'next-intl';
 import { localizePathname } from '@/lib/locale';
 import type { Locale } from '@/types';
+import { BrandLogo } from '@/components/brand-logo';
 import { LanguageSwitcher } from '@/components/layout/language-switcher';
 
 const navLinks = [
@@ -392,13 +392,16 @@ export function PublicNavbar() {
         <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 md:px-8">
           <Link href={localizePathname('/', locale)} className="flex items-center gap-3">
             <div className="relative flex size-11 items-center justify-center overflow-hidden rounded-xl">
-              <Image
-                src="/prismconnex-logo.jpeg"
-                alt="Prismconnex Global Solutions"
+              {/*
+                `mix-blend-multiply` was there to knock the opaque JPEG's white
+                background out against the light navbar. The variants have a
+                real alpha channel, so it is no longer needed.
+              */}
+              <BrandLogo
                 width={42}
                 height={42}
                 style={{ width: 'auto', height: 'auto' }}
-                className="object-contain mix-blend-multiply dark:mix-blend-normal"
+                className="object-contain"
                 priority
               />
             </div>

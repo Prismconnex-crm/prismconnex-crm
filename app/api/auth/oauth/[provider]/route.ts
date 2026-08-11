@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AuthService } from "@/services/auth.service";
-import { isOAuthProviderKey, isSupabaseAuthConfigured } from "@/lib/supabase/gotrue";
+import {
+    isOAuthProviderKey,
+    isProviderEnabled,
+    isSupabaseAuthConfigured,
+} from "@/lib/supabase/gotrue";
 import { PKCE_VERIFIER_COOKIE } from "@/lib/auth/session";
+import { authDebug } from "@/lib/auth/auth-debug";
 
 /**
  * Starts Google / Microsoft sign-in.
@@ -28,6 +33,30 @@ export async function GET(req: NextRequest, { params }: { params: { provider: st
 
     if (!isOAuthProviderKey(params.provider)) {
         signInUrl.searchParams.set("error", "unsupported_provider");
+        return NextResponse.redirect(signInUrl);
+    }
+
+    // Ask Supabase whether the provider is actually switched on before handing
+    // the browser over to it.
+    //
+    // Without this, a provider that is disabled in the dashboard sends the user
+    // to https://<project>.supabase.co/auth/v1/authorize?... which answers
+    //
+    //   400 {"error_code":"validation_failed",
+    //        "msg":"Unsupported provider: provider is not enabled"}
+    //
+    // as raw JSON. The user is stranded on a supabase.co URL with no way back
+    // and the app never regains control, so it cannot explain anything. The
+    // check fails open (see readEnabledProviders), so it can only ever convert
+    // that dead end into a message — never block a login that would have worked.
+    if (!(await isProviderEnabled(params.provider))) {
+        authDebug("oauth provider is disabled in the Supabase dashboard", {
+            provider: params.provider,
+            fix: "Supabase → Authentication → Providers → enable it and save the client id/secret",
+        });
+
+        signInUrl.searchParams.set("error", "provider_disabled");
+        signInUrl.searchParams.set("provider", params.provider);
         return NextResponse.redirect(signInUrl);
     }
 

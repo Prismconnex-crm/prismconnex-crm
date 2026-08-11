@@ -7,6 +7,7 @@ import {
     PKCE_VERIFIER_COOKIE,
 } from "@/lib/auth/session";
 import { resolveOnboardingState } from "@/lib/auth/tenant";
+import { authDebug } from "@/lib/auth/auth-debug";
 
 /**
  * OAuth callback for Google / Microsoft sign-in via Supabase.
@@ -34,6 +35,17 @@ export async function GET(req: NextRequest) {
 
     // The provider reports its own failures (consent denied, etc.) here.
     if (searchParams.get("error")) {
+        // error_description is where Google and Entra ID put the sentence that
+        // actually says what went wrong; `error` alone is usually just
+        // "access_denied" or "server_error". Log both — the sign-in page can
+        // only render one of a closed set of codes (lib/auth/oauth-errors.ts),
+        // so this is the one place the provider's own wording survives.
+        authDebug("provider redirected back with an error", {
+            error: searchParams.get("error"),
+            error_code: searchParams.get("error_code"),
+            error_description: searchParams.get("error_description"),
+        });
+
         return failure(req, searchParams.get("error") ?? "oauth_error");
     }
 
@@ -77,7 +89,16 @@ export async function GET(req: NextRequest) {
 
         return response;
     } catch (error) {
-        console.error("[OAuth callback]", error);
+        // Deliberately server-side only. The upstream message is the useful
+        // one ("Error getting user email from external provider", "invalid
+        // request: both auth code and code verifier should be non-empty"), but
+        // it describes the project's Supabase/provider configuration, so it
+        // stays out of the redirect the browser follows.
+        console.error(
+            "[OAuth callback] code exchange failed:",
+            error instanceof Error ? error.message : error
+        );
+
         return failure(req, "oauth_exchange_failed");
     }
 }

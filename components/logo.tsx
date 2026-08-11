@@ -1,18 +1,17 @@
-import Image from "next/image";
 import Link from "next/link";
+
+import { BrandLogo } from "@/components/brand-logo";
 
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <Link href="/" className="inline-flex items-center gap-3 group">
-      <div className="relative h-9 w-9 overflow-hidden rounded-xl border border-border bg-white shadow-sm transition-all duration-300 group-hover:shadow-glow-sm group-hover:scale-105">
-        <Image
-          src="/prismconnex-logo.jpeg"
-          alt="Prismconnex Global Solutions"
-          fill
-          sizes="36px"
-          className="object-contain p-0.5"
-          priority
-        />
+      {/*
+        The plate is transparent rather than `bg-white`: that white square only
+        existed to make the opaque JPEG readable. Box size, radius, border and
+        hover transform are unchanged, so alignment and layout are identical.
+      */}
+      <div className="relative h-9 w-9 overflow-hidden rounded-xl border border-border shadow-sm transition-all duration-300 group-hover:shadow-glow-sm group-hover:scale-105">
+        <BrandLogo fill sizes="36px" className="object-contain p-0.5" priority />
       </div>
       {!compact ? (
         <div className="leading-tight">
