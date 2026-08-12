@@ -21,4 +21,8 @@ jobs:
       - run: npm run lint
       - run: npx tsc --noEmit
       - run: npm test
-      - run: npx playwright test tests/e2e
+      # The Playwright suite in tests/e2e is still a draft: @playwright/test is
+      # not a dependency, there is no playwright.config.ts (no baseURL/webServer),
+      # and the flow depends on live Supabase email verification. Re-enable this
+      # step once that suite is actually runnable.
+      # - run: npx playwright test tests/e2e
