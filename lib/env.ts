@@ -31,6 +31,11 @@ const envSchema = z.object({
     // AWS S3 / General
     AWS_REGION: z.string().optional().default('us-east-1'),
     AWS_S3_BUCKET: z.string().optional(),
+
+    // Claude API — powers natural-language search in the Companies tab.
+    // Absent = /api/companies/ask returns 503 and the UI falls back to
+    // plain company prefix search.
+    ANTHROPIC_API_KEY: z.string().optional(),
 });
 
 export const env = envSchema.parse({
@@ -44,4 +49,5 @@ export const env = envSchema.parse({
     DATABASE_URL: process.env.DATABASE_URL,
     AWS_REGION: process.env.AWS_REGION,
     AWS_S3_BUCKET: process.env.AWS_S3_BUCKET,
+    ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
 });

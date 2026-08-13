@@ -20,6 +20,14 @@
       "headers": {
         "Authorization": "Bearer ${GITHUB_PAT}"
       }
+    },
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@0.0.78"],
+      "env": {
+        "PLAYWRIGHT_BROWSERS_PATH": "D:\\playwright-browsers"
+      }
     }
   }
 }
