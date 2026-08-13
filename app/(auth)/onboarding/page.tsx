@@ -10,11 +10,14 @@
 //   1. lib/auth/routing.ts  — remove the isOnboarding redirect, uncomment the
 //      `session && !onboarded && isAppRoute` block.
 //   2. app/(auth)/auth/sign-in/page.tsx — restore the '/onboarding' router.push.
+//
+// The "Validation failed" bug on Complete Setup is fixed below (required
+// workspaceName + draft that survives the locale remount), so the flow is ready
+// to work the moment it is switched back on.
 // ─────────────────────────────────────────────────────────────────────────────
 
-import { useMemo, useState, useTransition, useRef } from "react";
+import { useEffect, useMemo, useState, useTransition, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import Image from "next/image";
 import {
   Loader2,
   Check,
@@ -31,10 +34,38 @@ import {
   Target,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { BrandLogo } from "@/components/brand-logo";
 import { localizePathname, localeDetails } from "@/lib/locale";
 import type { Locale } from "@/types";
 
 const stepIcons = [User, Globe, Mail, Upload] as const;
+
+/** Step index that owns the fields POST /api/onboarding validates. */
+const WORKSPACE_STEP = 1;
+/** Mirrors `workspaceName: z.string().trim().min(2)` in app/api/onboarding/route.ts. */
+const MIN_WORKSPACE_NAME_LENGTH = 2;
+
+/**
+ * Changing the language navigates /en-US/onboarding -> /de/onboarding. That is a
+ * different value for the [locale] dynamic segment, so React unmounts this page
+ * and mounts a fresh copy — every useState below resets to its initial value.
+ * The draft keeps the answers alive across that remount; without it the form
+ * silently blanks and "Complete Setup" posts an empty workspaceName.
+ */
+const DRAFT_STORAGE_KEY = "pcx:onboarding-draft";
+
+type OnboardingDraft = {
+  currentStep: number;
+  selectedRole: string | null;
+  workspaceName: string;
+  firstName: string;
+  lastName: string;
+  workEmail: string;
+  phoneNumber: string;
+  timeZone: string;
+  currency: string;
+  dualTimeToggle: boolean;
+};
 
 const roleDefinitions = {
   "service-providers": { icon: Briefcase, accent: "indigo" },
@@ -60,6 +91,17 @@ const intlLocaleMap: Record<Locale, string> = {
   ja: "ja-JP",
   "zh-CN": "zh-CN",
 };
+
+/** Pulls the first message out of a Zod `error.format()` payload. */
+function firstFieldError(details: unknown): string | null {
+  if (!details || typeof details !== "object") return null;
+  for (const [key, value] of Object.entries(details as Record<string, unknown>)) {
+    if (key === "_errors") continue;
+    const messages = (value as { _errors?: string[] } | null)?._errors;
+    if (messages?.length) return messages[0];
+  }
+  return null;
+}
 
 function getTimePreview(timeZone: string, locale: Locale, currency: string) {
   try {
@@ -103,7 +145,55 @@ export default function OnboardingPage() {
   const [timeZone, setTimeZone] = useState("America/New_York");
   const [currency, setCurrency] = useState("USD");
   const [dualTimeToggle, setDualTimeToggle] = useState(true);
+  const [workspaceNameError, setWorkspaceNameError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const draftHydrated = useRef(false);
+
+  // Restore anything typed before a language switch remounted the page.
+  useEffect(() => {
+    try {
+      const stored = window.sessionStorage.getItem(DRAFT_STORAGE_KEY);
+      if (stored) {
+        const draft = JSON.parse(stored) as Partial<OnboardingDraft>;
+        if (typeof draft.currentStep === "number") setCurrentStep(draft.currentStep);
+        if (draft.selectedRole !== undefined) setSelectedRole(draft.selectedRole);
+        if (typeof draft.workspaceName === "string") setWorkspaceName(draft.workspaceName);
+        if (typeof draft.firstName === "string") setFirstName(draft.firstName);
+        if (typeof draft.lastName === "string") setLastName(draft.lastName);
+        if (typeof draft.workEmail === "string") setWorkEmail(draft.workEmail);
+        if (typeof draft.phoneNumber === "string") setPhoneNumber(draft.phoneNumber);
+        if (typeof draft.timeZone === "string") setTimeZone(draft.timeZone);
+        if (typeof draft.currency === "string") setCurrency(draft.currency);
+        if (typeof draft.dualTimeToggle === "boolean") setDualTimeToggle(draft.dualTimeToggle);
+      }
+    } catch {
+      // A corrupt draft must never block onboarding — fall back to a blank form.
+    } finally {
+      draftHydrated.current = true;
+    }
+  }, []);
+
+  // `language` is intentionally absent: the [locale] route segment owns it.
+  useEffect(() => {
+    if (!draftHydrated.current) return;
+    const draft: OnboardingDraft = {
+      currentStep,
+      selectedRole,
+      workspaceName,
+      firstName,
+      lastName,
+      workEmail,
+      phoneNumber,
+      timeZone,
+      currency,
+      dualTimeToggle,
+    };
+    try {
+      window.sessionStorage.setItem(DRAFT_STORAGE_KEY, JSON.stringify(draft));
+    } catch {
+      // Private-mode / quota failures are not worth interrupting onboarding for.
+    }
+  }, [currentStep, currency, dualTimeToggle, firstName, lastName, phoneNumber, selectedRole, timeZone, workEmail, workspaceName]);
 
   const steps = t.raw("steps") as Array<{ label: string }>;
   const roles = (t.raw("roles") as Array<{ id: keyof typeof roleDefinitions; name: string; chips: string[]; recommended: string }>).map((role) => ({
@@ -136,9 +226,34 @@ export default function OnboardingPage() {
     });
   }
 
+  /**
+   * The workspace name is the only field POST /api/onboarding requires, and it
+   * lives two steps behind "Complete Setup". Checking it here means the user is
+   * told which field is wrong, on the step that owns it, instead of getting a
+   * bare "Validation failed" from the server after the last step.
+   */
+  const validateWorkspaceStep = () => {
+    if (workspaceName.trim().length < MIN_WORKSPACE_NAME_LENGTH) {
+      setWorkspaceNameError(t("errors.workspaceName"));
+      setCurrentStep(WORKSPACE_STEP);
+      return false;
+    }
+    setWorkspaceNameError("");
+    return true;
+  };
+
   const handleContinue = async () => {
+    if (currentStep === WORKSPACE_STEP && !validateWorkspaceStep()) {
+      return;
+    }
+
     if (currentStep < steps.length - 1) {
       setCurrentStep((step) => step + 1);
+      return;
+    }
+
+    if (!validateWorkspaceStep()) {
+      setError(t("errors.workspaceName"));
       return;
     }
 
@@ -146,14 +261,44 @@ export default function OnboardingPage() {
     setError("");
     try {
       await persistLocale(language);
-      const response = await fetch("/api/auth/mock-sign-in", {
+
+      // Creates the CRM User, Workspace, Membership and WorkspaceSettings for
+      // the SIGNED-IN user. This previously called /api/auth/mock-sign-in,
+      // which replaced the real session with the demo identity
+      // (owner@prismconnex.demo) and created no workspace at all — so
+      // resolveTenant() found no membership and every tenant-scoped API failed.
+      const response = await fetch("/api/onboarding", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: "owner@prismconnex.demo" }),
+        body: JSON.stringify({
+          workspaceName: workspaceName.trim(),
+          locale: language,
+          timeZone,
+          currency,
+        }),
       });
-      if (!response.ok) throw new Error(t("errors.complete"));
-      document.cookie = "pcx_onboarded=true; path=/; max-age=28800";
+
+      const data = await response.json().catch(() => null);
+      if (!response.ok) {
+        // jsonError() returns the Zod issues in error.details keyed by field;
+        // showing the first one beats repeating the generic "Validation failed".
+        throw new Error(
+          firstFieldError(data?.error?.details) || data?.error?.message || t("errors.complete"),
+        );
+      }
+
+      // Sets pcx_onboarded server-side. The previous document.cookie write
+      // could mark a user onboarded even when no workspace had been created.
+      await fetch("/api/onboarding/complete", { method: "POST" });
+
+      try {
+        window.sessionStorage.removeItem(DRAFT_STORAGE_KEY);
+      } catch {
+        // Nothing to recover from — the workspace already exists.
+      }
+
       router.push("/app/dashboard");
+      router.refresh();
     } catch (caughtError) {
       setError(caughtError instanceof Error ? caughtError.message : t("errors.complete"));
     } finally {
@@ -172,8 +317,8 @@ export default function OnboardingPage() {
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-2">
-                <div className="flex size-10 items-center justify-center overflow-hidden rounded-xl bg-white shadow-sm dark:shadow-md">
-                  <Image src="/prismconnex-logo.jpeg" alt="Prismconnex" width={36} height={36} style={{ width: "auto", height: "auto" }} className="object-contain" />
+                <div className="flex size-10 items-center justify-center overflow-hidden rounded-xl shadow-sm dark:shadow-md">
+                  <BrandLogo alt="Prismconnex" width={36} height={36} style={{ width: "auto", height: "auto" }} className="object-contain" />
                 </div>
                 <div className="flex flex-col leading-tight">
                   <span className="text-[14px] font-bold tracking-tight text-slate-900 dark:text-white">Prism<span className="text-gradient">connex</span></span>
@@ -284,8 +429,28 @@ export default function OnboardingPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className={labelCls}>{t("workspace.fields.workspaceName")}</label>
-                    <input value={workspaceName} onChange={(event) => setWorkspaceName(event.target.value)} placeholder={t("workspace.placeholders.workspaceName")} className={inputCls} />
+                    <label className={labelCls} htmlFor="workspaceName">
+                      {t("workspace.fields.workspaceName")} <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      id="workspaceName"
+                      name="workspaceName"
+                      required
+                      value={workspaceName}
+                      onChange={(event) => {
+                        setWorkspaceName(event.target.value);
+                        if (workspaceNameError) setWorkspaceNameError("");
+                      }}
+                      placeholder={t("workspace.placeholders.workspaceName")}
+                      aria-invalid={workspaceNameError ? true : undefined}
+                      aria-describedby={workspaceNameError ? "workspaceName-error" : undefined}
+                      className={`${inputCls} ${workspaceNameError ? "border-red-500 dark:border-red-500" : ""}`}
+                    />
+                    {workspaceNameError ? (
+                      <p id="workspaceName-error" className="text-xs text-red-600 dark:text-red-400">
+                        {workspaceNameError}
+                      </p>
+                    ) : null}
                   </div>
 
                   <div className="space-y-1.5">

@@ -992,7 +992,7 @@ export function CompaniesSection() {
                   className="inline-flex items-baseline gap-2.5"
                 >
                   <span className="select-none bg-gradient-to-b from-indigo-400 to-fuchsia-500 bg-clip-text font-black italic text-transparent">
-                    //
+                    {"//"}
                   </span>
                   <span className="relative bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent dark:from-indigo-400 dark:via-violet-400 dark:to-fuchsia-400">
                     {activeCompany.name}

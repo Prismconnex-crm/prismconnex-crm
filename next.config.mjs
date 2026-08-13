@@ -13,6 +13,28 @@ const nextConfig = {
     workerThreads: true,
     cpus: 1,
   },
+  async redirects() {
+    return [
+      // The login page lives at /auth/sign-in alongside the other auth screens.
+      // /login is kept as an alias so the conventional path works; Next
+      // preserves the query string, so /login?signedOut=1 still shows the
+      // sign-out confirmation.
+      { source: '/login', destination: '/auth/sign-in', permanent: false },
+
+      // The same aliases for the password-recovery pair, which live at
+      // /auth/* like every other auth screen. These are conveniences for
+      // hand-typed URLs only — the link in the recovery email points straight
+      // at /auth/reset-password, because that is the exact string registered
+      // under Redirect URLs in the Supabase dashboard and Supabase matches it
+      // literally.
+      //
+      // Safe for a recovery link that does arrive here: Next carries the query
+      // string across the redirect (?token_hash=...), and browsers re-attach
+      // the fragment (#access_token=...) because the destination has none.
+      { source: '/forgot-password', destination: '/auth/forgot-password', permanent: false },
+      { source: '/reset-password', destination: '/auth/reset-password', permanent: false },
+    ];
+  },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'eventseye.com' },
