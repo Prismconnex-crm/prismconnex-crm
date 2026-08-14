@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, PanelLeftClose, PanelLeft, Building, X } from "lucide-react";
@@ -10,6 +9,7 @@ import { navItems } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { WorkspaceSwitcher } from "./workspace-switcher";
 import { useSidebar } from "./sidebar-context";
+import { BrandLogo } from "@/components/brand-logo";
 
 export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => void }) {
   const pathname = usePathname();
@@ -32,7 +32,7 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
         animate={{ width: isCollapsed ? 72 : 256 }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
         className={cn(
-          "fixed z-50 flex h-screen flex-col border-r border-white/[0.04] bg-[#0E1321] transition-transform duration-300 ease-in-out",
+          "fixed z-50 flex h-screen flex-col border-r border-slate-200 bg-white dark:border-white/[0.04] dark:bg-[#0E1321] transition-transform duration-300 ease-in-out",
           // Mobile: slide-over drawer (always in DOM, translated off-screen when closed)
           open ? "translate-x-0" : "-translate-x-full",
           // Desktop: always visible, static positioning
@@ -41,12 +41,12 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
         )}
       >
         {/* Logo & Toggle Header */}
-        <div className="flex h-16 items-center border-b border-white/[0.04] px-4 bg-[#0E1321] relative overflow-hidden shrink-0">
+        <div className="flex h-16 items-center border-b border-slate-200 px-4 bg-white dark:border-white/[0.04] dark:bg-[#0E1321] relative overflow-hidden shrink-0">
           
           {/* Mobile close button */}
           <button
             onClick={onClose}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors md:hidden z-20"
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white transition-colors md:hidden z-20"
             aria-label="Close sidebar"
           >
             <X className="size-5" />
@@ -60,20 +60,20 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
                 isCollapsed ? "opacity-0 pointer-events-none" : "opacity-100"
              )}
           >
-            <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white shadow-sm transition-all duration-300 group-hover:shadow-glow-sm group-hover:scale-105">
-              <Image
-                src="/prismconnex-logo.jpeg"
-                alt="Prismconnex Global Solutions"
-                fill
-                sizes="36px"
-                className="object-contain p-0.5"
-                priority
-              />
-            </div>
+            <BrandLogo
+              variant="mark"
+              priority
+              className="h-9 w-9 transition-all duration-300 group-hover:shadow-glow-sm group-hover:scale-105"
+            />
             
+            {/* Full company name sits to the right of the emblem (the artwork's
+                own stacked wordmark is cropped out by BrandLogo's `mark` variant). */}
             <div className="leading-tight overflow-hidden whitespace-nowrap">
-              <p className="text-sm font-bold tracking-wide text-white">
-                Prism<span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 font-extrabold inline-block">connex</span>
+              <p className="text-sm font-bold tracking-wide text-slate-900 dark:text-white">
+                Prismconnex
+              </p>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-slate-600 dark:text-slate-300">
+                Global Solutions
               </p>
             </div>
           </Link>
@@ -87,7 +87,7 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
             <button 
               onClick={toggleSidebar}
               className={cn(
-                "p-1.5 rounded-lg text-slate-500 hover:text-white hover:bg-white/5 transition-all absolute",
+                "p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/5 dark:hover:text-white transition-all absolute",
                 isCollapsed ? "opacity-0 scale-75 pointer-events-none" : "opacity-100 scale-100"
               )}
               title="Collapse Sidebar"
@@ -99,7 +99,7 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
             <button 
               onClick={toggleSidebar}
               className={cn(
-                "p-2 rounded-xl border border-white/10 bg-[#161B2B] text-slate-400 hover:text-white hover:bg-white/10 transition-all shadow-md group",
+                "p-2 rounded-xl border border-slate-200 bg-white text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:border-white/10 dark:bg-[#161B2B] dark:text-slate-400 dark:hover:bg-white/10 dark:hover:text-white transition-all shadow-md group",
                 isCollapsed ? "opacity-100 scale-100" : "opacity-0 scale-75 pointer-events-none absolute"
               )}
               title="Expand Sidebar"
@@ -123,8 +123,8 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
                   className={cn(
                     "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 mb-0.5",
                     isActive
-                      ? "bg-indigo-500/10 text-indigo-400 font-semibold"
-                      : "text-slate-400 hover:bg-white/[0.04] hover:text-white",
+                      ? "bg-indigo-50 text-indigo-600 font-semibold dark:bg-indigo-500/10 dark:text-indigo-400"
+                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/[0.04] dark:hover:text-white",
                     isCollapsed ? "justify-center px-0 w-12 mx-auto" : "justify-start px-3"
                   )}
                   title={isCollapsed ? item.label : undefined}
@@ -143,7 +143,7 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
                   <Icon
                     className={cn(
                       "transition-all duration-200 shrink-0",
-                      isActive ? "text-indigo-400" : "text-slate-400 group-hover:text-slate-300",
+                      isActive ? "text-indigo-600 dark:text-indigo-400" : "text-slate-500 group-hover:text-slate-700 dark:text-slate-400 dark:group-hover:text-slate-300",
                       isCollapsed ? "size-5" : "size-[18px]"
                     )}
                   />
@@ -167,24 +167,24 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
           </div>
         </nav>
         {/* Bottom Workspace Selector */}
-        <div className={cn("mt-auto border-t border-white/[0.04]", isCollapsed ? "p-3" : "p-4")}>
+        <div className={cn("mt-auto border-t border-slate-200 dark:border-white/[0.04]", isCollapsed ? "p-3" : "p-4")}>
           <button 
             onClick={() => setIsWorkspaceOpen(!isWorkspaceOpen)}
             className={cn(
                 "flex w-full items-center rounded-lg border font-medium transition-all duration-300 focus:outline-none",
                 isWorkspaceOpen && !isCollapsed
-                    ? "bg-indigo-500/10 border-indigo-500/30 text-white shadow-glow-sm" 
-                    : "bg-[#161B2B] border-white/10 text-slate-200 hover:bg-white/[0.04]",
+                    ? "bg-indigo-50 border-indigo-300 text-slate-900 dark:bg-indigo-500/10 dark:border-indigo-500/30 dark:text-white shadow-glow-sm" 
+                    : "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100 dark:bg-[#161B2B] dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/[0.04]",
                 isCollapsed ? "justify-center p-2 size-12 mx-auto" : "justify-between px-3 py-2 text-[13px]"
             )}
             title={isCollapsed ? "Switch Workspace" : undefined}
           >
             {isCollapsed ? (
-               <Building className={cn("size-5", isWorkspaceOpen ? "text-indigo-400" : "text-slate-400")} />
+               <Building className={cn("size-5", isWorkspaceOpen ? "text-indigo-600 dark:text-indigo-400" : "text-slate-500 dark:text-slate-400")} />
             ) : (
                 <>
                   <span className="truncate whitespace-nowrap">Prism Connex Workspace</span>
-                  <ChevronDown className={cn("size-3.5 shrink-0 text-slate-500 transition-transform duration-300 ml-2", isWorkspaceOpen && "rotate-180 text-indigo-400")} />
+                  <ChevronDown className={cn("size-3.5 shrink-0 text-slate-400 dark:text-slate-500 transition-transform duration-300 ml-2", isWorkspaceOpen && "rotate-180 text-indigo-400")} />
                 </>
             )}
           </button>

@@ -37,7 +37,7 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
   };
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-white/[0.04] bg-[#0E1321] px-4 md:px-6">
+    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white dark:border-white/[0.04] dark:bg-[#0E1321] px-4 md:px-6">
       <div className="flex items-center flex-1">
         <Button
           variant="ghost"
@@ -50,7 +50,7 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
 
         {/* Search */}
         <div className="relative hidden sm:flex items-center mr-auto w-full max-w-[400px]">
-          <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-500 z-10" />
+          <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-400 dark:text-slate-500 z-10" />
           <input
             type="text"
             value={searchValue}
@@ -59,7 +59,7 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
               if (event.key === "Enter") submitSearch();
             }}
             placeholder="Search events, companies, people, deals..."
-            className="w-full h-10 rounded-xl border border-white/[0.08] bg-[#141A2D] pl-10 pr-4 text-sm text-slate-200 placeholder:text-slate-500 focus:border-indigo-500/50 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all shadow-inner"
+            className="w-full h-10 rounded-xl border border-slate-200 bg-slate-50 dark:border-white/[0.08] dark:bg-[#141A2D] pl-10 pr-4 text-sm text-slate-900 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-indigo-500/50 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all shadow-inner"
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
           />
@@ -80,11 +80,11 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
           {newMenuOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setNewMenuOpen(false)} />
-              <div className="absolute right-0 top-11 z-50 w-40 rounded-xl border border-white/[0.08] bg-[#0E1321] p-1.5 shadow-xl animate-in fade-in zoom-in-95 duration-200">
+              <div className="absolute right-0 top-11 z-50 w-40 rounded-xl border border-slate-200 bg-white dark:border-white/[0.08] dark:bg-[#0E1321] p-1.5 shadow-xl animate-in fade-in zoom-in-95 duration-200">
                 {['Lead', 'Company', 'Event', 'Deal', 'Sequence'].map((item) => (
                   <button
                     key={item}
-                    className="flex w-full items-center rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-white/[0.04] hover:text-white transition-colors"
+                    className="flex w-full items-center rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/[0.04] dark:hover:text-white transition-colors"
                     onClick={() => setNewMenuOpen(false)}
                   >
                     {item}
@@ -97,7 +97,7 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
 
         {/* Notifications */}
         <div className="relative mx-1">
-          <button type="button" className="flex size-9 items-center justify-center rounded-lg text-slate-400 hover:bg-white/[0.04] hover:text-slate-200 transition-colors">
+          <button type="button" className="flex size-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/[0.04] dark:hover:text-slate-200 transition-colors">
             <Bell className="size-4.5" />
           </button>
           <span className="absolute right-1.5 top-1.5 flex size-2">
@@ -116,12 +116,12 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
           <button
             type="button"
             onClick={() => setUserMenuOpen(!userMenuOpen)}
-            className="flex items-center gap-2 rounded-full border border-white/[0.04] bg-[#141A2D] p-1 pr-3 hover:bg-[#1A2138] transition-colors"
+            className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 dark:border-white/[0.04] dark:bg-[#141A2D] dark:hover:bg-[#1A2138] transition-colors"
           >
-            <div className="flex size-7 items-center justify-center rounded-full bg-slate-200 text-xs font-bold text-slate-700">
+            <div className="flex size-7 items-center justify-center rounded-full bg-slate-200 text-xs font-bold text-slate-700 dark:bg-white/10 dark:text-slate-200">
               <User className="size-4" />
             </div>
-            <span className="text-sm font-medium text-slate-200 hidden sm:block">Admin</span>
+            <span className="text-sm font-medium text-slate-700 dark:text-slate-200 hidden sm:block">Admin</span>
           </button>
 
           {userMenuOpen && (
@@ -130,10 +130,10 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
                 className="fixed inset-0 z-40"
                 onClick={() => setUserMenuOpen(false)}
               />
-              <div className="absolute right-0 top-11 z-50 w-48 rounded-xl border border-white/[0.08] bg-[#0E1321] p-1.5 shadow-xl animate-in fade-in zoom-in-95 duration-200">
+              <div className="absolute right-0 top-11 z-50 w-48 rounded-xl border border-slate-200 bg-white dark:border-white/[0.08] dark:bg-[#0E1321] p-1.5 shadow-xl animate-in fade-in zoom-in-95 duration-200">
                 <button
                   type="button"
-                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition-colors hover:bg-white/[0.04] hover:text-white"
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
                   onClick={() => {
                     setUserMenuOpen(false);
                     router.push("/app/settings");
@@ -143,7 +143,7 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
                 </button>
                 <button
                   type="button"
-                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition-colors hover:bg-white/[0.04] hover:text-white"
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
                   onClick={() => {
                     setUserMenuOpen(false);
                     router.push("/app/settings");
@@ -151,7 +151,7 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
                 >
                   <Settings className="size-3.5" /> Settings
                 </button>
-                <div className="my-1 border-t border-white/[0.04]" />
+                <div className="my-1 border-t border-slate-200 dark:border-white/[0.04]" />
                 <button
                   type="button"
                   onClick={() => {
