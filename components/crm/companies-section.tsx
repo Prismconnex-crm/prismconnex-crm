@@ -27,6 +27,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { EnrichedLeadsFinderPanel } from "@/components/crm/enriched-leads-finder-panel";
+import { EventCatalogPanel } from "@/components/crm/event-catalog-panel";
+import type { EventFilters, EventResult } from "@/models/event-query";
 import {
   COMPANY_CATEGORIES,
   COMPANY_COUNTRIES,
@@ -34,6 +36,16 @@ import {
   COMPANY_LOCATION_REGIONS,
 } from "@/lib/company-classification";
 import { parseLeadQuery } from "@/lib/lead-query";
+
+type EventSearchState = {
+  query: string;
+  answer: string;
+  filters: EventFilters;
+  events: EventResult[];
+  totalMatched: number;
+  page: number;
+  pageSize: number;
+};
 
 type CompanyEvent = {
   name: string;
@@ -354,9 +366,7 @@ function useDebouncedValue<T>(value: T, delayMs: number) {
 const FILTER_OPTIONS: { key: string; label: string }[] = [
   { key: "ai-lookalikes", label: "AI Lookalikes" },
   { key: "category", label: "Category" },
-  // key stays "location" (drives the `location` query param + region filter);
-  // only the visible label changed to "Region".
-  { key: "location", label: "Region" },
+  { key: "location", label: "Location" },
   { key: "country", label: "Country" },
   { key: "keywords", label: "Keywords" },
   { key: "employee-headcount", label: "Employee Headcount" },
@@ -371,250 +381,6 @@ const FILTER_OPTIONS: { key: string; label: string }[] = [
   { key: "website-traffic", label: "Website Traffic" },
   { key: "key-executives-events", label: "Key Executives Events" },
 ];
-
-const COUNTRIES_BY_REGION: Record<string, readonly string[]> = {
-  Americas: [
-    "Antigua and Barbuda",
-    "Argentina",
-    "Bahamas",
-    "Barbados",
-    "Belize",
-    "Bolivia",
-    "Brazil",
-    "Canada",
-    "Chile",
-    "Colombia",
-    "Costa Rica",
-    "Cuba",
-    "Dominica",
-    "Dominican Republic",
-    "Ecuador",
-    "El Salvador",
-    "Grenada",
-    "Guatemala",
-    "Guyana",
-    "Haiti",
-    "Honduras",
-    "Jamaica",
-    "Mexico",
-    "Nicaragua",
-    "Panama",
-    "Paraguay",
-    "Peru",
-    "Saint Kitts and Nevis",
-    "Saint Lucia",
-    "Saint Vincent and the Grenadines",
-    "Suriname",
-    "Trinidad and Tobago",
-    "United States of America",
-    "Uruguay",
-    "Venezuela",
-  ],
-  Europe: [
-    "Albania",
-    "Andorra",
-    "Austria",
-    "Belarus",
-    "Belgium",
-    "Bosnia and Herzegovina",
-    "Bulgaria",
-    "Croatia",
-    "Cyprus",
-    "Czechia (Czech Republic)",
-    "Denmark",
-    "Estonia",
-    "Finland",
-    "France",
-    "Germany",
-    "Greece",
-    "Holy See",
-    "Hungary",
-    "Iceland",
-    "Ireland",
-    "Italy",
-    "Latvia",
-    "Liechtenstein",
-    "Lithuania",
-    "Luxembourg",
-    "Malta",
-    "Moldova",
-    "Monaco",
-    "Montenegro",
-    "Netherlands",
-    "North Macedonia",
-    "Norway",
-    "Poland",
-    "Portugal",
-    "Romania",
-    "Russia",
-    "San Marino",
-    "Serbia",
-    "Slovakia",
-    "Slovenia",
-    "Spain",
-    "Sweden",
-    "Switzerland",
-    "Ukraine",
-    "United Kingdom",
-  ],
-  "Africa & Middle East": [
-    "Algeria",
-    "Angola",
-    "Bahrain",
-    "Benin",
-    "Botswana",
-    "Burkina Faso",
-    "Burundi",
-    "CÃ´te d'Ivoire",
-    "Cabo Verde",
-    "Cameroon",
-    "Central African Republic",
-    "Chad",
-    "Comoros",
-    "Congo (Congo-Brazzaville)",
-    "Democratic Republic of the Congo",
-    "Djibouti",
-    "Egypt",
-    "Equatorial Guinea",
-    "Eritrea",
-    "Eswatini",
-    "Ethiopia",
-    "Gabon",
-    "Gambia",
-    "Ghana",
-    "Guinea",
-    "Guinea-Bissau",
-    "Iran",
-    "Iraq",
-    "Israel",
-    "Jordan",
-    "Kenya",
-    "Kuwait",
-    "Lebanon",
-    "Lesotho",
-    "Liberia",
-    "Libya",
-    "Madagascar",
-    "Malawi",
-    "Mali",
-    "Mauritania",
-    "Mauritius",
-    "Morocco",
-    "Mozambique",
-    "Namibia",
-    "Niger",
-    "Nigeria",
-    "Oman",
-    "Palestine State",
-    "Qatar",
-    "Rwanda",
-    "Sao Tome and Principe",
-    "Saudi Arabia",
-    "Senegal",
-    "Seychelles",
-    "Sierra Leone",
-    "Somalia",
-    "South Africa",
-    "South Sudan",
-    "Sudan",
-    "Syria",
-    "Tanzania",
-    "Togo",
-    "Tunisia",
-    "Turkey",
-    "Uganda",
-    "United Arab Emirates",
-    "Yemen",
-    "Zambia",
-    "Zimbabwe",
-  ],
-  "Asia-Pacific": [
-    "Afghanistan",
-    "Armenia",
-    "Australia",
-    "Azerbaijan",
-    "Bangladesh",
-    "Bhutan",
-    "Brunei",
-    "Cambodia",
-    "China",
-    "Fiji",
-    "Georgia",
-    "India",
-    "Indonesia",
-    "Japan",
-    "Kazakhstan",
-    "Kiribati",
-    "Kyrgyzstan",
-    "Laos",
-    "Malaysia",
-    "Maldives",
-    "Marshall Islands",
-    "Micronesia",
-    "Mongolia",
-    "Myanmar (formerly Burma)",
-    "Nauru",
-    "Nepal",
-    "New Zealand",
-    "North Korea",
-    "Pakistan",
-    "Palau",
-    "Papua New Guinea",
-    "Philippines",
-    "Samoa",
-    "Singapore",
-    "Solomon Islands",
-    "South Korea",
-    "Sri Lanka",
-    "Tajikistan",
-    "Thailand",
-    "Timor-Leste",
-    "Tonga",
-    "Turkmenistan",
-    "Tuvalu",
-    "Uzbekistan",
-    "Vanuatu",
-    "Vietnam",
-  ],
-};
-
-const sortCountries = (countries: readonly string[]) =>
-  [...countries].sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
-
-function countriesForRegion(region: string | null) {
-  return sortCountries(region ? COUNTRIES_BY_REGION[region] ?? [] : COMPANY_COUNTRIES);
-}
-
-function countryBelongsToRegion(country: string, region: string) {
-  return countriesForRegion(region).includes(country);
-}
-
-function SelectedFilterChip({
-  label,
-  onClear,
-  variant = "neutral",
-}: {
-  label: string;
-  onClear: () => void;
-  variant?: "primary" | "neutral";
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClear}
-      aria-label={`Remove ${label} filter`}
-      className={cn(
-        "inline-flex max-w-full items-center gap-1 rounded-full border px-3 py-1 text-[11px] font-semibold transition-colors",
-        variant === "primary"
-          ? "border-indigo-200 bg-indigo-50 text-indigo-700 hover:border-indigo-300 hover:bg-indigo-100 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20"
-          : "border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-slate-100 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300 dark:hover:bg-[#16233A]"
-      )}
-    >
-      <span className="truncate">{label}</span>
-      <X className="size-3 shrink-0" />
-    </button>
-  );
-}
 
 function CompanyTable({
   companies,
@@ -864,9 +630,16 @@ export function CompaniesSection() {
   const [isDetailView, setIsDetailView] = useState(false);
   const [activeTab, setActiveTab] = useState("Overview");
   const [companySearch, setCompanySearch] = useState("");
+  // Natural-language search: Enter sends the query to /api/companies/ask, which
+  // decides whether it's about trade shows or companies. Never fires per
+  // keystroke — that would be one model call per character.
+  const [eventSearch, setEventSearch] = useState<EventSearchState | null>(null);
+  const [isAsking, setIsAsking] = useState(false);
+  // Set when /api/companies/ask reports no ANTHROPIC_API_KEY, so the UI can
+  // explain why an event question did nothing instead of failing silently.
+  const [askUnavailable, setAskUnavailable] = useState(false);
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [categorySearch, setCategorySearch] = useState("");
-  const [countrySearch, setCountrySearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedEmployeeRange, setSelectedEmployeeRange] = useState<string | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
@@ -882,24 +655,6 @@ export function CompaniesSection() {
     setNextCursor(null);
     setHasNextPage(false);
   }, []);
-
-  const clearCompanyFilter = useCallback((filterKey: "category" | "employeeRange" | "location" | "country") => {
-    if (filterKey === "category") {
-      setSelectedCategory(null);
-    } else if (filterKey === "employeeRange") {
-      setSelectedEmployeeRange(null);
-    } else if (filterKey === "location") {
-      setSelectedLocation(null);
-    } else if (filterKey === "country") {
-      setSelectedCountry(null);
-      setCountrySearch("");
-    }
-
-    setFilterOrder((prev) => prev.filter((key) => key !== filterKey));
-    setSelectedCompanyId(null);
-    setIsDetailView(false);
-    resetCompanyPagination();
-  }, [resetCompanyPagination]);
 
   // Global topbar search: apply ?q= from the URL on mount, and react live to
   // searches submitted from the topbar while this section is already rendered.
@@ -1081,18 +836,109 @@ export function CompaniesSection() {
     return COMPANY_CATEGORIES.filter((category) => category.includes(query));
   }, [categorySearch]);
 
-  const filteredCountries = useMemo(() => {
-    const query = countrySearch.trim().toLowerCase();
-    const regionCountries = countriesForRegion(selectedLocation);
-    if (!query) {
-      return regionCountries;
-    }
-
-    return regionCountries.filter((country) => country.toLowerCase().includes(query));
-  }, [countrySearch, selectedLocation]);
-
   const filteredCompanies = companies;
   const isCompaniesBusy = isLoading || isSearchPending;
+
+  /**
+   * Sends the raw query to the assistant. On an event query the right pane
+   * swaps to the trade-show results; on a company query (or any failure —
+   * missing API key, rate limit, network) we quietly fall back to the existing
+   * prefix search so the box never feels broken.
+   */
+  const runAsk = useCallback(
+    async (rawQuery: string) => {
+      const query = rawQuery.trim();
+      if (query.length < 2) return;
+
+      setIsAsking(true);
+      setAskUnavailable(false);
+      try {
+        const response = await fetch("/api/companies/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ q: query }),
+        });
+
+        const result = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          // A missing or rejected API key is a configuration problem worth
+          // surfacing. Everything else (rate limit, overload, network) comes
+          // back as a 200 with `degraded` and stays silent.
+          if (result?.intent === "unavailable") {
+            setAskUnavailable(true);
+          }
+          setEventSearch(null);
+          return;
+        }
+
+        if (result.intent === "events") {
+          setEventSearch({
+            query,
+            answer: result.answer,
+            filters: result.filters,
+            events: result.events,
+            totalMatched: result.totalMatched,
+            page: 1,
+            pageSize: result.events.length || (result.filters?.limit ?? 25),
+          });
+          setSelectedCompanyId(null);
+          setIsDetailView(false);
+          return;
+        }
+
+        setEventSearch(null);
+        if (result.intent === "companies" && result.name && result.name !== query) {
+          setCompanySearch(result.name);
+          resetCompanyPagination();
+        }
+      } catch {
+        // Network failure — leave the prefix search in charge.
+        setEventSearch(null);
+      } finally {
+        setIsAsking(false);
+      }
+    },
+    [resetCompanyPagination]
+  );
+
+  /**
+   * Pages through matches by replaying the filters Claude already extracted.
+   * Deliberately hits /api/events/search, not /ask — no model call per page.
+   */
+  const handleEventPageChange = useCallback(
+    async (nextPage: number) => {
+      if (!eventSearch || nextPage < 1 || isAsking) return;
+
+      setIsAsking(true);
+      try {
+        const response = await fetch("/api/events/search", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ filters: eventSearch.filters, page: nextPage }),
+        });
+        if (!response.ok) return;
+
+        const result = await response.json();
+        setEventSearch((prev) =>
+          prev
+            ? {
+                ...prev,
+                events: result.events,
+                totalMatched: result.totalMatched,
+                page: result.page,
+                pageSize: result.pageSize,
+              }
+            : prev
+        );
+      } catch {
+        // Keep the current page on a network failure.
+      } finally {
+        setIsAsking(false);
+      }
+    },
+    [eventSearch, isAsking]
+  );
 
   // Any live filter/search means the right panel shows matching companies;
   // with nothing active it shows the enriched-leads finder instead.
@@ -1146,7 +992,7 @@ export function CompaniesSection() {
                   className="inline-flex items-baseline gap-2.5"
                 >
                   <span className="select-none bg-gradient-to-b from-indigo-400 to-fuchsia-500 bg-clip-text font-black italic text-transparent">
-                    {'//'}
+                    {"//"}
                   </span>
                   <span className="relative bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent dark:from-indigo-400 dark:via-violet-400 dark:to-fuchsia-400">
                     {activeCompany.name}
@@ -1312,7 +1158,14 @@ export function CompaniesSection() {
       ) : null}
 
       {mainTab === "companies" ? (
-      <div className="grid grid-cols-1 items-stretch gap-5 xl:grid-cols-[360px_1fr] 2xl:grid-cols-[390px_1fr]">
+      <div
+        className={cn(
+          "grid grid-cols-1 items-stretch gap-5",
+          // Event results take the whole width — the 7-column catalog table
+          // needs the same room it gets on the Events page.
+          !eventSearch && "xl:grid-cols-[360px_1fr] 2xl:grid-cols-[390px_1fr]"
+        )}
+      >
         <motion.div
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
@@ -1328,21 +1181,38 @@ export function CompaniesSection() {
                   setCompanySearch(event.target.value);
                   setSelectedCompanyId(null);
                   setIsDetailView(false);
+                  setEventSearch(null);
                   resetCompanyPagination();
                 }}
-                placeholder="Search company name..."
-                className="h-10 w-full rounded-[10px] border border-slate-200 bg-slate-50 pl-10 pr-3 text-[13px] text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white dark:placeholder:text-slate-500"
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    void runAsk(companySearch);
+                  }
+                }}
+                placeholder="Search companies, or ask about events..."
+                className="h-10 w-full rounded-[10px] border border-slate-200 bg-slate-50 pl-10 pr-9 text-[13px] text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white dark:placeholder:text-slate-500"
               />
+              {isAsking ? (
+                <Sparkles className="absolute right-3 top-1/2 size-4 -translate-y-1/2 animate-pulse text-indigo-500" />
+              ) : null}
             </div>
+            <p className="mt-1.5 text-[10px] text-slate-400 dark:text-slate-500">
+              Press Enter to ask — e.g. &ldquo;shows happening in London UK&rdquo;
+            </p>
+            {askUnavailable ? (
+              <p className="mt-2 rounded-[8px] border border-amber-200 bg-amber-50 px-2.5 py-2 text-[11px] font-medium text-amber-700 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-400">
+                Event search is unavailable — ANTHROPIC_API_KEY is not configured.
+              </p>
+            ) : null}
 
-            <div className="mt-4 flex flex-wrap items-center gap-2">
+            <div className={cn("mt-4 flex flex-wrap items-center gap-2", eventSearch && "hidden")}>
               <button
                 onClick={() => {
                   setSelectedCategory(null);
                   setSelectedEmployeeRange(null);
                   setSelectedLocation(null);
                   setSelectedCountry(null);
-                  setCountrySearch("");
                   setSelectedCompanyId(null);
                   setIsDetailView(false);
                   setFilterOrder([]);
@@ -1358,29 +1228,24 @@ export function CompaniesSection() {
                 All
               </button>
               {selectedCategory ? (
-                <SelectedFilterChip
-                  label={formatCategoryLabel(selectedCategory)}
-                  variant="primary"
-                  onClear={() => clearCompanyFilter("category")}
-                />
+                <span className="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-[11px] font-semibold text-indigo-700 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300">
+                  {formatCategoryLabel(selectedCategory)}
+                </span>
               ) : null}
               {selectedEmployeeRange ? (
-                <SelectedFilterChip
-                  label={selectedEmployeeRange}
-                  onClear={() => clearCompanyFilter("employeeRange")}
-                />
+                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold text-slate-700 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300">
+                  {selectedEmployeeRange}
+                </span>
               ) : null}
               {selectedLocation ? (
-                <SelectedFilterChip
-                  label={selectedLocation}
-                  onClear={() => clearCompanyFilter("location")}
-                />
+                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold text-slate-700 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300">
+                  {selectedLocation}
+                </span>
               ) : null}
               {selectedCountry ? (
-                <SelectedFilterChip
-                  label={selectedCountry}
-                  onClear={() => clearCompanyFilter("country")}
-                />
+                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold text-slate-700 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300">
+                  {selectedCountry}
+                </span>
               ) : null}
               {(selectedCategory || selectedEmployeeRange || selectedLocation || selectedCountry) ? (
                 <button
@@ -1391,7 +1256,6 @@ export function CompaniesSection() {
                       const last = newOrder.pop()!;
                       if (last === 'country' && selectedCountry) {
                         setSelectedCountry(null);
-                        setCountrySearch("");
                         cleared = true;
                       } else if (last === 'location' && selectedLocation) {
                         setSelectedLocation(null);
@@ -1407,7 +1271,6 @@ export function CompaniesSection() {
                     if (!cleared) {
                       if (selectedCountry) {
                         setSelectedCountry(null);
-                        setCountrySearch("");
                       } else if (selectedLocation) {
                         setSelectedLocation(null);
                       } else if (selectedEmployeeRange) {
@@ -1431,7 +1294,7 @@ export function CompaniesSection() {
               ) : null}
             </div>
 
-            <div className="mt-4 flex-1 space-y-1.5">
+            <div className={cn("mt-4 flex-1 space-y-1.5", eventSearch && "hidden")}>
               {FILTER_OPTIONS.map((option) => {
                 const isOpen = openFilter === option.key;
                 const activeValue =
@@ -1444,16 +1307,6 @@ export function CompaniesSection() {
                         : option.key === "country" && selectedCountry
                           ? selectedCountry
                           : null;
-                const activeFilterKey =
-                  option.key === "category"
-                    ? "category"
-                    : option.key === "employee-headcount"
-                      ? "employeeRange"
-                      : option.key === "location"
-                        ? "location"
-                        : option.key === "country"
-                          ? "country"
-                          : null;
 
                 return (
                   <div
@@ -1465,41 +1318,26 @@ export function CompaniesSection() {
                         : "border-slate-200 bg-slate-50 hover:border-indigo-200 dark:border-[#22304A] dark:bg-[#0B1220] dark:hover:border-indigo-500/30"
                     )}
                   >
-                    <div className="flex h-10 w-full items-center gap-2 px-3 text-[13px] font-medium text-slate-700 transition-colors [font-family:var(--font-inter),'Inter',sans-serif] dark:text-slate-200">
-                      <button
-                        type="button"
-                        onClick={() => setOpenFilter(isOpen ? null : option.key)}
-                        className="min-w-0 flex-1 text-left"
-                      >
-                        <span className="block truncate">{option.label}</span>
-                      </button>
+                    <button
+                      type="button"
+                      onClick={() => setOpenFilter(isOpen ? null : option.key)}
+                      className="flex h-10 w-full items-center justify-between gap-2 px-3 text-[13px] font-medium text-slate-700 transition-colors [font-family:var(--font-inter),'Inter',sans-serif] dark:text-slate-200"
+                    >
+                      <span className="truncate">{option.label}</span>
                       <span className="flex shrink-0 items-center gap-1.5">
-                        {activeValue && activeFilterKey ? (
-                          <button
-                            type="button"
-                            onClick={() => clearCompanyFilter(activeFilterKey)}
-                            aria-label={`Remove ${option.label} filter`}
-                            className="inline-flex max-w-[130px] items-center gap-1 rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 transition-colors hover:bg-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20"
-                          >
-                            <span className="truncate">{activeValue}</span>
-                            <X className="size-3 shrink-0" />
-                          </button>
+                        {activeValue ? (
+                          <span className="max-w-[110px] truncate rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300">
+                            {activeValue}
+                          </span>
                         ) : null}
-                        <button
-                          type="button"
-                          onClick={() => setOpenFilter(isOpen ? null : option.key)}
-                          aria-label={`${isOpen ? "Collapse" : "Expand"} ${option.label} filter`}
-                          className="flex size-6 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-indigo-500 dark:hover:bg-[#16233A]"
-                        >
-                          <ChevronDown
-                            className={cn(
-                              "size-4 transition-transform duration-200",
-                              isOpen && "rotate-180 text-indigo-500"
-                            )}
-                          />
-                        </button>
+                        <ChevronDown
+                          className={cn(
+                            "size-4 text-slate-400 transition-transform duration-200",
+                            isOpen && "rotate-180 text-indigo-500"
+                          )}
+                        />
                       </span>
-                    </div>
+                    </button>
                     <AnimatePresence initial={false}>
                       {isOpen ? (
                         <motion.div
@@ -1575,21 +1413,11 @@ export function CompaniesSection() {
                                     type="button"
                                     onClick={() => {
                                       setSelectedLocation(region);
-                                      setCountrySearch("");
-                                      const countryStillMatches = selectedCountry
-                                        ? countryBelongsToRegion(selectedCountry, region)
-                                        : true;
-                                      if (!countryStillMatches) {
-                                        setSelectedCountry(null);
-                                      }
                                       setOpenFilter(null);
                                       setSelectedCompanyId(null);
                                       setIsDetailView(false);
                                       resetCompanyPagination();
-                                      setFilterOrder((prev) => [
-                                        ...prev.filter((f) => f !== 'location' && (countryStillMatches || f !== 'country')),
-                                        'location',
-                                      ]);
+                                      setFilterOrder((prev) => [...prev.filter((f) => f !== 'location'), 'location']);
                                     }}
                                     className="flex w-full items-center justify-between rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
                                   >
@@ -1601,19 +1429,8 @@ export function CompaniesSection() {
                                 ))}
                               </div>
                             ) : option.key === "country" ? (
-                              <>
-                                {/* 195 countries — a search box keeps the list usable */}
-                                <div className="relative">
-                                  <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
-                                  <input
-                                    value={countrySearch}
-                                    onChange={(event) => setCountrySearch(event.target.value)}
-                                    placeholder="Search country..."
-                                    className="h-9 w-full rounded-[9px] border border-slate-200 bg-slate-50 pl-9 pr-3 text-[12px] text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
-                                  />
-                                </div>
-                                <div className="mt-2 max-h-52 space-y-1 overflow-y-auto">
-                                {filteredCountries.map((countryName) => (
+                              <div className="max-h-52 space-y-1 overflow-y-auto">
+                                {COMPANY_COUNTRIES.map((countryName) => (
                                   <button
                                     key={countryName}
                                     type="button"
@@ -1633,11 +1450,7 @@ export function CompaniesSection() {
                                     ) : null}
                                   </button>
                                 ))}
-                                {filteredCountries.length === 0 ? (
-                                  <p className="px-3 py-2 text-[12px] text-slate-500 dark:text-slate-400">No country found</p>
-                                ) : null}
-                                </div>
-                              </>
+                              </div>
                             ) : (
                               <p className="px-3 py-3 text-center text-[12px] text-slate-400 dark:text-slate-500">
                                 Coming soon — this filter unlocks with a connected data source.
@@ -1659,10 +1472,29 @@ export function CompaniesSection() {
           initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.35, delay: 0.1 }}
-          className="flex flex-col min-h-[600px] xl:min-h-0 xl:relative"
+          className={cn("flex flex-col", !eventSearch && "min-h-[600px] xl:min-h-0 xl:relative")}
         >
-          <div className="flex h-full w-full flex-col xl:absolute xl:inset-0">
-          {!isDetailView && !hasActiveCriteria ? (
+          <div className={cn("flex h-full w-full flex-col", !eventSearch && "xl:absolute xl:inset-0")}>
+          {!isDetailView && eventSearch ? (
+            <div className="flex-1 overflow-y-auto pr-1">
+              <EventCatalogPanel
+                query={eventSearch.query}
+                answer={eventSearch.answer}
+                filters={eventSearch.filters}
+                events={eventSearch.events}
+                totalMatched={eventSearch.totalMatched}
+                page={eventSearch.page}
+                pageSize={eventSearch.pageSize}
+                isLoading={isAsking}
+                onPageChange={handleEventPageChange}
+                onClear={() => {
+                  setEventSearch(null);
+                  setCompanySearch("");
+                  resetCompanyPagination();
+                }}
+              />
+            </div>
+          ) : !isDetailView && !hasActiveCriteria ? (
             <EnrichedLeadsFinderPanel onQuery={handleLeadQuery} />
           ) : !isDetailView ? (
             <CompanyTable

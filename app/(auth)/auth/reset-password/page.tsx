@@ -1,25 +1,29 @@
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
+import type { Metadata } from 'next';
+
+import { AuthShell } from '@/components/auth/auth-shell';
+import { ResetPasswordForm } from '@/components/auth/reset-password-form';
+
+/**
+ * /auth/reset-password — the destination of the link in the recovery email.
+ *
+ * This is the URL passed as `redirect_to` by /api/auth/forgot-password, so it
+ * must also be listed under Authentication → URL Configuration → Redirect URLs
+ * in the Supabase dashboard, or Supabase substitutes the project Site URL and
+ * the link lands on the home page instead.
+ *
+ * No Suspense boundary is needed even though the form reads the URL: it uses
+ * window.location in an effect rather than useSearchParams, which is required
+ * anyway because the stock email template returns the token in the fragment and
+ * useSearchParams cannot see fragments.
+ */
+export const metadata: Metadata = {
+  title: 'Reset Password',
+};
 
 export default function ResetPasswordPage() {
-  const t = useTranslations('auth.resetPassword');
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4 dark:bg-slate-950">
-      <div className="w-full max-w-md space-y-8 rounded-2xl border border-slate-200 bg-white p-8 text-center shadow-xl dark:border-slate-800 dark:bg-slate-900">
-        <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
-          {t('title')}
-        </h2>
-        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">{t('description')}</p>
-        <div className="mt-6">
-          <Link
-            href="/auth/sign-in"
-            className="font-medium font-semibold text-blue-600 hover:text-blue-500"
-          >
-            {t('actions.return')}
-          </Link>
-        </div>
-      </div>
-    </div>
+    <AuthShell>
+      <ResetPasswordForm />
+    </AuthShell>
   );
 }

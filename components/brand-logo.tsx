@@ -1,67 +1,82 @@
-"use client";
+import Image, { type ImageProps } from "next/image";
 
-import Image from "next/image";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-// Two artwork files, each with its background baked in, so the correct one has
-// to be chosen per theme rather than recoloured with CSS:
-//   dark  -> white mark on deep navy
-//   light -> blue mark on white
-const LOGO_DARK = "/prismconnex-logo-dark.jpeg";
-const LOGO_LIGHT = "/prismconnex-logo-light.jpeg";
+export const LOGO_BLUE_SRC = "/images/logo-blue.png";
+export const LOGO_BLUE_DARK_SRC = "/images/logo-blue-dark.png";
 
-// Both files are square lockups: emblem on top, "Prismconnex Global Solutions"
-// beneath. At sidebar size the wordmark is illegible, so `mark` zooms into the
-// emblem and lets the adjacent text carry the name.
-//
-// Geometry (measured on the artwork, 1600x1496): the emblem spans ~66% of the
-// height centred at ~39% — i.e. ABOVE the image's midpoint — and ~60% of the
-// width. So the image is scaled until the emblem fills the frame, then nudged
-// DOWN to bring it to centre; shifting up would pull the wordmark into view.
-const MARK_ZOOM = "scale-[1.7] translate-y-[17.5%]";
+/** Intrinsic pixels of the source artwork — used only to reserve aspect ratio. */
+const INTRINSIC_WIDTH = 800;
+const INTRINSIC_HEIGHT = 705;
 
-type BrandLogoProps = {
-  /** `mark` crops to the emblem; `full` shows the entire lockup. */
-  variant?: "mark" | "full";
-  /** Tailwind size classes for the frame, e.g. "size-9". */
-  className?: string;
-  priority?: boolean;
+const DEFAULT_ALT = "Prismconnex Global Solutions";
+
+type BrandLogoProps = Omit<ImageProps, "src" | "alt" | "width" | "height"> & {
+  alt?: string;
+  width?: number;
+  height?: number;
 };
 
-export function BrandLogo({ variant = "mark", className, priority = false }: BrandLogoProps) {
-  const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+/**
+ * The Prismconnex logo, in brand blue — #005C9D in light mode, one step up to
+ * #0086E6 in dark. Those are the `--brand` and `--brand-hover` tokens from
+ * app/globals.css, baked into two PNGs by scripts/generate-logo-variants.mjs. A
+ * PNG cannot read a CSS variable, so the script holds the only other copy of
+ * both hexes; keep them in sync.
+ *
+ * Dark mode gets its own variant because #005C9D is only 2.77:1 on the #0A0E1A
+ * auth background and 2.47:1 on the #111B2E sidebar. #0086E6 restores that to
+ * 5.09:1 / 4.55:1 — the same brand -> brand-hover substitution dark mode already
+ * makes for link text and focus borders.
+ *
+ * Both variants are rendered and toggled by Tailwind's `dark:` classes rather
+ * than picked in JS via `useTheme()`. That is deliberate: the theme is resolved
+ * from a class on <html>, so a JS swap would either render the wrong logo on the
+ * server and flash on hydration, or force this into a client component. CSS has
+ * the answer before first paint. Only one variant is ever visible, and only the
+ * visible one is decoded.
+ *
+ * A much older revision swapped in a *white* logo under `.dark`; that was
+ * removed on purpose and is not what this is — the mark stays brand blue in both
+ * themes. Don't reintroduce the white one.
+ */
+export function BrandLogo({
+  className,
+  alt = DEFAULT_ALT,
+  fill,
+  width,
+  height,
+  ...rest
+}: BrandLogoProps) {
+  // `fill` and explicit dimensions are mutually exclusive in next/image.
+  const dimensions = fill
+    ? {}
+    : { width: width ?? INTRINSIC_WIDTH, height: height ?? INTRINSIC_HEIGHT };
 
-  // resolvedTheme is undefined until mounted; rendering before then would flash
-  // the wrong artwork (and mismatch the server HTML).
-  useEffect(() => setMounted(true), []);
-
-  const src = mounted && resolvedTheme === "light" ? LOGO_LIGHT : LOGO_DARK;
+  // `alt` is passed explicitly rather than through the spread: jsx-a11y/alt-text
+  // cannot see props arriving via a spread and would warn on the <Image>s below.
+  const shared = { fill, ...dimensions, ...rest };
 
   return (
-    <div
-      className={cn(
-        "relative shrink-0 overflow-hidden rounded-xl border border-slate-200 shadow-sm dark:border-white/10",
-        // Frame background matches each artwork so the JPEG's baked-in
-        // background never reads as a visible box.
-        "bg-white dark:bg-[#0E1321]",
-        className
-      )}
-    >
+    <>
       <Image
-        key={src}
-        src={src}
-        alt="Prismconnex Global Solutions"
-        fill
-        sizes="96px"
-        priority={priority}
-        className={cn(
-          "object-contain",
-          variant === "mark" ? MARK_ZOOM : "p-0.5"
-        )}
+        {...shared}
+        alt={alt}
+        src={LOGO_BLUE_SRC}
+        className={cn(className, "dark:hidden")}
       />
-    </div>
+      {/*
+        `aria-hidden` plus an empty alt on the dark twin: both nodes are in the
+        DOM at all times, and without this a screen reader would announce the
+        logo twice regardless of which one is painted.
+      */}
+      <Image
+        {...shared}
+        alt=""
+        aria-hidden="true"
+        src={LOGO_BLUE_DARK_SRC}
+        className={cn(className, "hidden dark:block")}
+      />
+    </>
   );
 }

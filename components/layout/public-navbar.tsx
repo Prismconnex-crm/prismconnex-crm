@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Menu, X, ArrowRight, Sun, MoonStar, Monitor } from 'lucide-react';
@@ -392,7 +391,20 @@ export function PublicNavbar() {
 
         <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 md:px-8">
           <Link href={localizePathname('/', locale)} className="flex items-center gap-3">
-            <BrandLogo variant="mark" priority className="size-11" />
+            <div className="relative flex size-11 items-center justify-center overflow-hidden rounded-xl">
+              {/*
+                `mix-blend-multiply` was there to knock the opaque JPEG's white
+                background out against the light navbar. The variants have a
+                real alpha channel, so it is no longer needed.
+              */}
+              <BrandLogo
+                width={42}
+                height={42}
+                style={{ width: 'auto', height: 'auto' }}
+                className="object-contain"
+                priority
+              />
+            </div>
             <div className="flex flex-col leading-tight">
               <span className="text-[15px] font-bold tracking-tight text-slate-900 dark:text-white">
                 Prismconnex

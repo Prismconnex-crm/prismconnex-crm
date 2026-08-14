@@ -13,13 +13,38 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import type { AppShellUser } from "./app-shell";
 
-export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
+/** Initials for the avatar, e.g. "Ada Byron Lovelace" -> "AL". */
+function initialsOf(name: string | null, email: string | null) {
+  const source = name?.trim();
+  if (source) {
+    const parts = source.split(/\s+/);
+    const first = parts[0]?.[0] ?? "";
+    const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
+    return (first + last).toUpperCase();
+  }
+
+  return email?.[0]?.toUpperCase() ?? "";
+}
+
+export function AppTopbar({
+  onMenuClick,
+  user,
+}: {
+  onMenuClick: () => void;
+  user?: AppShellUser;
+}) {
   const router = useRouter();
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [newMenuOpen, setNewMenuOpen] = useState(false);
+
+  // Falls back to the email local-part, then a neutral label, so the topbar
+  // never renders an identity the session does not actually have.
+  const displayName = user?.name?.trim() || user?.email?.split("@")[0] || "Account";
+  const initials = initialsOf(user?.name ?? null, user?.email ?? null);
 
   const submitSearch = () => {
     const query = searchValue.trim();
@@ -30,10 +55,31 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
     window.dispatchEvent(new CustomEvent("pcx:company-search", { detail: query }));
   };
 
+  const [signingOut, setSigningOut] = useState(false);
+
   const handleSignOut = async () => {
-    await fetch("/api/auth/sign-out", { method: "POST" });
-    router.push("/auth/sign-in");
-    router.refresh();
+    if (signingOut) return;
+    setSigningOut(true);
+
+    try {
+      // Revokes the Supabase session (supabase.auth.signOut, scope=global) and
+      // expires every auth cookie. The route always returns 200 and always
+      // clears cookies, even if the Supabase call failed.
+      const res = await fetch("/api/auth/sign-out", { method: "POST" });
+      if (!res.ok) throw new Error(`Sign out failed: ${res.status}`);
+    } catch (error) {
+      // Logged, not surfaced: the redirect below still ends the session. The
+      // cookies are httpOnly so they cannot be cleared here, but /login and
+      // every private route are guarded server-side, so a stale or partially
+      // cleared cookie cannot get the user back into the app.
+      console.error("[sign-out]", error);
+    } finally {
+      // ?signedOut=1 makes the login page show the confirmation banner.
+      router.replace("/login?signedOut=1");
+      // Drops the cached RSC payload for /app so a back-navigation cannot
+      // render the authenticated shell from cache.
+      router.refresh();
+    }
   };
 
   return (
@@ -116,12 +162,16 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
           <button
             type="button"
             onClick={() => setUserMenuOpen(!userMenuOpen)}
-            className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 dark:border-white/[0.04] dark:bg-[#141A2D] dark:hover:bg-[#1A2138] transition-colors"
+            aria-haspopup="menu"
+            aria-expanded={userMenuOpen}
+            className="flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 p-1 pr-3 hover:bg-slate-100 dark:border-white/[0.04] dark:bg-[#141A2D] dark:hover:bg-[#1A2138] transition-colors"
           >
             <div className="flex size-7 items-center justify-center rounded-full bg-slate-200 text-xs font-bold text-slate-700 dark:bg-white/10 dark:text-slate-200">
-              <User className="size-4" />
+              {initials || <User className="size-4" />}
             </div>
-            <span className="text-sm font-medium text-slate-700 dark:text-slate-200 hidden sm:block">Admin</span>
+            <span className="text-sm font-medium text-slate-700 dark:text-slate-200 hidden sm:block">
+              {displayName}
+            </span>
           </button>
 
           {userMenuOpen && (
@@ -130,9 +180,29 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
                 className="fixed inset-0 z-40"
                 onClick={() => setUserMenuOpen(false)}
               />
-              <div className="absolute right-0 top-11 z-50 w-48 rounded-xl border border-slate-200 bg-white dark:border-white/[0.08] dark:bg-[#0E1321] p-1.5 shadow-xl animate-in fade-in zoom-in-95 duration-200">
+              {/* w-56 rather than w-48 so an email fits without truncating
+                  at typical lengths; longer ones still truncate cleanly. */}
+              <div
+                role="menu"
+                aria-label="User menu"
+                className="absolute right-0 top-11 z-50 w-56 rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl dark:border-white/[0.08] dark:bg-[#0E1321] animate-in fade-in zoom-in-95 duration-200"
+              >
+                {/* Signed-in identity. Not interactive — the same name shown on
+                    the trigger, plus the email, which appears nowhere else. */}
+                <div className="px-3 py-2">
+                  <p className="truncate text-sm font-medium text-slate-900 dark:text-slate-200">{displayName}</p>
+                  {user?.email ? (
+                    <p className="truncate text-[12px] text-slate-500" title={user.email}>
+                      {user.email}
+                    </p>
+                  ) : null}
+                </div>
+
+                <div className="my-1 border-t border-slate-200 dark:border-white/[0.04]" />
+
                 <button
                   type="button"
+                  role="menuitem"
                   className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
                   onClick={() => {
                     setUserMenuOpen(false);
@@ -143,6 +213,7 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
                 </button>
                 <button
                   type="button"
+                  role="menuitem"
                   className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
                   onClick={() => {
                     setUserMenuOpen(false);
@@ -152,13 +223,17 @@ export function AppTopbar({ onMenuClick }: { onMenuClick: () => void }) {
                   <Settings className="size-3.5" /> Settings
                 </button>
                 <div className="my-1 border-t border-slate-200 dark:border-white/[0.04]" />
+                {/* Sign-out now makes a round trip to revoke the Supabase
+                    session, so the control is disabled while it is in flight. */}
                 <button
                   type="button"
+                  role="menuitem"
+                  disabled={signingOut}
                   onClick={() => {
                     setUserMenuOpen(false);
                     handleSignOut();
                   }}
-                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-500 transition-colors hover:bg-red-500/10"
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-500 transition-colors hover:bg-red-500/10 disabled:opacity-60"
                 >
                   <LogOut className="size-3.5" /> Sign Out
                 </button>

@@ -68,9 +68,18 @@
         },
         "description": "这是一款 AI 原生 CRM，可将展会中的复杂流程转化为可预测的营收增长。整合高质量线索、自动化合规触达，并在一个平台中证明 ROI。",
         "bullets": [
-          { "icon": "shield", "text": "来源透明" },
-          { "icon": "activity", "text": "合规序列" },
-          { "icon": "chart", "text": "交易经济性（ROI）" }
+          {
+            "icon": "shield",
+            "text": "来源透明"
+          },
+          {
+            "icon": "activity",
+            "text": "合规序列"
+          },
+          {
+            "icon": "chart",
+            "text": "交易经济性（ROI）"
+          }
         ],
         "primaryCta": "开始免费试用",
         "secondaryCta": "预约演示",
@@ -84,22 +93,56 @@
         },
         "dashboard": {
           "kpis": [
-            { "label": "流转额", "value": "$1.82M", "color": "text-indigo-400" },
-            { "label": "线索", "value": "428", "color": "text-emerald-400" },
-            { "label": "ROI", "value": "3.4x", "color": "text-amber-400" }
+            {
+              "label": "流转额",
+              "value": "$1.82M",
+              "color": "text-indigo-400"
+            },
+            {
+              "label": "线索",
+              "value": "428",
+              "color": "text-emerald-400"
+            },
+            {
+              "label": "ROI",
+              "value": "3.4x",
+              "color": "text-amber-400"
+            }
           ],
           "events": [
-            { "name": "Berlin Tech Week", "score": "96%" },
-            { "name": "London Retail Summit", "score": "96%" }
+            {
+              "name": "Berlin Tech Week",
+              "score": "96%"
+            },
+            {
+              "name": "London Retail Summit",
+              "score": "96%"
+            }
           ]
         }
       },
       "stats": {
         "items": [
-          { "value": "10,000+", "label": "进行中的活动", "accent": "emerald" },
-          { "value": "2.5M+", "label": "企业档案", "accent": "indigo" },
-          { "value": "98.7%", "label": "送达率", "accent": "violet" },
-          { "value": "3.4x", "label": "平均 ROI 提升", "accent": "amber" }
+          {
+            "value": "10,000+",
+            "label": "进行中的活动",
+            "accent": "emerald"
+          },
+          {
+            "value": "2.5M+",
+            "label": "企业档案",
+            "accent": "indigo"
+          },
+          {
+            "value": "98.7%",
+            "label": "送达率",
+            "accent": "violet"
+          },
+          {
+            "value": "3.4x",
+            "label": "平均 ROI 提升",
+            "accent": "amber"
+          }
         ]
       },
       "personas": {
@@ -113,28 +156,50 @@
             "title": "服务提供商",
             "accent": "violet",
             "description": "将服务交付流程从初始报价一路打通到长期客户留存。",
-            "flow": ["项目", "报价", "评价", "复购客户"]
+            "flow": [
+              "项目",
+              "报价",
+              "评价",
+              "复购客户"
+            ]
           },
           {
             "id": "attendees",
             "title": "参会者",
             "accent": "emerald",
             "description": "发现活动、规划行程，并与参展商和同行建立高质量连接。",
-            "flow": ["活动", "行程规划", "门票", "地图", "社交连接"]
+            "flow": [
+              "活动",
+              "行程规划",
+              "门票",
+              "地图",
+              "社交连接"
+            ]
           },
           {
             "id": "exhibitors",
             "title": "参展商",
             "accent": "amber",
             "description": "从活动筛选到成交回款，管理完整的参展营收流程。",
-            "flow": ["活动", "目标名单", "序列", "会议", "交易到 ROI"]
+            "flow": [
+              "活动",
+              "目标名单",
+              "序列",
+              "会议",
+              "交易到 ROI"
+            ]
           },
           {
             "id": "organizers",
             "title": "主办方",
             "accent": "pink",
             "description": "用更流畅的运营流程、参展商工具和赞助商管理，打造世界级活动。",
-            "flow": ["活动运营", "参展商入驻", "赞助商管理", "参会者引导"]
+            "flow": [
+              "活动运营",
+              "参展商入驻",
+              "赞助商管理",
+              "参会者引导"
+            ]
           }
         ]
       },
@@ -211,13 +276,21 @@
           {
             "icon": "pin",
             "title": "附近配套信息",
-            "bullets": ["场馆附近酒店", "最近机场与火车站", "附近旅游景点"],
+            "bullets": [
+              "场馆附近酒店",
+              "最近机场与火车站",
+              "附近旅游景点"
+            ],
             "accent": "emerald"
           },
           {
             "icon": "globe",
             "title": "面向全球旅客友好",
-            "bullets": ["多语言界面", "支持时区的日程", "多币种显示"],
+            "bullets": [
+              "多语言界面",
+              "支持时区的日程",
+              "多币种显示"
+            ],
             "accent": "amber"
           }
         ],
@@ -228,9 +301,21 @@
           "applyPromo": "应用优惠码",
           "nearbyTitle": "附近配套信息",
           "nearby": [
-            { "icon": "hotel", "label": "酒店", "detail": "2 公里内 12 家" },
-            { "icon": "plane", "label": "机场", "detail": "BER · 22 公里" },
-            { "icon": "train", "label": "火车站", "detail": "Hbf · 4 公里" }
+            {
+              "icon": "hotel",
+              "label": "酒店",
+              "detail": "2 公里内 12 家"
+            },
+            {
+              "icon": "plane",
+              "label": "机场",
+              "detail": "BER · 22 公里"
+            },
+            {
+              "icon": "train",
+              "label": "火车站",
+              "detail": "Hbf · 4 公里"
+            }
           ],
           "disclaimer": "可用性和结果取决于地图服务商数据。合作伙伴优惠因活动而异。"
         }
@@ -595,10 +680,18 @@
       "description": "通过几个简单步骤完成工作区设置。"
     },
     "steps": [
-      { "label": "个人角色" },
-      { "label": "工作区" },
-      { "label": "发送设置" },
-      { "label": "导入" }
+      {
+        "label": "个人角色"
+      },
+      {
+        "label": "工作区"
+      },
+      {
+        "label": "发送设置"
+      },
+      {
+        "label": "导入"
+      }
     ],
     "role": {
       "title": "个人角色",
@@ -608,25 +701,41 @@
       {
         "id": "service-providers",
         "name": "服务提供商",
-        "chips": ["项目", "报价", "发票"],
+        "chips": [
+          "项目",
+          "报价",
+          "发票"
+        ],
         "recommended": "已应用推荐设置"
       },
       {
         "id": "attendees",
         "name": "参会者",
-        "chips": ["活动", "门票", "地图"],
+        "chips": [
+          "活动",
+          "门票",
+          "地图"
+        ],
         "recommended": "已应用推荐设置"
       },
       {
         "id": "exhibitors",
         "name": "参展商",
-        "chips": ["目标名单", "序列", "交易"],
+        "chips": [
+          "目标名单",
+          "序列",
+          "交易"
+        ],
         "recommended": "已应用推荐设置"
       },
       {
         "id": "organizers",
         "name": "主办方",
-        "chips": ["入驻", "赞助商", "引导"],
+        "chips": [
+          "入驻",
+          "赞助商",
+          "引导"
+        ],
         "recommended": "已应用推荐设置"
       }
     ],
@@ -651,16 +760,40 @@
         "phoneNumber": "+1 (555) 000-0000"
       },
       "timeZones": [
-        { "value": "America/New_York", "label": "America/New_York" },
-        { "value": "Europe/London", "label": "Europe/London" },
-        { "value": "Europe/Berlin", "label": "Europe/Berlin" },
-        { "value": "Asia/Kolkata", "label": "Asia/Kolkata" }
+        {
+          "value": "America/New_York",
+          "label": "America/New_York"
+        },
+        {
+          "value": "Europe/London",
+          "label": "Europe/London"
+        },
+        {
+          "value": "Europe/Berlin",
+          "label": "Europe/Berlin"
+        },
+        {
+          "value": "Asia/Kolkata",
+          "label": "Asia/Kolkata"
+        }
       ],
       "currencies": [
-        { "value": "USD", "label": "USD" },
-        { "value": "EUR", "label": "EUR" },
-        { "value": "GBP", "label": "GBP" },
-        { "value": "INR", "label": "INR" }
+        {
+          "value": "USD",
+          "label": "USD"
+        },
+        {
+          "value": "EUR",
+          "label": "EUR"
+        },
+        {
+          "value": "GBP",
+          "label": "GBP"
+        },
+        {
+          "value": "INR",
+          "label": "INR"
+        }
       ],
       "toggles": {
         "dualTime": "显示活动当地时间和我的时间"
@@ -688,8 +821,14 @@
     "import": {
       "title": "导入数据",
       "description": "导入现有联系人，或从零开始。",
-      "primary": { "title": "上传 CSV", "description": "从文件导入联系人" },
-      "secondary": { "title": "从零开始", "description": "稍后手动添加联系人" }
+      "primary": {
+        "title": "上传 CSV",
+        "description": "从文件导入联系人"
+      },
+      "secondary": {
+        "title": "从零开始",
+        "description": "稍后手动添加联系人"
+      }
     },
     "buttons": {
       "back": "返回",
@@ -697,10 +836,16 @@
       "complete": "完成设置"
     },
     "errors": {
-      "complete": "完成引导设置失败"
+      "complete": "完成引导设置失败",
+      "workspaceName": "请输入至少 2 个字符的工作区名称"
     }
   },
   "auth": {
+    "tabs": {
+      "login": "登录",
+      "signUp": "注册",
+      "ariaLabel": "身份验证"
+    },
     "signIn": {
       "brandSubtitle": "AI 展会 CRM",
       "heroTitleLine1": "展会情报。",
@@ -714,14 +859,21 @@
       "subtitle": "登录你的 Prismconnex 工作区",
       "fields": {
         "email": "邮箱",
-        "password": "密码"
+        "password": "密码",
+        "identifier": "邮箱或手机号",
+        "secret": "密码或验证码"
       },
       "actions": {
         "submit": "登录",
         "divider": "或继续使用",
-        "cognito": "使用 AWS Cognito 继续",
         "forgotPassword": "忘记密码？",
-        "createAccount": "创建账户"
+        "createAccount": "创建账户",
+        "showPassword": "显示密码",
+        "hidePassword": "隐藏密码",
+        "google": "使用 Google 继续",
+        "microsoft": "使用 Microsoft 继续",
+        "signUpPrompt": "还没有账号？",
+        "signUpLink": "注册"
       },
       "footer": {
         "language": "语言：{language}",
@@ -729,24 +881,73 @@
       },
       "errors": {
         "signIn": "登录失败",
-        "cognito": "无法连接到 AWS Cognito"
+        "oauth": {
+          "provider_unavailable": "当前环境未配置第三方登录。请使用邮箱和密码登录。",
+          "unsupported_provider": "不支持该登录方式。",
+          "provider_disabled": "本项目尚未启用 {provider} 登录。请在 Supabase（Authentication → Providers）中启用该提供商，或使用邮箱和密码登录。",
+          "missing_code": "登录提供商未返回授权码，请重试。",
+          "expired_oauth_state": "本次登录已过期。请重新点击按钮，并在 10 分钟内完成。",
+          "oauth_exchange_failed": "无法通过该提供商完成登录。请重试，或使用邮箱和密码登录。",
+          "access_denied": "登录已取消。请重试以继续。",
+          "unknown": "第三方登录失败。请重试，或使用邮箱和密码登录。"
+        }
+      },
+      "placeholders": {
+        "identifier": "you@company.com",
+        "secret": "请输入密码或验证码"
+      },
+      "validation": {
+        "identifierRequired": "请输入邮箱或手机号",
+        "identifierInvalid": "请输入有效的邮箱地址或印度手机号",
+        "passwordRequired": "请输入密码"
+      },
+      "status": {
+        "signedOut": "您已成功退出登录。"
       }
     },
     "signUp": {
-      "title": "创建账户",
+      "hints": {
+        "companyDetected": "根据您的邮箱域名自动填写，可以修改。"
+      },
+      "title": "注册",
       "subtitle": "开始你的 Prismconnex 之旅",
       "fields": {
+        "companyName": "公司名称",
         "name": "姓名",
         "email": "邮箱地址",
-        "password": "密码"
+        "password": "密码",
+        "firstName": "名字",
+        "middleName": "中间名",
+        "lastName": "姓氏",
+        "phone": "手机号",
+        "confirmPassword": "确认密码",
+        "optional": "（选填）"
       },
       "actions": {
-        "submit": "注册",
+        "submit": "创建账号",
         "signInPrompt": "已有账户？",
-        "signInLink": "登录"
+        "signInLink": "登录",
+        "showPassword": "显示密码",
+        "hidePassword": "隐藏密码"
       },
       "errors": {
         "signUp": "注册失败"
+      },
+      "placeholders": {
+        "companyName": "Acme 公司",
+        "email": "you@company.com",
+        "phone": "+91 98765 43210"
+      },
+      "validation": {
+        "firstNameRequired": "请输入名字",
+        "lastNameRequired": "请输入姓氏",
+        "emailRequired": "请输入邮箱",
+        "emailInvalid": "请输入有效的邮箱地址",
+        "phoneRequired": "请输入手机号",
+        "phoneInvalid": "请输入有效的印度手机号",
+        "passwordMin": "密码至少需要 8 个字符",
+        "confirmPasswordRequired": "请确认密码",
+        "passwordMismatch": "两次输入的密码不一致"
       }
     },
     "verify": {
@@ -767,17 +968,73 @@
       }
     },
     "forgotPassword": {
-      "title": "忘记密码",
-      "description": "此功能在当前 MVP 前端演示中尚未完全实现。",
+      "title": "忘记密码？",
+      "subtitle": "请输入您账户的电子邮箱，我们将向您发送重置密码的链接。",
+      "fields": {
+        "email": "电子邮箱"
+      },
+      "placeholders": {
+        "email": "you@company.com"
+      },
       "actions": {
-        "return": "返回登录"
+        "submit": "发送重置链接",
+        "return": "返回登录",
+        "useDifferentEmail": "使用其他邮箱"
+      },
+      "sent": {
+        "title": "请查收邮件",
+        "description": "如果 {email} 存在对应账户，重置链接已在发送途中。",
+        "hint": "链接有效期为一小时。若数分钟内仍未收到，请查看垃圾邮件文件夹。"
+      },
+      "validation": {
+        "emailRequired": "请输入电子邮箱",
+        "emailInvalid": "请输入有效的电子邮箱"
+      },
+      "errors": {
+        "send": "无法发送邮件，请重试。"
       }
     },
     "resetPassword": {
-      "title": "重置密码",
-      "description": "此功能在当前 MVP 前端演示中尚未完全实现。",
+      "title": "设置新密码",
+      "subtitle": "请为您的账户选择新密码，至少 8 个字符。",
+      "fields": {
+        "password": "新密码",
+        "confirmPassword": "确认新密码"
+      },
+      "placeholders": {
+        "password": "至少 8 个字符",
+        "confirmPassword": "请再次输入新密码"
+      },
       "actions": {
-        "return": "返回登录"
+        "submit": "更新密码",
+        "signIn": "前往登录",
+        "requestNew": "申请新链接",
+        "return": "返回登录",
+        "showPassword": "显示密码",
+        "hidePassword": "隐藏密码"
+      },
+      "status": {
+        "checking": "正在验证您的链接"
+      },
+      "success": {
+        "title": "密码已更新",
+        "description": "您的密码已更改，正在跳转到登录页面..."
+      },
+      "invalid": {
+        "missingTitle": "密码重置会话缺失或已过期",
+        "missingDescription": "请打开重置邮件中最新的链接，或在下方申请新的链接。",
+        "title": "链接无效",
+        "description": "此页面只能通过密码重置邮件中的链接打开。",
+        "expiredTitle": "此链接已过期",
+        "expiredDescription": "重置链接仅能使用一次，且一小时后过期。请申请新的链接以继续。"
+      },
+      "validation": {
+        "passwordMin": "密码至少需要 8 个字符",
+        "confirmPasswordRequired": "请确认您的新密码",
+        "passwordMismatch": "两次输入的密码不一致"
+      },
+      "errors": {
+        "update": "无法更新密码，请重试。"
       }
     }
   }

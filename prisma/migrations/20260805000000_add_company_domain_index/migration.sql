@@ -1,0 +1,23 @@
+-- Workspace "Company" domain lookup for sign-up company auto-detection.
+--
+-- /api/companies/by-domain now checks "Company" before the shared
+-- "DiscoveryCompany" dataset, because these are the curated CRM records: clean
+-- names, and they cover well-known domains the bulk import missed (google.com
+-- resolves here and nowhere else).
+--
+-- Indexed on lower(domain) rather than domain to match the query's predicate
+-- exactly — stored values vary in case and the lookup is case-insensitive by
+-- definition, so a plain btree on "domain" could not serve it.
+--
+-- "createdAt" trails for the same reason "rowCursor" does in
+-- 20260804000000_add_discovery_domain_index: the query breaks ties with
+-- `ORDER BY "createdAt" ASC LIMIT 1` (domain has no unique constraint), and
+-- carrying the sort column in the index lets the scan stop at the first match
+-- instead of sorting.
+--
+-- At 500 rows this index is not yet load-bearing — a sequential scan is already
+-- sub-millisecond. It exists so the query stays indexed as real tenants add
+-- rows, and it is cheap to build now.
+
+-- CreateIndex
+CREATE INDEX IF NOT EXISTS "idx_company_domain_lower" ON "Company" (lower("domain"), "createdAt");

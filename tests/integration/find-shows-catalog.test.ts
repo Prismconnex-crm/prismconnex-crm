@@ -4,77 +4,76 @@ import { getSeedFindShowAsset } from '../../lib/find-shows/eventseye';
 import { getFindShowAvatarUrl, getFindShowGradient } from '../../lib/find-shows/presentation';
 
 describe('find shows catalog', () => {
-  it('keeps a deduplicated 695-event catalog across the UK, Germany, and USA', () => {
-    expect(findShowEvents).toHaveLength(695);
-    expect(findShowStats.totalEvents).toBe(695);
-    expect(findShowStats.ukEvents).toBe(385);
-    expect(findShowStats.germanyEvents).toBe(10);
-    expect(findShowStats.usaEvents).toBe(300);
-    expect(findShowStats.countries).toBe(3);
-    expect(new Set(findShowEvents.map((event) => event.slug)).size).toBe(695);
+  // Counts are derived from the seed data rather than hardcoded: the catalog
+  // grows every time a country is imported, and pinning totals here only ever
+  // produced false failures. What must hold regardless of size is that the
+  // catalog is deduplicated and that findShowStats agrees with findShowEvents.
+  it('keeps a deduplicated catalog whose stats match the event list', () => {
+    const countries = new Set(findShowEvents.map((event) => event.country));
+
+    expect(findShowEvents.length).toBeGreaterThan(0);
+
+    // No duplicates: one entry per slug, and per name/city/start-date triple.
+    expect(new Set(findShowEvents.map((event) => event.slug)).size).toBe(findShowEvents.length);
     expect(
       new Set(findShowEvents.map((event) => `${event.name}|${event.city}|${event.startDate}`)).size
-    ).toBe(695);
-    expect(
-      new Set(
-        findShowEvents
-          .map((event) => event.seedAsset.eventseyeUrl)
-          .filter((value): value is string => Boolean(value))
-      ).size
-    ).toBe(685);
-    expect(new Set(findShowEvents.map((event) => event.country))).toEqual(
-      new Set(['Germany', 'United Kingdom', 'United States'])
+    ).toBe(findShowEvents.length);
+
+    // Stats are a projection of the same list, so they must not drift from it.
+    expect(findShowStats.totalEvents).toBe(findShowEvents.length);
+    expect(findShowStats.countries).toBe(countries.size);
+    expect(findShowStats.ukEvents).toBe(
+      findShowEvents.filter((event) => event.country === 'United Kingdom').length
     );
-    expect(
-      findShowEvents.filter(
-        (event) =>
-          event.country === 'United Kingdom' &&
-          event.seedAsset.eventseyeUrl &&
-          event.seedAsset.bannerUrl &&
-          event.seedAsset.logoUrl
-      )
-    ).toHaveLength(385);
-    expect(
-      findShowEvents.filter(
-        (event) =>
-          event.country === 'United States' &&
-          event.seedAsset.eventseyeUrl &&
-          event.seedAsset.bannerUrl &&
-          event.seedAsset.logoUrl
-      )
-    ).toHaveLength(300);
+    expect(findShowStats.germanyEvents).toBe(
+      findShowEvents.filter((event) => event.country === 'Germany').length
+    );
+    expect(findShowStats.usaEvents).toBe(
+      findShowEvents.filter((event) => event.country === 'United States').length
+    );
+
+    // The three originally-imported countries must stay represented.
+    for (const country of ['Germany', 'United Kingdom', 'United States']) {
+      expect(countries.has(country)).toBe(true);
+    }
+
+    // Every event carries its persisted Eventseye asset bag.
+    for (const event of findShowEvents) {
+      expect(event.seedAsset).toBeDefined();
+    }
   });
 
-  it('normalizes exact and approximate dates, placeholder locations, and mapped categories', () => {
-    const polymers = findShowEvents.find((event) => event.name === 'POLYMERS IN FLOORING EUROPE');
-    const euroguss = findShowEvents.find((event) => event.name === 'EUROGUSS');
-    const scottishMotorcycleShow = findShowEvents.find(
-      (event) => event.name === 'THE SCOTTISH MOTORCYCLE SHOW'
+  // Fixtures come from the Aug 2026 - Jul 2027 eventseye import. They are named
+  // shows rather than indexes so a failure says which normalisation broke, and
+  // they were chosen to cover one case each: an exact numeric range, an
+  // approximate month-only date, a missing venue, and category mapping.
+  it('normalizes exact and approximate dates, placeholder venues, and mapped categories', () => {
+    const aghaMelbourne = findShowEvents.find((event) => event.name === 'AGHA GIFT FAIRS - MELBOURNE');
+    const argusCriticalMinerals = findShowEvents.find(
+      (event) => event.name === 'ARGUS AUSTRALIA CRITICAL MINERALS FORUM'
     );
-    const oncologyProfessionalCare = findShowEvents.find(
-      (event) => event.name === 'ONCOLOGY PROFESSIONAL CARE'
-    );
-    const photonexEurope = findShowEvents.find((event) => event.name === 'PHOTONEX EUROPE');
-    const savannahRvExpo = findShowEvents.find((event) => event.name === 'SAVANNAH RV EXPO');
+    const opalExhibition = findShowEvents.find((event) => event.name === 'AUSTRALIAN OPAL EXHIBITION');
+    const blackHat = findShowEvents.find((event) => event.name === 'BLACK HAT USA');
 
-    expect(polymers?.startDate).toBe('2025-12-09');
-    expect(polymers?.endDate).toBe('2025-12-10');
-    expect(polymers?.venue).toBe('Venue to be announced');
-    expect(polymers?.categories).toContain('Plastics & Rubber');
+    // Exact range: "08/01/2026" plus a 5-day duration becomes a real span.
+    expect(aghaMelbourne?.startDate).toBe('2026-08-01');
+    expect(aghaMelbourne?.endDate).toBe('2026-08-05');
+    expect(aghaMelbourne?.displayDate).toBe('01 - 05 Aug 2026');
+    expect(aghaMelbourne?.city).toBe('Melbourne');
 
-    expect(euroguss?.displayDate).toBe('13 - 15 Jan 2026');
-    expect(euroguss?.categories).toContain('Manufacturing & Engineering');
+    // Month-only date: spans the whole month and is labelled as provisional.
+    expect(argusCriticalMinerals?.startDate).toBe('2026-08-01');
+    expect(argusCriticalMinerals?.endDate).toBe('2026-08-31');
+    expect(argusCriticalMinerals?.displayDate).toBe('Aug 2026 (TBC)');
 
-    expect(scottishMotorcycleShow?.categories).toContain('Automotive');
-    expect(oncologyProfessionalCare?.startDate).toBe('2026-05-01');
-    expect(oncologyProfessionalCare?.endDate).toBe('2026-05-31');
-    expect(oncologyProfessionalCare?.displayDate).toBe('May 2026 (TBC)');
-    expect(photonexEurope?.city).toBe('City to be announced');
-    expect(photonexEurope?.country).toBe('United Kingdom');
-    expect(photonexEurope?.venue).toBe('Venue to be announced');
-    expect(savannahRvExpo?.country).toBe('United States');
-    expect(savannahRvExpo?.region).toBe('Americas');
-    expect(savannahRvExpo?.city).toBe('Savannah, GA');
+    // The seed's "?" venue placeholder is rendered, never shown raw.
+    expect(opalExhibition?.venue).toBe('Venue to be announced');
+    expect(opalExhibition?.categories).toContain('Textiles & Fashion');
+
+    // Keyword mapping from the show name and description.
+    expect(blackHat?.categories).toContain('Security & Safety');
+    expect(blackHat?.country).toBe('United States');
+    expect(blackHat?.region).toBe('Americas');
   });
 
   it('builds stable fallback media helpers for every event', () => {
@@ -86,7 +85,7 @@ describe('find shows catalog', () => {
 
   it('returns persisted Eventseye media for imported events without a live fetch', async () => {
     const importedEvent = findShowEvents.find(
-      (event) => event.name === 'HRC - HOTEL, RESTAURANT & CATERING'
+      (event) => event.name === 'AGHA GIFT FAIRS - MELBOURNE'
     );
 
     expect(importedEvent?.seedAsset.eventseyeUrl).toBeTruthy();

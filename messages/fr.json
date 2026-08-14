@@ -68,9 +68,18 @@
         },
         "description": "Le CRM natif IA qui transforme le chaos des salons en revenu previsible. Trouvez des leads verifies, automatisez une prospection conforme et prouvez le ROI, le tout sur une seule plateforme.",
         "bullets": [
-          { "icon": "shield", "text": "Transparence des sources" },
-          { "icon": "activity", "text": "Sequences conformes" },
-          { "icon": "chart", "text": "Economie des deals (ROI)" }
+          {
+            "icon": "shield",
+            "text": "Transparence des sources"
+          },
+          {
+            "icon": "activity",
+            "text": "Sequences conformes"
+          },
+          {
+            "icon": "chart",
+            "text": "Economie des deals (ROI)"
+          }
         ],
         "primaryCta": "Commencer l'essai gratuit",
         "secondaryCta": "Reserver une demo",
@@ -84,22 +93,56 @@
         },
         "dashboard": {
           "kpis": [
-            { "label": "Flux", "value": "$1.82M", "color": "text-indigo-400" },
-            { "label": "Leads", "value": "428", "color": "text-emerald-400" },
-            { "label": "ROI", "value": "3.4x", "color": "text-amber-400" }
+            {
+              "label": "Flux",
+              "value": "$1.82M",
+              "color": "text-indigo-400"
+            },
+            {
+              "label": "Leads",
+              "value": "428",
+              "color": "text-emerald-400"
+            },
+            {
+              "label": "ROI",
+              "value": "3.4x",
+              "color": "text-amber-400"
+            }
           ],
           "events": [
-            { "name": "Berlin Tech Week", "score": "96%" },
-            { "name": "London Retail Summit", "score": "96%" }
+            {
+              "name": "Berlin Tech Week",
+              "score": "96%"
+            },
+            {
+              "name": "London Retail Summit",
+              "score": "96%"
+            }
           ]
         }
       },
       "stats": {
         "items": [
-          { "value": "10,000+", "label": "Evenements suivis", "accent": "emerald" },
-          { "value": "2.5M+", "label": "Profils d'entreprises", "accent": "indigo" },
-          { "value": "98.7%", "label": "Delivrabilite", "accent": "violet" },
-          { "value": "3.4x", "label": "Hausse moyenne du ROI", "accent": "amber" }
+          {
+            "value": "10,000+",
+            "label": "Evenements suivis",
+            "accent": "emerald"
+          },
+          {
+            "value": "2.5M+",
+            "label": "Profils d'entreprises",
+            "accent": "indigo"
+          },
+          {
+            "value": "98.7%",
+            "label": "Delivrabilite",
+            "accent": "violet"
+          },
+          {
+            "value": "3.4x",
+            "label": "Hausse moyenne du ROI",
+            "accent": "amber"
+          }
         ]
       },
       "personas": {
@@ -113,21 +156,38 @@
             "title": "Prestataires de services",
             "accent": "violet",
             "description": "Rationalisez votre flux de prestation depuis le premier devis jusqu'a la retention client long terme.",
-            "flow": ["Missions", "Devis", "Avis", "Clients recurrents"]
+            "flow": [
+              "Missions",
+              "Devis",
+              "Avis",
+              "Clients recurrents"
+            ]
           },
           {
             "id": "attendees",
             "title": "Participants",
             "accent": "emerald",
             "description": "Decouvrez des evenements, planifiez votre voyage et creez des relations utiles avec les exposants et vos pairs.",
-            "flow": ["Evenements", "Planifier le voyage", "Billets", "Carte", "Networking"]
+            "flow": [
+              "Evenements",
+              "Planifier le voyage",
+              "Billets",
+              "Carte",
+              "Networking"
+            ]
           },
           {
             "id": "exhibitors",
             "title": "Exposants",
             "accent": "amber",
             "description": "De la selection d'un evenement a la signature, pilotez tout le flux de revenu exposant.",
-            "flow": ["Evenement", "Liste cible", "Sequence", "Rendez-vous", "Deals vers ROI"]
+            "flow": [
+              "Evenement",
+              "Liste cible",
+              "Sequence",
+              "Rendez-vous",
+              "Deals vers ROI"
+            ]
           },
           {
             "id": "organizers",
@@ -216,7 +276,10 @@
           {
             "icon": "pin",
             "title": "Services a proximite",
-            "bullets": ["Hotels pres du lieu", "Aeroport et gare les plus proches"],
+            "bullets": [
+              "Hotels pres du lieu",
+              "Aeroport et gare les plus proches"
+            ],
             "accent": "emerald"
           },
           {
@@ -237,9 +300,21 @@
           "applyPromo": "Appliquer un code promo",
           "nearbyTitle": "Services a proximite",
           "nearby": [
-            { "icon": "hotel", "label": "Hotels", "detail": "12 a moins de 2 km" },
-            { "icon": "plane", "label": "Aeroport", "detail": "BER Â· 22 km" },
-            { "icon": "train", "label": "Train", "detail": "Hbf Â· 4 km" }
+            {
+              "icon": "hotel",
+              "label": "Hotels",
+              "detail": "12 a moins de 2 km"
+            },
+            {
+              "icon": "plane",
+              "label": "Aeroport",
+              "detail": "BER Â· 22 km"
+            },
+            {
+              "icon": "train",
+              "label": "Train",
+              "detail": "Hbf Â· 4 km"
+            }
           ],
           "disclaimer": "La disponibilite et les resultats dependent des donnees du fournisseur de cartes. Les offres partenaires varient selon l'evenement."
         }
@@ -608,10 +683,18 @@
       "description": "Configurons votre workspace en quelques etapes rapides."
     },
     "steps": [
-      { "label": "Role personnel" },
-      { "label": "Workspace" },
-      { "label": "Envoi" },
-      { "label": "Import" }
+      {
+        "label": "Role personnel"
+      },
+      {
+        "label": "Workspace"
+      },
+      {
+        "label": "Envoi"
+      },
+      {
+        "label": "Import"
+      }
     ],
     "role": {
       "title": "Role personnel",
@@ -621,25 +704,41 @@
       {
         "id": "service-providers",
         "name": "Prestataires de services",
-        "chips": ["Missions", "Devis", "Factures"],
+        "chips": [
+          "Missions",
+          "Devis",
+          "Factures"
+        ],
         "recommended": "Parametres recommandes appliques"
       },
       {
         "id": "attendees",
         "name": "Participants",
-        "chips": ["Evenements", "Billets", "Carte"],
+        "chips": [
+          "Evenements",
+          "Billets",
+          "Carte"
+        ],
         "recommended": "Parametres recommandes appliques"
       },
       {
         "id": "exhibitors",
         "name": "Exposants",
-        "chips": ["Liste cible", "Sequence", "Deals"],
+        "chips": [
+          "Liste cible",
+          "Sequence",
+          "Deals"
+        ],
         "recommended": "Parametres recommandes appliques"
       },
       {
         "id": "organizers",
         "name": "Organisateurs",
-        "chips": ["Onboarding", "Sponsors", "Guidage"],
+        "chips": [
+          "Onboarding",
+          "Sponsors",
+          "Guidage"
+        ],
         "recommended": "Parametres recommandes appliques"
       }
     ],
@@ -664,16 +763,40 @@
         "phoneNumber": "+1 (555) 000-0000"
       },
       "timeZones": [
-        { "value": "America/New_York", "label": "America/New_York" },
-        { "value": "Europe/London", "label": "Europe/London" },
-        { "value": "Europe/Berlin", "label": "Europe/Berlin" },
-        { "value": "Asia/Kolkata", "label": "Asia/Kolkata" }
+        {
+          "value": "America/New_York",
+          "label": "America/New_York"
+        },
+        {
+          "value": "Europe/London",
+          "label": "Europe/London"
+        },
+        {
+          "value": "Europe/Berlin",
+          "label": "Europe/Berlin"
+        },
+        {
+          "value": "Asia/Kolkata",
+          "label": "Asia/Kolkata"
+        }
       ],
       "currencies": [
-        { "value": "USD", "label": "USD" },
-        { "value": "EUR", "label": "EUR" },
-        { "value": "GBP", "label": "GBP" },
-        { "value": "INR", "label": "INR" }
+        {
+          "value": "USD",
+          "label": "USD"
+        },
+        {
+          "value": "EUR",
+          "label": "EUR"
+        },
+        {
+          "value": "GBP",
+          "label": "GBP"
+        },
+        {
+          "value": "INR",
+          "label": "INR"
+        }
       ],
       "toggles": {
         "dualTime": "Afficher l'heure locale de l'evenement et mon heure"
@@ -716,10 +839,16 @@
       "complete": "Terminer la configuration"
     },
     "errors": {
-      "complete": "Echec de la finalisation de l'onboarding"
+      "complete": "Echec de la finalisation de l'onboarding",
+      "workspaceName": "Saisissez un nom d'espace de travail d'au moins 2 caracteres"
     }
   },
   "auth": {
+    "tabs": {
+      "login": "Connexion",
+      "signUp": "S'inscrire",
+      "ariaLabel": "Authentification"
+    },
     "signIn": {
       "brandSubtitle": "CRM IA pour salons",
       "heroTitleLine1": "Intelligence des salons.",
@@ -733,14 +862,21 @@
       "subtitle": "Connectez-vous a votre workspace Prismconnex",
       "fields": {
         "email": "Email",
-        "password": "Mot de passe"
+        "password": "Mot de passe",
+        "identifier": "E-mail ou numéro de téléphone",
+        "secret": "Mot de passe ou OTP"
       },
       "actions": {
         "submit": "Se connecter",
         "divider": "ou continuer avec",
-        "cognito": "Continuer avec AWS Cognito",
         "forgotPassword": "Mot de passe oublie ?",
-        "createAccount": "Creer un compte"
+        "createAccount": "Creer un compte",
+        "showPassword": "Afficher le mot de passe",
+        "hidePassword": "Masquer le mot de passe",
+        "google": "Continuer avec Google",
+        "microsoft": "Continuer avec Microsoft",
+        "signUpPrompt": "Vous n'avez pas de compte ?",
+        "signUpLink": "S'inscrire"
       },
       "footer": {
         "language": "Langue : {language}",
@@ -748,24 +884,73 @@
       },
       "errors": {
         "signIn": "Connexion impossible",
-        "cognito": "Connexion a AWS Cognito impossible"
+        "oauth": {
+          "provider_unavailable": "La connexion via un fournisseur n’est pas configurée dans cet environnement. Utilisez votre e-mail et votre mot de passe.",
+          "unsupported_provider": "Ce fournisseur de connexion n’est pas pris en charge.",
+          "provider_disabled": "La connexion {provider} n’est pas encore activée pour ce projet. Activez le fournisseur dans Supabase (Authentication → Providers) ou utilisez votre e-mail et votre mot de passe.",
+          "missing_code": "Le fournisseur n’a pas renvoyé de code d’autorisation. Veuillez réessayer.",
+          "expired_oauth_state": "Cette tentative de connexion a expiré. Cliquez à nouveau sur le bouton et terminez dans les 10 minutes.",
+          "oauth_exchange_failed": "Impossible de finaliser la connexion avec ce fournisseur. Réessayez ou utilisez votre e-mail et votre mot de passe.",
+          "access_denied": "Connexion annulée. Veuillez réessayer pour continuer.",
+          "unknown": "Échec de la connexion via ce fournisseur. Réessayez ou utilisez votre e-mail et votre mot de passe."
+        }
+      },
+      "placeholders": {
+        "identifier": "vous@entreprise.com",
+        "secret": "Saisissez votre mot de passe ou OTP"
+      },
+      "validation": {
+        "identifierRequired": "L'e-mail ou le numéro de téléphone est requis",
+        "identifierInvalid": "Saisissez une adresse e-mail valide ou un numéro de téléphone indien",
+        "passwordRequired": "Le mot de passe est requis"
+      },
+      "status": {
+        "signedOut": "Vous avez été déconnecté avec succès."
       }
     },
     "signUp": {
-      "title": "Creer un compte",
+      "hints": {
+        "companyDetected": "Détecté à partir du domaine de votre e-mail. Vous pouvez le modifier."
+      },
+      "title": "Inscription",
       "subtitle": "Commencez votre parcours avec Prismconnex",
       "fields": {
+        "companyName": "Nom de l'entreprise",
         "name": "Nom complet",
         "email": "Adresse email",
-        "password": "Mot de passe"
+        "password": "Mot de passe",
+        "firstName": "Prénom",
+        "middleName": "Deuxième prénom",
+        "lastName": "Nom",
+        "phone": "Numéro de téléphone",
+        "confirmPassword": "Confirmer le mot de passe",
+        "optional": "(Facultatif)"
       },
       "actions": {
-        "submit": "S'inscrire",
+        "submit": "Créer un compte",
         "signInPrompt": "Vous avez deja un compte ?",
-        "signInLink": "Se connecter"
+        "signInLink": "Connexion",
+        "showPassword": "Afficher le mot de passe",
+        "hidePassword": "Masquer le mot de passe"
       },
       "errors": {
         "signUp": "Inscription impossible"
+      },
+      "placeholders": {
+        "companyName": "Acme SARL",
+        "email": "vous@entreprise.com",
+        "phone": "+91 98765 43210"
+      },
+      "validation": {
+        "firstNameRequired": "Le prénom est requis",
+        "lastNameRequired": "Le nom est requis",
+        "emailRequired": "L'e-mail est requis",
+        "emailInvalid": "Saisissez une adresse e-mail valide",
+        "phoneRequired": "Le numéro de téléphone est requis",
+        "phoneInvalid": "Saisissez un numéro de téléphone indien valide",
+        "passwordMin": "Le mot de passe doit contenir au moins 8 caractères",
+        "confirmPasswordRequired": "Confirmez votre mot de passe",
+        "passwordMismatch": "Les mots de passe ne correspondent pas"
       }
     },
     "verify": {
@@ -786,17 +971,73 @@
       }
     },
     "forgotPassword": {
-      "title": "Mot de passe oublie",
-      "description": "Cette fonctionnalite n'est pas encore entierement implementee dans la demo frontend MVP.",
+      "title": "Mot de passe oublie ?",
+      "subtitle": "Saisissez l adresse email de votre compte et nous vous enverrons un lien de reinitialisation.",
+      "fields": {
+        "email": "Adresse email"
+      },
+      "placeholders": {
+        "email": "vous@entreprise.com"
+      },
       "actions": {
-        "return": "Retour a la connexion"
+        "submit": "Envoyer le lien",
+        "return": "Retour a la connexion",
+        "useDifferentEmail": "Utiliser une autre adresse email"
+      },
+      "sent": {
+        "title": "Consultez votre boite mail",
+        "description": "Si un compte existe pour {email}, un lien de reinitialisation est en route.",
+        "hint": "Le lien expire dans une heure. S il n arrive pas, verifiez vos spams."
+      },
+      "validation": {
+        "emailRequired": "L adresse email est requise",
+        "emailInvalid": "Saisissez une adresse email valide"
+      },
+      "errors": {
+        "send": "Impossible d envoyer l email. Veuillez reessayer."
       }
     },
     "resetPassword": {
-      "title": "Reinitialiser le mot de passe",
-      "description": "Cette fonctionnalite n'est pas encore entierement implementee dans la demo frontend MVP.",
+      "title": "Definir un nouveau mot de passe",
+      "subtitle": "Choisissez un nouveau mot de passe. Il doit contenir au moins 8 caracteres.",
+      "fields": {
+        "password": "Nouveau mot de passe",
+        "confirmPassword": "Confirmer le mot de passe"
+      },
+      "placeholders": {
+        "password": "Au moins 8 caracteres",
+        "confirmPassword": "Saisissez a nouveau le mot de passe"
+      },
       "actions": {
-        "return": "Retour a la connexion"
+        "submit": "Mettre a jour le mot de passe",
+        "signIn": "Continuer vers la connexion",
+        "requestNew": "Demander un nouveau lien",
+        "return": "Retour a la connexion",
+        "showPassword": "Afficher le mot de passe",
+        "hidePassword": "Masquer le mot de passe"
+      },
+      "status": {
+        "checking": "Verification de votre lien"
+      },
+      "success": {
+        "title": "Mot de passe mis a jour",
+        "description": "Votre mot de passe a ete modifie. Redirection vers la connexion..."
+      },
+      "invalid": {
+        "missingTitle": "Votre session de reinitialisation est absente ou expiree",
+        "missingDescription": "Ouvrez le lien le plus recent recu par email ou demandez-en un nouveau ci-dessous.",
+        "title": "Lien invalide",
+        "description": "Cette page ne peut etre ouverte qu a partir du lien recu par email.",
+        "expiredTitle": "Ce lien a expire",
+        "expiredDescription": "Les liens de reinitialisation sont a usage unique et expirent apres une heure. Demandez-en un nouveau."
+      },
+      "validation": {
+        "passwordMin": "Le mot de passe doit contenir au moins 8 caracteres",
+        "confirmPasswordRequired": "Confirmez votre nouveau mot de passe",
+        "passwordMismatch": "Les mots de passe ne correspondent pas"
+      },
+      "errors": {
+        "update": "Impossible de mettre a jour le mot de passe. Veuillez reessayer."
       }
     }
   }

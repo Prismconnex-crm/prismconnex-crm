@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
+import { BrandLogo } from "@/components/brand-logo";
 import { localizePathname } from "@/lib/locale";
 import type { Locale } from "@/types";
 
@@ -53,9 +53,8 @@ export function PublicFooter() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <Link href={localizePathname("/", locale)} className="flex items-center gap-2.5">
-              <div className="flex size-8 items-center justify-center overflow-hidden rounded-lg bg-white shadow-sm dark:shadow-md">
-                <Image
-                  src="/prismconnex-logo.jpeg"
+              <div className="flex size-8 items-center justify-center overflow-hidden rounded-lg shadow-sm dark:shadow-md">
+                <BrandLogo
                   alt="Prismconnex"
                   width={28}
                   height={28}

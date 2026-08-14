@@ -5,11 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, PanelLeftClose, PanelLeft, Building, X } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 import { navItems } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { WorkspaceSwitcher } from "./workspace-switcher";
 import { useSidebar } from "./sidebar-context";
-import { BrandLogo } from "@/components/brand-logo";
 
 export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => void }) {
   const pathname = usePathname();
@@ -60,14 +60,12 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
                 isCollapsed ? "opacity-0 pointer-events-none" : "opacity-100"
              )}
           >
-            <BrandLogo
-              variant="mark"
-              priority
-              className="h-9 w-9 transition-all duration-300 group-hover:shadow-glow-sm group-hover:scale-105"
-            />
-            
-            {/* Full company name sits to the right of the emblem (the artwork's
-                own stacked wordmark is cropped out by BrandLogo's `mark` variant). */}
+            <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-xl border border-slate-200 shadow-sm transition-all duration-300 group-hover:shadow-glow-sm group-hover:scale-105 dark:border-white/10">
+              <BrandLogo fill sizes="36px" className="object-contain p-0.5" priority />
+            </div>
+
+            {/* Company name sits to the right of the emblem — BrandLogo renders
+                the mark only, so there is no duplicate wordmark. */}
             <div className="leading-tight overflow-hidden whitespace-nowrap">
               <p className="text-sm font-bold tracking-wide text-slate-900 dark:text-white">
                 Prismconnex
