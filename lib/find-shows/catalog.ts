@@ -244,7 +244,7 @@ function splitLocation(rawLocation: string) {
   return { city, country, region: getRegionForCountry(country) };
 }
 
-  function parseDates(rawDates: string) {
+  function parseDates(rawDates: string, durationDays = 0) {
   try {
     const normalized = sanitizeDateText(rawDates);
     const approximate = /\(\?\)/.test(rawDates);
@@ -301,6 +301,37 @@ function splitLocation(rawLocation: string) {
         startMonth: startDate.slice(0, 7),
         endMonth: endDate.slice(0, 7),
         displayDate: `${pad(startDay)} ${monthLabels[startMonth - 1]} - ${pad(endDay)} ${monthLabels[endMonth - 1]} ${year}${suffix}`,
+      };
+    }
+
+    // Numeric US-style dates from the eventseye calendar ("01/20/2027"), where a
+    // confirmed date is published. `durationDays` (from the listing's "3 days")
+    // gives the end date; without it the show is treated as single-day.
+    const numeric = normalized.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    if (numeric) {
+      const month = Number(numeric[1]);
+      const day = Number(numeric[2]);
+      const year = Number(numeric[3]);
+      const startDate = toIsoDate(year, month, day);
+      const span = Math.max(1, durationDays || 1);
+      const endMs = new Date(Date.UTC(year, month - 1, day + span - 1)).getTime();
+      const end = new Date(endMs);
+      const endDate = toIsoDate(end.getUTCFullYear(), end.getUTCMonth() + 1, end.getUTCDate());
+
+      const sameMonth = endDate.slice(0, 7) === startDate.slice(0, 7);
+      const displayDate =
+        span === 1
+          ? `${pad(day)} ${monthLabels[month - 1]} ${year}`
+          : sameMonth
+            ? `${pad(day)} - ${pad(end.getUTCDate())} ${monthLabels[month - 1]} ${year}`
+            : `${pad(day)} ${monthLabels[month - 1]} - ${pad(end.getUTCDate())} ${monthLabels[end.getUTCMonth()]} ${year}`;
+
+      return {
+        startDate,
+        endDate,
+        startMonth: startDate.slice(0, 7),
+        endMonth: endDate.slice(0, 7),
+        displayDate,
       };
     }
 
@@ -380,7 +411,9 @@ function uniqueCategories<T extends string>(categories: T[]) {
 
 function toEvent(record: FindShowSeedRecord): FindShowEvent {
   const location = splitLocation(record.city);
-  const parsedDates = parseDates(record.dates);
+  // "3 days" from the listing lets a numeric start date resolve its end date.
+  const durationDays = Number((record.duration ?? '').match(/(\d+)/)?.[1] ?? 0);
+  const parsedDates = parseDates(record.dates, durationDays);
   const mappedCategories = uniqueCategories(record.categories.map(mapRawCategory));
   const primaryCategory = mappedCategories[0] ?? 'General';
   const seedAsset = {
@@ -415,12 +448,17 @@ function toEvent(record: FindShowSeedRecord): FindShowEvent {
       location.country,
       normalizeVenue(record.venue),
       record.organizer,
+      record.description ?? '',
       ...record.categories,
       ...mappedCategories,
     ]
       .join(' ')
       .toLowerCase(),
     seedAsset,
+    description: record.description ?? '',
+    seedCity: record.city,
+    monthYear: record.monthYear ?? parsedDates.startMonth ?? '',
+    duration: record.duration ?? '',
   };
 }
 
@@ -490,6 +528,27 @@ export const findShowEventsBySlug = Object.fromEntries(
 export const findShowCountries = Array.from(
   new Set(findShowEvents.map((event) => event.country))
 ).sort();
+
+/**
+ * Month-Year options for the Events Explorer filter, in calendar order rather
+ * than alphabetical ("August 2026" before "January 2027").
+ */
+export const findShowMonthOptions: FindShowFilterOption[] = Array.from(
+  findShowEvents.reduce((acc, event) => {
+    if (!event.monthYear) return acc;
+    acc.set(event.monthYear, (acc.get(event.monthYear) ?? 0) + 1);
+    return acc;
+  }, new Map<string, number>())
+)
+  .map(([label, count]) => ({ label, value: label, count }))
+  .sort((left, right) => {
+    const toKey = (value: string) => {
+      const [month, year] = value.split(' ');
+      const index = monthMap[month.toLowerCase()] ?? 0;
+      return Number(year) * 100 + index;
+    };
+    return toKey(left.value) - toKey(right.value);
+  });
 
 export const findShowStats = {
   totalEvents: findShowEvents.length,

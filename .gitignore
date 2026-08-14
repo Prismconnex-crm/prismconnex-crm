@@ -52,4 +52,14 @@ dev.db
 # local dev artifacts
 dev-server.log
 /*.png
+/*.jpeg
 scripts/.migrate-checkpoint.json
+# resumable script checkpoints / one-off id dumps
+scripts/.deleted-synthetic-ids.txt
+scripts/.purge-ids.txt
+scripts/.sqlite-delete-progress.json
+# superseded copy of the events seed, kept locally while re-importing
+data/find-shows-seed.backup.json
+# original logo uploads (byte-identical duplicates of public/prismconnex-logo-*.jpeg)
+public/Prismconnex logo.jpeg
+public/Prismconnex logo2.jpeg
