@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     Calendar,
@@ -34,9 +35,12 @@ import {
     Users,
     Share2,
     Loader2,
+    Phone,
+    Linkedin,
+    Briefcase,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { findShowEvents, findShowsCategories, findShowsRegions, countryStatsByRegion } from "@/lib/find-shows/catalog";
+import { findShowEvents, findShowsCategories, findShowsRegions, countryStatsByRegion, findShowMonthOptions } from "@/lib/find-shows/catalog";
 import type { FindShowEvent, FindShowsRegion, FindShowsCategory } from "@/types/find-shows";
 import type { WorkspacePreferences } from "@/types";
 import type { Exhibitor } from "@/types/exhibitors";
@@ -50,7 +54,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { EventMap } from "./event-map";
+import { EventMap, googleMapsUrl } from "./event-map";
 
 const containerVariants = {
     hidden: {},
@@ -66,6 +70,508 @@ interface EventsSectionProps {
     eventId?: string;
     preferences?: WorkspacePreferences;
     mode?: 'all' | 'target';
+}
+
+/** Expected exhibitor counts per event, from the show's published figures. */
+const EXPECTED_EXHIBITORS: Record<string, number> = {
+    'BETT SHOW': 316,
+};
+
+/** website -> this exhibitor's directory page -> the event's directory root. */
+function exhibitorLink(ex: Exhibitor) {
+    return ex.website || ex.profileUrl || ex.directoryUrl || undefined;
+}
+
+function ExhibitorLogo({ name, logoUrl }: { name: string; logoUrl: string | null }) {
+    const [failed, setFailed] = useState(false);
+    return (
+        <div className="flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-[#22304A] dark:bg-[#0B1220]">
+            {logoUrl && !failed ? (
+                <img
+                    src={logoUrl}
+                    alt={`${name} logo`}
+                    loading="lazy"
+                    className="size-full object-contain p-1"
+                    onError={() => setFailed(true)}
+                />
+            ) : (
+                <span className="text-[13px] font-black text-indigo-500">
+                    {name.substring(0, 2).toUpperCase()}
+                </span>
+            )}
+        </div>
+    );
+}
+
+/**
+ * Exhibitors tab. Reads imported exhibitors from /api/exhibitors and renders a
+ * searchable, sortable list. Clicking a row opens the exhibitor's own website,
+ * falling back to the source directory page when no official site was published.
+ */
+function ExhibitorsPanel({ event }: { event: FindShowEvent }) {
+    const [exhibitors, setExhibitors] = useState<Exhibitor[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [query, setQuery] = useState('');
+    const [sortBy, setSortBy] = useState<'name' | 'stand'>('name');
+    const [detail, setDetail] = useState<Exhibitor | null>(null);
+
+    useEffect(() => {
+        let active = true;
+        setLoading(true);
+        setError(null);
+        fetch(`/api/exhibitors?eventSlug=${encodeURIComponent(event.slug)}`)
+            .then((res) => res.json())
+            .then((data) => {
+                if (!active) return;
+                if (data.error) throw new Error(data.error);
+                setExhibitors(data.exhibitors ?? []);
+            })
+            .catch((err) => {
+                if (!active) return;
+                setError(err instanceof Error ? err.message : 'Failed to load exhibitors');
+            })
+            .finally(() => { if (active) setLoading(false); });
+        return () => { active = false; };
+    }, [event.slug]);
+
+    const expected = EXPECTED_EXHIBITORS[event.name] ?? null;
+    const withSite = useMemo(() => exhibitors.filter((x) => x.website).length, [exhibitors]);
+
+    const visible = useMemo(() => {
+        const q = query.trim().toLowerCase();
+        const rows = q
+            ? exhibitors.filter((x) =>
+                  [x.name, x.stand, x.country].filter(Boolean).join(' ').toLowerCase().includes(q)
+              )
+            : exhibitors;
+        return [...rows].sort((a, b) =>
+            sortBy === 'stand'
+                ? (a.stand ?? 'zzz').localeCompare(b.stand ?? 'zzz', undefined, { numeric: true })
+                : a.name.localeCompare(b.name)
+        );
+    }, [exhibitors, query, sortBy]);
+
+    return (
+        <div className="space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                    <Users className="size-5 text-indigo-500" />
+                    <h2 className="text-[16px] font-black text-slate-900 dark:text-white">Exhibitors</h2>
+                    <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2.5 py-0.5 text-[11px] font-black text-indigo-600 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300">
+                        Imported: {exhibitors.length.toLocaleString()}
+                    </span>
+                    {expected !== null ? (
+                        <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[11px] font-bold text-slate-600 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-400">
+                            Expected: {expected.toLocaleString()}
+                        </span>
+                    ) : null}
+                    {withSite > 0 ? (
+                        <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-bold text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-300">
+                            Official sites: {withSite.toLocaleString()}
+                        </span>
+                    ) : null}
+                </div>
+
+                {exhibitors.length > 0 ? (
+                    <div className="flex items-center gap-2">
+                        <div className="relative">
+                            <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
+                            <input
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                placeholder="Search exhibitors..."
+                                className="h-9 w-[220px] rounded-full border border-slate-200 bg-white pl-9 pr-3 text-[12px] font-medium text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
+                            />
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setSortBy(sortBy === 'name' ? 'stand' : 'name')}
+                            className="h-9 rounded-full border border-slate-200 bg-white px-4 text-[12px] font-bold text-slate-600 transition-colors hover:border-indigo-300 dark:border-[#22304A] dark:bg-[#111B2E] dark:text-slate-400"
+                        >
+                            Sort: {sortBy === 'name' ? 'Name' : 'Stand'}
+                        </button>
+                    </div>
+                ) : null}
+            </div>
+
+            {loading ? (
+                <div className="flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white py-16 text-[13px] font-bold text-slate-500 dark:border-[#22304A] dark:bg-[#111B2E]">
+                    <Loader2 className="size-4 animate-spin" />
+                    Loading exhibitors...
+                </div>
+            ) : error ? (
+                <div className="rounded-2xl border border-slate-200 bg-white py-16 text-center dark:border-[#22304A] dark:bg-[#111B2E]">
+                    <p className="text-[15px] font-black text-slate-900 dark:text-white">Could not load exhibitors</p>
+                    <p className="mt-1 text-[12px] font-medium text-slate-500 dark:text-slate-400">{error}</p>
+                </div>
+            ) : exhibitors.length === 0 ? (
+                <div className="flex flex-col items-center justify-center gap-6 rounded-2xl border border-slate-200 bg-white py-16 shadow-sm dark:border-[#22304A] dark:bg-[#111B2E]">
+                    <div className="flex size-16 items-center justify-center rounded-2xl bg-indigo-50 dark:bg-indigo-500/10">
+                        <Users className="size-8 text-indigo-500" />
+                    </div>
+                    <div className="max-w-lg space-y-2 text-center">
+                        <p className="text-[17px] font-black text-slate-900 dark:text-white">No Exhibitors Imported Yet</p>
+                        <p className="text-[13px] font-medium leading-relaxed text-slate-500 dark:text-slate-400">
+                            Run the exhibitor import for this event, or visit the official site to browse the directory.
+                        </p>
+                    </div>
+                    {event.website ? (
+                        <a
+                            href={event.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex h-11 items-center gap-2.5 rounded-full bg-indigo-600 px-8 text-[13px] font-black text-white shadow-xl shadow-indigo-500/20 transition-all hover:scale-[1.03] dark:bg-indigo-500"
+                        >
+                            <ExternalLink className="size-4" />
+                            Visit Official Website
+                        </a>
+                    ) : null}
+                </div>
+            ) : (
+                <>
+                    <div className="max-h-[620px] overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-sm dark:border-[#22304A] dark:bg-[#111B2E]">
+                        <ul className="divide-y divide-slate-100 dark:divide-[#22304A]">
+                            {visible.map((ex) => (
+                                <li
+                                    key={ex.id}
+                                    className="group flex items-center gap-4 px-4 py-3 transition-colors hover:bg-slate-50 dark:hover:bg-[#16233A]"
+                                >
+                                    {/* Row body opens the enriched details panel; the website link
+                                        is a separate anchor so one click still reaches the site. */}
+                                    <button
+                                        type="button"
+                                        onClick={() => setDetail(ex)}
+                                        className="flex min-w-0 flex-1 items-center gap-4 text-left"
+                                    >
+                                        <ExhibitorLogo name={ex.name} logoUrl={ex.logoUrl} />
+                                        <div className="min-w-0 flex-1">
+                                            <p className="truncate text-[14px] font-black text-slate-900 group-hover:text-indigo-600 dark:text-white dark:group-hover:text-indigo-300">
+                                                {ex.name}
+                                            </p>
+                                            <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-bold text-slate-500 dark:text-slate-400">
+                                                {ex.stand ? (
+                                                    <span className="rounded-md bg-slate-100 px-1.5 py-0.5 dark:bg-[#0B1220]">
+                                                        Stand {ex.stand}
+                                                    </span>
+                                                ) : null}
+                                                {ex.country ? <span>{ex.country}</span> : null}
+                                                {ex.website ? (
+                                                    <span className="truncate text-indigo-500/80 dark:text-indigo-300/80">
+                                                        {ex.website.replace(/^https?:\/\/(www\.)?/, '')}
+                                                    </span>
+                                                ) : (
+                                                    <span className="text-slate-400 dark:text-slate-500">No official site published</span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </button>
+                                    <a
+                                        href={exhibitorLink(ex)}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        title={ex.website ? `Open ${ex.name} official website` : 'No official site published - opens the show directory'}
+                                        className="flex shrink-0 items-center gap-1.5 rounded-full border border-transparent px-2.5 py-1 text-[12px] font-bold text-indigo-500 transition-all hover:border-indigo-200 hover:bg-indigo-50 dark:hover:border-indigo-500/30 dark:hover:bg-indigo-500/10 md:opacity-0 md:group-hover:opacity-100"
+                                    >
+                                        Visit website
+                                        <ExternalLink className="size-3.5" />
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                        Showing {visible.length.toLocaleString()} of {exhibitors.length.toLocaleString()} imported exhibitors
+                        {withSite > 0 ? `, ${withSite.toLocaleString()} with an official website` : ''}.
+                        Click a row for the full record; blank fields are simply not published by the source.
+                    </p>
+                </>
+            )}
+
+            <ExhibitorDetailPanel exhibitor={detail} onClose={() => setDetail(null)} />
+        </div>
+    );
+}
+
+/**
+ * Details drawer for one exhibitor. Shows every enriched column the sheet
+ * carries; anything the source left blank is rendered as "Not published" rather
+ * than guessed at.
+ */
+function ExhibitorDetailPanel({ exhibitor, onClose }: { exhibitor: Exhibitor | null; onClose: () => void }) {
+    // Portalled to <body>: the events tree animates through framer-motion, and a
+    // transformed ancestor makes `position: fixed` resolve to that ancestor
+    // instead of the viewport — which slid the drawer under the top bar.
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => setMounted(true), []);
+
+    // Esc closes, and the page behind must not scroll under the overlay.
+    useEffect(() => {
+        if (!exhibitor) return;
+        const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+        document.addEventListener('keydown', onKey);
+        const previousOverflow = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.removeEventListener('keydown', onKey);
+            document.body.style.overflow = previousOverflow;
+        };
+    }, [exhibitor, onClose]);
+
+    const groups: { title: string; rows: { label: string; value: string | null | undefined; href?: string | null; icon: typeof Globe2 }[] }[] = exhibitor
+        ? [
+              {
+                  title: 'Company',
+                  rows: [
+                      { label: 'Exhibitor name', value: exhibitor.name, icon: Building2 },
+                      { label: 'Stand number', value: exhibitor.stand, icon: MapPin },
+                      { label: 'Official website', value: exhibitor.website?.replace(/^https?:\/\/(www\.)?/, ''), href: exhibitor.website, icon: Globe2 },
+                      { label: 'Country', value: exhibitor.country, icon: Globe2 },
+                      { label: 'Contact number', value: exhibitor.phone, href: exhibitor.phone ? `tel:${exhibitor.phone.replace(/\s+/g, '')}` : null, icon: Phone },
+                      { label: 'Company LinkedIn', value: exhibitor.companyLinkedInUrl?.replace(/^https?:\/\/(www\.)?linkedin\.com\//, 'linkedin.com/'), href: exhibitor.companyLinkedInUrl, icon: Linkedin },
+                  ],
+              },
+              {
+                  title: 'Contact',
+                  rows: [
+                      { label: 'Contact person', value: [exhibitor.firstName, exhibitor.lastName].filter(Boolean).join(' ') || null, icon: Users },
+                      { label: 'Job title', value: exhibitor.designation, icon: Briefcase },
+                      { label: 'Contact email', value: exhibitor.email, href: exhibitor.email ? `mailto:${exhibitor.email}` : null, icon: Mail },
+                      { label: 'Person LinkedIn', value: exhibitor.personLinkedInUrl?.replace(/^https?:\/\/([a-z]{2}\.)?(www\.)?linkedin\.com\//, 'linkedin.com/'), href: exhibitor.personLinkedInUrl, icon: Linkedin },
+                      { label: 'Show directory listing', value: exhibitor.profileUrl ? 'Open on the show site' : null, href: exhibitor.profileUrl, icon: ExternalLink },
+                  ],
+              },
+          ]
+        : [];
+
+    if (!mounted) return null;
+
+    return createPortal(
+        <AnimatePresence>
+            {exhibitor ? (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.18 }}
+                    className="fixed inset-0 z-[100] flex justify-end bg-slate-900/50 backdrop-blur-md dark:bg-[#020617]/70"
+                    onClick={onClose}
+                >
+                    <motion.aside
+                        initial={{ x: '100%' }}
+                        animate={{ x: 0 }}
+                        exit={{ x: '100%' }}
+                        transition={{ type: 'spring', stiffness: 360, damping: 38 }}
+                        onClick={(e) => e.stopPropagation()}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-label={`${exhibitor.name} details`}
+                        className="relative flex h-full w-full max-w-[468px] flex-col overflow-hidden border-l border-slate-200 bg-white shadow-[0_0_80px_-12px_rgba(79,70,229,0.35)] dark:border-indigo-500/20 dark:bg-[#0B1220]"
+                    >
+                        {/* Ambient glow — pure decoration, kept behind the content */}
+                        <div className="pointer-events-none absolute -right-24 -top-24 size-64 rounded-full bg-indigo-500/20 blur-3xl dark:bg-indigo-500/25" aria-hidden="true" />
+                        <div className="pointer-events-none absolute -left-20 top-40 size-56 rounded-full bg-fuchsia-500/10 blur-3xl dark:bg-fuchsia-500/15" aria-hidden="true" />
+
+                        {/* Identity header — logo, name and stand stay pinned while the record scrolls */}
+                        <header className="relative z-10 shrink-0 border-b border-slate-200/80 bg-gradient-to-br from-indigo-50/80 via-white to-white px-6 pb-5 pt-6 dark:border-indigo-500/15 dark:from-indigo-500/10 dark:via-[#0B1220] dark:to-[#0B1220]">
+                            <button
+                                type="button"
+                                onClick={onClose}
+                                aria-label="Close exhibitor details"
+                                className="absolute right-4 top-4 rounded-lg p-1.5 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-white/10 dark:hover:text-white"
+                            >
+                                <X className="size-4" />
+                            </button>
+
+                            <div className="flex items-start gap-4 pr-10">
+                                <motion.div
+                                    initial={{ scale: 0.9, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    transition={{ delay: 0.06, type: 'spring', stiffness: 300, damping: 24 }}
+                                    className="flex size-[72px] shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-lg ring-1 ring-indigo-500/10 dark:border-[#22304A] dark:bg-white"
+                                >
+                                    <ExhibitorLogoMark name={exhibitor.name} logoUrl={exhibitor.logoUrl} />
+                                </motion.div>
+
+                                <div className="min-w-0 pt-0.5">
+                                    <h3 className="text-[19px] font-black leading-tight text-slate-900 dark:text-white">
+                                        {exhibitor.name}
+                                    </h3>
+                                    <div className="mt-2 flex flex-wrap items-center gap-1.5">
+                                        {exhibitor.stand ? (
+                                            <span className="rounded-full border border-amber-300/60 bg-amber-50 px-2.5 py-0.5 text-[11px] font-black uppercase tracking-wider text-amber-700 dark:border-amber-400/25 dark:bg-amber-400/10 dark:text-amber-300">
+                                                Stand {exhibitor.stand}
+                                            </span>
+                                        ) : null}
+                                        {exhibitor.country ? (
+                                            <span className="rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[11px] font-bold text-slate-600 dark:border-[#22304A] dark:bg-[#111B2E] dark:text-slate-300">
+                                                {exhibitor.country}
+                                            </span>
+                                        ) : null}
+                                        <span className={cn(
+                                            'rounded-full border px-2.5 py-0.5 text-[11px] font-bold',
+                                            exhibitor.website
+                                                ? 'border-emerald-300/60 bg-emerald-50 text-emerald-700 dark:border-emerald-400/25 dark:bg-emerald-400/10 dark:text-emerald-300'
+                                                : 'border-slate-200 bg-slate-50 text-slate-500 dark:border-[#22304A] dark:bg-[#111B2E] dark:text-slate-400'
+                                        )}>
+                                            {exhibitor.website ? 'Official site' : 'Directory only'}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <a
+                                href={exhibitorLink(exhibitor)}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group/cta mt-4 flex h-11 items-center justify-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 text-[13px] font-black text-white shadow-lg shadow-indigo-500/25 transition-transform hover:scale-[1.015] active:scale-[0.99] motion-reduce:transition-none motion-reduce:hover:scale-100"
+                            >
+                                <ExternalLink className="size-4 transition-transform group-hover/cta:translate-x-0.5 motion-reduce:transition-none" />
+                                {exhibitor.website ? 'Visit website' : 'Open show directory'}
+                            </a>
+                        </header>
+
+                        {/* Record — only this scrolls, so the header never leaves the viewport */}
+                        <div className="relative z-10 flex-1 overflow-y-auto px-6 pb-8 pt-4">
+                            {groups.map((group, groupIndex) => (
+                                <section key={group.title} className={groupIndex ? 'mt-5' : ''}>
+                                    <h4 className="mb-1.5 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-indigo-600 dark:text-indigo-300">
+                                        {group.title}
+                                        <span className="h-px flex-1 bg-gradient-to-r from-indigo-500/30 to-transparent" />
+                                    </h4>
+                                    <dl className="divide-y divide-slate-100 dark:divide-white/[0.06]">
+                                        {group.rows.map((row, rowIndex) => (
+                                            <motion.div
+                                                key={row.label}
+                                                initial={{ opacity: 0, y: 6 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: 0.08 + (groupIndex * group.rows.length + rowIndex) * 0.02, duration: 0.22 }}
+                                                className="grid grid-cols-[136px_1fr] items-start gap-3 py-[7px]"
+                                            >
+                                                <dt className="flex items-start gap-1.5 pt-px text-[10px] font-bold uppercase leading-[1.35] tracking-[0.04em] text-slate-500 dark:text-slate-400">
+                                                    <row.icon className="mt-px size-3 shrink-0 text-slate-400 dark:text-slate-500" aria-hidden="true" />
+                                                    <span>{row.label}</span>
+                                                </dt>
+                                                <dd className="min-w-0 text-[12.5px] font-bold leading-snug text-slate-900 dark:text-white">
+                                                    {row.value ? (
+                                                        row.href ? (
+                                                            <a
+                                                                href={row.href}
+                                                                target={row.href.startsWith('http') ? '_blank' : undefined}
+                                                                rel="noopener noreferrer"
+                                                                className="break-words text-indigo-600 decoration-indigo-400/40 underline-offset-2 hover:underline dark:text-indigo-300"
+                                                            >
+                                                                {row.value}
+                                                            </a>
+                                                        ) : (
+                                                            <span className="break-words">{row.value}</span>
+                                                        )
+                                                    ) : (
+                                                        <span className="text-[11.5px] font-medium italic text-slate-400 dark:text-slate-500">Not published</span>
+                                                    )}
+                                                </dd>
+                                            </motion.div>
+                                        ))}
+                                    </dl>
+                                </section>
+                            ))}
+
+                            <p className="mt-5 rounded-xl border border-slate-200 bg-slate-50/70 px-3 py-2 text-[10.5px] font-medium leading-relaxed text-slate-500 dark:border-[#22304A] dark:bg-[#111B2E]/60 dark:text-slate-400">
+                                Sourced from the show directory and the BETT 2027 detail sheet. Blank fields are
+                                not published by either source — nothing here is inferred.
+                            </p>
+                        </div>
+                    </motion.aside>
+                </motion.div>
+            ) : null}
+        </AnimatePresence>,
+        document.body
+    );
+}
+
+/** Logo image sized for the drawer header, with initials as the fallback. */
+function ExhibitorLogoMark({ name, logoUrl }: { name: string; logoUrl: string | null }) {
+    const [failed, setFailed] = useState(false);
+    if (logoUrl && !failed) {
+        return (
+            <img
+                src={logoUrl}
+                alt={`${name} logo`}
+                className="size-full object-contain"
+                onError={() => setFailed(true)}
+            />
+        );
+    }
+    return <span className="text-[22px] font-black text-indigo-500">{name.substring(0, 2).toUpperCase()}</span>;
+}
+
+/**
+ * Event logo beside the title. Falls back to the event initials when the source
+ * has no logo, or when the logo URL 404s.
+ */
+function EventLogo({ event }: { event: FindShowEvent }) {
+    const [failed, setFailed] = useState(false);
+    const logo = event.seedAsset.logoUrl;
+
+    return (
+        <div className="mt-1 size-20 shrink-0 overflow-hidden rounded-2xl border-2 border-white bg-white p-2 shadow-2xl dark:border-[#111B2E] dark:bg-[#0B1220]">
+            {logo && !failed ? (
+                <img
+                    src={logo}
+                    alt={`${event.name} logo`}
+                    className="size-full object-contain"
+                    onError={() => setFailed(true)}
+                />
+            ) : (
+                <div className="flex size-full items-center justify-center text-xl font-black text-indigo-500">
+                    {event.name.substring(0, 2).toUpperCase()}
+                </div>
+            )}
+        </div>
+    );
+}
+
+/**
+ * Overview hero. Prefers the venue photograph (a real, full-resolution image);
+ * falls back to a clean gradient rather than upscaling the small event logo,
+ * which would look blurry.
+ */
+function EventHero({ event }: { event: FindShowEvent }) {
+    const [failed, setFailed] = useState(false);
+    const photo = event.seedAsset.bannerUrl ?? null;
+    const showPhoto = photo && !failed;
+
+    return (
+        <div className="relative h-[300px] w-full overflow-hidden bg-slate-100 dark:bg-[#0B1220]">
+            {showPhoto ? (
+                <img
+                    src={photo}
+                    alt={`${event.venue || event.city} venue`}
+                    loading="lazy"
+                    className="size-full object-cover"
+                    onError={() => setFailed(true)}
+                />
+            ) : (
+                <div className="size-full bg-gradient-to-br from-indigo-500/25 via-violet-500/10 to-cyan-500/20 flex flex-col items-center justify-center gap-3">
+                    {event.seedAsset.logoUrl ? (
+                        // Logos are small; render at natural size inside a card
+                        // instead of stretching them across the hero.
+                        <div className="rounded-2xl bg-white dark:bg-[#0B1220] p-4 shadow-lg">
+                            <img src={event.seedAsset.logoUrl} alt={event.name} className="max-h-16 max-w-[220px] object-contain" />
+                        </div>
+                    ) : (
+                        <ImageIcon className="size-16 text-indigo-500/30" />
+                    )}
+                    <p className="text-[12px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
+                        {event.city}{event.country ? `, ${event.country}` : ''}
+                    </p>
+                </div>
+            )}
+            {showPhoto ? (
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white dark:from-[#111B2E] to-transparent" />
+            ) : null}
+        </div>
+    );
 }
 
 export function EventsSection({ eventId, preferences, mode = 'all' }: EventsSectionProps) {
@@ -113,15 +619,7 @@ function EventDetailView({ event }: { event: FindShowEvent }) {
                 
                 <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     <div className="flex items-start gap-5">
-                        <div className="size-20 rounded-2xl border-2 border-white dark:border-[#111B2E] bg-white dark:bg-[#0B1220] p-2 shadow-2xl overflow-hidden shrink-0 mt-1">
-                            {event.seedAsset.logoUrl ? (
-                                <img src={event.seedAsset.logoUrl} alt="" className="size-full object-contain" />
-                            ) : (
-                                <div className="size-full flex items-center justify-center text-xl font-black text-indigo-500">
-                                    {event.name.substring(0, 2)}
-                                </div>
-                            )}
-                        </div>
+                        <EventLogo event={event} />
                         <div className="space-y-1">
                             <div className="flex items-center gap-3 flex-wrap">
                                 <h1 className="text-[32px] font-black tracking-tight text-slate-900 dark:text-white leading-tight">{event.name}</h1>
@@ -151,9 +649,10 @@ function EventDetailView({ event }: { event: FindShowEvent }) {
                             Track Event
                         </button>
                         <a
-                            href={event.website}
+                            href={event.website || event.seedAsset.eventseyeUrl || undefined}
                             target="_blank"
                             rel="noopener noreferrer"
+                            title={event.website ? `Go to ${event.name} official website` : 'Official site not published - opens the source listing'}
                             className="flex items-center justify-center gap-2 h-10 px-8 rounded-full bg-indigo-600 dark:bg-indigo-500 text-[13px] font-black text-white shadow-xl shadow-indigo-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
                         >
                             <Ticket className="size-4" />
@@ -200,16 +699,11 @@ function EventDetailView({ event }: { event: FindShowEvent }) {
                 </div>
 
                 <div className="flex-1" />
-
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/5 border border-emerald-500/20">
-                    <div className="size-2 rounded-full bg-emerald-500" />
-                    <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">Synchronized via Eventseye intelligence</span>
-                </div>
             </div>
 
             {/* Main Tabs */}
             <div className="flex items-center gap-2 border-b border-slate-200 dark:border-[#22304A]">
-                {['Overview', 'Intelligence', 'Location & Venue', 'Exhibitors', 'Notes'].map((tab) => {
+                {['Overview', 'Location & Venue', 'Exhibitors', 'Notes'].map((tab) => {
                     const isActive = activeTab === tab;
                     return (
                         <button 
@@ -234,46 +728,13 @@ function EventDetailView({ event }: { event: FindShowEvent }) {
 
             {/* Content Display — Tab Switched */}
             {activeTab === 'Exhibitors' ? (
-                /* ---- EXHIBITORS TAB — Direct Official Link ---- */
-                <div className="space-y-4">
-                    <div className="flex items-center gap-3 mb-2">
-                        <Users className="size-5 text-indigo-500" />
-                        <h2 className="text-[16px] font-black text-slate-900 dark:text-white">Exhibitors</h2>
-                    </div>
-                    <div className="flex flex-col items-center justify-center py-16 gap-6 rounded-2xl border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#111B2E] shadow-sm">
-                        <div className="size-16 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 flex items-center justify-center">
-                            <Users className="size-8 text-indigo-500" />
-                        </div>
-                        <div className="text-center space-y-2 max-w-lg">
-                            <p className="text-[17px] font-black text-slate-900 dark:text-white">Exhibitor Data Not Yet Available</p>
-                            <p className="text-[13px] font-medium text-slate-500 dark:text-slate-400 leading-relaxed">The exhibitor list for this event could not be automatically imported. Visit the official website to view exhibitors.</p>
-                        </div>
-                        <a
-                            href={event.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2.5 h-11 px-8 rounded-full bg-indigo-600 dark:bg-indigo-500 text-[13px] font-black text-white shadow-xl shadow-indigo-500/20 hover:scale-[1.03] active:scale-[0.97] transition-all"
-                        >
-                            <ExternalLink className="size-4" />
-                            Visit Official Website
-                        </a>
-                    </div>
-                </div>
+                <ExhibitorsPanel event={event} />
             ) : (
                 /* ---- DEFAULT: OVERVIEW + SIDEBAR ---- */
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                     <div className="lg:col-span-8 space-y-6">
                         <div className="rounded-3xl border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#111B2E] overflow-hidden shadow-xl">
-                            <div className="h-[300px] w-full bg-slate-100 dark:bg-[#0B1220] relative">
-                                {event.seedAsset.bannerUrl ? (
-                                    <img src={event.seedAsset.bannerUrl} alt="" className="size-full object-cover opacity-90" />
-                                ) : (
-                                    <div className="size-full bg-gradient-to-br from-indigo-500/20 to-purple-500/10 flex items-center justify-center">
-                                        <ImageIcon className="size-20 text-indigo-500/10" />
-                                    </div>
-                                )}
-                                <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-[#111B2E] to-transparent via-transparent" />
-                            </div>
+                            <EventHero event={event} />
                             <div className="p-8 space-y-8">
                                 <div>
                                     <h3 className="text-[20px] font-black text-slate-900 dark:text-white mb-4 flex items-center gap-3">
@@ -281,8 +742,20 @@ function EventDetailView({ event }: { event: FindShowEvent }) {
                                         Executive Overview
                                     </h3>
                                     <div className="space-y-4 text-[15px] font-medium text-slate-600 dark:text-slate-300 leading-relaxed">
-                                        <p>{event.name} is a premier global event scheduled for {event.displayDate} in {event.city}. As a core gathering for the {event.primaryCategory} industry, it brings together key decision-makers and innovators from across the {event.region} region.</p>
-                                        <p>The event is professionally managed by {event.organizer} and occurs on a {event.frequency} basis, ensuring consistent opportunities for growth, networking, and technology exchange.</p>
+                                        {/* Editorial blurb from the source listing, when present. */}
+                                        {event.description ? <p>{event.description}.</p> : null}
+                                        <p>
+                                            {event.name} takes place {event.displayDate} in {event.city}
+                                            {event.country ? `, ${event.country}` : ''}
+                                            {event.venue && event.venue !== 'Venue to be announced' ? ` at ${event.venue}` : ''}.
+                                            It is a {event.primaryCategory.toLowerCase()} event serving the {event.region} region
+                                            {event.duration ? `, running over ${event.duration}` : ''}.
+                                        </p>
+                                        <p>
+                                            The show runs {event.frequency === 'unknown' ? 'on a recurring basis' : `${event.frequency}`}
+                                            {event.organizer ? `, organised by ${event.organizer}` : ''}. Use the location panel to plan
+                                            travel, and track the event to keep its exhibitors and dates in your workspace.
+                                        </p>
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -296,8 +769,8 @@ function EventDetailView({ event }: { event: FindShowEvent }) {
                                     <div className="p-5 rounded-2xl border border-slate-100 dark:border-[#22304A] bg-slate-50/50 dark:bg-[#0B1220]/50">
                                         <h4 className="text-[13px] font-black text-slate-900 dark:text-white uppercase tracking-widest mb-4">Logistics</h4>
                                         <div className="space-y-3">
-                                            <div className="flex items-start gap-3"><Globe2 className="size-4 text-indigo-500 mt-0.5" /><a href={event.website} target="_blank" rel="noopener noreferrer" className="text-[13px] font-bold text-indigo-500 hover:underline truncate">{event.website?.replace(/^https?:\/\/(www\.)?/, '')}</a></div>
-                                            <div className="flex items-start gap-3"><CheckCircle2 className="size-4 text-emerald-500 mt-0.5" /><span className="text-[13px] font-medium text-slate-500 dark:text-slate-400">Official Registration Active</span></div>
+                                            <div className="flex items-start gap-3"><Globe2 className="size-4 text-indigo-500 mt-0.5" />{event.website ? (<a href={event.website} target="_blank" rel="noopener noreferrer" className="text-[13px] font-bold text-indigo-500 hover:underline truncate">{event.website.replace(/^https?:\/\/(www\.)?/, '')}</a>) : (<span className="text-[13px] font-medium text-slate-500 dark:text-slate-400">Official website not published</span>)}</div>
+                                            <div className="flex items-start gap-3"><Mail className="size-4 text-indigo-500 mt-0.5" />{event.email ? (<a href={`mailto:${event.email}`} title={`Contact email for ${event.name}`} className="text-[13px] font-bold text-indigo-500 hover:underline truncate">{event.email}</a>) : (<span className="text-[13px] font-medium text-slate-500 dark:text-slate-400">Contact email not published</span>)}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -310,10 +783,16 @@ function EventDetailView({ event }: { event: FindShowEvent }) {
                                 <h3 className="text-[15px] font-black text-slate-900 dark:text-white uppercase tracking-widest">Global Location</h3>
                                 <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-500"><Sparkles className="size-3" /><span className="text-[9px] font-black uppercase">Live Geo</span></div>
                             </div>
-                            <EventMap locationName={`${event.venue}, ${event.city}, ${event.country}`} className="h-[240px] shadow-2xl" />
+                            <EventMap locationName={`${event.venue}, ${event.city}, ${event.country}`} cityKey={event.seedCity} className="h-[240px] shadow-2xl" />
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-[#22304A]"><span className="text-[12px] font-bold text-slate-500">Venue Distance</span><span className="text-[12px] font-black text-slate-900 dark:text-white">Calculating...</span></div>
-                                <button className="w-full h-10 rounded-xl border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#0B1220] text-[12px] font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"><ExternalLink className="size-4" />Open in Google Maps</button>
+                                <a
+                                    href={googleMapsUrl(`${event.venue}, ${event.city}, ${event.country}`)}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    title={`Open ${event.venue !== '?' ? event.venue : event.city} in Google Maps`}
+                                    className="w-full h-10 rounded-xl border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#0B1220] text-[12px] font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#111B2E] transition-colors flex items-center justify-center gap-2"
+                                ><ExternalLink className="size-4" />Open in Google Maps</a>
                             </div>
                         </div>
                         <div className="rounded-3xl border border-indigo-200 dark:border-indigo-500/20 bg-indigo-50/50 dark:bg-gradient-to-br dark:from-indigo-500/[0.05] dark:to-transparent p-6 shadow-xl space-y-6 relative overflow-hidden">
@@ -431,7 +910,7 @@ function ExhibitorDetailView({ exhibitor, event, onBack }: { exhibitor: Exhibito
                                     <p className="font-bold text-slate-900 dark:text-white">{event.venue}</p>
                                 </div>
                                 <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#0B1220] border border-slate-100 dark:border-[#22304A]">
-                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Category</p>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Industry</p>
                                     <p className="font-bold text-slate-900 dark:text-white">{event.primaryCategory}</p>
                                 </div>
                             </div>
@@ -458,7 +937,7 @@ function ExhibitorDetailView({ exhibitor, event, onBack }: { exhibitor: Exhibito
                         <p><span className="font-bold text-slate-900 dark:text-white">City:</span> {event.city}, {event.country}</p>
                         {exhibitor.stand && <p><span className="font-bold text-slate-900 dark:text-white">Stand / Booth:</span> {exhibitor.stand}</p>}
                     </div>
-                    <EventMap locationName={`${event.venue}, ${event.city}, ${event.country}`} className="h-[300px] shadow-2xl rounded-xl" />
+                    <EventMap locationName={`${event.venue}, ${event.city}, ${event.country}`} cityKey={event.seedCity} className="h-[300px] shadow-2xl rounded-xl" />
                 </div>
             )}
 
@@ -572,7 +1051,7 @@ function TicketBookingView({ event, onBack }: { event: typeof findShowEvents[0],
                         {/* Action Buttons */}
                         <div className="flex flex-col gap-4 pt-4">
                             <a
-                                href={event.website}
+                                href={event.website || event.seedAsset.eventseyeUrl || undefined}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="w-full h-14 rounded-full bg-gradient-to-r from-cyan-400 via-indigo-500 to-purple-600 text-white font-black text-[18px] shadow-[0_0_30px_rgba(79,70,229,0.5)] flex items-center justify-center gap-3 group transition-all hover:scale-[1.02] active:scale-[0.98]"
@@ -820,10 +1299,66 @@ function RegionMegaMenuPopover({
   );
 }
 
+/** Month-Year dropdown (August 2026 → July 2027), sourced from the catalogue. */
+function MonthYearFilterPopover({ value, onChange }: { value: string, onChange: (val: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const options = [
+    { label: 'All Dates', value: 'All Dates', count: undefined as number | undefined },
+    ...findShowMonthOptions,
+  ];
+  const selected = options.find(o => o.value === value) ?? options[0];
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button className={cn(
+          "inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-[12px] font-bold transition-all",
+          value !== 'All Dates'
+            ? "border-indigo-500/60 bg-indigo-50/50 text-indigo-600 shadow-sm dark:border-indigo-400/40 dark:bg-indigo-400/10 dark:text-indigo-300"
+            : "border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#111B2E] text-slate-600 dark:text-slate-400 hover:border-indigo-300 dark:hover:border-indigo-500/50 hover:text-slate-900 dark:hover:text-white"
+        )}>
+          <Calendar className="size-3 shrink-0 opacity-70" />
+          <span className="truncate">{selected.label}</span>
+          <ChevronDown className="size-3 shrink-0 opacity-60 transition-transform" />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent align="start" className="w-[260px] p-0 rounded-xl overflow-hidden border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#0B1220]">
+        <Command>
+          <CommandInput placeholder="Search month..." className="h-9 text-[12px]" />
+          <CommandList>
+            <CommandEmpty className="py-2 text-center text-[12px] text-slate-500">No month found.</CommandEmpty>
+            <CommandGroup>
+              {options.map((option) => (
+                <CommandItem
+                  key={option.value}
+                  value={option.value}
+                  onSelect={() => {
+                    onChange(option.value);
+                    setOpen(false);
+                  }}
+                  className="px-3 py-2 text-[12px] font-bold cursor-pointer"
+                >
+                  <span className="flex-1">{option.label}</span>
+                  {typeof option.count === 'number' ? (
+                    <span className="mr-2 text-[11px] font-semibold text-slate-400">{option.count.toLocaleString()}</span>
+                  ) : null}
+                  {value === option.value && <Check className="size-3.5 text-indigo-600" />}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 function CategoryFilterPopover({ value, onChange }: { value: string, onChange: (val: string) => void }) {
   const [open, setOpen] = useState(false);
   const categories = [
-    { label: 'All Categories', value: 'All Categories' },
+    // `value` stays the FindShowsCategory sentinel the filter logic compares
+    // against; only the label the user reads changed to "Industries".
+    { label: 'All Industries', value: 'All Categories' },
     { label: 'Technology', value: 'Technology' },
     { label: 'Manufacturing', value: 'Manufacturing' },
     { label: 'Healthcare', value: 'Healthcare' },
@@ -849,9 +1384,9 @@ function CategoryFilterPopover({ value, onChange }: { value: string, onChange: (
       </PopoverTrigger>
       <PopoverContent align="start" className="w-[240px] p-0 rounded-xl overflow-hidden border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#0B1220]">
         <Command>
-          <CommandInput placeholder="Search category..." className="h-9 text-[12px]" />
+          <CommandInput placeholder="Search industry..." className="h-9 text-[12px]" />
           <CommandList>
-            <CommandEmpty className="py-2 text-center text-[12px] text-slate-500">No category found.</CommandEmpty>
+            <CommandEmpty className="py-2 text-center text-[12px] text-slate-500">No industry found.</CommandEmpty>
             <CommandGroup>
               {categories.map((cat) => (
                 <CommandItem
@@ -882,7 +1417,8 @@ function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
     const [filters, setFilters] = useState({
         region: 'All Regions' as FindShowsRegion,
         country: '',
-        category: 'All Categories' as FindShowsCategory
+        category: 'All Categories' as FindShowsCategory,
+        monthYear: 'All Dates',
     });
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 15;
@@ -954,6 +1490,11 @@ function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
         // Category Filter
         if (filters.category !== 'All Categories') {
             results = results.filter(e => e.categories.includes(filters.category as any));
+        }
+
+        // Month-Year Filter (e.g. "August 2026")
+        if (filters.monthYear !== 'All Dates') {
+            results = results.filter(e => e.monthYear === filters.monthYear);
         }
 
         return results;
@@ -1049,16 +1590,21 @@ function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                             />
                         ))}
                         
-                        <CategoryFilterPopover 
-                            value={filters.category} 
+                        <CategoryFilterPopover
+                            value={filters.category}
                             onChange={(cat) => setFilters({ ...filters, category: cat as any })}
+                        />
+
+                        <MonthYearFilterPopover
+                            value={filters.monthYear}
+                            onChange={(monthYear) => setFilters({ ...filters, monthYear })}
                         />
                     </div>
 
-                    { (filters.region !== 'All Regions' || filters.country !== '' || filters.category !== 'All Categories' || showOnlyLiked) && (
-                        <button 
+                    { (filters.region !== 'All Regions' || filters.country !== '' || filters.category !== 'All Categories' || filters.monthYear !== 'All Dates' || showOnlyLiked) && (
+                        <button
                             onClick={() => {
-                                setFilters({ region: 'All Regions', country: '', category: 'All Categories' });
+                                setFilters({ region: 'All Regions', country: '', category: 'All Categories', monthYear: 'All Dates' });
                                 setShowOnlyLiked(false);
                             }}
                             className="flex items-center gap-2 h-9 px-4 rounded-full border border-red-200 dark:border-red-500/20 bg-red-50 dark:bg-red-500/5 text-red-600 dark:text-red-400 text-[12px] font-bold hover:bg-red-100 dark:hover:bg-red-500/10 transition-all shadow-sm"
@@ -1098,7 +1644,7 @@ function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                                 <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px]">Event Details</th>
                                 <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px]">Location</th>
                                 <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px] w-32">Dates</th>
-                                <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px] hidden md:table-cell w-32">Category</th>
+                                <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px] hidden md:table-cell w-32">Industry</th>
                                 <th className="px-4 py-4 font-black uppercase tracking-[0.1em] text-[10px] text-right">Action</th>
                             </tr>
                         </thead>

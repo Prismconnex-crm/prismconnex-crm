@@ -13,8 +13,25 @@ export type Exhibitor = {
   description: string | null;
   /** Link to the exhibitor's profile on the event website */
   profileUrl: string | null;
+  /** The event's exhibitor-directory root — last-resort link fallback */
+  directoryUrl?: string | null;
   /** Country of the exhibitor (if available) */
   country: string | null;
+  /** Public phone number, when the source lists one */
+  phone?: string | null;
+  /** Company LinkedIn page, when the source lists one */
+  companyLinkedInUrl?: string | null;
+  /** Stand/booth categories or sectors from the source listing */
+  categories?: string[];
+
+  // ── Personal contact fields ────────────────────────────────────────────────
+  // Exhibitor directories rarely publish named contacts. These stay null unless
+  // a source legitimately provides them — never inferred or invented.
+  firstName?: string | null;
+  lastName?: string | null;
+  designation?: string | null;
+  email?: string | null;
+  personLinkedInUrl?: string | null;
 };
 
 export type ExhibitorCacheEntry = {

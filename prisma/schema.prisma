@@ -175,6 +175,54 @@ model DiscoveryCompany {
   //   as idx_discovery_cat_region_country_emp
 }
 
+// Exhibitors imported from an event's public exhibitor directory.
+//
+// Company-level fields come from the source listing. The personal-contact fields
+// are deliberately nullable: exhibitor directories almost never publish named
+// contacts, and these must only ever be filled from a source that legitimately
+// provides them.
+model EventExhibitor {
+  id        String @id @default(cuid())
+  /// FindShowEvent.slug this exhibitor belongs to.
+  eventSlug String
+
+  companyName String
+  /// Canonical form of companyName (see scripts/lib/exhibitor-name-key.mjs).
+  /// Used to match enrichment sources onto a listing; NOT unique, because a
+  /// directory legitimately lists one company twice on different stands.
+  nameKey     String?
+  logoUrl     String?
+  /// Source directory page for this exhibitor - also the upsert key.
+  sourceDetailUrl   String
+  /// Root directory page for the event, used as the link fallback when an
+  /// exhibitor publishes no official website of its own.
+  sourceDirectoryUrl String?
+  websiteUrl        String?
+  standNumber       String?
+  country           String?
+  phone             String?
+  companyLinkedInUrl String?
+  description       String?
+  categories        String[] @default([])
+
+  // Personal contact — nullable, never inferred.
+  firstName         String?
+  lastName          String?
+  designation       String?
+  email             String?
+  personLinkedInUrl String?
+
+  /// Where the row came from, e.g. bettshow.com
+  source    String   @default("import")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([eventSlug, sourceDetailUrl])
+  @@index([eventSlug])
+  @@index([eventSlug, companyName])
+  @@index([eventSlug, nameKey])
+}
+
 // Employee/contact records for a DiscoveryCompany, shown in the People page's
 // employee-detail card. Doubles as the enrichment cache: rows can be entered
 // manually (verified first-party data) or written once by a provider lookup so
