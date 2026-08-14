@@ -93,7 +93,7 @@ export function EventsResultsTable({
                 <th className="px-4 py-4 text-[10px] font-black uppercase tracking-[0.1em]">Event Details</th>
                 <th className="px-4 py-4 text-[10px] font-black uppercase tracking-[0.1em]">Location</th>
                 <th className="w-32 px-4 py-4 text-[10px] font-black uppercase tracking-[0.1em]">Dates</th>
-                <th className="hidden w-32 px-4 py-4 text-[10px] font-black uppercase tracking-[0.1em] md:table-cell">Category</th>
+                <th className="hidden w-32 px-4 py-4 text-[10px] font-black uppercase tracking-[0.1em] md:table-cell">Industry</th>
                 <th className="px-4 py-4 text-right text-[10px] font-black uppercase tracking-[0.1em]">Action</th>
               </tr>
             </thead>

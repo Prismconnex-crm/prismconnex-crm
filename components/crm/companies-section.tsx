@@ -366,7 +366,9 @@ function useDebouncedValue<T>(value: T, delayMs: number) {
 const FILTER_OPTIONS: { key: string; label: string }[] = [
   { key: "ai-lookalikes", label: "AI Lookalikes" },
   { key: "category", label: "Category" },
-  { key: "location", label: "Location" },
+  // Keyed "location" for the API query param, but labelled Region: its options
+  // are the four discovery regions, not cities.
+  { key: "location", label: "Region" },
   { key: "country", label: "Country" },
   { key: "keywords", label: "Keywords" },
   { key: "employee-headcount", label: "Employee Headcount" },

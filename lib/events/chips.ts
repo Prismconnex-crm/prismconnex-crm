@@ -14,7 +14,7 @@ const LIST_LABEL: Record<EventFilterListKey, string> = {
   regions: 'Region',
   countries: 'Country',
   cities: 'City',
-  categories: 'Category',
+  categories: 'Industry',
   organizers: 'Organizer',
   keywords: 'Keyword',
 };

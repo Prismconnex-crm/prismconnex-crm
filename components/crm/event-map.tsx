@@ -19,12 +19,14 @@ const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
  * needed, so this works for every event in the catalog.
  */
 export function googleMapsUrl(locationName: string) {
-  // "?" is the seed's placeholder for an unknown venue — drop it so the query
-  // falls back to city + country instead of searching for a literal "?".
+  // Unknown venues reach here either as the seed's raw "?" or as the catalog's
+  // rendered "Venue to be announced". Both are dropped so the query falls back
+  // to city + country rather than searching for the placeholder text.
+  const PLACEHOLDERS = ["?", "venue to be announced", "city to be announced"];
   const query = locationName
     .split(",")
     .map((part) => part.trim())
-    .filter((part) => part && part !== "?")
+    .filter((part) => part && !PLACEHOLDERS.includes(part.toLowerCase()))
     .join(", ");
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 }

@@ -19,7 +19,7 @@ const SECTIONS: { key: SectionKey; label: string }[] = [
   { key: "regions", label: "Region" },
   { key: "countries", label: "Country" },
   { key: "cities", label: "City / Venue" },
-  { key: "categories", label: "Category" },
+  { key: "categories", label: "Industry" },
   { key: "dates", label: "Date range" },
   { key: "organizers", label: "Organizer" },
   { key: "keywords", label: "Keywords" },
