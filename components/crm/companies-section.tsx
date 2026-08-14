@@ -354,7 +354,9 @@ function useDebouncedValue<T>(value: T, delayMs: number) {
 const FILTER_OPTIONS: { key: string; label: string }[] = [
   { key: "ai-lookalikes", label: "AI Lookalikes" },
   { key: "category", label: "Category" },
-  { key: "location", label: "Location" },
+  // key stays "location" (drives the `location` query param + region filter);
+  // only the visible label changed to "Region".
+  { key: "location", label: "Region" },
   { key: "country", label: "Country" },
   { key: "keywords", label: "Keywords" },
   { key: "employee-headcount", label: "Employee Headcount" },
@@ -369,6 +371,250 @@ const FILTER_OPTIONS: { key: string; label: string }[] = [
   { key: "website-traffic", label: "Website Traffic" },
   { key: "key-executives-events", label: "Key Executives Events" },
 ];
+
+const COUNTRIES_BY_REGION: Record<string, readonly string[]> = {
+  Americas: [
+    "Antigua and Barbuda",
+    "Argentina",
+    "Bahamas",
+    "Barbados",
+    "Belize",
+    "Bolivia",
+    "Brazil",
+    "Canada",
+    "Chile",
+    "Colombia",
+    "Costa Rica",
+    "Cuba",
+    "Dominica",
+    "Dominican Republic",
+    "Ecuador",
+    "El Salvador",
+    "Grenada",
+    "Guatemala",
+    "Guyana",
+    "Haiti",
+    "Honduras",
+    "Jamaica",
+    "Mexico",
+    "Nicaragua",
+    "Panama",
+    "Paraguay",
+    "Peru",
+    "Saint Kitts and Nevis",
+    "Saint Lucia",
+    "Saint Vincent and the Grenadines",
+    "Suriname",
+    "Trinidad and Tobago",
+    "United States of America",
+    "Uruguay",
+    "Venezuela",
+  ],
+  Europe: [
+    "Albania",
+    "Andorra",
+    "Austria",
+    "Belarus",
+    "Belgium",
+    "Bosnia and Herzegovina",
+    "Bulgaria",
+    "Croatia",
+    "Cyprus",
+    "Czechia (Czech Republic)",
+    "Denmark",
+    "Estonia",
+    "Finland",
+    "France",
+    "Germany",
+    "Greece",
+    "Holy See",
+    "Hungary",
+    "Iceland",
+    "Ireland",
+    "Italy",
+    "Latvia",
+    "Liechtenstein",
+    "Lithuania",
+    "Luxembourg",
+    "Malta",
+    "Moldova",
+    "Monaco",
+    "Montenegro",
+    "Netherlands",
+    "North Macedonia",
+    "Norway",
+    "Poland",
+    "Portugal",
+    "Romania",
+    "Russia",
+    "San Marino",
+    "Serbia",
+    "Slovakia",
+    "Slovenia",
+    "Spain",
+    "Sweden",
+    "Switzerland",
+    "Ukraine",
+    "United Kingdom",
+  ],
+  "Africa & Middle East": [
+    "Algeria",
+    "Angola",
+    "Bahrain",
+    "Benin",
+    "Botswana",
+    "Burkina Faso",
+    "Burundi",
+    "CÃ´te d'Ivoire",
+    "Cabo Verde",
+    "Cameroon",
+    "Central African Republic",
+    "Chad",
+    "Comoros",
+    "Congo (Congo-Brazzaville)",
+    "Democratic Republic of the Congo",
+    "Djibouti",
+    "Egypt",
+    "Equatorial Guinea",
+    "Eritrea",
+    "Eswatini",
+    "Ethiopia",
+    "Gabon",
+    "Gambia",
+    "Ghana",
+    "Guinea",
+    "Guinea-Bissau",
+    "Iran",
+    "Iraq",
+    "Israel",
+    "Jordan",
+    "Kenya",
+    "Kuwait",
+    "Lebanon",
+    "Lesotho",
+    "Liberia",
+    "Libya",
+    "Madagascar",
+    "Malawi",
+    "Mali",
+    "Mauritania",
+    "Mauritius",
+    "Morocco",
+    "Mozambique",
+    "Namibia",
+    "Niger",
+    "Nigeria",
+    "Oman",
+    "Palestine State",
+    "Qatar",
+    "Rwanda",
+    "Sao Tome and Principe",
+    "Saudi Arabia",
+    "Senegal",
+    "Seychelles",
+    "Sierra Leone",
+    "Somalia",
+    "South Africa",
+    "South Sudan",
+    "Sudan",
+    "Syria",
+    "Tanzania",
+    "Togo",
+    "Tunisia",
+    "Turkey",
+    "Uganda",
+    "United Arab Emirates",
+    "Yemen",
+    "Zambia",
+    "Zimbabwe",
+  ],
+  "Asia-Pacific": [
+    "Afghanistan",
+    "Armenia",
+    "Australia",
+    "Azerbaijan",
+    "Bangladesh",
+    "Bhutan",
+    "Brunei",
+    "Cambodia",
+    "China",
+    "Fiji",
+    "Georgia",
+    "India",
+    "Indonesia",
+    "Japan",
+    "Kazakhstan",
+    "Kiribati",
+    "Kyrgyzstan",
+    "Laos",
+    "Malaysia",
+    "Maldives",
+    "Marshall Islands",
+    "Micronesia",
+    "Mongolia",
+    "Myanmar (formerly Burma)",
+    "Nauru",
+    "Nepal",
+    "New Zealand",
+    "North Korea",
+    "Pakistan",
+    "Palau",
+    "Papua New Guinea",
+    "Philippines",
+    "Samoa",
+    "Singapore",
+    "Solomon Islands",
+    "South Korea",
+    "Sri Lanka",
+    "Tajikistan",
+    "Thailand",
+    "Timor-Leste",
+    "Tonga",
+    "Turkmenistan",
+    "Tuvalu",
+    "Uzbekistan",
+    "Vanuatu",
+    "Vietnam",
+  ],
+};
+
+const sortCountries = (countries: readonly string[]) =>
+  [...countries].sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
+
+function countriesForRegion(region: string | null) {
+  return sortCountries(region ? COUNTRIES_BY_REGION[region] ?? [] : COMPANY_COUNTRIES);
+}
+
+function countryBelongsToRegion(country: string, region: string) {
+  return countriesForRegion(region).includes(country);
+}
+
+function SelectedFilterChip({
+  label,
+  onClear,
+  variant = "neutral",
+}: {
+  label: string;
+  onClear: () => void;
+  variant?: "primary" | "neutral";
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClear}
+      aria-label={`Remove ${label} filter`}
+      className={cn(
+        "inline-flex max-w-full items-center gap-1 rounded-full border px-3 py-1 text-[11px] font-semibold transition-colors",
+        variant === "primary"
+          ? "border-indigo-200 bg-indigo-50 text-indigo-700 hover:border-indigo-300 hover:bg-indigo-100 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20"
+          : "border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-slate-100 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300 dark:hover:bg-[#16233A]"
+      )}
+    >
+      <span className="truncate">{label}</span>
+      <X className="size-3 shrink-0" />
+    </button>
+  );
+}
 
 function CompanyTable({
   companies,
@@ -620,6 +866,7 @@ export function CompaniesSection() {
   const [companySearch, setCompanySearch] = useState("");
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [categorySearch, setCategorySearch] = useState("");
+  const [countrySearch, setCountrySearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedEmployeeRange, setSelectedEmployeeRange] = useState<string | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
@@ -635,6 +882,24 @@ export function CompaniesSection() {
     setNextCursor(null);
     setHasNextPage(false);
   }, []);
+
+  const clearCompanyFilter = useCallback((filterKey: "category" | "employeeRange" | "location" | "country") => {
+    if (filterKey === "category") {
+      setSelectedCategory(null);
+    } else if (filterKey === "employeeRange") {
+      setSelectedEmployeeRange(null);
+    } else if (filterKey === "location") {
+      setSelectedLocation(null);
+    } else if (filterKey === "country") {
+      setSelectedCountry(null);
+      setCountrySearch("");
+    }
+
+    setFilterOrder((prev) => prev.filter((key) => key !== filterKey));
+    setSelectedCompanyId(null);
+    setIsDetailView(false);
+    resetCompanyPagination();
+  }, [resetCompanyPagination]);
 
   // Global topbar search: apply ?q= from the URL on mount, and react live to
   // searches submitted from the topbar while this section is already rendered.
@@ -816,6 +1081,16 @@ export function CompaniesSection() {
     return COMPANY_CATEGORIES.filter((category) => category.includes(query));
   }, [categorySearch]);
 
+  const filteredCountries = useMemo(() => {
+    const query = countrySearch.trim().toLowerCase();
+    const regionCountries = countriesForRegion(selectedLocation);
+    if (!query) {
+      return regionCountries;
+    }
+
+    return regionCountries.filter((country) => country.toLowerCase().includes(query));
+  }, [countrySearch, selectedLocation]);
+
   const filteredCompanies = companies;
   const isCompaniesBusy = isLoading || isSearchPending;
 
@@ -871,7 +1146,7 @@ export function CompaniesSection() {
                   className="inline-flex items-baseline gap-2.5"
                 >
                   <span className="select-none bg-gradient-to-b from-indigo-400 to-fuchsia-500 bg-clip-text font-black italic text-transparent">
-                    //
+                    {'//'}
                   </span>
                   <span className="relative bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 bg-clip-text text-transparent dark:from-indigo-400 dark:via-violet-400 dark:to-fuchsia-400">
                     {activeCompany.name}
@@ -1067,6 +1342,7 @@ export function CompaniesSection() {
                   setSelectedEmployeeRange(null);
                   setSelectedLocation(null);
                   setSelectedCountry(null);
+                  setCountrySearch("");
                   setSelectedCompanyId(null);
                   setIsDetailView(false);
                   setFilterOrder([]);
@@ -1082,24 +1358,29 @@ export function CompaniesSection() {
                 All
               </button>
               {selectedCategory ? (
-                <span className="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-[11px] font-semibold text-indigo-700 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300">
-                  {formatCategoryLabel(selectedCategory)}
-                </span>
+                <SelectedFilterChip
+                  label={formatCategoryLabel(selectedCategory)}
+                  variant="primary"
+                  onClear={() => clearCompanyFilter("category")}
+                />
               ) : null}
               {selectedEmployeeRange ? (
-                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold text-slate-700 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300">
-                  {selectedEmployeeRange}
-                </span>
+                <SelectedFilterChip
+                  label={selectedEmployeeRange}
+                  onClear={() => clearCompanyFilter("employeeRange")}
+                />
               ) : null}
               {selectedLocation ? (
-                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold text-slate-700 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300">
-                  {selectedLocation}
-                </span>
+                <SelectedFilterChip
+                  label={selectedLocation}
+                  onClear={() => clearCompanyFilter("location")}
+                />
               ) : null}
               {selectedCountry ? (
-                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold text-slate-700 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300">
-                  {selectedCountry}
-                </span>
+                <SelectedFilterChip
+                  label={selectedCountry}
+                  onClear={() => clearCompanyFilter("country")}
+                />
               ) : null}
               {(selectedCategory || selectedEmployeeRange || selectedLocation || selectedCountry) ? (
                 <button
@@ -1110,6 +1391,7 @@ export function CompaniesSection() {
                       const last = newOrder.pop()!;
                       if (last === 'country' && selectedCountry) {
                         setSelectedCountry(null);
+                        setCountrySearch("");
                         cleared = true;
                       } else if (last === 'location' && selectedLocation) {
                         setSelectedLocation(null);
@@ -1125,6 +1407,7 @@ export function CompaniesSection() {
                     if (!cleared) {
                       if (selectedCountry) {
                         setSelectedCountry(null);
+                        setCountrySearch("");
                       } else if (selectedLocation) {
                         setSelectedLocation(null);
                       } else if (selectedEmployeeRange) {
@@ -1161,6 +1444,16 @@ export function CompaniesSection() {
                         : option.key === "country" && selectedCountry
                           ? selectedCountry
                           : null;
+                const activeFilterKey =
+                  option.key === "category"
+                    ? "category"
+                    : option.key === "employee-headcount"
+                      ? "employeeRange"
+                      : option.key === "location"
+                        ? "location"
+                        : option.key === "country"
+                          ? "country"
+                          : null;
 
                 return (
                   <div
@@ -1172,26 +1465,41 @@ export function CompaniesSection() {
                         : "border-slate-200 bg-slate-50 hover:border-indigo-200 dark:border-[#22304A] dark:bg-[#0B1220] dark:hover:border-indigo-500/30"
                     )}
                   >
-                    <button
-                      type="button"
-                      onClick={() => setOpenFilter(isOpen ? null : option.key)}
-                      className="flex h-10 w-full items-center justify-between gap-2 px-3 text-[13px] font-medium text-slate-700 transition-colors [font-family:var(--font-inter),'Inter',sans-serif] dark:text-slate-200"
-                    >
-                      <span className="truncate">{option.label}</span>
+                    <div className="flex h-10 w-full items-center gap-2 px-3 text-[13px] font-medium text-slate-700 transition-colors [font-family:var(--font-inter),'Inter',sans-serif] dark:text-slate-200">
+                      <button
+                        type="button"
+                        onClick={() => setOpenFilter(isOpen ? null : option.key)}
+                        className="min-w-0 flex-1 text-left"
+                      >
+                        <span className="block truncate">{option.label}</span>
+                      </button>
                       <span className="flex shrink-0 items-center gap-1.5">
-                        {activeValue ? (
-                          <span className="max-w-[110px] truncate rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300">
-                            {activeValue}
-                          </span>
+                        {activeValue && activeFilterKey ? (
+                          <button
+                            type="button"
+                            onClick={() => clearCompanyFilter(activeFilterKey)}
+                            aria-label={`Remove ${option.label} filter`}
+                            className="inline-flex max-w-[130px] items-center gap-1 rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 transition-colors hover:bg-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20"
+                          >
+                            <span className="truncate">{activeValue}</span>
+                            <X className="size-3 shrink-0" />
+                          </button>
                         ) : null}
-                        <ChevronDown
-                          className={cn(
-                            "size-4 text-slate-400 transition-transform duration-200",
-                            isOpen && "rotate-180 text-indigo-500"
-                          )}
-                        />
+                        <button
+                          type="button"
+                          onClick={() => setOpenFilter(isOpen ? null : option.key)}
+                          aria-label={`${isOpen ? "Collapse" : "Expand"} ${option.label} filter`}
+                          className="flex size-6 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-slate-100 hover:text-indigo-500 dark:hover:bg-[#16233A]"
+                        >
+                          <ChevronDown
+                            className={cn(
+                              "size-4 transition-transform duration-200",
+                              isOpen && "rotate-180 text-indigo-500"
+                            )}
+                          />
+                        </button>
                       </span>
-                    </button>
+                    </div>
                     <AnimatePresence initial={false}>
                       {isOpen ? (
                         <motion.div
@@ -1267,11 +1575,21 @@ export function CompaniesSection() {
                                     type="button"
                                     onClick={() => {
                                       setSelectedLocation(region);
+                                      setCountrySearch("");
+                                      const countryStillMatches = selectedCountry
+                                        ? countryBelongsToRegion(selectedCountry, region)
+                                        : true;
+                                      if (!countryStillMatches) {
+                                        setSelectedCountry(null);
+                                      }
                                       setOpenFilter(null);
                                       setSelectedCompanyId(null);
                                       setIsDetailView(false);
                                       resetCompanyPagination();
-                                      setFilterOrder((prev) => [...prev.filter((f) => f !== 'location'), 'location']);
+                                      setFilterOrder((prev) => [
+                                        ...prev.filter((f) => f !== 'location' && (countryStillMatches || f !== 'country')),
+                                        'location',
+                                      ]);
                                     }}
                                     className="flex w-full items-center justify-between rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
                                   >
@@ -1283,8 +1601,19 @@ export function CompaniesSection() {
                                 ))}
                               </div>
                             ) : option.key === "country" ? (
-                              <div className="max-h-52 space-y-1 overflow-y-auto">
-                                {COMPANY_COUNTRIES.map((countryName) => (
+                              <>
+                                {/* 195 countries — a search box keeps the list usable */}
+                                <div className="relative">
+                                  <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
+                                  <input
+                                    value={countrySearch}
+                                    onChange={(event) => setCountrySearch(event.target.value)}
+                                    placeholder="Search country..."
+                                    className="h-9 w-full rounded-[9px] border border-slate-200 bg-slate-50 pl-9 pr-3 text-[12px] text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
+                                  />
+                                </div>
+                                <div className="mt-2 max-h-52 space-y-1 overflow-y-auto">
+                                {filteredCountries.map((countryName) => (
                                   <button
                                     key={countryName}
                                     type="button"
@@ -1304,7 +1633,11 @@ export function CompaniesSection() {
                                     ) : null}
                                   </button>
                                 ))}
-                              </div>
+                                {filteredCountries.length === 0 ? (
+                                  <p className="px-3 py-2 text-[12px] text-slate-500 dark:text-slate-400">No country found</p>
+                                ) : null}
+                                </div>
+                              </>
                             ) : (
                               <p className="px-3 py-3 text-center text-[12px] text-slate-400 dark:text-slate-500">
                                 Coming soon — this filter unlocks with a connected data source.

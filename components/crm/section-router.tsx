@@ -7,6 +7,7 @@ import type { WorkspacePreferences } from "@/types";
 import { Card, CardContent } from "@/components/ui/card";
 
 import { DashboardSection } from "./dashboard-section";
+import { OpportunitiesSection } from "./opportunities-section";
 import { EventsSection } from "./events-section";
 import { CompaniesSection } from "./companies-section";
 import { PeopleSection } from "./people-section";
@@ -64,6 +65,7 @@ export function AppSectionRouter({ slug }: Props) {
 
   return useMemo(() => {
     if (section === "dashboard") return <DashboardSection />;
+    if (section === "opportunities") return <OpportunitiesSection />;
     if (section === "events") return <EventsSection eventId={sub} preferences={preferences} />;
     if (section === "target-events") return <EventsSection eventId={sub} preferences={preferences} mode="target" />;
     if (section === "companies") return <CompaniesSection />;

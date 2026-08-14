@@ -119,16 +119,26 @@ export async function GET(request: Request) {
     // idx_discovery_cat_region_country_emp. The expression MUST match the index's
     // expression exactly. The dataset mixes short/long country names, so match both.
     const COUNTRY_EXPR = `trim(split_part(headquarters, ',', -1))`;
+    // The picker shows full country names (see COMPANY_COUNTRIES); the dataset
+    // stores shorter forms in `headquarters`. Map the ones that differ so the
+    // filter still matches.
     const COUNTRY_ALIASES: Record<string, string[]> = {
+      "United States of America": ["USA", "United States"],
+      "United Kingdom": ["UK", "United Kingdom"],
+      // legacy short forms, still accepted from saved/shared URLs
       USA: ["USA", "United States"],
       UK: ["UK", "United Kingdom"],
     };
     // Each country lives in exactly one region; pinning it lets the query
     // planner use the (category, region, ...) composite indexes instead
     // of probing the whole table for the headquarters suffix.
+    // Only the countries actually present in the dataset need a region pin; any
+    // other country simply skips this optimisation.
     const COUNTRY_REGION: Record<string, string> = {
+      "United States of America": "Americas",
       USA: "Americas",
       Canada: "Americas",
+      "United Kingdom": "Europe",
       UK: "Europe",
       Germany: "Europe",
       France: "Europe",
