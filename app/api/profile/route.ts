@@ -3,6 +3,11 @@ import { UnauthorizedError } from "@/lib/http/errors";
 import { getSessionPayload } from "@/lib/auth/session";
 import { ProfileService } from "@/services/profile.service";
 
+// This route reads the session cookie, so it can never be statically rendered.
+// Declaring it keeps `next build` from attempting the static pass and logging a
+// dynamic-server-usage error for a route that is working as intended.
+export const dynamic = "force-dynamic";
+
 /**
  * Returns the signed-in user's profile.
  *
