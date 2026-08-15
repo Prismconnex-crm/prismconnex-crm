@@ -658,6 +658,31 @@ export function CompaniesSection() {
     setHasNextPage(false);
   }, []);
 
+  /**
+   * Unsets one filter from its own chip, leaving the others in place — the four
+   * conditions are AND-ed, so dropping one has to widen the result set rather
+   * than reset the search. `filterOrder` drives which condition "Clear" removes
+   * next, so the key is pulled out of it too.
+   */
+  const clearFilterByKey = useCallback(
+    (key: string) => {
+      const orderKey =
+        key === "employee-headcount" ? "employeeRange" : key === "category" ? "category" : key;
+
+      if (key === "category") setSelectedCategory(null);
+      else if (key === "employee-headcount") setSelectedEmployeeRange(null);
+      else if (key === "location") setSelectedLocation(null);
+      else if (key === "country") setSelectedCountry(null);
+      else return;
+
+      setFilterOrder((prev) => prev.filter((entry) => entry !== orderKey));
+      setSelectedCompanyId(null);
+      setIsDetailView(false);
+      resetCompanyPagination();
+    },
+    [resetCompanyPagination]
+  );
+
   // Global topbar search: apply ?q= from the URL on mount, and react live to
   // searches submitted from the topbar while this section is already rendered.
   useEffect(() => {
@@ -1320,26 +1345,51 @@ export function CompaniesSection() {
                         : "border-slate-200 bg-slate-50 hover:border-indigo-200 dark:border-[#22304A] dark:bg-[#0B1220] dark:hover:border-indigo-500/30"
                     )}
                   >
-                    <button
-                      type="button"
-                      onClick={() => setOpenFilter(isOpen ? null : option.key)}
-                      className="flex h-10 w-full items-center justify-between gap-2 px-3 text-[13px] font-medium text-slate-700 transition-colors [font-family:var(--font-inter),'Inter',sans-serif] dark:text-slate-200"
-                    >
-                      <span className="truncate">{option.label}</span>
+                    {/* A row, not one button: the selected value carries its own
+                        remove control, and a <button> cannot be nested inside a
+                        <button>. Both the label and the chevron still toggle. */}
+                    <div className="flex h-10 w-full items-center justify-between gap-2 px-3">
+                      <button
+                        type="button"
+                        onClick={() => setOpenFilter(isOpen ? null : option.key)}
+                        aria-expanded={isOpen}
+                        className="flex min-w-0 flex-1 items-center text-left text-[13px] font-medium text-slate-700 transition-colors [font-family:var(--font-inter),'Inter',sans-serif] dark:text-slate-200"
+                      >
+                        <span className="truncate">{option.label}</span>
+                      </button>
                       <span className="flex shrink-0 items-center gap-1.5">
                         {activeValue ? (
-                          <span className="max-w-[110px] truncate rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300">
-                            {activeValue}
+                          <span className="flex max-w-[130px] items-center gap-1 rounded-full bg-indigo-50 py-0.5 pl-2 pr-1 text-[10px] font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300">
+                            <span className="truncate">{activeValue}</span>
+                            <button
+                              type="button"
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                clearFilterByKey(option.key);
+                              }}
+                              aria-label={`Remove ${option.label} filter`}
+                              title={`Remove ${option.label} filter`}
+                              className="flex size-3.5 shrink-0 items-center justify-center rounded-full text-indigo-500 transition-colors hover:bg-indigo-500 hover:text-white dark:text-indigo-300 dark:hover:bg-indigo-400 dark:hover:text-[#0B1220]"
+                            >
+                              <X className="size-2.5" strokeWidth={3} />
+                            </button>
                           </span>
                         ) : null}
-                        <ChevronDown
-                          className={cn(
-                            "size-4 text-slate-400 transition-transform duration-200",
-                            isOpen && "rotate-180 text-indigo-500"
-                          )}
-                        />
+                        <button
+                          type="button"
+                          onClick={() => setOpenFilter(isOpen ? null : option.key)}
+                          aria-label={isOpen ? `Collapse ${option.label}` : `Expand ${option.label}`}
+                          className="flex items-center"
+                        >
+                          <ChevronDown
+                            className={cn(
+                              "size-4 text-slate-400 transition-transform duration-200",
+                              isOpen && "rotate-180 text-indigo-500"
+                            )}
+                          />
+                        </button>
                       </span>
-                    </button>
+                    </div>
                     <AnimatePresence initial={false}>
                       {isOpen ? (
                         <motion.div

@@ -154,6 +154,25 @@ export async function GET(request: Request) {
       "1001-5000": ["1001-5000", "1001-2000", "2001-5000"],
       "1001+": ["1001+", "1001-2000", "2001-5000", "1001-5000", "5001-10000", "10001+"],
     };
+    /**
+     * The dataset stores a category in two spellings: the bulk rows are
+     * lowercase ("financial services"), while the real-company import used
+     * title case ("Financial Services"). The rail always sends the lowercase
+     * vocabulary from lib/company-classification, so a plain equality silently
+     * dropped the title-cased rows — "Financial Services" + Europe returned an
+     * empty page while 41 matching companies sat in the table.
+     *
+     * IN (...) over the spelling variants rather than lower(category) = $1:
+     * an expression comparison cannot use idx_discovery_cat_region_cursor, and
+     * a sequential scan over 36.5M rows is not an option here.
+     */
+    const applyCategoryFilter = () => {
+      if (!category) return;
+      const lower = category.toLowerCase();
+      const titleCase = lower.replace(/(^|[\s&/,-]+)([a-z])/g, (_, prefix, letter) => prefix + letter.toUpperCase());
+      const variants = Array.from(new Set([category, lower, titleCase]));
+      where.push(`category IN (${variants.map((value) => p(value)).join(",")})`);
+    };
     const applyEmployeeFilter = () => {
       if (!employeeRange) return;
       const values = EMPLOYEE_RANGE_EXPANSION[employeeRange] ?? [employeeRange];
@@ -180,7 +199,7 @@ export async function GET(request: Request) {
       where.push(`lower(name) ~>=~ ${p(lower)} AND lower(name) ~<~ ${p(upperBound)}`);
 
       // Add other filters on top of search
-      if (category) where.push(`category = ${p(category)}`);
+      applyCategoryFilter();
       applyEmployeeFilter();
       if (region) where.push(`region = ${p(region)}`);
       applyCountryFilter();
@@ -212,7 +231,7 @@ export async function GET(request: Request) {
     // ── Browse mode: use rowCursor for instant pagination ──
     // rowCursor DESC shows newest companies first (Indian MNCs were inserted
     // last = highest cursors; rowCursor mirrors the original SQLite rowid).
-    if (category) where.push(`category = ${p(category)}`);
+    applyCategoryFilter();
     applyEmployeeFilter();
     if (region) where.push(`region = ${p(region)}`);
     applyCountryFilter();
