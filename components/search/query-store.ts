@@ -9,7 +9,7 @@ import { useCallback, useEffect, useState } from "react";
  * stay common.
  */
 
-export type SavedQueryKind = "lead_query" | "event_query";
+export type SavedQueryKind = "lead_query" | "event_query" | "people_query";
 
 export type SavedQueryChip = { label: string; value: string };
 
