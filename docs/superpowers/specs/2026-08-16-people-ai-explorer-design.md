@@ -1,7 +1,8 @@
 # People AI Explorer — filter rail, streaming chat, results view
 
 **Date:** 2026-08-16
-**Status:** Awaiting review
+**Status:** Approved 2026-08-16 — decisions 5 (Saved People in `localStorage`) and
+6 (confidence chips, not a slider) confirmed by the owner
 **Supersedes:** `2026-08-01-people-explorer-design.md`
 
 ## Problem
