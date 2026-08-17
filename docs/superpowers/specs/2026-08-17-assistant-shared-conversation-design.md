@@ -3,7 +3,7 @@
 **Date:** 2026-08-17
 **Status:** Approved, ready for planning
 **Scope:** The shared conversation layer, with People as its first consumer.
-First of the two UI specs; Companies and Events migrate in Spec 2b.
+First of the three UI specs: Events migrates in Spec 2b, Companies in Spec 2c.
 
 **Depends on:** `2026-08-17-assistant-entity-router-design.md` (Spec 1, shipped —
 `lib/assistant/`, `POST /api/assistant/chat`).
@@ -23,18 +23,19 @@ the handoff the router emits has nowhere to land.
 - A navigation handoff the user can see and undo.
 - People migrated onto `/api/assistant/chat` end to end, proving the layer.
 
-## Non-goals (Spec 2b)
+## Non-goals (Specs 2b and 2c)
 
-- Migrating Companies and Events, and splitting `companies-section.tsx` (1746
-  lines) and `events-section.tsx` (1029 lines).
-- Reconciling the two `EventFilters` types for the Explorer rail.
-- Deleting the four legacy AI routes and their services and tests.
+- Migrating Events and splitting `events-section.tsx` (1029 lines) — Spec 2b.
+- Migrating Companies and decomposing `companies-section.tsx` (1746 lines) —
+  Spec 2c.
+- Reconciling the two `EventFilters` types for the Explorer rail — Spec 2b.
+- Deleting any legacy route or its service and tests.
 
 Spec 2a leaves all five legacy routes working and deletes none of them:
 `/api/companies/ask`, `/api/ai/event-query`, `/api/ai/event-answer`,
 `/api/events/search` and `/api/people/chat`. The last of those stops being
-called once People is migrated, but it is removed in Spec 2b with the rest so
-that a single spec owns the teardown.
+called once People is migrated; it is removed in Spec 2b, alongside the Events
+routes, once it is provably unreferenced.
 
 ## Decisions
 
@@ -263,12 +264,16 @@ stated limitation, not an oversight.
 
 ## Follow-on work
 
-**Spec 2b:** migrate Companies and Events onto the panel; split
-`companies-section.tsx` and `events-section.tsx`; add the events and companies
-bindings; reconcile the single-valued `AskEventFilters` with the array-valued
-`EventFilters`/`EventQueryState` that drives the Explorer rail; delete
-`/api/companies/ask`, `/api/ai/event-query`, `/api/ai/event-answer`,
-`/api/events/search` and `/api/people/chat` with their services and tests.
+**Spec 2b (Events):** split `events-section.tsx` into its four view
+components; rewrite the events adapter onto the array-valued `lib/events` stack
+(`EventQueryState`) so one filter shape backs both the rail and the assistant;
+add the events binding; delete `/api/ai/event-query`, `/api/ai/event-answer` and
+the `/api/people/chat` transport this spec orphaned.
+
+**Spec 2c (Companies):** decompose `companies-section.tsx`; add the companies
+binding; replace the page's inline event results with navigation; delete
+`/api/companies/ask`, `/api/events/search` and the find-shows scalar filter
+path.
 
 **Unscheduled:** `target_entity: "mixed"` and `cross_reference`, still blocked on
 a linking key between the three datasets.
