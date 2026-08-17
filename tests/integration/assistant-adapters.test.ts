@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { peopleAdapter } from '@/lib/assistant/adapters/people';
 import { eventsAdapter } from '@/lib/assistant/adapters/events';
+import { emptyEventFilters } from '@/types/events';
 import { createCompaniesAdapter } from '@/lib/assistant/adapters/companies';
 import type { EntityAdapter } from '@/lib/assistant/types';
 
@@ -51,24 +52,44 @@ describe('peopleAdapter', () => {
 });
 
 describe('eventsAdapter', () => {
-  it('extracts a keyword from a question', () => {
-    const filters = eventsAdapter.parseLocally(
-      'trade shows in Munich',
-      eventsAdapter.emptyFilters()
-    );
-    expect(filters.keyword ?? filters.city).toBeTruthy();
+  it('puts a plain question into the search field, not a keyword', () => {
+    const state = eventsAdapter.parseLocally('trade shows in Munich', eventsAdapter.emptyFilters());
+    expect(state.search).toBe('trade shows in Munich');
+    expect(state.filters.keywords).toEqual([]);
   });
 
-  it('searches and returns a numeric total', async () => {
+  it('starts from the shared empty filter shape', () => {
+    const empty = eventsAdapter.emptyFilters();
+    expect(empty.filters).toEqual(emptyEventFilters());
+    expect(empty.search).toBe('');
+  });
+
+  it('searches the array-valued filters and returns a numeric total', async () => {
+    const empty = eventsAdapter.emptyFilters();
     const result = await eventsAdapter.search(
-      { ...eventsAdapter.emptyFilters(), country: 'Germany' },
+      { ...empty, filters: { ...empty.filters, countries: ['Germany'] } },
       1
     );
     expect(typeof result.total).toBe('number');
+    expect(result.total as number).toBeGreaterThan(0);
     expect(result.rows.length).toBeLessThanOrEqual(10);
   });
 
-  it('pages via offset', async () => {
+  it('matches on multiple values in one dimension', async () => {
+    const empty = eventsAdapter.emptyFilters();
+    const one = await eventsAdapter.search(
+      { ...empty, filters: { ...empty.filters, countries: ['Germany'] } },
+      1
+    );
+    const two = await eventsAdapter.search(
+      { ...empty, filters: { ...empty.filters, countries: ['Germany', 'France'] } },
+      1
+    );
+    // The scalar shape could not express this at all.
+    expect(two.total as number).toBeGreaterThan(one.total as number);
+  });
+
+  it('pages without overlapping', async () => {
     const empty = eventsAdapter.emptyFilters();
     const first = await eventsAdapter.search(empty, 1);
     const second = await eventsAdapter.search(empty, 2);
@@ -77,13 +98,21 @@ describe('eventsAdapter', () => {
     expect(firstSlugs.some((s) => secondSlugs.includes(s))).toBe(false);
   });
 
-  it('carries country over and drops people-only filters', () => {
+  it('carries country over as an array and drops people-only filters', () => {
     const { filters, dropped } = eventsAdapter.carryOver({
       country: 'Germany',
       verification: 'verified',
     });
-    expect(filters.country).toBe('Germany');
+    expect(filters.filters?.countries).toEqual(['Germany']);
     expect(dropped).toContain('verification');
+  });
+
+  it('unions carried-over values rather than replacing them', () => {
+    const { filters } = eventsAdapter.carryOver({
+      countries: ['Germany'],
+      country: 'France',
+    });
+    expect(filters.filters?.countries).toEqual(expect.arrayContaining(['Germany', 'France']));
   });
 
   it('never returns a Person-shaped row', async () => {
@@ -94,10 +123,29 @@ describe('eventsAdapter', () => {
     }
   });
 
-  it('produces chips and prose', () => {
-    const filters = { ...eventsAdapter.emptyFilters(), city: 'Munich' };
-    expect(eventsAdapter.chips(filters).length).toBeGreaterThan(0);
-    expect(eventsAdapter.describe(filters, 5).length).toBeGreaterThan(0);
+  it('builds chips from the shared chip builder', () => {
+    const empty = eventsAdapter.emptyFilters();
+    const chips = eventsAdapter.chips({
+      ...empty,
+      filters: { ...empty.filters, cities: ['Munich'] },
+    });
+    expect(chips.map((c) => c.value)).toContain('Munich');
+    expect(chips.every((c) => typeof c.key === 'string')).toBe(true);
+  });
+
+  it('does not expose favouritesOnly to the model', () => {
+    const properties = eventsAdapter.filterSchema.properties as Record<string, unknown>;
+    // Favourites live in browser localStorage; the server passes an empty set,
+    // so the flag could never match. Offering it would be a lie.
+    expect(properties.favouritesOnly).toBeUndefined();
+    expect(properties.countries).toBeDefined();
+    expect(properties.dateFrom).toBeDefined();
+  });
+
+  it('exposes ISO date bounds rather than month integers', () => {
+    const properties = eventsAdapter.filterSchema.properties as Record<string, unknown>;
+    expect(properties.monthFrom).toBeUndefined();
+    expect(properties.year).toBeUndefined();
   });
 });
 

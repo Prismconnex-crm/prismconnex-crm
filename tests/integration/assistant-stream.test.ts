@@ -84,7 +84,11 @@ describe('createAssistantStream — navigate', () => {
         classifyWithModel: async () => ({ entity: 'events', filters: {} }),
       })
     );
-    expect(routeEvent(events).interpretedFilters).toMatchObject({ country: 'Germany' });
+    // Carried onto the events shape: array-valued, nested under `filters`.
+    const carried = routeEvent(events).interpretedFilters as {
+      filters: { countries: string[] };
+    };
+    expect(carried.filters.countries).toEqual(['Germany']);
   });
 });
 

@@ -17,7 +17,8 @@ describe('translateFilters', () => {
       to: 'events',
       filters: { country: 'Germany' },
     });
-    expect(out.filters.country).toBe('Germany');
+    // Events filters are array-valued and nested under `filters`.
+    expect((out.filters.filters as { countries: string[] }).countries).toEqual(['Germany']);
     expect(out.dropped).toEqual([]);
   });
 
@@ -27,7 +28,7 @@ describe('translateFilters', () => {
       to: 'events',
       filters: { category: 'SaaS' },
     });
-    expect(out.filters.category).toBe('SaaS');
+    expect((out.filters.filters as { categories: string[] }).categories).toEqual(['SaaS']);
   });
 
   it('drops a filter with no counterpart and reports it', () => {
@@ -36,7 +37,7 @@ describe('translateFilters', () => {
       to: 'events',
       filters: { country: 'Germany', verification: 'verified' },
     });
-    expect(out.filters.country).toBe('Germany');
+    expect((out.filters.filters as { countries: string[] }).countries).toEqual(['Germany']);
     expect(out.dropped).toContain('verification');
   });
 
