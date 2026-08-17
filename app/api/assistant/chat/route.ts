@@ -27,6 +27,8 @@ type ChatBody = {
   activeFilters?: unknown;
   previousEntity?: unknown;
   page?: unknown;
+  forceEntity?: unknown;
+  presetFilters?: unknown;
 };
 
 function isEntity(value: unknown): value is AssistantEntity {
@@ -61,6 +63,16 @@ export async function POST(request: Request) {
     const previousEntity = isEntity(body.previousEntity) ? body.previousEntity : null;
     const page = Number.isInteger(body.page) ? (body.page as number) : 1;
 
+    if (body.forceEntity !== undefined && !isEntity(body.forceEntity)) {
+      throw new BadRequestError('forceEntity must be one of companies, events, people');
+    }
+    const forceEntity = isEntity(body.forceEntity) ? body.forceEntity : undefined;
+
+    const presetFilters =
+      body.presetFilters && typeof body.presetFilters === 'object'
+        ? (body.presetFilters as Record<string, unknown>)
+        : undefined;
+
     const limit = consumeRateLimit(clientKey(request));
     if (!limit.allowed) {
       return new Response(
@@ -76,7 +88,15 @@ export async function POST(request: Request) {
       // No classifier passed: the stream resolves the real one itself, so a
       // missing API key is reported as missing_api_key rather than as a model
       // that answered without calling a tool.
-      createAssistantStream({ message, currentPage, activeFilters, previousEntity, page }),
+      createAssistantStream({
+        message,
+        currentPage,
+        activeFilters,
+        previousEntity,
+        page,
+        forceEntity,
+        presetFilters,
+      }),
       { status: 200, headers: NDJSON_HEADERS }
     );
   } catch (error) {

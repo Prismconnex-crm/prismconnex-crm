@@ -20,6 +20,14 @@ export type AssistantStreamInput = {
   activeFilters?: Record<string, unknown>;
   previousEntity?: AssistantEntity | null;
   page?: number;
+  /**
+   * Phase two of a navigation handoff: the entity was already decided, so both
+   * classifiers are skipped. This is what makes a navigate -> navigate bounce
+   * impossible rather than merely unlikely — do not replace it with a counter.
+   */
+  forceEntity?: AssistantEntity;
+  /** Filters already extracted during phase one, used verbatim. */
+  presetFilters?: Record<string, unknown>;
   classifyWithModel?: ModelClassifier;
   generateAnswer?: AnswerGenerator;
 };
@@ -60,72 +68,95 @@ export function createAssistantStream(input: AssistantStreamInput): ReadableStre
       const send = (event: AssistantEvent) => controller.enqueue(encoder.encode(line(event)));
 
       try {
-        // 1. Classify. The deterministic pass always runs; the model pass may
-        //    fail, and its failure is information rather than an error.
-        const deterministic = classify(input.message);
-        // The default classifier is resolved HERE, not by the caller. A route
-        // that always passes one would make `canUseModel` true even with no
-        // API key, so the missing_api_key branch could never be reached.
-        const injected = Boolean(input.classifyWithModel);
-        const canUseModel = isConfigured() || injected;
-        const classifyWithModel = input.classifyWithModel ?? createModelClassifier();
-
-        let modelEntity: AssistantEntity | null = null;
-        let modelFilters: Record<string, unknown> = {};
+        // 1. Decide the entity. Phase two of a handoff skips this entirely.
+        let decision: { targetEntity: AssistantEntity; action: RouteAction; confidence: number };
         let degraded: DegradedReason | undefined;
+        let carried: { filters: Record<string, unknown>; dropped: string[] };
+        let filters: Record<string, unknown>;
 
-        if (!canUseModel) {
-          degraded = 'missing_api_key';
+        if (input.forceEntity) {
+          // The entity was already decided by phase one. Running a classifier
+          // here is what would let Companies -> Events -> Companies loop.
+          decision = {
+            targetEntity: input.forceEntity,
+            action: 'answer_inline',
+            confidence: 1,
+          };
+          carried = { filters: {}, dropped: [] };
+          const forced = adapterFor(input.forceEntity);
+          filters = {
+            ...(forced.emptyFilters() as Record<string, unknown>),
+            ...(input.presetFilters ?? {}),
+          };
         } else {
-          try {
-            const result = await classifyWithModel(input.message);
-            if (result) {
-              modelEntity = result.entity;
-              modelFilters = result.filters;
-            } else {
-              degraded = 'no_tool_call';
-            }
-          } catch {
-            degraded = 'model_error';
-          }
-        }
+          // The deterministic pass always runs; the model pass may fail, and
+          // its failure is information rather than an error.
+          const deterministic = classify(input.message);
+          // The default classifier is resolved HERE, not by the caller. A route
+          // that always passes one would make `canUseModel` true even with no
+          // API key, so the missing_api_key branch could never be reached.
+          const injected = Boolean(input.classifyWithModel);
+          const canUseModel = isConfigured() || injected;
+          const classifyWithModel = input.classifyWithModel ?? createModelClassifier();
 
-        const decision = resolveRoute({
-          modelEntity,
-          deterministic,
-          currentPage: input.currentPage,
-          previousEntity: input.previousEntity ?? null,
-          hasApiKey: canUseModel,
-        });
+          let modelEntity: AssistantEntity | null = null;
+          let modelFilters: Record<string, unknown> = {};
+
+          if (!canUseModel) {
+            degraded = 'missing_api_key';
+          } else {
+            try {
+              const result = await classifyWithModel(input.message);
+              if (result) {
+                modelEntity = result.entity;
+                modelFilters = result.filters;
+              } else {
+                degraded = 'no_tool_call';
+              }
+            } catch {
+              degraded = 'model_error';
+            }
+          }
+
+          decision = resolveRoute({
+            modelEntity,
+            deterministic,
+            currentPage: input.currentPage,
+            previousEntity: input.previousEntity ?? null,
+            hasApiKey: canUseModel,
+          });
+
+          const chosen = adapterFor(decision.targetEntity);
+
+          // 2. Build filters: carried-over context, then the model's extraction,
+          //    then the local parse as the floor.
+          carried = translateFilters({
+            from: input.currentPage,
+            to: decision.targetEntity,
+            filters: input.activeFilters ?? {},
+          });
+
+          const base = {
+            ...(chosen.emptyFilters() as Record<string, unknown>),
+            ...carried.filters,
+          };
+
+          const modelGaveFilters =
+            modelEntity === decision.targetEntity &&
+            Object.values(modelFilters).some((value) => value !== null && value !== undefined);
+
+          filters = modelGaveFilters
+            ? {
+                ...base,
+                ...Object.fromEntries(
+                  Object.entries(modelFilters).filter(([, v]) => v !== null && v !== undefined)
+                ),
+              }
+            : (chosen.parseLocally(input.message, base as never) as Record<string, unknown>);
+        }
 
         const target = decision.targetEntity;
         const adapter = adapterFor(target);
-
-        // 2. Build filters: carried-over context, then the model's extraction,
-        //    then the local parse as the floor.
-        const carried = translateFilters({
-          from: input.currentPage,
-          to: target,
-          filters: input.activeFilters ?? {},
-        });
-
-        const base = {
-          ...(adapter.emptyFilters() as Record<string, unknown>),
-          ...carried.filters,
-        };
-
-        const modelGaveFilters =
-          modelEntity === target &&
-          Object.values(modelFilters).some((value) => value !== null && value !== undefined);
-
-        const filters = modelGaveFilters
-          ? {
-              ...base,
-              ...Object.fromEntries(
-                Object.entries(modelFilters).filter(([, v]) => v !== null && v !== undefined)
-              ),
-            }
-          : (adapter.parseLocally(input.message, base as never) as Record<string, unknown>);
 
         // 3. The route verdict — ALWAYS the first event, always before any
         //    search runs, because the client must know whether to stay here.
