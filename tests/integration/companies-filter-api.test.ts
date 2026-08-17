@@ -1,12 +1,16 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+/**
+ * Mocks the Postgres client the route actually uses. This suite previously
+ * mocked "@/lib/db/sqlite-companies"; the discovery dataset moved to Postgres
+ * ("DiscoveryCompany" via prisma.$queryRawUnsafe) and the mock stopped
+ * intercepting anything, so every assertion here read an undefined call.
+ */
 const mocks = vi.hoisted(() => ({
-  ensureSQLiteReadPragmas: vi.fn(),
   queryRawUnsafe: vi.fn(),
 }));
 
-vi.mock("@/lib/db/sqlite-companies", () => ({
-  ensureSQLiteReadPragmas: mocks.ensureSQLiteReadPragmas,
+vi.mock("@/lib/db/prisma", () => ({
   prisma: {
     $queryRawUnsafe: mocks.queryRawUnsafe,
   },
@@ -15,6 +19,7 @@ vi.mock("@/lib/db/sqlite-companies", () => ({
 import { GET } from "@/app/api/companies/route";
 
 const companyRow = {
+  rowCursor: 4210,
   id: "company-1",
   workspaceId: "workspace-1",
   name: "APAC Software Co 123",
@@ -44,13 +49,11 @@ function normalizeSql(sql: string) {
 
 describe("companies filter API", () => {
   beforeEach(() => {
-    mocks.ensureSQLiteReadPragmas.mockReset();
     mocks.queryRawUnsafe.mockReset();
-    mocks.ensureSQLiteReadPragmas.mockResolvedValue(undefined);
     mocks.queryRawUnsafe.mockResolvedValue([companyRow]);
   });
 
-  it("uses raw SQL with exact filters, rowid listing, and cursor-compatible limit", async () => {
+  it("uses raw SQL with exact filters, rowCursor listing, and cursor-compatible limit", async () => {
     const request = new Request(
       "http://localhost/api/companies?category=information%20technology%20%26%20services&employeeRange=1-10&location=Asia-Pacific"
     );
@@ -65,9 +68,9 @@ describe("companies filter API", () => {
     expect(body.hasNextPage).toBe(false);
     expect(body.companies[0].name).toBe("APAC Software Co");
     expect(normalizeSql(sql)).toContain(
-      "WHERE category = ? AND employeeRange = ? AND region = ?"
+      `WHERE category = $1 AND "employeeRange" IN ($2) AND region = $3`
     );
-    expect(normalizeSql(sql)).toContain("ORDER BY rowid DESC");
+    expect(normalizeSql(sql)).toContain(`ORDER BY "DiscoveryCompany"."rowCursor" DESC`);
     expect(params).toEqual(["information technology & services", "1-10", "Asia-Pacific", 31]);
   });
 
@@ -78,19 +81,23 @@ describe("companies filter API", () => {
     const [sql, ...params] = mocks.queryRawUnsafe.mock.calls[0];
 
     expect(response.status).toBe(200);
-    expect(normalizeSql(sql)).toContain("WHERE name >= ? COLLATE NOCASE AND name < ? COLLATE NOCASE");
-    expect(normalizeSql(sql)).toContain("ORDER BY name COLLATE NOCASE ASC");
+    // The pattern operators are what keep the text_pattern_ops index scannable;
+    // a LIKE or a collation-aware >= would full-scan the dataset.
+    expect(normalizeSql(sql)).toContain("WHERE lower(name) ~>=~ $1 AND lower(name) ~<~ $2");
+    expect(normalizeSql(sql)).toContain("ORDER BY lower(name) USING ~<~");
     expect(params).toEqual(["apac", "apad", 6]);
   });
 
-  it("preserves the raw search term casing so COLLATE NOCASE matches Titlecase names", async () => {
+  it("lowercases the search term to match the lower(name) index expression", async () => {
     const request = new Request("http://localhost/api/companies?search=GOOGLE&limit=5");
 
     const response = await GET(request);
     const [sql, ...params] = mocks.queryRawUnsafe.mock.calls[0];
 
     expect(response.status).toBe(200);
-    expect(normalizeSql(sql)).toContain("WHERE name >= ? COLLATE NOCASE AND name < ? COLLATE NOCASE");
-    expect(params).toEqual(["GOOGLE", "GOOGLF", 6]);
+    expect(normalizeSql(sql)).toContain("WHERE lower(name) ~>=~ $1 AND lower(name) ~<~ $2");
+    // Bounds MUST be lowercased: they are compared against lower(name), so an
+    // uppercase bound would sort outside the index range and match nothing.
+    expect(params).toEqual(["google", "googlf", 6]);
   });
 });
