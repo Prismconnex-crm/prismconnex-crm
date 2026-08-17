@@ -84,7 +84,7 @@ export const peopleAdapter: EntityAdapter<PeopleFilters> = {
         continue;
       }
       const existing = (filters[target] as string[] | undefined) ?? [];
-      (filters[target] as string[]) = [...new Set([...existing, ...values])];
+      (filters[target] as string[]) = Array.from(new Set(existing.concat(values)));
     }
 
     return { filters, dropped };

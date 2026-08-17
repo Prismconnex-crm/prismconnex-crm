@@ -14,7 +14,10 @@ const PAGE_SIZE = 10;
  * one filterEvents consumes), not the array-valued type of the same name in
  * types/events.ts that drives the Explorer sidebar.
  */
-const CARRY_OVER_KEYS: Record<string, keyof AskEventFilters> = {
+/** Only the string-valued keys are carry-over targets; months and year are not. */
+type EventStringKey = 'city' | 'country' | 'region' | 'category' | 'keyword';
+
+const CARRY_OVER_KEYS: Record<string, EventStringKey> = {
   country: 'country',
   countries: 'country',
   location: 'city',
@@ -98,7 +101,7 @@ export const eventsAdapter: EntityAdapter<AskEventFilters> = {
         continue;
       }
       if (filters[target] == null) {
-        (filters[target] as string) = single;
+        filters[target] = single;
       }
     }
 
