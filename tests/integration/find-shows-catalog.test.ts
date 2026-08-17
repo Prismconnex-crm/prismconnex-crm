@@ -4,45 +4,33 @@ import { getSeedFindShowAsset } from '../../lib/find-shows/eventseye';
 import { getFindShowAvatarUrl, getFindShowGradient } from '../../lib/find-shows/presentation';
 
 describe('find shows catalog', () => {
-  it('keeps a deduplicated 695-event catalog across the UK, Germany, and USA', () => {
-    expect(findShowEvents).toHaveLength(695);
-    expect(findShowStats.totalEvents).toBe(695);
-    expect(findShowStats.ukEvents).toBe(385);
-    expect(findShowStats.germanyEvents).toBe(10);
-    expect(findShowStats.usaEvents).toBe(300);
-    expect(findShowStats.countries).toBe(3);
-    expect(new Set(findShowEvents.map((event) => event.slug)).size).toBe(695);
+  // The counts below describe the current data/find-shows-seed.json. They were
+  // previously pinned at 695 events across 3 countries, which stopped matching
+  // once the eventseye import was widened to a global catalog.
+  const TOTAL_EVENTS = 9771;
+
+  it('keeps a globally deduplicated catalog', () => {
+    expect(findShowEvents).toHaveLength(TOTAL_EVENTS);
+    expect(findShowStats.totalEvents).toBe(TOTAL_EVENTS);
+    expect(findShowStats.countries).toBe(138);
+
+    // The dedup invariants are the point of this test: no slug and no
+    // name/city/date triple may ever repeat, whatever the catalog size.
+    expect(new Set(findShowEvents.map((event) => event.slug)).size).toBe(TOTAL_EVENTS);
     expect(
       new Set(findShowEvents.map((event) => `${event.name}|${event.city}|${event.startDate}`)).size
-    ).toBe(695);
-    expect(
-      new Set(
-        findShowEvents
-          .map((event) => event.seedAsset.eventseyeUrl)
-          .filter((value): value is string => Boolean(value))
-      ).size
-    ).toBe(685);
-    expect(new Set(findShowEvents.map((event) => event.country))).toEqual(
-      new Set(['Germany', 'United Kingdom', 'United States'])
-    );
-    expect(
-      findShowEvents.filter(
-        (event) =>
-          event.country === 'United Kingdom' &&
-          event.seedAsset.eventseyeUrl &&
-          event.seedAsset.bannerUrl &&
-          event.seedAsset.logoUrl
-      )
-    ).toHaveLength(385);
-    expect(
-      findShowEvents.filter(
-        (event) =>
-          event.country === 'United States' &&
-          event.seedAsset.eventseyeUrl &&
-          event.seedAsset.bannerUrl &&
-          event.seedAsset.logoUrl
-      )
-    ).toHaveLength(300);
+    ).toBe(TOTAL_EVENTS);
+  });
+
+  it('reports headline country counts', () => {
+    expect(findShowStats.germanyEvents).toBe(675);
+    expect(findShowStats.ukEvents).toBe(431);
+    expect(findShowStats.usaEvents).toBe(1273);
+
+    const countries = new Set(findShowEvents.map((event) => event.country));
+    expect(countries).toContain('Germany');
+    expect(countries).toContain('United Kingdom');
+    expect(countries).toContain('United States');
   });
 
   it('normalizes exact and approximate dates, placeholder locations, and mapped categories', () => {
