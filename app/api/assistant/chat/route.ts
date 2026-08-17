@@ -9,8 +9,8 @@ import { ASSISTANT_ENTITIES, type AssistantEntity } from '@/lib/assistant/types'
  * answering, so a question typed on the wrong page hands off rather than being
  * answered from the wrong dataset.
  *
- * Not tenant-scoped, matching /api/companies and /api/people/chat — these are
- * shared discovery datasets, not workspace data.
+ * Not tenant-scoped, matching /api/companies — these are shared discovery
+ * datasets, not workspace data.
  *
  * An assistant problem is never an HTTP error: a rate-limit refusal is still
  * delivered AS A STREAM EVENT so the client has exactly one code path.

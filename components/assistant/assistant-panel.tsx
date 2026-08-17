@@ -45,7 +45,7 @@ const COPY: Record<
 /**
  * The shared assistant surface, mounted by each page in its own layout slot.
  *
- * Two states, matching the PeopleChatPanel it replaces: the AiSearchPanel hero
+ * Two states: the AiSearchPanel hero
  * when the thread is empty, and a CompactSearchBar pinned above the thread
  * once it is not.
  */

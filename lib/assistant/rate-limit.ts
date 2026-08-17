@@ -1,9 +1,9 @@
 /**
  * In-memory per-IP token bucket. Process-local by design — no dependency.
  *
- * Deliberately separate from the bucket in lib/people/chat-stream.ts: sharing
- * one would make /api/people/chat and /api/assistant/chat consume each other's
- * budget.
+ * One bucket for the whole assistant. It was deliberately kept separate from
+ * the old lib/people/chat-stream.ts bucket so the two endpoints could not
+ * consume each other's budget; that transport is now deleted.
  */
 const BUCKET_CAPACITY = 20;
 const REFILL_PER_SECOND = 0.5;
