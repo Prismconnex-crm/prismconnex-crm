@@ -2,7 +2,7 @@ import { peopleBinding } from './bindings/people';
 import type { AssistantEntity } from '@/lib/assistant/types';
 import type { PageBinding } from './types';
 
-type AnyBinding = PageBinding<never>;
+type AnyBinding = PageBinding<never, never>;
 
 const defaults: Partial<Record<AssistantEntity, AnyBinding>> = {
   people: peopleBinding as unknown as AnyBinding,

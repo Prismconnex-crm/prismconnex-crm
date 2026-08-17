@@ -38,15 +38,22 @@ export type ConversationState = {
   pendingHandoff: PendingHandoff | null;
 };
 
-/** The client twin of Spec 1's EntityAdapter. */
-export type PageBinding<F> = {
+/**
+ * The client twin of Spec 1's EntityAdapter.
+ *
+ * `C` is the page's own row-interaction context — selection sets and handlers
+ * the page already owns. It is opaque to the panel, which forwards it without
+ * inspecting it, so each page/binding pair stays type-safe while the panel
+ * stays entity-agnostic.
+ */
+export type PageBinding<F, C = unknown> = {
   entity: AssistantEntity;
   /** Where navigation sends the user, e.g. "/app/people". */
   route: string;
   emptyFilters(): F;
   /** Incoming keys replace conflicting ones; unrelated current filters survive. */
   applyFilters(current: F, incoming: Partial<F>): F;
-  renderRows(rows: unknown[]): ReactNode;
+  renderRows(rows: unknown[], context: C): ReactNode;
 };
 
 export function emptyMessage(id: string, role: 'user' | 'assistant'): ConversationMessage {

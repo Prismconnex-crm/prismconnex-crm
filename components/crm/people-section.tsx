@@ -359,6 +359,13 @@ export function PeopleSection() {
             <AssistantPanel
               currentPage="people"
               activeFilters={filters as unknown as Record<string, unknown>}
+              rowContext={{
+                selectedIds,
+                savedIds,
+                onToggleSelect: toggleSelect,
+                onToggleSaved: toggleSaved,
+                onOpenPerson: setOpenPerson,
+              }}
               onGoBack={(entity, sourceFilters) => {
                 // Spec 2a only binds People, so a back-jump can only land
                 // here; the events and companies routes arrive in Spec 2b.

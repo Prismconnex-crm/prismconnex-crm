@@ -52,10 +52,13 @@ const COPY: Record<
 export function AssistantPanel({
   currentPage,
   activeFilters,
+  rowContext,
   onGoBack,
 }: {
   currentPage: AssistantEntity;
   activeFilters?: Record<string, unknown>;
+  /** The page's own row handlers, forwarded opaquely to its binding. */
+  rowContext?: unknown;
   onGoBack: (entity: AssistantEntity, filters: unknown) => void;
 }) {
   const chat = useAssistantChat({ currentPage, activeFilters });
@@ -124,6 +127,7 @@ export function AssistantPanel({
           <AssistantMessage
             key={message.id}
             message={message}
+            rowContext={rowContext}
             onSuggestion={submit}
             onRetry={chat.retry}
           />

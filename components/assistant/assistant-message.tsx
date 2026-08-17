@@ -12,10 +12,13 @@ import type { ConversationMessage } from './types';
  */
 export function AssistantMessage({
   message,
+  rowContext,
   onSuggestion,
   onRetry,
 }: {
   message: ConversationMessage;
+  /** The page's own row handlers, forwarded opaquely to its binding. */
+  rowContext?: unknown;
   onSuggestion: (text: string) => void;
   onRetry: () => void;
 }) {
@@ -55,7 +58,7 @@ export function AssistantMessage({
 
       {showRows && entity && (
         <div className="overflow-hidden rounded-xl border border-[#E2E8F0] dark:border-[#22304A]">
-          {bindingFor(entity).renderRows(message.rows)}
+          {bindingFor(entity).renderRows(message.rows, rowContext as never)}
           {/* total is null when counting is too slow — render an absent count,
               never "0 results". */}
           {typeof message.total === 'number' && (
