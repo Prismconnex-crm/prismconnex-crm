@@ -2,7 +2,7 @@ import { translateFilters } from './carry-over';
 import { classify } from './classify';
 import { resolveRoute } from './confidence';
 import { adapterFor } from './registry';
-import { isConfigured, type ModelClassifier } from './route';
+import { createModelClassifier, isConfigured, type ModelClassifier } from './route';
 import type { AssistantEntity, AssistantEvent, DegradedReason, RouteAction } from './types';
 
 export type AnswerGenerator = (input: {
@@ -63,7 +63,12 @@ export function createAssistantStream(input: AssistantStreamInput): ReadableStre
         // 1. Classify. The deterministic pass always runs; the model pass may
         //    fail, and its failure is information rather than an error.
         const deterministic = classify(input.message);
-        const canUseModel = isConfigured() || Boolean(input.classifyWithModel);
+        // The default classifier is resolved HERE, not by the caller. A route
+        // that always passes one would make `canUseModel` true even with no
+        // API key, so the missing_api_key branch could never be reached.
+        const injected = Boolean(input.classifyWithModel);
+        const canUseModel = isConfigured() || injected;
+        const classifyWithModel = input.classifyWithModel ?? createModelClassifier();
 
         let modelEntity: AssistantEntity | null = null;
         let modelFilters: Record<string, unknown> = {};
@@ -73,9 +78,7 @@ export function createAssistantStream(input: AssistantStreamInput): ReadableStre
           degraded = 'missing_api_key';
         } else {
           try {
-            const result = input.classifyWithModel
-              ? await input.classifyWithModel(input.message)
-              : null;
+            const result = await classifyWithModel(input.message);
             if (result) {
               modelEntity = result.entity;
               modelFilters = result.filters;

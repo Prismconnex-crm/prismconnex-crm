@@ -47,6 +47,20 @@ describe('POST /api/assistant/chat', () => {
     expect(events[events.length - 1].type).toBe('done');
   });
 
+  it('reports missing_api_key when no key is configured', async () => {
+    // Regression: the route used to pass createModelClassifier() unconditionally,
+    // which made the stream believe a model was available and report
+    // no_tool_call instead. Injecting a stub masks this, so this test must go
+    // through the real route with nothing injected.
+    expect(process.env.ANTHROPIC_API_KEY).toBeFalsy();
+
+    const response = await POST(post({ message: 'people in Germany', currentPage: 'people' }));
+    const events = await read(response.body);
+    const first = events[0];
+    if (first.type !== 'route') throw new Error('expected route event');
+    expect(first.degraded).toBe('missing_api_key');
+  });
+
   it('rejects a missing message', async () => {
     const response = await POST(post({ currentPage: 'people' }));
     expect(response.status).toBe(400);

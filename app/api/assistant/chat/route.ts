@@ -1,7 +1,6 @@
 import { BadRequestError } from '@/lib/http/errors';
 import { jsonError } from '@/lib/http/response';
 import { consumeRateLimit } from '@/lib/assistant/rate-limit';
-import { createModelClassifier } from '@/lib/assistant/route';
 import { createAssistantErrorStream, createAssistantStream } from '@/lib/assistant/stream';
 import { ASSISTANT_ENTITIES, type AssistantEntity } from '@/lib/assistant/types';
 
@@ -74,14 +73,10 @@ export async function POST(request: Request) {
     }
 
     return new Response(
-      createAssistantStream({
-        message,
-        currentPage,
-        activeFilters,
-        previousEntity,
-        page,
-        classifyWithModel: createModelClassifier(),
-      }),
+      // No classifier passed: the stream resolves the real one itself, so a
+      // missing API key is reported as missing_api_key rather than as a model
+      // that answered without calling a tool.
+      createAssistantStream({ message, currentPage, activeFilters, previousEntity, page }),
       { status: 200, headers: NDJSON_HEADERS }
     );
   } catch (error) {

@@ -77,6 +77,32 @@ function buildTools(): AnthropicSdk.Tool[] {
   }));
 }
 
+/**
+ * Reports why a classification call failed, without ever throwing.
+ *
+ * The classifier degrades silently by design, which makes a misconfigured key
+ * indistinguishable from a model that simply chose no tool. This restores the
+ * distinction in the server log while keeping the degradation.
+ */
+function logClassifierFailure(error: unknown): void {
+  if (error instanceof Error && error.name === 'AbortError') {
+    console.warn(`[assistant] classifier aborted after ${TIMEOUT_MS}ms`);
+    return;
+  }
+
+  // Anthropic SDK errors carry status + type; read them defensively so this
+  // never becomes a second failure.
+  const status = (error as { status?: number } | null)?.status;
+  const type = (error as { type?: string } | null)?.type;
+  const message = error instanceof Error ? error.message : String(error);
+
+  console.warn(
+    `[assistant] classifier failed${status ? ` (HTTP ${status}` : ''}${
+      type ? `, ${type}` : ''
+    }${status ? ')' : ''}: ${message}`
+  );
+}
+
 export function createModelClassifier(): ModelClassifier {
   return async function classifyWithModel(message) {
     const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -110,9 +136,11 @@ export function createModelClassifier(): ModelClassifier {
 
       // Model answered without calling a tool — treat as unclassified.
       return null;
-    } catch {
-      // Any failure (network, abort, rate limit, malformed response) degrades
-      // to the deterministic classifier rather than surfacing an error.
+    } catch (error) {
+      // Any failure degrades to the deterministic classifier rather than
+      // surfacing an error — but it is logged, because a bad key, a 404 and a
+      // timeout are otherwise indistinguishable from a genuine no-tool-call.
+      logClassifierFailure(error);
       return null;
     } finally {
       clearTimeout(timer);
