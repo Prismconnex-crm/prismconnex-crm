@@ -2234,10 +2234,12 @@ Expected: no new warnings in `components/assistant/**`. One pre-existing error i
 - [ ] **Step 3: Confirm the legacy routes are untouched**
 
 ```bash
-git diff --stat main -- app/api/ai app/api/companies/ask app/api/events/search app/api/people/chat
+git log --oneline 9704761..HEAD -- app/api/ai app/api/companies/ask app/api/events/search app/api/people/chat
 ```
 
-Expected: **empty output.**
+Expected: **empty output** — no commit in this work touched them.
+
+Do **not** use `git diff --stat main -- <paths>` here: this whole feature branch *adds* those files relative to `main`, so that command reports them as changed even when the work never touched them. It measures branch-vs-main, not what this plan did.
 
 - [ ] **Step 4: Run the app and drive the handoff**
 
@@ -2279,7 +2281,7 @@ git commit -m "docs: record the shared assistant conversation layer"
 
 - `npx vitest run` green except the pre-existing `tests/e2e/auth.spec.ts`.
 - `npx tsc --noEmit` clean.
-- `git diff --stat main -- app/api/ai app/api/companies/ask app/api/events/search app/api/people/chat` empty.
+- `git log --oneline 9704761..HEAD -- app/api/ai app/api/companies/ask app/api/events/search app/api/people/chat` empty (not `git diff` against `main` — the branch adds those files).
 - `forceEntity` provably skips both classifiers (spy asserts the model classifier is never called).
 - A `forceEntity` reply can never produce a second `pendingHandoff`.
 - The People page answers inline through `/api/assistant/chat`, and the thread survives a refresh.
