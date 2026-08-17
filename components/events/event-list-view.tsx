@@ -1,11 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 import { findShowEvents } from '@/lib/find-shows/catalog';
 import { EventsFilterSidebar } from '@/components/events/events-filter-sidebar';
-import { EventsAiSearch } from '@/components/events/events-ai-search';
 import { EventsResultsTable } from '@/components/events/events-results-table';
 import { buildEventFilterChips, removeEventFilterChip } from '@/lib/events/chips';
 import {
@@ -15,7 +14,10 @@ import {
     serializeEventQueryState,
     type EventQueryState,
 } from '@/lib/events/filters';
-import { emptyEventFilters, type EventAnswerRow, type EventFilters } from '@/types/events';
+import { emptyEventFilters, type EventFilters } from '@/types/events';
+import { AssistantPanel } from '@/components/assistant/assistant-panel';
+import { useAssistantConversation } from '@/components/assistant/assistant-provider';
+import { eventsBinding } from '@/components/assistant/bindings/events';
 
 const PAGE_SIZE = 25;
 /** How many rows the answering model is allowed to see. */
@@ -49,10 +51,6 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
     const [likedIds, setLikedIds] = useState<Set<string>>(new Set());
     const [targetIds, setTargetIds] = useState<Set<string>>(new Set());
 
-    // The question behind the current result set, and the grounded answer to it.
-    const [question, setQuestion] = useState<string | null>(null);
-    const [answer, setAnswer] = useState<string | null>(null);
-    const [isAnswering, setIsAnswering] = useState(false);
 
     useEffect(() => {
         setQueryState(parseEventQueryState(window.location.search));
@@ -115,53 +113,27 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
         [filteredEvents, safePage]
     );
 
-    // Answer the user's question from the rows that actually matched. Runs after
-    // filtering, and re-runs if the filters are then adjusted by hand.
-    useEffect(() => {
-        if (!question) return;
-
-        const controller = new AbortController();
-        setIsAnswering(true);
-
-        const rows: EventAnswerRow[] = filteredEvents.slice(0, ANSWER_ROW_LIMIT).map((event) => ({
-            name: event.name,
-            organizer: event.organizer === '?' ? '' : event.organizer,
-            city: event.city,
-            country: event.country,
-            dates: event.displayDate,
-            category: event.primaryCategory,
-        }));
-
-        fetch('/api/ai/event-answer', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ question, totalMatched: filteredEvents.length, rows }),
-            signal: controller.signal,
-        })
-            .then((response) => (response.ok ? response.json() : { answer: null }))
-            .then((data: { answer?: string | null }) => {
-                setAnswer(typeof data.answer === 'string' ? data.answer : null);
-                setIsAnswering(false);
-            })
-            .catch((error) => {
-                if ((error as Error).name === 'AbortError') return;
-                // The table is already on screen; a missing summary is not worth
-                // an error state.
-                setAnswer(null);
-                setIsAnswering(false);
-            });
-
-        return () => controller.abort();
-    }, [question, filteredEvents]);
-
-    const applyQueryState = useCallback((next: EventQueryState, asked: string | null) => {
+    const applyQueryState = useCallback((next: EventQueryState) => {
         setQueryState(next);
         setPage(1);
-        if (asked !== null) {
-            setQuestion(asked);
-            setAnswer(null);
-        }
     }, []);
+
+    // A handoff carries filters the RAIL must show, not just the panel. Keyed by
+    // the question so a second handoff for the same target still applies.
+    const { state: conversation } = useAssistantConversation();
+    const appliedHandoffRef = useRef<string | null>(null);
+
+    useEffect(() => {
+        const handoff = conversation.pendingHandoff;
+        if (!handoff || handoff.to !== 'events' || !handoff.presetFilters) return;
+        const key = `${handoff.to}:${handoff.message}`;
+        if (appliedHandoffRef.current === key) return;
+        appliedHandoffRef.current = key;
+        setQueryState((prev) =>
+            eventsBinding.applyFilters(prev, handoff.presetFilters as Partial<EventQueryState>)
+        );
+        setPage(1);
+    }, [conversation.pendingHandoff]);
 
     const updateFilters = (filters: EventFilters) => {
         setQueryState((prev) => ({ ...prev, filters }));
@@ -176,17 +148,6 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
     const clearAll = () => {
         setQueryState({ filters: emptyEventFilters(), search: '' });
         setPage(1);
-        setQuestion(null);
-        setAnswer(null);
-    };
-
-    // Emptying the compact box drops the question, but leaves filters the user
-    // set by hand in the rail — those still have results worth showing.
-    const clearQuery = () => {
-        setQueryState((prev) => ({ ...prev, search: '' }));
-        setPage(1);
-        setQuestion(null);
-        setAnswer(null);
     };
 
     const removeChip = (chipId: string) => {
@@ -200,7 +161,7 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
     // a typed question or a single filter — means the rows are what the user
     // came for, so the pitch collapses to a one-line bar. Target Events is a
     // curated list rather than a search, so it skips the hero entirely.
-    const isSearchActive = mode === 'target' || chips.length > 0 || question !== null;
+    const isSearchActive = mode === 'target' || chips.length > 0;
 
     return (
         <div className="mx-auto w-full max-w-[1600px] space-y-5 pb-8">
@@ -263,17 +224,27 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                                 // and the page keeps its single scrollbar.
                                 className="flex flex-col overflow-y-auto rounded-[16px] border border-slate-200 bg-white shadow-sm dark:border-[#22304A] dark:bg-[#111B2E] xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)]"
                             >
-                                <EventsAiSearch
-                                    variant="compact"
-                                    filters={queryState.filters}
-                                    search={queryState.search}
-                                    question={question}
-                                    onApply={applyQueryState}
-                                    onRemoveChip={removeChip}
-                                    onClearAll={clearAll}
-                                    onClearQuery={clearQuery}
-                                    answer={answer}
-                                    isAnswering={isAnswering}
+                                <AssistantPanel
+                                    currentPage="events"
+                                    activeFilters={queryState as unknown as Record<string, unknown>}
+                                    rowContext={{
+                                        likedIds,
+                                        targetIds,
+                                        onToggleLike: toggleLike,
+                                        onToggleTarget: toggleTarget,
+                                    }}
+                                    onGoBack={(entity, sourceFilters) => {
+                                        // Spec 2b binds People and Events; a
+                                        // back-jump to Companies arrives in 2c.
+                                        if (entity === 'events' && sourceFilters) {
+                                            applyQueryState(
+                                                eventsBinding.applyFilters(
+                                                    queryState,
+                                                    sourceFilters as Partial<EventQueryState>
+                                                )
+                                            );
+                                        }
+                                    }}
                                 />
 
                                 <div className="flex shrink-0 items-center justify-between gap-3 border-b border-slate-200 px-4 py-3 dark:border-[#22304A]">
@@ -319,16 +290,27 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <EventsAiSearch
-                                    filters={queryState.filters}
-                                    search={queryState.search}
-                                    question={question}
-                                    onApply={applyQueryState}
-                                    onRemoveChip={removeChip}
-                                    onClearAll={clearAll}
-                                    onClearQuery={clearQuery}
-                                    answer={answer}
-                                    isAnswering={isAnswering}
+                                <AssistantPanel
+                                    currentPage="events"
+                                    activeFilters={queryState as unknown as Record<string, unknown>}
+                                    rowContext={{
+                                        likedIds,
+                                        targetIds,
+                                        onToggleLike: toggleLike,
+                                        onToggleTarget: toggleTarget,
+                                    }}
+                                    onGoBack={(entity, sourceFilters) => {
+                                        // Spec 2b binds People and Events; a
+                                        // back-jump to Companies arrives in 2c.
+                                        if (entity === 'events' && sourceFilters) {
+                                            applyQueryState(
+                                                eventsBinding.applyFilters(
+                                                    queryState,
+                                                    sourceFilters as Partial<EventQueryState>
+                                                )
+                                            );
+                                        }
+                                    }}
                                 />
                             </motion.div>
                         )}
