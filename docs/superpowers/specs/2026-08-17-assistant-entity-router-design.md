@@ -76,11 +76,17 @@ services already work this way.
 
 ### `total` is `number | null`
 
-`COUNT(*)` on the 27 GB companies SQLite dataset is too slow, so `/api/companies`
-deliberately returns `total: null` and the UI pages by cursor. The adapter
-interface must type this honestly. Prose templates must handle null without
-emitting "0 results" — a confident report of zero companies is worse than no
-number at all.
+`/api/companies` deliberately returns `total: null` and `totalPages: null`,
+paging by cursor instead — counting the discovery dataset is too slow to do per
+request. The adapter interface must type this honestly. Prose templates must
+handle null without emitting "0 results"; a confident report of zero companies
+is worse than no number at all.
+
+Note: the companies route now queries **Postgres** —
+`prisma.$queryRawUnsafe` against the `"DiscoveryCompany"` table via
+`lib/db/prisma.ts`. `CLAUDE.md` still describes this dataset as SQLite behind
+`lib/db/sqlite-companies.ts`; that is stale. Events and People both read
+in-memory seed JSON and are unaffected.
 
 ### Confidence is computed, not self-reported
 
@@ -154,11 +160,20 @@ is enforced by types rather than by prompt text.
 
 ### Event filter shape
 
-Two event filter systems exist: `lib/events/filters.ts` (`EventQueryState`,
-drives the Explorer rail) and `lib/find-shows/filter-events.ts` (`EventFilters`,
-drives the AI ask path). The adapter emits `EventFilters`, because that is what
-`filterEvents()` consumes and what the existing AI path already produces.
-Reconciling the two for the Explorer rail is a UI concern, deferred to Spec 2.
+Two types share the name `EventFilters`:
+
+- `types/events.ts` — **array-valued** (`countries: string[]`, `categories:
+  string[]`, `dateFrom`/`dateTo`), drives the Explorer sidebar and
+  `EventQueryState` URL serialisation in `lib/events/filters.ts`.
+- `models/event-query.ts` — **single-valued** (`city`, `country`, `region`,
+  `category`, `keyword`, `monthFrom`/`monthTo`/`year`), a Zod schema consumed by
+  `filterEvents()` in `lib/find-shows/filter-events.ts`.
+
+The adapter emits the **`models/event-query.ts`** shape, because that is what
+`filterEvents()` accepts, what `eventFiltersSchema` already validates, and what
+the existing AI path produces. To avoid the name collision it is imported as
+`AskEventFilters`. Mapping it onto the array-valued sidebar shape is a UI
+concern, deferred to Spec 2.
 
 ## Classification and confidence
 
@@ -314,10 +329,11 @@ production passes the real implementations. No network mocking library required.
 
 ### Known coverage gap
 
-The companies adapter cannot be integration-tested on the current machine:
-`prisma/dev.db` is 4 KB, not the 27 GB discovery dataset. It is tested against a
-seam with a fake row source. Its real SQL path remains covered by the existing
-`/api/companies` tests. This is a stated limitation, not an oversight.
+The companies adapter's search is tested against an injected row-source seam
+with a fake, not against a live database — the suite must run with no Postgres
+instance up, matching every existing test in `tests/integration`. Its real SQL
+path remains covered by `tests/integration/companies-filter-api.test.ts`. This
+is a stated limitation, not an oversight.
 
 ## Follow-on work (Spec 2)
 
