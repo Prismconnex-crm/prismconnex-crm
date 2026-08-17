@@ -1,4 +1,5 @@
 import { peopleBinding } from './bindings/people';
+import { eventsBinding } from './bindings/events';
 import type { AssistantEntity } from '@/lib/assistant/types';
 import type { PageBinding } from './types';
 
@@ -6,7 +7,8 @@ type AnyBinding = PageBinding<never, never>;
 
 const defaults: Partial<Record<AssistantEntity, AnyBinding>> = {
   people: peopleBinding as unknown as AnyBinding,
-  // events and companies land in Spec 2b.
+  events: eventsBinding as unknown as AnyBinding,
+  // companies lands in Spec 2c.
 };
 
 const registry: Partial<Record<AssistantEntity, AnyBinding>> = { ...defaults };

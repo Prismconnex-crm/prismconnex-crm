@@ -2,6 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { peopleBinding } from '@/components/assistant/bindings/people';
 import { bindingFor, resetBindings, setBindingForTests } from '@/components/assistant/registry';
 import type { PeopleRowContext } from '@/components/assistant/bindings/people';
+import { eventsBinding } from '@/components/assistant/bindings/events';
+import { emptyEventFilters } from '@/types/events';
 import { emptyPeopleFilters } from '@/types/people';
 
 describe('peopleBinding', () => {
@@ -46,15 +48,15 @@ describe('registry', () => {
   });
 
   it('throws for an entity with no binding yet', () => {
-    // events and companies land in Spec 2b.
-    expect(() => bindingFor('events')).toThrow(/no binding/i);
+    // companies lands in Spec 2c.
+    expect(() => bindingFor('companies')).toThrow(/no binding/i);
   });
 
   it('supports a test seam', () => {
-    setBindingForTests('events', { ...peopleBinding, entity: 'events' } as never);
-    expect(bindingFor('events').entity).toBe('events');
+    setBindingForTests('companies', { ...peopleBinding, entity: 'companies' } as never);
+    expect(bindingFor('companies').entity).toBe('companies');
     resetBindings();
-    expect(() => bindingFor('events')).toThrow();
+    expect(() => bindingFor('companies')).toThrow();
   });
 });
 
@@ -82,5 +84,63 @@ describe('peopleBinding — row context', () => {
       'savedIds',
       'selectedIds',
     ]);
+  });
+});
+
+describe('eventsBinding', () => {
+  it('declares its entity and route', () => {
+    expect(eventsBinding.entity).toBe('events');
+    expect(eventsBinding.route).toBe('/app/events');
+  });
+
+  it('starts from the shared empty query state', () => {
+    const empty = eventsBinding.emptyFilters();
+    expect(empty.filters).toEqual(emptyEventFilters());
+    expect(empty.search).toBe('');
+  });
+
+  it('merges the nested filters key-wise rather than replacing the object', () => {
+    const current = {
+      filters: { ...emptyEventFilters(), countries: ['France'], categories: ['Packaging'] as never },
+      search: 'expo',
+    };
+
+    const next = eventsBinding.applyFilters(current, {
+      filters: { countries: ['Germany'] } as never,
+    });
+
+    expect(next.filters.countries).toEqual(['Germany']); // replaced
+    expect(next.filters.categories).toEqual(['Packaging']); // preserved
+    expect(next.search).toBe('expo'); // preserved
+  });
+
+  it('replaces search when it is supplied', () => {
+    const current = { filters: emptyEventFilters(), search: 'old' };
+    expect(eventsBinding.applyFilters(current, { search: 'new' }).search).toBe('new');
+  });
+
+  it('leaves search alone when it is absent', () => {
+    const current = { filters: emptyEventFilters(), search: 'old' };
+    expect(eventsBinding.applyFilters(current, { filters: emptyEventFilters() }).search).toBe('old');
+  });
+
+  it('accepts an explicit empty array as a real clear', () => {
+    const current = { filters: { ...emptyEventFilters(), countries: ['France'] }, search: '' };
+    const next = eventsBinding.applyFilters(current, { filters: { countries: [] } as never });
+    expect(next.filters.countries).toEqual([]);
+  });
+
+  it('renderRows takes a context argument', () => {
+    expect(eventsBinding.renderRows.length).toBe(2);
+  });
+});
+
+describe('registry — events registered', () => {
+  it('no longer throws for events', () => {
+    expect(bindingFor('events').entity).toBe('events');
+  });
+
+  it('still throws for companies, which lands in Spec 2c', () => {
+    expect(() => bindingFor('companies')).toThrow(/no binding/i);
   });
 });
