@@ -32,14 +32,13 @@ function makeEvent(overrides: Partial<FindShowEvent> & { slug: string }): FindSh
     startMonth: '2026-03',
     endMonth: '2026-03',
     displayDate: '01 - 03 Mar 2026',
-    searchText: '',
-    // Added by the Aug 2026 - Jul 2027 eventseye import: the catalog now carries
-    // the source description, the raw seed city string used for the geocode
-    // cache, and the month/duration columns the Month-Year filter reads.
-    description: 'Sample description',
-    seedCity: 'Berlin (D - Germany)',
+    // Added by the eventseye calendar import: the catalog now carries a
+    // description, the seed's raw city, a Month-Year label and a duration.
+    description: 'A sample trade show used by the filter tests.',
+    seedCity: 'Berlin',
     monthYear: 'March 2026',
     duration: '3 days',
+    searchText: '',
     seedAsset: { eventseyeUrl: null, bannerUrl: null, logoUrl: null },
   };
 

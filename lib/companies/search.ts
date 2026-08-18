@@ -1,0 +1,299 @@
+export const DEFAULT_LIMIT = 30;
+export const MAX_LIMIT = 100;
+
+// Only select columns we actually need for the list view (faster I/O).
+// rowCursor is bigint in Postgres; cast to int so JSON serialization works
+// (max value ~36.5M fits comfortably).
+const LIST_COLUMNS = `
+  "rowCursor"::int AS "rowCursor",
+  id,
+  name,
+  category,
+  domain,
+  founded,
+  "employeeRange",
+  headquarters,
+  region,
+  "engagementScore",
+  tags,
+  highlights,
+  insights,
+  email,
+  phone
+`;
+
+export type CompanyRow = {
+  rowCursor: number;
+  id: string;
+  name: string;
+  category: string | null;
+  description?: string | null;
+  domain: string | null;
+  website?: string | null;
+  founded: string | null;
+  employeeRange: string | null;
+  headquarters: string | null;
+  region: string | null;
+  revenueRange?: string | null;
+  engagementScore: number | null;
+  trustSignals?: string | null;
+  tags: string | null;
+  email?: string | null;
+  phone?: string | null;
+  highlights: string | null;
+  insights: string | null;
+};
+
+export type SqlParam = string | number;
+
+export type CompanySearchFilters = {
+  search: string | null;
+  category: string | null;
+  employeeRange: string | null;
+  region: string | null;
+  country: string | null;
+};
+
+/** Injectable so tests can run with no database. */
+export type CompanyRowSource = (sql: string, params: SqlParam[]) => Promise<CompanyRow[]>;
+
+/**
+ * Prisma is imported lazily, NOT at module scope.
+ *
+ * The assistant's adapter registry pulls this module into every test file's
+ * import graph. A static `import { prisma }` would construct a PrismaClient
+ * during collection and fail the whole suite on a machine with no reachable
+ * DATABASE_URL — even for tests that never touch companies.
+ */
+const defaultRowSource: CompanyRowSource = async (sql, params) => {
+  const { prisma } = await import('@/lib/db/prisma');
+  return prisma.$queryRawUnsafe<CompanyRow[]>(sql, ...params);
+};
+
+export function splitList(value: string | null | undefined) {
+  return value ? value.split(',').map((item) => item.trim()).filter(Boolean) : [];
+}
+
+export function cleanParam(value: string | null) {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : null;
+}
+
+export function parseLimit(value: string | null) {
+  const requested = Number.parseInt(value || String(DEFAULT_LIMIT), 10);
+  if (!Number.isFinite(requested)) return DEFAULT_LIMIT;
+  return Math.min(MAX_LIMIT, Math.max(1, requested));
+}
+
+export function formatCompany(row: CompanyRow) {
+  return {
+    ...row,
+    name: row.name.replace(/\s+\d+$/, ''),
+    category: row.category ?? '',
+    description: row.description ?? '',
+    domain: row.domain ?? '',
+    website: row.website ?? '',
+    founded: row.founded ?? '',
+    employeeRange: row.employeeRange ?? '',
+    headquarters: row.headquarters ?? '',
+    region: row.region ?? '',
+    revenueRange: row.revenueRange ?? '',
+    engagementScore: row.engagementScore ?? 0,
+    trustSignals: row.trustSignals ?? '',
+    tags: splitList(row.tags),
+    email: row.email ?? '',
+    phone: row.phone ?? '',
+    highlights: splitList(row.highlights),
+    insights: splitList(row.insights),
+    events: [],
+    deals: [],
+    activity: [],
+  };
+}
+
+export type FormattedCompany = ReturnType<typeof formatCompany>;
+
+// headquarters is stored as "City, Country" (occasionally "City, State,
+// Country"), so the country is the last comma-segment. Matching the extracted
+// country by equality (rather than a leading-wildcard `LIKE '%, X'`, which can
+// never use an index and full-scans 36M rows) lets the query hit
+// idx_discovery_cat_region_country_emp. The expression MUST match the index's
+// expression exactly. The dataset mixes short/long country names, so match both.
+const COUNTRY_EXPR = `trim(split_part(headquarters, ',', -1))`;
+
+// The picker shows full country names (see COMPANY_COUNTRIES); the dataset
+// stores shorter forms in `headquarters`. Map the ones that differ so the
+// filter still matches.
+const COUNTRY_ALIASES: Record<string, string[]> = {
+  'United States of America': ['USA', 'United States'],
+  'United Kingdom': ['UK', 'United Kingdom'],
+  // legacy short forms, still accepted from saved/shared URLs
+  USA: ['USA', 'United States'],
+  UK: ['UK', 'United Kingdom'],
+};
+
+// Each country lives in exactly one region; pinning it lets the query planner
+// use the (category, region, ...) composite indexes instead of probing the
+// whole table for the headquarters suffix.
+// Only the countries actually present in the dataset need a region pin; any
+// other country simply skips this optimisation.
+const COUNTRY_REGION: Record<string, string> = {
+  'United States of America': 'Americas',
+  USA: 'Americas',
+  Canada: 'Americas',
+  'United Kingdom': 'Europe',
+  UK: 'Europe',
+  Germany: 'Europe',
+  France: 'Europe',
+  India: 'Asia-Pacific',
+  Japan: 'Asia-Pacific',
+  Singapore: 'Asia-Pacific',
+  Australia: 'Asia-Pacific',
+};
+
+// The dataset mixes coarse and fine-grained headcount bands; expand the coarse
+// ones so e.g. "51-200" also matches rows stored as "51-100"/"101-200".
+const EMPLOYEE_RANGE_EXPANSION: Record<string, string[]> = {
+  '51-200': ['51-200', '51-100', '101-200'],
+  '1001-5000': ['1001-5000', '1001-2000', '2001-5000'],
+  '1001+': ['1001+', '1001-2000', '2001-5000', '1001-5000', '5001-10000', '10001+'],
+};
+
+export function buildCompanyQuery(
+  filters: CompanySearchFilters,
+  limit: number,
+  cursor: number
+): { sql: string; params: SqlParam[] } {
+  const { search, category, employeeRange, region, country } = filters;
+  const where: string[] = [];
+  const params: SqlParam[] = [];
+  // Postgres positional placeholders: push the value, use the returned $n.
+  const p = (value: SqlParam) => {
+    params.push(value);
+    return `$${params.length}`;
+  };
+
+  /**
+   * The dataset stores a category in two spellings: the bulk rows are
+   * lowercase ("financial services"), while the real-company import used
+   * title case ("Financial Services"). The rail always sends the lowercase
+   * vocabulary from lib/company-classification, so a plain equality silently
+   * dropped the title-cased rows — "Financial Services" + Europe returned an
+   * empty page while 41 matching companies sat in the table.
+   *
+   * IN (...) over the spelling variants rather than lower(category) = $1:
+   * an expression comparison cannot use idx_discovery_cat_region_cursor, and
+   * a sequential scan over 36.5M rows is not an option here.
+   */
+  const applyCategoryFilter = () => {
+    if (!category) return;
+    const lower = category.toLowerCase();
+    const titleCase = lower.replace(
+      /(^|[\s&/,-]+)([a-z])/g,
+      (_, prefix, letter) => prefix + letter.toUpperCase()
+    );
+    const variants = Array.from(new Set([category, lower, titleCase]));
+    where.push(`category IN (${variants.map((value) => p(value)).join(',')})`);
+  };
+
+  const applyEmployeeFilter = () => {
+    if (!employeeRange) return;
+    const values = EMPLOYEE_RANGE_EXPANSION[employeeRange] ?? [employeeRange];
+    where.push(`"employeeRange" IN (${values.map((v) => p(v)).join(',')})`);
+  };
+
+  const applyCountryFilter = () => {
+    if (!country) return;
+    const names = COUNTRY_ALIASES[country] ?? [country];
+    where.push(`${COUNTRY_EXPR} IN (${names.map((n) => p(n)).join(',')})`);
+    const inferredRegion = COUNTRY_REGION[country];
+    if (inferredRegion && !region) {
+      where.push(`region = ${p(inferredRegion)}`);
+    }
+  };
+
+  // ── Search mode: case-insensitive prefix search via the lower(name) index ──
+  // idx_discovery_name_lower_pattern is a text_pattern_ops index, which only
+  // serves the pattern operators (~>=~ / ~<~), not collation-aware >= / < —
+  // and unlike a parameterized LIKE it stays index-scannable with bound
+  // parameters. ORDER BY must use the same operator ordering to stay sorted.
+  if (search) {
+    const lower = search.toLowerCase();
+    const upperBound =
+      lower.slice(0, -1) + String.fromCharCode(lower.charCodeAt(lower.length - 1) + 1);
+    where.push(`lower(name) ~>=~ ${p(lower)} AND lower(name) ~<~ ${p(upperBound)}`);
+
+    applyCategoryFilter();
+    applyEmployeeFilter();
+    if (region) where.push(`region = ${p(region)}`);
+    applyCountryFilter();
+
+    return {
+      sql: `
+        SELECT ${LIST_COLUMNS}
+        FROM "DiscoveryCompany"
+        WHERE ${where.join(' AND ')}
+        ORDER BY lower(name) USING ~<~
+        LIMIT ${p(limit + 1)}
+      `,
+      params,
+    };
+  }
+
+  // ── Browse mode: use rowCursor for instant pagination ──
+  // rowCursor DESC shows newest companies first (Indian MNCs were inserted
+  // last = highest cursors; rowCursor mirrors the original SQLite rowid).
+  applyCategoryFilter();
+  applyEmployeeFilter();
+  if (region) where.push(`region = ${p(region)}`);
+  applyCountryFilter();
+
+  if (cursor > 0) where.push(`"rowCursor" < ${p(cursor)}`);
+
+  const whereClause = where.length > 0 ? where.join(' AND ') : '1 = 1';
+
+  return {
+    sql: `
+      SELECT ${LIST_COLUMNS}
+      FROM "DiscoveryCompany"
+      WHERE ${whereClause}
+      ORDER BY "DiscoveryCompany"."rowCursor" DESC
+      LIMIT ${p(limit + 1)}
+    `,
+    params,
+  };
+}
+
+/**
+ * `total` and `totalPages` are deliberately null: counting the discovery
+ * dataset per request is too slow, so the UI pages by cursor instead. Callers
+ * must render an absent count rather than reporting zero.
+ */
+export async function searchCompanies(input: {
+  filters: CompanySearchFilters;
+  limit: number;
+  cursor: number;
+  rowSource?: CompanyRowSource;
+}): Promise<{
+  companies: FormattedCompany[];
+  nextCursor: string | null;
+  hasNextPage: boolean;
+  total: null;
+  totalPages: null;
+}> {
+  const { sql, params } = buildCompanyQuery(input.filters, input.limit, input.cursor);
+  const rows = await (input.rowSource ?? defaultRowSource)(sql, params);
+
+  // One row is over-fetched purely to detect a next page.
+  const pageRows = rows.slice(0, input.limit);
+  const hasNextPage = rows.length > input.limit;
+  const lastRow = pageRows[pageRows.length - 1];
+
+  return {
+    companies: pageRows.map(formatCompany),
+    nextCursor: hasNextPage ? String(lastRow?.rowCursor ?? '') : null,
+    hasNextPage,
+    total: null,
+    totalPages: null,
+  };
+}

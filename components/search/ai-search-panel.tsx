@@ -23,7 +23,7 @@ const TABS = [
   { key: "saved", label: "Saved" },
 ] as const;
 
-type TabKey = (typeof TABS)[number]["key"];
+export type TabKey = (typeof TABS)[number]["key"];
 
 function QueryCard({
   entry,
@@ -178,6 +178,7 @@ export function AiSearchPanel({
   kindLabel,
   isBusy = false,
   note,
+  defaultTab = null,
   onSubmit,
   onSelectQuery,
   children,
@@ -189,12 +190,14 @@ export function AiSearchPanel({
   kindLabel: string;
   isBusy?: boolean;
   note?: ReactNode;
+  /** Which history tab starts expanded. `null` (the default) keeps it collapsed. */
+  defaultTab?: TabKey | null;
   onSubmit: (prompt: string) => void;
   onSelectQuery: (entry: SavedQuery) => void;
   children?: ReactNode;
 }) {
   const [prompt, setPrompt] = useState("");
-  const [activeTab, setActiveTab] = useState<TabKey | null>(null);
+  const [activeTab, setActiveTab] = useState<TabKey | null>(defaultTab);
   const { recent, saved, toggleSaved, remove } = useQueryStore(kind);
 
   const entries = activeTab === "saved" ? saved : recent;
