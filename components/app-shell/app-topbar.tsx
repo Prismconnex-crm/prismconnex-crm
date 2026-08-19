@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Bell,
+  ChevronDown,
   Menu,
   Search,
   Plus,
@@ -13,6 +14,10 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { cn } from "@/lib/utils";
+import { UserAvatar } from "./user-avatar";
+import { AvatarViewer } from "./avatar-viewer";
+import { AVATAR_CHANGED_EVENT, type AvatarChangedDetail } from "@/lib/profile-events";
 import type { AppShellUser } from "./app-shell";
 
 /** Initials for the avatar, e.g. "Ada Byron Lovelace" -> "AL". */
@@ -40,11 +45,35 @@ export function AppTopbar({
   const [searchValue, setSearchValue] = useState("");
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [newMenuOpen, setNewMenuOpen] = useState(false);
+  const [viewerOpen, setViewerOpen] = useState(false);
 
   // Falls back to the email local-part, then a neutral label, so the topbar
   // never renders an identity the session does not actually have.
   const displayName = user?.name?.trim() || user?.email?.split("@")[0] || "Account";
   const initials = initialsOf(user?.name ?? null, user?.email ?? null);
+
+  /**
+   * The avatar is the one piece of identity that changes without a navigation,
+   * so it is held in state seeded from the server-rendered prop. The Profile
+   * page's photo upload broadcasts AVATAR_CHANGED_EVENT and both avatars here
+   * update in place — no reload, no refetch.
+   */
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(user?.avatarUrl ?? null);
+
+  // Re-seed when the server sends a new value (a fresh load, or a navigation
+  // that re-renders the layout), so the prop stays authoritative.
+  useEffect(() => {
+    setAvatarUrl(user?.avatarUrl ?? null);
+  }, [user?.avatarUrl]);
+
+  useEffect(() => {
+    const onAvatarChanged = (event: Event) => {
+      setAvatarUrl((event as CustomEvent<AvatarChangedDetail>).detail ?? null);
+    };
+
+    window.addEventListener(AVATAR_CHANGED_EVENT, onAvatarChanged);
+    return () => window.removeEventListener(AVATAR_CHANGED_EVENT, onAvatarChanged);
+  }, []);
 
   const submitSearch = () => {
     const query = searchValue.trim();
@@ -159,20 +188,48 @@ export function AppTopbar({
 
         {/* User menu */}
         <div className="relative ml-1">
-          <button
-            type="button"
-            onClick={() => setUserMenuOpen(!userMenuOpen)}
-            aria-haspopup="menu"
-            aria-expanded={userMenuOpen}
-            className="flex items-center gap-2 rounded-full border border-white/[0.04] bg-[#141A2D] p-1 pr-3 hover:bg-[#1A2138] transition-colors"
-          >
-            <div className="flex size-7 items-center justify-center rounded-full bg-slate-200 text-xs font-bold text-slate-700">
-              {initials || <User className="size-4" />}
-            </div>
-            <span className="text-sm font-medium text-slate-200 hidden sm:block">
-              {displayName}
-            </span>
-          </button>
+          {/*
+              Two controls sharing one pill, not one button doing two things:
+              the photo opens the image viewer, the name opens the menu. They
+              have to be siblings because a <button> cannot legally nest inside
+              another <button> — the browser drops the inner one.
+          */}
+          <div className="flex max-w-[260px] items-center rounded-full border border-white/[0.04] bg-[#141A2D] p-1 pr-1">
+            <button
+              type="button"
+              onClick={() => setViewerOpen(true)}
+              title="View profile image"
+              aria-label="View profile image"
+              className="rounded-full transition-opacity hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+            >
+              <UserAvatar src={avatarUrl} initials={initials} size={36} />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setUserMenuOpen(!userMenuOpen)}
+              aria-haspopup="menu"
+              aria-expanded={userMenuOpen}
+              className="flex min-w-0 items-center gap-1 rounded-full px-2 py-1.5 transition-colors hover:bg-white/[0.06] focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+            >
+              {/*
+                  truncate + min-w-0 so a long name ("Reddappa gari
+                  manjunatha") shortens instead of pushing the header controls
+                  out of line. Hidden below sm, where the chevron alone opens
+                  the menu and the avatar stays visible.
+              */}
+              <span className="hidden min-w-0 truncate text-sm font-medium text-slate-200 sm:block">
+                {displayName}
+              </span>
+              <ChevronDown
+                className={cn(
+                  "size-4 shrink-0 text-slate-400 transition-transform",
+                  userMenuOpen && "rotate-180"
+                )}
+                aria-hidden="true"
+              />
+            </button>
+          </div>
 
           {userMenuOpen && (
             <>
@@ -180,22 +237,39 @@ export function AppTopbar({
                 className="fixed inset-0 z-40"
                 onClick={() => setUserMenuOpen(false)}
               />
-              {/* w-56 rather than w-48 so an email fits without truncating
-                  at typical lengths; longer ones still truncate cleanly. */}
+              {/* w-64 rather than w-56: the identity block is now centred
+                  around a 64px photo, and an email still needs to fit. */}
               <div
                 role="menu"
                 aria-label="User menu"
-                className="absolute right-0 top-11 z-50 w-56 rounded-xl border border-white/[0.08] bg-[#0E1321] p-1.5 shadow-xl animate-in fade-in zoom-in-95 duration-200"
+                className="absolute right-0 top-12 z-50 w-64 rounded-xl border border-white/[0.08] bg-[#0E1321] p-1.5 shadow-xl animate-in fade-in zoom-in-95 duration-200"
               >
-                {/* Signed-in identity. Not interactive — the same name shown on
-                    the trigger, plus the email, which appears nowhere else. */}
-                <div className="px-3 py-2">
-                  <p className="truncate text-sm font-medium text-slate-200">{displayName}</p>
-                  {user?.email ? (
-                    <p className="truncate text-[12px] text-slate-500" title={user.email}>
-                      {user.email}
+                {/* Signed-in identity: the same photo and name as the trigger,
+                    plus the email, which appears nowhere else in the shell.
+                    The photo opens the viewer, as it does on the trigger. */}
+                <div className="flex flex-col items-center gap-2 px-3 py-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setUserMenuOpen(false);
+                      setViewerOpen(true);
+                    }}
+                    title="View profile image"
+                    aria-label="View profile image"
+                    className="rounded-full transition-opacity hover:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+                  >
+                    <UserAvatar src={avatarUrl} initials={initials} size={64} />
+                  </button>
+                  <div className="w-full text-center">
+                    <p className="break-words text-sm font-semibold text-slate-100">
+                      {displayName}
                     </p>
-                  ) : null}
+                    {user?.email ? (
+                      <p className="truncate text-[12px] text-slate-500" title={user.email}>
+                        {user.email}
+                      </p>
+                    ) : null}
+                  </div>
                 </div>
 
                 <div className="my-1 border-t border-white/[0.04]" />
@@ -206,7 +280,7 @@ export function AppTopbar({
                   className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition-colors hover:bg-white/[0.04] hover:text-white"
                   onClick={() => {
                     setUserMenuOpen(false);
-                    router.push("/app/settings");
+                    router.push("/app/profile");
                   }}
                 >
                   <User className="size-3.5" /> Profile
@@ -242,6 +316,16 @@ export function AppTopbar({
           )}
         </div>
       </div>
+
+      {/* Portals to the body, so the header's stacking context and
+          overflow cannot clip it. */}
+      <AvatarViewer
+        open={viewerOpen}
+        onOpenChange={setViewerOpen}
+        src={avatarUrl}
+        initials={initials}
+        name={displayName}
+      />
     </header>
   );
 }

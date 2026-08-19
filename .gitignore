@@ -27,8 +27,13 @@ yarn-debug.log*
 yarn-error.log*
 
 # local env files
+# `.env*.local` alone does NOT cover .env.production / .env.development /
+# .env.test — it only matches the `.local` suffixed variants — so each real
+# environment file is listed explicitly. .env.example stays tracked on purpose:
+# it is the placeholder template, and is force-added if ever needed.
 .env
-.env*.local
+.env.*
+!.env.example
 
 # vercel
 .vercel

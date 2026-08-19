@@ -19,6 +19,8 @@ import { IntegrationsSection } from "./integrations-section";
 import { DeliverabilitySection } from "./deliverability-section";
 import { TeamSection } from "./team-section";
 import { SettingsSection } from "./settings-section";
+import { ProfileSection } from "./profile-section";
+import { BillingSection } from "./billing-section";
 import { AuditLogSection } from "./audit-log-board";
 
 function SectionFallback({ title }: { title: string }) {
@@ -77,6 +79,8 @@ export function AppSectionRouter({ slug }: Props) {
     if (section === "deliverability") return <DeliverabilitySection />;
     if (section === "team") return <TeamSection />;
     if (section === "settings") return <SettingsSection />;
+    if (section === "profile") return <ProfileSection />;
+    if (section === "billing") return <BillingSection />;
     if (section === "audit-log") return <AuditLogSection />;
     return <SectionFallback title="Unknown route" />;
   }, [section, sub, preferences]);

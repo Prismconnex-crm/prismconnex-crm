@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AuthService } from "@/services/auth.service";
 import {
+    applyPendingMfaCookie,
     applySessionCookies,
     applySupabaseTokenCookie,
     createAppSessionToken,
@@ -8,6 +9,9 @@ import {
 } from "@/lib/auth/session";
 import { resolveOnboardingState } from "@/lib/auth/tenant";
 import { authDebug } from "@/lib/auth/auth-debug";
+import * as gotrue from "@/lib/supabase/gotrue";
+import { AccountSecurityService } from "@/services/account-security.service";
+import { ProfileService } from "@/services/profile.service";
 
 /**
  * OAuth callback for Google / Microsoft sign-in via Supabase.
@@ -60,6 +64,47 @@ export async function GET(req: NextRequest) {
 
     try {
         const { session, profile } = await AuthService.completeOAuth(code, codeVerifier);
+
+        // A soft-deleted account still has working provider credentials, so the
+        // block belongs here as well as on the password path.
+        AccountSecurityService.assertSignInAllowed(profile.accountStatus);
+
+        // ── Second factor, same gate as the password path ──
+        //
+        // Supabase links a Google/Microsoft identity to an existing account by
+        // email, so without this check anyone who enrolled TOTP after signing
+        // up with a password could skip it entirely by clicking "Continue with
+        // Google". The second factor has to gate every route to a session, not
+        // just the one it was added to.
+        //
+        // The pending state is parked exactly as on the password path, and the
+        // user is redirected to the sign-in page, which renders the code step
+        // from ?mfa=1 without asking for the password again.
+        const factors = await gotrue.listFactors(session.access_token).catch(() => []);
+        const verifiedFactor = gotrue.findVerifiedTotpFactor(factors);
+
+        if (verifiedFactor) {
+            const challenge = await gotrue.challengeFactor(
+                session.access_token,
+                verifiedFactor.id
+            );
+
+            const mfaUrl = new URL("/auth/sign-in", req.nextUrl.origin);
+            mfaUrl.searchParams.set("mfa", "1");
+
+            const pendingResponse = NextResponse.redirect(mfaUrl);
+            pendingResponse.cookies.delete(PKCE_VERIFIER_COOKIE);
+
+            return applyPendingMfaCookie(pendingResponse, {
+                factorId: verifiedFactor.id,
+                challengeId: challenge.id,
+                access_token: session.access_token,
+                refresh_token: session.refresh_token,
+                email: profile.email,
+            });
+        }
+
+        await ProfileService.recordLogin(session.user.id);
 
         const { onboarded, workspaceId } = await resolveOnboardingState({
             supabaseUserId: session.user.id,

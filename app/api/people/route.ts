@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db/prisma";
+import { resolveTenant } from "@/lib/auth/tenant";
+import { BillingService } from "@/services/billing.service";
 
 export const dynamic = "force-dynamic";
 
@@ -145,6 +147,30 @@ export async function GET(request: Request) {
       .map(mapProfile)
       .filter((employee) => employee.name)
       .slice(0, limit);
+
+    // Meter it. ContactOut bills per profile returned, so that is the unit
+    // charged here; this is the app's only genuinely credit-metered call and
+    // therefore the only thing that writes to the credit ledger.
+    //
+    // Fire-and-forget with its own catch: the lookup the user asked for has
+    // already succeeded, and failing it now because an unrelated ledger insert
+    // errored would trade a working feature for a bookkeeping row.
+    void (async () => {
+      try {
+        const tenant = await resolveTenant();
+        if (!tenant || employees.length === 0) return;
+
+        await BillingService.recordUsage({
+          workspaceId: tenant.workspaceId,
+          userId: tenant.userId,
+          kind: "PEOPLE_LOOKUP",
+          amount: employees.length,
+          description: domain || company || null ? `Lookup: ${domain || company}` : undefined,
+        });
+      } catch {
+        // Metering is best-effort; see above.
+      }
+    })();
 
     return NextResponse.json({ configured: true, employees });
   } catch (error) {

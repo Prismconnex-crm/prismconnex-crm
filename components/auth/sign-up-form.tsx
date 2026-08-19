@@ -8,6 +8,7 @@ import { AUTH_PRIMARY_BUTTON_CLASSES, AuthErrorBanner } from '@/components/auth/
 import { FormField, PasswordField } from '@/components/auth/form-field';
 import { useCompanyDetection } from '@/components/auth/use-company-detection';
 import { createSignUpSchema, toFieldErrors } from '@/models/auth';
+import { readJsonResponse, type ApiErrorBody } from '@/lib/http/read-json';
 
 /**
  * Sign-up form.
@@ -74,9 +75,11 @@ export function SignUpForm() {
         body: JSON.stringify({ firstName, middleName, lastName, email, phone, password }),
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error?.message || t('errors.signUp'));
+      const data = await readJsonResponse<ApiErrorBody & { emailConfirmationRequired?: boolean }>(
+        res
+      );
+      if (!res.ok || !data) {
+        throw new Error(data?.error?.message || t('errors.signUp'));
       }
 
       // Supabase only emails a confirmation code when email confirmation is

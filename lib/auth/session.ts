@@ -23,6 +23,20 @@ export const PKCE_VERIFIER_COOKIE = "pcx_pkce_verifier";
  */
 export const SUPABASE_TOKEN_COOKIE = "pcx_sb";
 
+/**
+ * Holds the half-finished sign-in of a user with 2FA enabled: the aal1 Supabase
+ * session, between the password step and the TOTP code step.
+ *
+ * This is NOT a session. It grants nothing on its own — no pcx_session is
+ * minted until the code verifies — and it is short-lived by design, because a
+ * long-lived one would be a password-only bypass of the second factor for
+ * anyone who could read it. httpOnly for the same reason.
+ */
+export const MFA_PENDING_COOKIE = "pcx_mfa";
+
+/** Two minutes longer than a TOTP window, so a slow typist is not punished. */
+export const MFA_PENDING_MAX_AGE_SECONDS = 5 * 60;
+
 export const SESSION_MAX_AGE_SECONDS = 60 * 60 * 8;
 
 /** Every cookie that carries auth state. Sign-out must clear all of them. */
@@ -31,6 +45,7 @@ export const AUTH_COOKIE_NAMES = [
     ONBOARDED_COOKIE_NAME,
     PKCE_VERIFIER_COOKIE,
     SUPABASE_TOKEN_COOKIE,
+    MFA_PENDING_COOKIE,
 ] as const;
 
 export type StoredSupabaseTokens = {
@@ -66,6 +81,45 @@ export function readSupabaseTokens(): StoredSupabaseTokens | null {
     } catch {
         return null;
     }
+}
+
+export type PendingMfa = {
+    factorId: string;
+    challengeId: string;
+    access_token: string;
+    refresh_token: string;
+    email: string;
+};
+
+/** Parks the aal1 session while the user fetches their TOTP code. */
+export function applyPendingMfaCookie(response: NextResponse, pending: PendingMfa) {
+    response.cookies.set(MFA_PENDING_COOKIE, JSON.stringify(pending), {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: MFA_PENDING_MAX_AGE_SECONDS,
+    });
+
+    return response;
+}
+
+export function readPendingMfa(): PendingMfa | null {
+    const raw = cookies().get(MFA_PENDING_COOKIE)?.value;
+    if (!raw) return null;
+
+    try {
+        const parsed = JSON.parse(raw) as Partial<PendingMfa>;
+        if (!parsed.factorId || !parsed.challengeId || !parsed.access_token) return null;
+        return parsed as PendingMfa;
+    } catch {
+        return null;
+    }
+}
+
+export function clearPendingMfaCookie(response: NextResponse) {
+    response.cookies.set(MFA_PENDING_COOKIE, "", { path: "/", maxAge: 0 });
+    return response;
 }
 
 export async function setSessionCookie(token: string) {

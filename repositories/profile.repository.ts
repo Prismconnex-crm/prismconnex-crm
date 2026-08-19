@@ -98,4 +98,150 @@ export class ProfileRepository {
             },
         });
     }
+
+    // ─── Profile page writes ─────────────────────────────────────────
+    //
+    // One method per card, mirroring the schemas in models/profile.ts. Each
+    // takes an already-validated payload and writes only its own columns, so
+    // no path can blank a field belonging to a different section.
+    //
+    // `Prisma.ProfileUpdateInput` is not used as the parameter type on purpose:
+    // that would let a caller pass arbitrary columns (including `id`) straight
+    // through from a request body.
+
+    /** Personal information. Note: `email` is NOT written here — see the service. */
+    static async updatePersonalInfo(
+        id: string,
+        data: {
+            firstName: string;
+            middleName: string | null;
+            lastName: string;
+            phone: string | null;
+            alternatePhone: string | null;
+            dateOfBirth: Date | null;
+            addressLine: string | null;
+            city: string | null;
+            state: string | null;
+            country: string | null;
+            postalCode: string | null;
+        }
+    ) {
+        return prisma.profile.update({ where: { id }, data });
+    }
+
+    static async updateProfessionalInfo(
+        id: string,
+        data: {
+            employeeId: string | null;
+            department: string | null;
+            designation: string | null;
+            reportingManager: string | null;
+            team: string | null;
+            joiningDate: Date | null;
+            skills: string[];
+        }
+    ) {
+        return prisma.profile.update({ where: { id }, data });
+    }
+
+    static async updatePreferences(
+        id: string,
+        data: {
+            language: string;
+            timeZone: string;
+            dateFormat: string;
+            currency: string;
+            theme: string;
+        }
+    ) {
+        return prisma.profile.update({ where: { id }, data });
+    }
+
+    static async updateNotifications(
+        id: string,
+        data: {
+            notifyEmail: boolean;
+            notifySms: boolean;
+            notifyPush: boolean;
+            notifyNewLead: boolean;
+            notifyNewCustomer: boolean;
+            notifyDeal: boolean;
+            notifyTask: boolean;
+            notifySystem: boolean;
+        }
+    ) {
+        return prisma.profile.update({ where: { id }, data });
+    }
+
+    static async setAvatarUrl(id: string, avatarUrl: string | null) {
+        return prisma.profile.update({ where: { id }, data: { avatarUrl } });
+    }
+
+    /**
+     * Stamps the sign-in time.
+     *
+     * Deliberately swallows its own errors: this is called from the sign-in
+     * path, and a failure to record a timestamp must never be the reason a
+     * user cannot log in. A legacy session whose `sub` is not a uuid, or a
+     * profile row that does not exist yet, both land here.
+     */
+    static async touchLastLogin(id: string) {
+        try {
+            await prisma.profile.update({
+                where: { id },
+                data: { lastLoginAt: new Date() },
+            });
+        } catch {
+            // Non-fatal by design — see above.
+        }
+    }
+
+    static async setAccountStatus(
+        id: string,
+        status: "active" | "inactive" | "deleted",
+        stamps: { deactivatedAt?: Date | null; deletedAt?: Date | null } = {}
+    ) {
+        return prisma.profile.update({
+            where: { id },
+            data: {
+                accountStatus: status,
+                ...(stamps.deactivatedAt !== undefined
+                    ? { deactivatedAt: stamps.deactivatedAt }
+                    : {}),
+                ...(stamps.deletedAt !== undefined ? { deletedAt: stamps.deletedAt } : {}),
+            },
+        });
+    }
+
+    /**
+     * Scrubs the personal data off a soft-deleted profile.
+     *
+     * A soft delete that leaves the row fully populated is not a deletion in
+     * any sense the user meant. Name and email are kept minimally — email
+     * because it is NOT NULL and still mirrors auth.users, first/last because
+     * they are NOT NULL — but everything discretionary goes.
+     */
+    static async scrubPersonalData(id: string) {
+        return prisma.profile.update({
+            where: { id },
+            data: {
+                avatarUrl: null,
+                phone: null,
+                alternatePhone: null,
+                dateOfBirth: null,
+                addressLine: null,
+                city: null,
+                state: null,
+                country: null,
+                postalCode: null,
+                employeeId: null,
+                department: null,
+                designation: null,
+                reportingManager: null,
+                team: null,
+                joiningDate: null,
+                skills: [],
+            },
+        });
+    }
 }

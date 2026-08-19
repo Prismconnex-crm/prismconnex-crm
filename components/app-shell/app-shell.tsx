@@ -9,6 +9,12 @@ import { SidebarProvider } from "./sidebar-context";
 export type AppShellUser = {
   name: string | null;
   email: string | null;
+  /**
+   * profiles.avatar_url — the same column the Profile page's photo upload
+   * writes. Null renders initials. Resolved server-side so the photo is present
+   * on first paint instead of popping in after a client fetch.
+   */
+  avatarUrl: string | null;
 };
 
 export function AppShell({

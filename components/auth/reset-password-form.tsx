@@ -11,6 +11,7 @@ import {
 } from '@/components/auth/auth-card';
 import { PasswordField } from '@/components/auth/form-field';
 import { createResetPasswordSchema, toFieldErrors } from '@/models/auth';
+import { readJsonResponse, type ApiErrorBody } from '@/lib/http/read-json';
 import {
   createRecoveryLinkReader,
   isExpiredRecoveryError,
@@ -116,9 +117,9 @@ export function ResetPasswordForm() {
         }),
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error?.message || t('errors.update'));
+      const data = await readJsonResponse<ApiErrorBody>(res);
+      if (!res.ok || !data) {
+        throw new Error(data?.error?.message || t('errors.update'));
       }
 
       setDone(true);
