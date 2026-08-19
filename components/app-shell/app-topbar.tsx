@@ -112,7 +112,7 @@ export function AppTopbar({
   };
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-white/[0.04] bg-[#0E1321] px-4 md:px-6">
+    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white dark:border-white/[0.04] dark:bg-[#0E1321] px-4 md:px-6">
       <div className="flex items-center flex-1">
         <Button
           variant="ghost"
@@ -125,7 +125,7 @@ export function AppTopbar({
 
         {/* Search */}
         <div className="relative hidden sm:flex items-center mr-auto w-full max-w-[400px]">
-          <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-500 z-10" />
+          <Search className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-400 dark:text-slate-500 z-10" />
           <input
             type="text"
             value={searchValue}
@@ -134,7 +134,7 @@ export function AppTopbar({
               if (event.key === "Enter") submitSearch();
             }}
             placeholder="Search events, companies, people, deals..."
-            className="w-full h-10 rounded-xl border border-white/[0.08] bg-[#141A2D] pl-10 pr-4 text-sm text-slate-200 placeholder:text-slate-500 focus:border-indigo-500/50 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all shadow-inner"
+            className="w-full h-10 rounded-xl border border-slate-200 bg-slate-50 dark:border-white/[0.08] dark:bg-[#141A2D] pl-10 pr-4 text-sm text-slate-900 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-indigo-500/50 focus:outline-none focus:ring-1 focus:ring-indigo-500/50 transition-all shadow-inner"
             onFocus={() => setSearchFocused(true)}
             onBlur={() => setSearchFocused(false)}
           />
@@ -155,11 +155,11 @@ export function AppTopbar({
           {newMenuOpen && (
             <>
               <div className="fixed inset-0 z-40" onClick={() => setNewMenuOpen(false)} />
-              <div className="absolute right-0 top-11 z-50 w-40 rounded-xl border border-white/[0.08] bg-[#0E1321] p-1.5 shadow-xl animate-in fade-in zoom-in-95 duration-200">
+              <div className="absolute right-0 top-11 z-50 w-40 rounded-xl border border-slate-200 bg-white dark:border-white/[0.08] dark:bg-[#0E1321] p-1.5 shadow-xl animate-in fade-in zoom-in-95 duration-200">
                 {['Lead', 'Company', 'Event', 'Deal', 'Sequence'].map((item) => (
                   <button
                     key={item}
-                    className="flex w-full items-center rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-white/[0.04] hover:text-white transition-colors"
+                    className="flex w-full items-center rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/[0.04] dark:hover:text-white transition-colors"
                     onClick={() => setNewMenuOpen(false)}
                   >
                     {item}
@@ -172,7 +172,7 @@ export function AppTopbar({
 
         {/* Notifications */}
         <div className="relative mx-1">
-          <button type="button" className="flex size-9 items-center justify-center rounded-lg text-slate-400 hover:bg-white/[0.04] hover:text-slate-200 transition-colors">
+          <button type="button" className="flex size-9 items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-white/[0.04] dark:hover:text-slate-200 transition-colors">
             <Bell className="size-4.5" />
           </button>
           <span className="absolute right-1.5 top-1.5 flex size-2">
@@ -194,7 +194,7 @@ export function AppTopbar({
               have to be siblings because a <button> cannot legally nest inside
               another <button> — the browser drops the inner one.
           */}
-          <div className="flex max-w-[260px] items-center rounded-full border border-white/[0.04] bg-[#141A2D] p-1 pr-1">
+          <div className="flex max-w-[260px] items-center rounded-full border border-slate-200 bg-slate-50 p-1 pr-1 dark:border-white/[0.04] dark:bg-[#141A2D]">
             <button
               type="button"
               onClick={() => setViewerOpen(true)}
@@ -210,7 +210,7 @@ export function AppTopbar({
               onClick={() => setUserMenuOpen(!userMenuOpen)}
               aria-haspopup="menu"
               aria-expanded={userMenuOpen}
-              className="flex min-w-0 items-center gap-1 rounded-full px-2 py-1.5 transition-colors hover:bg-white/[0.06] focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+              className="flex min-w-0 items-center gap-1 rounded-full px-2 py-1.5 transition-colors hover:bg-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60 dark:hover:bg-white/[0.06]"
             >
               {/*
                   truncate + min-w-0 so a long name ("Reddappa gari
@@ -218,12 +218,12 @@ export function AppTopbar({
                   out of line. Hidden below sm, where the chevron alone opens
                   the menu and the avatar stays visible.
               */}
-              <span className="hidden min-w-0 truncate text-sm font-medium text-slate-200 sm:block">
+              <span className="hidden min-w-0 truncate text-sm font-medium text-slate-700 sm:block dark:text-slate-200">
                 {displayName}
               </span>
               <ChevronDown
                 className={cn(
-                  "size-4 shrink-0 text-slate-400 transition-transform",
+                  "size-4 shrink-0 text-slate-500 transition-transform dark:text-slate-400",
                   userMenuOpen && "rotate-180"
                 )}
                 aria-hidden="true"
@@ -242,7 +242,7 @@ export function AppTopbar({
               <div
                 role="menu"
                 aria-label="User menu"
-                className="absolute right-0 top-12 z-50 w-64 rounded-xl border border-white/[0.08] bg-[#0E1321] p-1.5 shadow-xl animate-in fade-in zoom-in-95 duration-200"
+                className="absolute right-0 top-12 z-50 w-64 rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl animate-in fade-in zoom-in-95 duration-200 dark:border-white/[0.08] dark:bg-[#0E1321]"
               >
                 {/* Signed-in identity: the same photo and name as the trigger,
                     plus the email, which appears nowhere else in the shell.
@@ -261,7 +261,7 @@ export function AppTopbar({
                     <UserAvatar src={avatarUrl} initials={initials} size={64} />
                   </button>
                   <div className="w-full text-center">
-                    <p className="break-words text-sm font-semibold text-slate-100">
+                    <p className="break-words text-sm font-semibold text-slate-900 dark:text-slate-100">
                       {displayName}
                     </p>
                     {user?.email ? (
@@ -272,12 +272,12 @@ export function AppTopbar({
                   </div>
                 </div>
 
-                <div className="my-1 border-t border-white/[0.04]" />
+                <div className="my-1 border-t border-slate-200 dark:border-white/[0.04]" />
 
                 <button
                   type="button"
                   role="menuitem"
-                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition-colors hover:bg-white/[0.04] hover:text-white"
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
                   onClick={() => {
                     setUserMenuOpen(false);
                     router.push("/app/profile");
@@ -288,7 +288,7 @@ export function AppTopbar({
                 <button
                   type="button"
                   role="menuitem"
-                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-300 transition-colors hover:bg-white/[0.04] hover:text-white"
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
                   onClick={() => {
                     setUserMenuOpen(false);
                     router.push("/app/settings");
@@ -296,7 +296,7 @@ export function AppTopbar({
                 >
                   <Settings className="size-3.5" /> Settings
                 </button>
-                <div className="my-1 border-t border-white/[0.04]" />
+                <div className="my-1 border-t border-slate-200 dark:border-white/[0.04]" />
                 {/* Sign-out now makes a round trip to revoke the Supabase
                     session, so the control is disabled while it is in flight. */}
                 <button

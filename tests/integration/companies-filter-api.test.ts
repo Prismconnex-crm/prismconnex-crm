@@ -55,11 +55,21 @@ describe("companies filter API", () => {
     expect(body.pagination).toBe("cursor");
     expect(body.hasNextPage).toBe(false);
     expect(body.companies[0].name).toBe("APAC Software Co");
+    // Category is matched over its spelling variants, not by a single equality:
+    // the dataset holds both "information technology & services" and the title
+    // -cased form, and an IN list keeps the composite index usable where
+    // lower(category) = $1 would not.
     expect(normalizeSql(sql)).toContain(
-      `WHERE category = $1 AND "employeeRange" IN ($2) AND region = $3`
+      `WHERE category IN ($1,$2) AND "employeeRange" IN ($3) AND region = $4`
     );
     expect(normalizeSql(sql)).toContain(`ORDER BY "DiscoveryCompany"."rowCursor" DESC`);
-    expect(params).toEqual(["information technology & services", "1-10", "Asia-Pacific", 31]);
+    expect(params).toEqual([
+      "information technology & services",
+      "Information Technology & Services",
+      "1-10",
+      "Asia-Pacific",
+      31,
+    ]);
   });
 
   it("uses indexed prefix ranges instead of contains search", async () => {

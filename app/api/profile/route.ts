@@ -6,6 +6,11 @@ import { readSupabaseTokens } from "@/lib/auth/session";
 import { requireSupabaseAccessToken } from "@/lib/supabase/access-token";
 import { getUser } from "@/lib/supabase/gotrue";
 
+// This route reads the session cookie, so it can never be statically rendered.
+// Declaring it keeps `next build` from attempting the static pass and logging a
+// dynamic-server-usage error for a route that is working as intended.
+export const dynamic = "force-dynamic";
+
 /**
  * Email verification state, read from Supabase rather than inferred.
  *

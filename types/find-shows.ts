@@ -24,6 +24,8 @@ export type FindShowsCategory =
 export type FindShowFilterOption<T extends string = string> = {
   label: string;
   value: T;
+  /** Number of events matching this option, when the source can supply it. */
+  count?: number;
 };
 
 export type FindShowAsset = {
@@ -63,6 +65,12 @@ export type FindShowSeedRecord = {
   eventseyeUrl?: string;
   bannerUrl?: string | null;
   logoUrl?: string | null;
+  /** Editorial blurb from the eventseye calendar listing. */
+  description?: string;
+  /** "August 2026" — drives the Month-Year filter. */
+  monthYear?: string;
+  /** e.g. "6 days", when the listing states it. */
+  duration?: string;
 };
 
 export type FindShowEvent = {
@@ -87,4 +95,12 @@ export type FindShowEvent = {
   displayDate: string;
   searchText: string;
   seedAsset: FindShowAsset;
+  /** Editorial blurb shown in the event Overview tab. */
+  description: string;
+  /** Unsplit seed city string ("London (UK - United Kingdom)") — the key into
+   *  data/city-coordinates.json. */
+  seedCity: string;
+  /** "August 2026" — drives the Month-Year filter. */
+  monthYear: string;
+  duration: string;
 };

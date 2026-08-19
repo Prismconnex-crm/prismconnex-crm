@@ -4,16 +4,42 @@ import { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { MapPin, Loader2, AlertTriangle } from 'lucide-react';
+import cityCoordinates from '../../data/city-coordinates.json';
 
 // Mapbox API Key provided by user
 const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN || "";
 
+/**
+ * Deep link into Google Maps for an event's venue.
+ *
+ * Uses Google's documented universal `search` URL with a free-text query rather
+ * than raw coordinates: the cached coordinates are city-level (from
+ * scripts/geocode-event-cities.mjs), while Google resolves "<venue>, <city>,
+ * <country>" to the venue itself and drops its red pin there. No API key is
+ * needed, so this works for every event in the catalog.
+ */
+export function googleMapsUrl(locationName: string) {
+  // Unknown venues reach here either as the seed's raw "?" or as the catalog's
+  // rendered "Venue to be announced". Both are dropped so the query falls back
+  // to city + country rather than searching for the placeholder text.
+  const PLACEHOLDERS = ["?", "venue to be announced", "city to be announced"];
+  const query = locationName
+    .split(",")
+    .map((part) => part.trim())
+    .filter((part) => part && !PLACEHOLDERS.includes(part.toLowerCase()))
+    .join(", ");
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
 interface EventMapProps {
   locationName: string; // e.g., "Messe Berlin, Berlin, Germany"
+  /** Raw seed city string, e.g. "London (UK - United Kingdom)" — used to hit the
+   *  pre-geocoded coordinate cache instead of calling Mapbox at runtime. */
+  cityKey?: string;
   className?: string;
 }
 
-export function EventMap({ locationName, className }: EventMapProps) {
+export function EventMap({ locationName, cityKey, className }: EventMapProps) {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
   const [loading, setLoading] = useState(true);
@@ -27,40 +53,56 @@ export function EventMap({ locationName, className }: EventMapProps) {
         setLoading(true);
         setError(null);
 
-        // 1. Geocode the location
-        const response = await fetch(
-          `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(locationName)}.json?access_token=${MAPBOX_TOKEN}&limit=1`
-        );
-        const data = await response.json();
+        // 1. Resolve coordinates. `cityKey` hits the pre-geocoded cache built by
+        //    scripts/geocode-event-cities.mjs (1,434 of 1,435 cities), so the
+        //    common path costs no network call. Anything missing falls back to a
+        //    live geocode of the full location string.
+        const cached = cityKey
+          ? (cityCoordinates as Record<string, number[] | null>)[cityKey]
+          : null;
+        let coords: [number, number] | null =
+          cached && cached.length >= 2 ? [cached[0], cached[1]] : null;
 
-        if (!data.features || data.features.length === 0) {
-          throw new Error("Location not found");
+        if (!coords) {
+          const response = await fetch(
+            `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(locationName)}.json?access_token=${MAPBOX_TOKEN}&limit=1`
+          );
+          const data = await response.json();
+
+          if (!data.features || data.features.length === 0) {
+            throw new Error("Location not found");
+          }
+          coords = data.features[0].center as [number, number];
         }
 
-        const [lng, lat] = data.features[0].center;
+        const [lng, lat] = coords;
 
         // 2. Initialize Mapbox
         mapboxgl.accessToken = MAPBOX_TOKEN;
         
         map.current = new mapboxgl.Map({
           container: mapContainer.current!,
-          style: 'mapbox://styles/mapbox/dark-v11', // Futuristic dark theme
+          // Light street cartography in both themes so the panel reads as a
+          // Google-Maps-style outline (roads, labels, parks) rather than the
+          // former dark globe.
+          style: 'mapbox://styles/mapbox/streets-v12',
           center: [lng, lat],
           zoom: 13,
           attributionControl: false,
         });
 
-        // 3. Add Pulse Effect Marker
+        // 3. Google-style red teardrop pin, anchored at its tip.
         const el = document.createElement('div');
         el.className = 'custom-marker';
         el.innerHTML = `
-          <div class="relative flex items-center justify-center">
-            <div class="absolute size-10 bg-indigo-500/30 rounded-full animate-ping"></div>
-            <div class="relative size-4 bg-indigo-500 rounded-full border-2 border-white shadow-lg"></div>
-          </div>
+          <svg width="30" height="42" viewBox="0 0 24 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="12" cy="31.5" rx="5" ry="2" fill="rgba(0,0,0,0.25)" />
+            <path d="M12 0.75c-5.66 0-10.25 4.59-10.25 10.25 0 7.3 9.1 18.3 9.49 18.77a1 1 0 0 0 1.52 0c.39-.47 9.49-11.47 9.49-18.77C22.25 5.34 17.66.75 12 .75Z" fill="#EA4335" stroke="#B31412" stroke-width="0.75"/>
+            <circle cx="12" cy="11" r="3.75" fill="#8B1A11"/>
+          </svg>
         `;
 
-        new mapboxgl.Marker(el)
+        new mapboxgl.Marker({ element: el, anchor: 'bottom' })
           .setLngLat([lng, lat])
           .addTo(map.current);
 
@@ -78,7 +120,7 @@ export function EventMap({ locationName, className }: EventMapProps) {
     initializeMap();
 
     return () => map.current?.remove();
-  }, [locationName]);
+  }, [locationName, cityKey]);
 
   return (
     <div className={`relative rounded-xl overflow-hidden border border-slate-200 dark:border-[#22304A] bg-slate-100 dark:bg-[#0B1220] ${className}`}>
@@ -104,9 +146,10 @@ export function EventMap({ locationName, className }: EventMapProps) {
       {/* Map Overlay Stats */}
       {!loading && !error && (
         <div className="absolute bottom-3 left-3 flex flex-col gap-1 z-10 pointer-events-none">
-          <div className="px-3 py-1.5 rounded-lg bg-white/90 dark:bg-[#0B1220]/90 border border-white/20 backdrop-blur-md shadow-lg flex items-center gap-2">
+          {/* The map is light in both themes, so this pill stays light too. */}
+          <div className="px-3 py-1.5 rounded-lg bg-white/90 border border-slate-200 backdrop-blur-md shadow-lg flex items-center gap-2">
             <div className="size-2 rounded-full bg-emerald-500 animate-pulse"></div>
-            <span className="text-[10px] font-black text-slate-900 dark:text-white uppercase tracking-tighter">Live Geo-Sync Active</span>
+            <span className="text-[10px] font-black text-slate-900 uppercase tracking-tighter">Live Geo-Sync Active</span>
           </div>
         </div>
       )}

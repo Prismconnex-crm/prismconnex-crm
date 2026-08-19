@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { describeResults, filterEvents, normalize } from '@/lib/find-shows/filter-events';
+import { findShowEvents } from '@/lib/find-shows/catalog';
 
 describe('filterEvents', () => {
   it('finds trade shows in London, United Kingdom', () => {
@@ -109,9 +110,16 @@ describe('filterEvents', () => {
     expect(totalMatched).toBeGreaterThan(0);
   });
 
+  // Derived from the catalog rather than pinned: this was hardcoded at 1306 and
+  // broke the moment the eventseye import widened the catalog to 11,635 shows.
+  // What must hold is that an uncategorised country query returns every French
+  // show in the catalog — not one particular total.
   it('finds every trade show in France when no category is set', () => {
     const { totalMatched } = filterEvents({ country: 'France', category: null });
-    expect(totalMatched).toBe(1306);
+    const expected = findShowEvents.filter((event) => event.country === 'France').length;
+
+    expect(expected).toBeGreaterThan(0);
+    expect(totalMatched).toBe(expected);
   });
 
   it('exposes the seed logo url on each result', () => {
