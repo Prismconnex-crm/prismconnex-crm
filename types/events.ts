@@ -2,9 +2,10 @@
  * Shared types for the Events Explorer (left filter rail + AI panel + results).
  *
  * `EventFilters` is the single source of truth for both the sidebar and the
- * assistant: /api/ai/event-query returns exactly this shape, the client writes
- * it into the URL query string, and the sidebar renders from it. That is what
- * makes the left panel visibly update when the assistant reads a question.
+ * assistant: the events adapter in `lib/assistant/adapters/events.ts` produces
+ * exactly this shape, the client writes it into the URL query string, and the
+ * sidebar renders from it. That is what makes the left panel visibly update
+ * when the assistant reads a question.
  *
  * Distinct from the single-value `EventFilters` in `models/event-query.ts`,
  * which belongs to the Companies tab's "ask" flow and is left untouched.
@@ -23,12 +24,6 @@ export type EventFilters = {
   dateFrom: string | null;
   dateTo: string | null;
   favouritesOnly: boolean;
-};
-
-export type EventQueryResponse = {
-  filters: EventFilters;
-  explanation: string;
-  suggestedFollowUps: string[];
 };
 
 /** The array-valued keys, useful for generic chip/facet code. */
@@ -80,17 +75,3 @@ export const EVENT_DATE_PRESETS: { id: EventDatePresetId; label: string }[] = [
   { id: 'next-6-months', label: 'Next 6 months' },
   { id: 'this-year', label: 'This year' },
 ];
-
-/** One trimmed row handed to the answering model. Nothing else is sent. */
-export type EventAnswerRow = {
-  name: string;
-  organizer: string;
-  city: string;
-  country: string;
-  dates: string;
-  category: string;
-};
-
-export type EventAnswerResponse = {
-  answer: string;
-};
