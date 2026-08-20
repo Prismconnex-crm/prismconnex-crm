@@ -23,6 +23,14 @@ model User {
   // resolves by email — see resolveTenant() in lib/auth/tenant.ts.
   supabaseUserId String? @unique @db.Uuid
 
+  /// Any pcx_session minted before this instant is rejected — see
+  /// isSessionSuperseded() in lib/auth/session-revocation.ts. Stamped when a
+  /// password reset completes, so someone holding a stolen password loses
+  /// access immediately instead of keeping a signed, still-unexpired cookie for
+  /// up to the full 8-hour session lifetime. NULL = nothing revoked yet, which
+  /// is the case for every existing row and skips the check entirely.
+  sessionsValidFrom DateTime?
+
   memberships Membership[]
   tasks       Task[]
 }

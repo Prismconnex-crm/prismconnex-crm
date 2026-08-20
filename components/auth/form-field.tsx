@@ -47,6 +47,12 @@ type FormFieldProps = {
   hint?: string;
   /** Shows a spinner inside the field while a background lookup is running. */
   busy?: boolean;
+  /**
+   * Native required attribute. Only /auth/verify uses it: the other forms set
+   * `noValidate` and mirror a zod schema from models/auth.ts instead, so for
+   * them this stays undefined and no attribute is emitted.
+   */
+  required?: boolean;
 };
 
 /** Label + input + inline error, matching the red error styling used app-wide. */
@@ -64,6 +70,7 @@ export function FormField({
   onBlur,
   hint,
   busy,
+  required,
 }: FormFieldProps) {
   const id = useId();
   const errorId = `${id}-error`;
@@ -88,6 +95,7 @@ export function FormField({
           type={type}
           placeholder={placeholder}
           autoComplete={autoComplete}
+          required={required}
           {...(isControlled ? { value } : { defaultValue })}
           onChange={onChange}
           onBlur={onBlur}
@@ -129,6 +137,7 @@ export function PasswordField({
   placeholder,
   autoComplete,
   defaultValue,
+  required,
   showLabel,
   hideLabel,
 }: PasswordFieldProps) {
@@ -149,6 +158,7 @@ export function PasswordField({
           placeholder={placeholder}
           autoComplete={autoComplete}
           defaultValue={defaultValue}
+          required={required}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
           className={`${FIELD_CLASSES} pr-11 ${error ? FIELD_INVALID : FIELD_IDLE}`}

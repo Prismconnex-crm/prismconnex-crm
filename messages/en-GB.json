@@ -902,7 +902,8 @@
         "passwordRequired": "Password is required"
       },
       "status": {
-        "signedOut": "You have been signed out successfully."
+        "signedOut": "You have been signed out successfully.",
+        "verified": "Your email has been verified. You can now sign in."
       }
     },
     "signUp": {
@@ -961,7 +962,8 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Verify"
+        "submit": "Verify",
+        "return": "Back to sign in"
       },
       "errors": {
         "verify": "Failed to verify"

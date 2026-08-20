@@ -5888,7 +5888,7 @@ Expected: no new warnings.
 Run: `npm run dev`
 Open `http://localhost:3000/app/people`.
 
-(The CRM requires a signed-in session. If the page redirects, sign in at `/sign-in` as `demo@prismconnex.com` — the seeded user, per CLAUDE.md.)
+(The CRM requires a signed-in session; without the `pcx_session` cookie `middleware.ts` returns a 307 to `/auth/sign-in`. Sign in there with a **real Supabase Auth account** — as of 2026-08-18 `/api/auth/sign-in` verifies the password against Supabase, so the seeded `demo@prismconnex.com` user has no usable password and the old "any password" demo mode no longer exists.)
 
 - [ ] **Step 4: Walk the spec's acceptance criteria**
 

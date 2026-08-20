@@ -31,7 +31,20 @@ export function AuthLanding({ defaultTab = 'login' }: { defaultTab?: AuthTab }) 
   const selectTab = (next: AuthTab) => {
     if (next === tab) return;
     setTab(next);
-    window.history.replaceState(null, '', TAB_PATHS[next]);
+
+    // Only the tab changes here, so the query string and fragment have to
+    // survive. They did not: replacing with a bare path dropped them, and
+    // because AnimatePresence remounts the form on every switch, SignInForm
+    // re-ran its mount effect against an empty location.search. That silently
+    // destroyed whichever banner was showing — ?error= from a failed OAuth
+    // hand-off, ?signedOut=1, ?verified=true from a confirmed signup.
+    //
+    // ?forceSignIn=1 is the one with teeth: middleware.ts reads it and
+    // resolveAuthRedirect() uses it to let an already-signed-in user reach the
+    // sign-in form anyway. Losing it means the next load bounces them to the
+    // dashboard instead of letting them re-authenticate.
+    const { search, hash } = window.location;
+    window.history.replaceState(null, '', `${TAB_PATHS[next]}${search}${hash}`);
   };
 
   return (

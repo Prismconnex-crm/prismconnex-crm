@@ -6,6 +6,16 @@ export type SessionPayload = {
   workspaceId: string;
 };
 
+/**
+ * A verified session plus the registered claims jose hands back.
+ *
+ * `iat` is set by signLocalSession's setIssuedAt() and is what session
+ * revocation compares against — see lib/auth/session-revocation.ts. It is
+ * optional because the type describes any token that verifies, not only the
+ * ones we minted.
+ */
+export type VerifiedSession = SessionPayload & { iat?: number };
+
 export async function signLocalSession(payload: SessionPayload) {
   const secret = new TextEncoder().encode(process.env.AUTH_SECRET || "prismconnex-dev-secret");
   return new SignJWT(payload)
@@ -18,7 +28,7 @@ export async function signLocalSession(payload: SessionPayload) {
 export async function verifyLocalSession(token: string) {
   const secret = new TextEncoder().encode(process.env.AUTH_SECRET || "prismconnex-dev-secret");
   const { payload } = await jwtVerify(token, secret);
-  return payload as unknown as SessionPayload;
+  return payload as unknown as VerifiedSession;
 }
 
 export async function verifyCognitoJwt(token: string) {

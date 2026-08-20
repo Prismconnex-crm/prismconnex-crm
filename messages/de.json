@@ -905,7 +905,8 @@
         "passwordRequired": "Passwort ist erforderlich"
       },
       "status": {
-        "signedOut": "Sie wurden erfolgreich abgemeldet."
+        "signedOut": "Sie wurden erfolgreich abgemeldet.",
+        "verified": "Ihre E-Mail-Adresse wurde bestätigt. Sie können sich jetzt anmelden."
       }
     },
     "signUp": {
@@ -964,7 +965,8 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Bestaetigen"
+        "submit": "Bestaetigen",
+        "return": "Zuruck zur Anmeldung"
       },
       "errors": {
         "verify": "Bestaetigung fehlgeschlagen"

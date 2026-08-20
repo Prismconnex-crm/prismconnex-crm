@@ -905,7 +905,8 @@
         "passwordRequired": "A senha é obrigatória"
       },
       "status": {
-        "signedOut": "Você saiu da sua conta com sucesso."
+        "signedOut": "Você saiu da sua conta com sucesso.",
+        "verified": "Seu e-mail foi verificado. Agora você pode fazer login."
       }
     },
     "signUp": {
@@ -964,7 +965,8 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Verificar"
+        "submit": "Verificar",
+        "return": "Voltar para o login"
       },
       "errors": {
         "verify": "Falha ao verificar"

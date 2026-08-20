@@ -905,7 +905,8 @@
         "passwordRequired": "Le mot de passe est requis"
       },
       "status": {
-        "signedOut": "Vous avez été déconnecté avec succès."
+        "signedOut": "Vous avez été déconnecté avec succès.",
+        "verified": "Votre adresse e-mail a été vérifiée. Vous pouvez maintenant vous connecter."
       }
     },
     "signUp": {
@@ -964,7 +965,8 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Verifier"
+        "submit": "Verifier",
+        "return": "Retour a la connexion"
       },
       "errors": {
         "verify": "Verification impossible"

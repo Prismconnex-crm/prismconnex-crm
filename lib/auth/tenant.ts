@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db/prisma";
 import { getSessionPayload } from "./session";
+import { isSessionSuperseded } from "./session-revocation";
 
 export type TenantContext = {
     userId: string;
@@ -41,6 +42,11 @@ export async function resolveTenant(): Promise<TenantContext | null> {
     const user = await findSessionUser(payload.sub as string, email);
 
     if (!user || user.memberships.length === 0) return null;
+
+    // A completed password reset stamps sessionsValidFrom, retiring every
+    // cookie minted before it — including one held by whoever the reset was
+    // meant to lock out. The row is already loaded, so this costs no query.
+    if (isSessionSuperseded(payload.iat, user.sessionsValidFrom)) return null;
 
     const defaultMembership = user.memberships[0];
 

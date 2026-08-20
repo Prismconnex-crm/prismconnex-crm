@@ -905,7 +905,8 @@
         "passwordRequired": "La contraseña es obligatoria"
       },
       "status": {
-        "signedOut": "Has cerrado sesión correctamente."
+        "signedOut": "Has cerrado sesión correctamente.",
+        "verified": "Tu correo electrónico ha sido verificado. Ya puedes iniciar sesión."
       }
     },
     "signUp": {
@@ -964,7 +965,8 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Verificar"
+        "submit": "Verificar",
+        "return": "Volver a iniciar sesion"
       },
       "errors": {
         "verify": "No se pudo verificar"

@@ -24,7 +24,15 @@ export function resolveAuthRedirect({
 }) {
   const isAppRoute = pathnameWithoutLocale.startsWith("/app");
   const isOnboarding = pathnameWithoutLocale.startsWith("/onboarding");
-  const isSignIn = pathnameWithoutLocale.startsWith("/auth/sign-in");
+  // Both routes render AuthLanding, whose Login / Sign Up tabs swap the two
+  // forms in-page via history.replaceState. That is not a navigation, so
+  // middleware does not re-run on a tab switch — guarding /auth/sign-in alone
+  // left /auth/sign-up as an unguarded door to the very same sign-in form.
+  // Listed explicitly rather than matched as "/auth/sign-" so the recovery and
+  // verify routes stay reachable for a user who still holds a session.
+  const isAuthLanding =
+    pathnameWithoutLocale.startsWith("/auth/sign-in") ||
+    pathnameWithoutLocale.startsWith("/auth/sign-up");
 
   if ((isAppRoute || isOnboarding) && !session) {
     return "/auth/sign-in";
@@ -35,7 +43,7 @@ export function resolveAuthRedirect({
   // parked, not removed (page + components are still in the repo).
   // TO RE-ENABLE: delete the redirect below and uncomment the block after it.
   // App routes are not locale-prefixed, so return the plain path here
-  // (matching the isSignIn rule below) — localizing it 404s.
+  // (matching the isAuthLanding rule below) — localizing it 404s.
   if (session && isOnboarding) {
     return "/app/dashboard";
   }
@@ -45,7 +53,7 @@ export function resolveAuthRedirect({
   // }
   // ─────────────────────────────────────────────────────────────────────
 
-  if (session && isSignIn && !forceSignIn) {
+  if (session && isAuthLanding && !forceSignIn) {
     return "/app/dashboard";
   }
 

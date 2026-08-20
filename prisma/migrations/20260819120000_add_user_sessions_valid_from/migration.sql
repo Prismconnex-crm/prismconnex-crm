@@ -1,0 +1,18 @@
+-- AlterTable
+--
+-- Nullable with no default: existing rows stay NULL, which reads as "nothing has
+-- been revoked for this account" and leaves their sessions untouched. Only a
+-- completed password reset writes a value.
+--
+-- Applied to the shared Supabase database out of band, as a direct ALTER rather
+-- than `prisma migrate deploy`, then recorded with
+-- `prisma migrate resolve --applied`. That route was deliberate: the database
+-- records 20260815120000_extend_profiles_for_profile_page, which has no
+-- directory in this repo, so the two histories do not match. (`migrate status`
+-- still reports "up to date" regardless — it only reports the mismatch while a
+-- local migration is also unapplied, so a clean status does not prove the
+-- histories agree.)
+--
+-- IF NOT EXISTS keeps a replay harmless — re-running this cannot fail on a
+-- column that is already there.
+ALTER TABLE "User" ADD COLUMN IF NOT EXISTS "sessionsValidFrom" TIMESTAMP(3);

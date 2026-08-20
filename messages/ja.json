@@ -905,7 +905,8 @@
         "passwordRequired": "パスワードを入力してください"
       },
       "status": {
-        "signedOut": "ログアウトしました。"
+        "signedOut": "ログアウトしました。",
+        "verified": "メールアドレスの確認が完了しました。ログインできます。"
       }
     },
     "signUp": {
@@ -964,7 +965,8 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "確認する"
+        "submit": "確認する",
+        "return": "ログインに戻る"
       },
       "errors": {
         "verify": "確認に失敗しました"

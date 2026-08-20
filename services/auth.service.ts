@@ -2,6 +2,7 @@ import * as gotrue from "@/lib/supabase/gotrue";
 import type { OAuthProviderKey, SupabaseSession } from "@/lib/supabase/gotrue";
 import { ProfileService } from "@/services/profile.service";
 import { BadRequestError, UnauthorizedError } from "@/lib/http/errors";
+import { revokeIssuedSessions } from "@/lib/auth/session-revocation";
 import type { ProfileDTO } from "@/models/profile";
 
 /**
@@ -157,9 +158,18 @@ export class AuthService {
         await gotrue.sendRecoveryEmail(email, redirectTo);
     }
 
+    /**
+     * Confirms a reset with the emailed OTP rather than a link.
+     *
+     * Currently has no callers — the form posts to resetPasswordFromLink — but
+     * it revokes for the same reason that path does, so wiring it up later
+     * cannot quietly reintroduce the gap. The returned session is revoked
+     * along with the rest: after a reset the user signs in afresh.
+     */
     static async resetPassword(email: string, code: string, newPassword: string) {
         const session = await gotrue.verifyRecoveryOtp(email, code);
         await gotrue.updatePassword(session.access_token, newPassword);
+        await AuthService.revokeSupabaseSessions(session.access_token);
         return session;
     }
 
@@ -192,13 +202,34 @@ export class AuthService {
             );
         }
 
+        let user;
         try {
-            await gotrue.updatePassword(accessToken, newPassword);
+            user = await gotrue.updatePassword(accessToken, newPassword);
         } catch (error) {
             // A stale fragment (link opened long after it was issued, or the
             // page left sitting open) fails here rather than at verify time.
             throw AuthService.asRecoveryError(error);
         }
+
+        // The password is now changed. Ending the sessions it used to protect is
+        // the other half of the remedy, and there are two independent kinds:
+        //
+        //   Supabase's — revoked over the wire, scope=global.
+        //   This app's  — pcx_session cookies, which are stateless JWTs with
+        //                 nothing to delete, so they are retired by stamping
+        //                 User.sessionsValidFrom and rejecting anything older.
+        //
+        // Neither throws; both report what happened. The password change has
+        // already committed by this point, so a failure here must not surface as
+        // a failed reset — but it does mean sessions survived, which is worth
+        // seeing in the response and the logs.
+        return {
+            supabaseSessionsRevoked: await AuthService.revokeSupabaseSessions(accessToken),
+            appSessionsRevoked: await revokeIssuedSessions({
+                supabaseUserId: user.id,
+                email: user.email ?? "",
+            }),
+        };
     }
 
     /**
@@ -243,6 +274,30 @@ export class AuthService {
                     "Set the recovery email template to {{ .TokenHash }} " +
                     "(or {{ .ConfirmationURL }}) and request a new link."
             );
+        }
+    }
+
+    /**
+     * Ends every Supabase session for the account behind `accessToken`.
+     *
+     * A reset is usually requested because someone else knows the old
+     * password. Changing it does not, on its own, log that person out —
+     * their refresh token stays valid until it expires — so scope=global is
+     * what actually evicts them.
+     *
+     * Never throws. By the time this runs the password has already been
+     * changed and the recovery link is spent, so reporting a failure here
+     * would tell the user a reset that did work had failed, and leave them
+     * nothing to retry with. /api/auth/sign-out makes the same trade for the
+     * same reason. The boolean is returned for observability.
+     */
+    private static async revokeSupabaseSessions(accessToken: string) {
+        try {
+            await gotrue.signOut(accessToken, "global");
+            return true;
+        } catch (error) {
+            console.error("[reset-password] Supabase revocation failed", error);
+            return false;
         }
     }
 

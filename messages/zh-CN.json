@@ -902,7 +902,8 @@
         "passwordRequired": "请输入密码"
       },
       "status": {
-        "signedOut": "您已成功退出登录。"
+        "signedOut": "您已成功退出登录。",
+        "verified": "您的邮箱已验证，现在可以登录了。"
       }
     },
     "signUp": {
@@ -961,7 +962,8 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "验证"
+        "submit": "验证",
+        "return": "返回登录"
       },
       "errors": {
         "verify": "验证失败"

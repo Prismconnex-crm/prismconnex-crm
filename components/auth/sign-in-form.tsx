@@ -39,10 +39,11 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
   const [notice, setNotice] = useState('');
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
-  // Three redirects land here with a query flag: /api/auth/oauth/[provider]
+  // Four redirects land here with a query flag: /api/auth/oauth/[provider]
   // when the hand-off cannot even be started (?error=provider_disabled
   // &provider=google), /auth/callback on a failed Google/Microsoft sign-in
-  // (?error=<reason>), and the topbar's Sign Out (?signedOut=1). Read from
+  // /auth/verify after a confirmed signup (?verified=true), and the topbar's
+  // Sign Out (?signedOut=1). Read from
   // location rather than useSearchParams so the page needs no Suspense boundary.
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -69,7 +70,12 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
       );
     }
 
-    if (params.get('signedOut')) setNotice(t('status.signedOut'));
+    // /auth/verify redirects here after the OTP is accepted. The flag was
+    // being written but never read, so a user who had just confirmed their
+    // email landed on a blank sign-in form with nothing to say it had worked.
+    // else-if because the two are alternatives: only one notice slot exists.
+    if (params.get('verified')) setNotice(t('status.verified'));
+    else if (params.get('signedOut')) setNotice(t('status.signedOut'));
   }, [t]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -142,7 +148,6 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
           label={t('fields.identifier')}
           placeholder={t('placeholders.identifier')}
           autoComplete="username"
-          defaultValue="owner@prismconnex.demo"
           error={fieldErrors.email}
         />
 
@@ -151,7 +156,6 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
           label={t('fields.secret')}
           placeholder={t('placeholders.secret')}
           autoComplete="current-password"
-          defaultValue="Prism123!"
           showLabel={t('actions.showPassword')}
           hideLabel={t('actions.hidePassword')}
           error={fieldErrors.password}
