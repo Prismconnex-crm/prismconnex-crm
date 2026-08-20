@@ -10,6 +10,11 @@ export default defineConfig({
       '@': __dirname,
     },
   },
+  // Next compiles JSX with the automatic runtime, so components do not import
+  // React. esbuild defaults to the classic transform, under which any component
+  // rendered in a test throws "React is not defined" — matching Next here is
+  // what lets the .tsx tests the include pattern already globs actually run.
+  esbuild: { jsx: 'automatic' },
   test: {
     environment: 'node',
     globals: true,

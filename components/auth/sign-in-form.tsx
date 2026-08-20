@@ -15,6 +15,7 @@ import { GoogleIcon, MicrosoftIcon } from '@/components/auth/brand-icons';
 import { FormField, PasswordField } from '@/components/auth/form-field';
 import { createSignInSchema, toFieldErrors } from '@/models/auth';
 import { resolveOAuthErrorCode } from '@/lib/auth/oauth-errors';
+import { readJsonResponse, type ApiErrorBody } from '@/lib/http/read-json';
 import { localizePathname } from '@/lib/locale';
 import type { Locale } from '@/types';
 
@@ -39,6 +40,17 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
   const [notice, setNotice] = useState('');
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
+  // Second-factor step. Only ever true for accounts with a verified TOTP
+  // factor; the password step is untouched for everyone else.
+  //
+  // Also raised by ?mfa=1, which is how the OAuth callback hands over: it has
+  // already verified the provider identity and parked the pending session in
+  // an httpOnly cookie, so the user must land straight on the code field
+  // rather than being asked for a password they may not even have. Set in the
+  // effect below, from location, for the same no-Suspense reason as ?error.
+  const [mfaRequired, setMfaRequired] = useState(false);
+  const [mfaCode, setMfaCode] = useState('');
+
   // Four redirects land here with a query flag: /api/auth/oauth/[provider]
   // when the hand-off cannot even be started (?error=provider_disabled
   // &provider=google), /auth/callback on a failed Google/Microsoft sign-in
@@ -48,6 +60,11 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const rawError = params.get('error');
+
+    // The OAuth callback redirects here with ?mfa=1 when the account has a
+    // verified TOTP factor; the pending sign-in is already in an httpOnly
+    // cookie and only the code is missing.
+    if (params.get('mfa') === '1') setMfaRequired(true);
 
     if (rawError) {
       // Every OAuth failure used to collapse into "Failed to sign in", which
@@ -105,9 +122,20 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error?.message || t('errors.signIn'));
+      const data = await readJsonResponse<
+        ApiErrorBody & { onboarded?: boolean; mfaRequired?: boolean }
+      >(res);
+      if (!res.ok || !data) {
+        throw new Error(data?.error?.message || t('errors.signIn'));
+      }
+
+      // Accounts with 2FA get a second step instead of a session. The server
+      // has parked the half-finished sign-in in an httpOnly cookie; this form
+      // just swaps to the code field. Accounts without 2FA never see this.
+      if (data.mfaRequired) {
+        setMfaRequired(true);
+        setLoading(false);
+        return;
       }
 
       // ONBOARDING DISABLED — go straight to the dashboard after sign-in.
@@ -116,6 +144,41 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
       // routing an already-onboarded user to /onboarding creates a 2nd workspace.
       router.push('/app/dashboard');
       // router.push(data.onboarded ? '/app/dashboard' : localizePathname('/onboarding', locale));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : t('errors.signIn'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+   * Second step for 2FA accounts.
+   *
+   * Nothing about the password is re-sent — the server holds the verified
+   * half of the sign-in in an httpOnly cookie, so this request carries only
+   * the code. A rejection sends the user back to the password step because
+   * the Supabase challenge is single-use and cannot be retried.
+   */
+  const onSubmitMfa = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const res = await fetch('/api/auth/mfa-challenge', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: mfaCode.trim() }),
+      });
+
+      const data = await readJsonResponse<ApiErrorBody & { onboarded?: boolean }>(res);
+      if (!res.ok || !data) {
+        setMfaRequired(false);
+        setMfaCode('');
+        throw new Error(data?.error?.message || t('errors.signIn'));
+      }
+
+      router.push('/app/dashboard');
     } catch (err) {
       setError(err instanceof Error ? err.message : t('errors.signIn'));
     } finally {
@@ -142,6 +205,68 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
       {notice ? <AuthSuccessBanner message={notice} /> : null}
       {error ? <AuthErrorBanner message={error} /> : null}
 
+      {mfaRequired ? (
+        <form onSubmit={onSubmitMfa} noValidate className="space-y-4">
+          <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-[#22304A] dark:bg-[#101C2E]">
+            <p className="text-[13px] font-semibold text-[#111827] dark:text-white">
+              Two-factor authentication
+            </p>
+            <p className="mt-1 text-[12px] text-slate-600 dark:text-slate-400">
+              Enter the 6-digit code from your authenticator app to finish signing in.
+            </p>
+          </div>
+
+          <div>
+            <label
+              htmlFor="mfa-code"
+              className="mb-1.5 block text-[13px] font-medium text-slate-700 dark:text-slate-300"
+            >
+              Authentication code
+            </label>
+            <input
+              id="mfa-code"
+              name="mfaCode"
+              value={mfaCode}
+              onChange={(event) =>
+                setMfaCode(event.target.value.replace(/\D/g, '').slice(0, 6))
+              }
+              // inputMode + autoComplete are what make this usable on a phone:
+              // the numeric keypad opens directly and the OS offers the code
+              // it has just seen in the authenticator app.
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              autoFocus
+              maxLength={6}
+              placeholder="000000"
+              aria-describedby="mfa-help"
+              className="h-11 w-full rounded-lg border border-slate-300 bg-white px-3 text-center text-[18px] font-semibold tracking-[0.4em] text-[#111827] placeholder:tracking-[0.4em] placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/30 dark:border-[#22304A] dark:bg-[#0F1729] dark:text-white"
+            />
+            <p id="mfa-help" className="mt-1.5 text-[12px] text-slate-500 dark:text-slate-400">
+              Codes refresh about every 30 seconds.
+            </p>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading || mfaCode.length !== 6}
+            className="h-11 w-full rounded-lg bg-brand text-[14px] font-semibold text-white transition-colors hover:bg-brand-hover disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {loading ? 'Verifying…' : 'Verify and sign in'}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setMfaRequired(false);
+              setMfaCode('');
+              setError('');
+            }}
+            className="w-full text-center text-[13px] font-medium text-slate-600 underline-offset-4 hover:underline dark:text-slate-400"
+          >
+            Use a different account
+          </button>
+        </form>
+      ) : (
       <form onSubmit={onSubmit} noValidate className="space-y-4">
         <FormField
           name="email"
@@ -215,7 +340,14 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
           {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : t('actions.submit')}
         </button>
       </form>
+      )}
 
+      {/* Hidden during the code step: the password half of this sign-in is
+          already verified and parked server-side, so offering a different
+          sign-in method there would abandon it mid-flight rather than
+          continue it. */}
+      {mfaRequired ? null : (
+      <>
       <AuthDivider label={t('actions.divider')} />
 
       <div className="space-y-3">
@@ -237,6 +369,8 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
           {t('actions.microsoft')}
         </button>
       </div>
+      </>
+      )}
     </div>
   );
 }

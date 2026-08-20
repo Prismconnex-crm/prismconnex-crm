@@ -11,6 +11,7 @@ import {
 } from '@/components/auth/auth-card';
 import { FormField } from '@/components/auth/form-field';
 import { createForgotPasswordSchema, toFieldErrors } from '@/models/auth';
+import { readJsonResponse, type ApiErrorBody } from '@/lib/http/read-json';
 
 /**
  * Step 1 of the reset flow: collect the address and ask Supabase to email a
@@ -56,9 +57,9 @@ export function ForgotPasswordForm() {
         body: JSON.stringify({ email: parsed.data.email }),
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error?.message || t('errors.send'));
+      const data = await readJsonResponse<ApiErrorBody>(res);
+      if (!res.ok || !data) {
+        throw new Error(data?.error?.message || t('errors.send'));
       }
 
       setSentTo(parsed.data.email);

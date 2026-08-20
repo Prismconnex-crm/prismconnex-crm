@@ -25,8 +25,20 @@ export type SupabaseUser = {
     email?: string | null;
     phone?: string | null;
     created_at?: string;
+    last_sign_in_at?: string | null;
     email_confirmed_at?: string | null;
     user_metadata?: Record<string, unknown> | null;
+    /** Present on GET /user. Only `verified` factors actually gate sign-in. */
+    factors?: SupabaseFactor[] | null;
+};
+
+export type SupabaseFactor = {
+    id: string;
+    friendly_name?: string | null;
+    factor_type: string;
+    status: "verified" | "unverified";
+    created_at?: string;
+    updated_at?: string;
 };
 
 export type SupabaseSession = {
@@ -79,7 +91,11 @@ function extractMessage(body: unknown, fallback: string) {
 
 async function request<T>(
     path: string,
-    init: { method: "GET" | "POST" | "PUT"; body?: unknown; accessToken?: string }
+    init: {
+        method: "GET" | "POST" | "PUT" | "DELETE";
+        body?: unknown;
+        accessToken?: string;
+    }
 ): Promise<T> {
     const { url, anonKey } = config();
 
@@ -256,6 +272,118 @@ export async function updatePassword(accessToken: string, password: string) {
 
 export async function getUser(accessToken: string) {
     return request<SupabaseUser>("/user", { method: "GET", accessToken });
+}
+
+/**
+ * Starts an email change.
+ *
+ * Supabase does NOT apply this immediately: it emails a confirmation link to
+ * the new address (and, if "Secure email change" is on, to the old one too),
+ * and auth.users.email only moves once confirmed. The
+ * `on_auth_user_email_updated` trigger from 001_create_profiles.sql then syncs
+ * public.profiles.email.
+ *
+ * So the correct handling of the response is "we have asked", never "it is
+ * done" — writing profiles.email ourselves would desync it from auth.users and
+ * break sign-in, which resolves the typed identifier through that column.
+ */
+export async function updateUserEmail(accessToken: string, email: string) {
+    return request<SupabaseUser>("/user", {
+        method: "PUT",
+        body: { email },
+        accessToken,
+    });
+}
+
+// ─── MFA / TOTP (AAL2) ───────────────────────────────────────────────
+//
+// The wire equivalents of supabase.auth.mfa.*. Four calls make up the whole
+// feature, and the order matters:
+//
+//   enroll   -> returns a secret + QR. The factor is `unverified` and does
+//               NOT yet gate anything.
+//   challenge-> starts a short-lived attempt against a factor.
+//   verify   -> proves the code. On the FIRST verify the factor flips to
+//               `verified`; on every later one it upgrades the session to
+//               aal2. Either way it returns a fresh session.
+//   unenroll -> removes the factor.
+//
+// The security-critical detail is that an enrolled-but-unverified factor is
+// inert. If enrolment alone were treated as "2FA on", a user who scanned the
+// QR but never typed a code would be locked out of nothing while believing
+// they were protected. Hence `isMfaRequired` below tests status === verified,
+// and nothing else in this app calls a factor "enabled" before that.
+
+export type EnrollTotpResponse = {
+    id: string;
+    type: string;
+    friendly_name?: string | null;
+    totp: {
+        /** SVG or data-URI QR code rendered by Supabase. */
+        qr_code: string;
+        /** Base32 secret, for manual entry when the QR cannot be scanned. */
+        secret: string;
+        uri: string;
+    };
+};
+
+export type ChallengeResponse = { id: string; expires_at?: number };
+
+/** Starts TOTP enrolment. The returned factor is unverified until verifyFactor. */
+export async function enrollTotpFactor(accessToken: string, friendlyName: string) {
+    return request<EnrollTotpResponse>("/factors", {
+        method: "POST",
+        body: { factor_type: "totp", friendly_name: friendlyName },
+        accessToken,
+    });
+}
+
+/** Opens a challenge against an enrolled factor. */
+export async function challengeFactor(accessToken: string, factorId: string) {
+    return request<ChallengeResponse>(`/factors/${factorId}/challenge`, {
+        method: "POST",
+        accessToken,
+    });
+}
+
+/**
+ * Answers a challenge with the 6-digit code.
+ *
+ * Returns a NEW session at aal2 — the caller must replace whatever session it
+ * was holding with this one, or the user stays at aal1 and every subsequent
+ * assurance check fails.
+ */
+export async function verifyFactor(
+    accessToken: string,
+    factorId: string,
+    challengeId: string,
+    code: string
+) {
+    return request<SupabaseSession>(`/factors/${factorId}/verify`, {
+        method: "POST",
+        body: { challenge_id: challengeId, code },
+        accessToken,
+    });
+}
+
+export async function unenrollFactor(accessToken: string, factorId: string) {
+    return request<{ id: string }>(`/factors/${factorId}`, {
+        method: "DELETE",
+        accessToken,
+    });
+}
+
+/** Every factor on the account, verified or not. */
+export async function listFactors(accessToken: string): Promise<SupabaseFactor[]> {
+    const user = await getUser(accessToken);
+    return user.factors ?? [];
+}
+
+/** The verified TOTP factor gating sign-in, or null when 2FA is off. */
+export function findVerifiedTotpFactor(factors: SupabaseFactor[]): SupabaseFactor | null {
+    return (
+        factors.find((f) => f.factor_type === "totp" && f.status === "verified") ?? null
+    );
 }
 
 /** Exchanges a refresh token for a fresh session. */

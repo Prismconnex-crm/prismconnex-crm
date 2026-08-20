@@ -1011,3 +1011,166 @@
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Auth brand panel — scrolling tagline above the logo
+   (components/auth/auth-shell.tsx -> AuthBrandPanel)
+
+   Three independent, GPU-only animations stacked on separate elements so their
+   transforms never fight each other:
+
+     .pcx-tagline        the clipping viewport. Owns the edge fade *and* the
+                         centre brightening — both come from one mask gradient,
+                         which is alpha-only and therefore free: fully opaque at
+                         50%, tapering to transparent at both ends, so a word
+                         reads brightest exactly as it crosses the middle.
+     .pcx-tagline__float the breathing wrapper (translateY + a slight opacity
+                         swell). Kept off the track because the track's own
+                         transform is the marquee.
+     .pcx-tagline__track the marquee itself: four identical copies, animated
+                         0 -> -50%. Two copies' worth of travel against four
+                         copies of content means the frame at 100% is
+                         pixel-identical to the frame at 0% — the loop has no
+                         seam and no jump. Reversing the marquee is only ever
+                         this pair of keyframes; nothing else in the block
+                         encodes a direction.
+
+   Colour is --brand-hover (#0086E6) in *both* themes, not the light/dark
+   --brand swap the logo makes. The brief asks for one blue everywhere, and
+   #0086E6 is the only brand blue that clears contrast on both grounds:
+   3.78:1 on #FFFFFF and 5.08:1 on #0A0E1A. (#005C9D would be 2.77:1 in dark —
+   a smudge.) The glow is a wide, low-alpha text-shadow in the same blue, one
+   step stronger in dark mode where it does real legibility work.
+   ───────────────────────────────────────────────────────────────────────────*/
+
+@keyframes pcx-tagline-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes pcx-tagline-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.92;
+  }
+  50% {
+    transform: translate3d(0, -3px, 0);
+    opacity: 1;
+  }
+}
+
+.pcx-tagline {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* Alpha ramp: invisible at the edges, full strength through the centre.
+     Doubles as the "brighten while passing the middle" effect. */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 8%,
+    rgba(0, 0, 0, 0.78) 24%,
+    rgb(0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.78) 76%,
+    rgba(0, 0, 0, 0.3) 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 8%,
+    rgba(0, 0, 0, 0.78) 24%,
+    rgb(0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.78) 76%,
+    rgba(0, 0, 0, 0.3) 92%,
+    transparent 100%
+  );
+}
+
+.pcx-tagline__float {
+  animation: pcx-tagline-float 7s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.pcx-tagline__track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  animation: pcx-tagline-scroll 18s linear infinite;
+  will-change: transform;
+}
+
+.pcx-tagline__item {
+  /* Block, not flex: the lead/rest/dot spans have to stay *inline* so the space
+     between them survives. Blockified flex items drop their leading whitespace,
+     which glued "One Platform." to "Every Connection.". `flex: none` still
+     applies — this is itself a flex item of the track. */
+  display: block;
+  flex: none;
+  white-space: nowrap;
+  color: rgb(var(--brand-hover));
+  text-shadow: 0 0 18px rgba(0, 134, 230, 0.22);
+}
+
+.dark .pcx-tagline__item {
+  text-shadow: 0 0 22px rgba(0, 134, 230, 0.34);
+}
+
+/* "One Platform." carries the emphasis; the rest stays lighter and calmer. */
+.pcx-tagline__lead {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.pcx-tagline__rest {
+  font-weight: 500;
+  opacity: 0.82;
+}
+
+.pcx-tagline__dot {
+  opacity: 0.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* No travel at all: drop to a single centred copy that wraps normally, so the
+     full sentence is still readable without motion. */
+  .pcx-tagline {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .pcx-tagline__float,
+  .pcx-tagline__track {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+
+  .pcx-tagline__track {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pcx-tagline__item + .pcx-tagline__item {
+    display: none;
+  }
+
+  .pcx-tagline__item {
+    /* The marquee sizes items to max-content (`flex: none`); left as-is here
+       the single copy would overflow the panel instead of wrapping. */
+    flex: 1 1 auto;
+    min-width: 0;
+    width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .pcx-tagline__item .pcx-tagline__dot {
+    display: none;
+  }
+}

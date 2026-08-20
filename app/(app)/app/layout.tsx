@@ -37,8 +37,13 @@ export default async function AppLayout({ children }: { children: React.ReactNod
                 .filter(Boolean)
                 .join(" "),
               email: profile.email,
+              avatarUrl: profile.avatarUrl,
             }
-          : { name: null, email: (session.email as string) ?? null }
+          : {
+              name: null,
+              email: (session.email as string) ?? null,
+              avatarUrl: null,
+            }
       }
     >
       {children}

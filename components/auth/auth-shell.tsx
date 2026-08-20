@@ -67,8 +67,19 @@ export function AuthShell({ children }: { children: ReactNode }) {
 }
 
 /**
- * Right-hand panel: the Prismconnex Global Solutions logo, centred on both
- * axes, and nothing else.
+ * Right-hand panel: the scrolling brand tagline (`BrandTagline`, below) stacked
+ * directly above the Prismconnex Global Solutions logo, the pair centred on
+ * both axes.
+ *
+ * The panel is a centred column rather than a single centred child, so the
+ * tagline rides with the logo at every breakpoint — including mobile, where the
+ * whole panel reorders above the form. Nothing about the mark itself changed:
+ * same asset, same size ramp, same link target; the column just shifts it down
+ * by half the tagline's height so the group stays optically centred.
+ *
+ * The asymmetric `pt-20 pb-10` below `lg` is clearance, not taste: where the
+ * panel stacks first, its top edge is exactly where the absolutely-positioned
+ * ThemeToggle floats, and the old `py-10` put the tagline underneath it.
  *
  * This used to render the wordmark as text because the only asset available,
  * `public/prismconnex-logo.jpeg`, is a white-background JPEG that would show as
@@ -106,11 +117,13 @@ export function AuthShell({ children }: { children: ReactNode }) {
  */
 function AuthBrandPanel() {
   return (
-    <div className="relative order-1 flex items-center justify-center overflow-hidden px-6 py-10 lg:order-2 lg:min-h-screen lg:py-0">
+    <div className="relative order-1 flex flex-col items-center justify-center overflow-hidden px-6 pb-10 pt-20 lg:order-2 lg:min-h-screen lg:py-0">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/[0.06] blur-[150px] dark:bg-indigo-600/10 lg:h-[560px] lg:w-[560px]"
       />
+
+      <BrandTagline />
 
       <Link
         href="/"
@@ -133,6 +146,60 @@ function AuthBrandPanel() {
           className="h-auto w-[200px] sm:w-[280px] lg:w-[360px]"
         />
       </Link>
+    </div>
+  );
+}
+
+
+/** The tagline, as it appears once in the marquee track. */
+const TAGLINE_LEAD = 'One Platform.';
+const TAGLINE_REST = ' Every Connection. Turn Every Connection Into an Opportunity';
+
+/**
+ * Four copies of the phrase are laid end to end and the track is translated
+ * by half its width. Four copies against two copies' worth of travel is what makes
+ * the loop seamless: the final frame is pixel-identical to the first, so there
+ * is no snap when the animation restarts. Four (rather than two) also
+ * guarantees the strip is wider than the panel at every breakpoint, so the
+ * viewport is never left with a gap mid-cycle.
+ */
+const TAGLINE_COPIES = 4;
+
+/**
+ * The scrolling brand line that sits directly above the logo.
+ *
+ * Everything visual lives in `.pcx-tagline*` in app/globals.css — the edge
+ * fade, the centre brightening, the breathing float, the glow, and the
+ * `prefers-reduced-motion` fallback that collapses this to a single static,
+ * centred, wrapping line. Only transform and opacity are animated, so the whole
+ * thing stays on the compositor and costs no layout.
+ *
+ * The clipping viewport is width-capped and `overflow-hidden`, so the
+ * `w-max` track can never widen the panel or introduce a horizontal scrollbar.
+ *
+ * Screen readers get the sentence exactly once: the first copy is real content,
+ * the remaining three are `aria-hidden` decoration.
+ */
+function BrandTagline() {
+  return (
+    <div className="pcx-tagline relative z-10 mb-7 w-full max-w-[300px] sm:max-w-[460px] lg:mb-10 lg:max-w-[600px]">
+      <div className="pcx-tagline__float">
+        <div className="pcx-tagline__track font-sans text-[14px] leading-relaxed tracking-[0.01em] sm:text-[16px] lg:text-[18px]">
+          {Array.from({ length: TAGLINE_COPIES }, (_, index) => (
+            <span
+              key={index}
+              className="pcx-tagline__item"
+              aria-hidden={index === 0 ? undefined : true}
+            >
+              <span className="pcx-tagline__lead">{TAGLINE_LEAD}</span>
+              <span className="pcx-tagline__rest">{TAGLINE_REST}</span>
+              <span className="pcx-tagline__dot" aria-hidden="true">
+                {'  •  '}
+              </span>
+            </span>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

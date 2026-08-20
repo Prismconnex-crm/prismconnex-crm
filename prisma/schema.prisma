@@ -56,6 +56,69 @@ model Profile {
   phone      String?
   createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
+  // ─── Profile page fields (migration 20260815120000) ───────────────
+  // Everything below is nullable or defaulted, so existing rows and the
+  // on_auth_user_created trigger (which only writes the columns above) keep
+  // working untouched.
+
+  /// Public URL of the avatar in the Supabase Storage `avatars` bucket.
+  /// Null = render initials. The object itself is at `<user-id>/<file>`;
+  /// see lib/supabase/storage.ts.
+  avatarUrl String? @map("avatar_url")
+
+  /// Display handle. Unique case-insensitively via a partial expression index
+  /// (profiles_username_lower_key) that Prisma cannot express — it lives in the
+  /// migration. Nullable because every pre-existing row has none.
+  username String?
+
+  alternatePhone String?   @map("alternate_phone")
+  dateOfBirth    DateTime? @map("date_of_birth") @db.Date
+  addressLine    String?   @map("address_line")
+  city           String?
+  state          String?
+  country        String?
+  postalCode     String?   @map("postal_code")
+
+  employeeId       String?   @map("employee_id")
+  department       String?
+  designation      String?
+  reportingManager String?   @map("reporting_manager")
+  team             String?
+  joiningDate      DateTime? @map("joining_date") @db.Date
+  /// Free-form tags. text[] rather than a join table: skills are display-only
+  /// here, never queried or aggregated across users.
+  skills           String[]  @default([])
+
+  /// active | inactive | deleted. Soft-delete only — the auth.users row is
+  /// never removed, because hard deletion needs the service_role key which
+  /// this project deliberately does not hold (see docs/PROFILE.md).
+  accountStatus  String    @default("active") @map("account_status")
+  lastLoginAt    DateTime? @map("last_login_at") @db.Timestamptz(6)
+  deactivatedAt  DateTime? @map("deactivated_at") @db.Timestamptz(6)
+  deletedAt      DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+  // Preferences. Defaults intentionally mirror WorkspaceSettings above, so a
+  // user who never opens the Preferences card behaves like their workspace.
+  language   String @default("en-US")
+  timeZone   String @default("Europe/Berlin") @map("time_zone")
+  dateFormat String @default("DD MMM YYYY") @map("date_format")
+  currency   String @default("EUR")
+  /// light | dark | system — mirrors next-themes, which remains the source of
+  /// truth in the browser; this column is what makes the choice follow the user
+  /// across devices.
+  theme      String @default("system")
+
+  notifyEmail       Boolean @default(true) @map("notify_email")
+  notifySms         Boolean @default(false) @map("notify_sms")
+  notifyPush        Boolean @default(true) @map("notify_push")
+  notifyNewLead     Boolean @default(true) @map("notify_new_lead")
+  notifyNewCustomer Boolean @default(true) @map("notify_new_customer")
+  notifyDeal        Boolean @default(true) @map("notify_deal")
+  notifyTask        Boolean @default(true) @map("notify_task")
+  notifySystem      Boolean @default(true) @map("notify_system")
+
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz(6)
+
   @@index([phone])
   @@map("profiles")
 }
@@ -81,6 +144,9 @@ model Workspace {
   enrollments SequenceEnrollment[]
   emailEvents EmailEvent[]
   savedCompanies SavedCompany[]
+  credit         WorkspaceCredit?
+  creditUsage    CreditUsageEntry[]
+  referrals      Referral[]
 }
 
 model Membership {
@@ -106,6 +172,76 @@ model WorkspaceSettings {
   showDualTime Boolean @default(true)
 
   workspace Workspace @relation(fields: [workspaceId], references: [id])
+}
+
+// ─── Billing / Credits ───────────────────────────────────────
+//
+// There is no payment provider wired up, so these tables are the ONLY source of
+// truth for a workspace's plan and credit balance. They are deliberately real
+// rows rather than a hardcoded UI figure: "remaining credits" is meaningless
+// unless both the allowance and the consumption are persisted and can move.
+//
+// Consumption is written by the metered call sites (currently the ContactOut
+// people lookup in app/api/people/route.ts, which is the one genuinely
+// credit-metered operation in the app). Nothing backfills historical usage —
+// a workspace that has run no lookups shows zero used, because that is true.
+
+/// A workspace's plan and its credit allowance for the current period.
+model WorkspaceCredit {
+  workspaceId String   @id
+  /// STARTER | PROFESSIONAL | ENTERPRISE — matches the public pricing page.
+  plan        String   @default("STARTER")
+  /// Credits granted for the current period. Consumption is summed from
+  /// CreditUsageEntry rather than decremented here, so the ledger stays
+  /// auditable and a period reset is a date change, not a destructive update.
+  allowance   Int      @default(1000)
+  periodStart DateTime @default(now())
+  periodEnd   DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+}
+
+/// One metered operation. Append-only.
+model CreditUsageEntry {
+  id          String   @id @default(cuid())
+  workspaceId String
+  /// The CRM User.id that triggered it, when attributable.
+  userId      String?
+  /// PEOPLE_LOOKUP | COMPANY_EXPORT | AI_QUERY — see CREDIT_KINDS.
+  kind        String
+  amount      Int      @default(1)
+  description String?
+  createdAt   DateTime @default(now())
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, createdAt])
+}
+
+/// An invitation raised from the Profile page's "Refer a New User" card.
+///
+/// No email is sent — the app has no mail transport and no Supabase
+/// service_role key. The row plus its token is what makes the invite link
+/// shareable and its acceptance verifiable later.
+model Referral {
+  id              String    @id @default(cuid())
+  workspaceId     String
+  /// CRM User.id of the referrer.
+  invitedByUserId String
+  email           String
+  /// Opaque value carried in the invite link as ?ref=.
+  token           String    @unique
+  /// PENDING | ACCEPTED | REVOKED
+  status          String    @default("PENDING")
+  createdAt       DateTime  @default(now())
+  acceptedAt      DateTime?
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, email])
+  @@index([workspaceId, createdAt])
 }
 
 model AuditLog {
