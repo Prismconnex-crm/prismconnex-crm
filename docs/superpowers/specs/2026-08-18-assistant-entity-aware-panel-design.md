@@ -68,35 +68,73 @@ rather than a callback the page has to service. That deletes the ~15-line
 `event-list-view.tsx` mount sites, instead of duplicating it a fourth time in
 3b.
 
-### Filters are base64url, not base64
+### Handoff params are namespaced, because Events already owns `q` and `from`
 
-Plain base64 emits `+`, `/` and `=`, all of which are mangled or ambiguous in a
-query string. `lib/assistant/filter-params.ts` encodes base64url with padding
-stripped.
+`components/events/event-list-view.tsx:66-70` already reads and writes the URL
+through `parseEventQueryState` / `serializeEventQueryState`. That scheme claims
+`q` for the sidebar's free-text box (`lib/events/filters.ts:75`) and `from` for
+`dateFrom` as an ISO date (`filters.ts:70`).
 
-`decodeFilters` returns `null` for anything it cannot parse and never throws.
-A filter param is attacker-controllable in the sense that any user can edit the
-address bar, and a throw during render on the target page would be an unhandled
-navigation failure rather than a bad filter.
+The obvious handoff URL therefore breaks Events. `?q=<the whole question>` lands
+in the search box as a literal text filter, and `?from=companies` is read as a
+date. Neither throws, which is what makes it dangerous — the page would just be
+quietly wrong.
 
-Over 1500 encoded characters the param is omitted entirely and the handoff
-falls back to the in-memory `presetFilters` the provider already carries. The
-URL is an enhancement to the transport, never the transport itself.
+Handoff params are `ask`, `via` and `cid`. None of them collide with Events'
+`region`, `country`, `city`, `category`, `organizer`, `keyword`, `from`, `to`,
+`fav` or `q`. Any future page-owned param must avoid those three names.
+
+### Filter serialization belongs to the binding, not to one shared codec
+
+Events has a shipped, tested, readable URL scheme. A second base64 `filters`
+param on the same page would be a competing representation of the same state,
+and the two would drift.
+
+So `PageBinding` gains `serializeFilters(f): string` and
+`parseFilters(search: string): F`. Events delegates to the two functions it
+already has. People gets `lib/assistant/filter-params.ts` — base64url of the
+JSON, since `PeopleFilters` has fifteen keys and eleven of them are arrays, and
+enumerating that as readable params buys nothing on a page nobody hand-edits.
+
+This mirrors the reasoning already recorded in `bindings/people.tsx:24` for why
+`applyFilters` could not be generic: the shapes differ per entity, so a shared
+implementation would have to guess.
+
+Base64url, not plain base64: `+`, `/` and `=` are mangled or ambiguous in a
+query string. Padding is stripped.
+
+`parseFilters` returns the entity's empty filters for anything it cannot parse
+and never throws. The param is attacker-controllable in the sense that any user
+can edit the address bar, and a throw during render on the target page would be
+an unhandled navigation failure rather than a bad filter.
+
+Over 1500 encoded characters the People param is omitted entirely and the
+handoff falls back to the in-memory `presetFilters` the provider already
+carries. The URL is an enhancement to the transport, never the transport
+itself.
 
 ### The URL hook avoids useSearchParams
 
 `useSearchParams` in Next 14 forces the reading subtree into a Suspense
 boundary. `components/auth/sign-in-form.tsx:46` already documents avoiding it
-for exactly this reason.
+for exactly this reason, and `event-list-view.tsx:66` independently arrived at
+the same answer.
 
-`components/assistant/use-url-filters.ts` therefore reads `window.location.search`
-on mount, holds the decoded value in state, writes through `router.replace` for
-in-page filter edits and `router.push` for handoffs, and subscribes to
-`popstate` so browser back and forward stay correct. Programmatic navigations
-update the hook's own state directly, since `popstate` does not fire for them.
+`components/assistant/use-url-filters.ts` generalizes what Events already does:
+read `window.location.search` in an effect after mount (never in the render
+initializer — parsing during render makes the server produce an unfiltered list
+and the client a filtered one, a hydration mismatch), hold the parsed value in
+state, and write back with `history.replaceState` for in-page edits.
 
-`replace` for edits is what keeps a filter change out of the history stack —
-otherwise every keystroke-debounced facet toggle becomes a back-button step.
+`history.replaceState`, not `router.replace`, for edits — the comment at
+`event-list-view.tsx:63` gives the reason: it keeps the address bar shareable
+without re-running the RSC payload on every checkbox click, and it keeps filter
+changes out of the history stack, so a debounced facet toggle does not become a
+back-button step.
+
+Handoffs are the exception and use `router.push`, because a handoff *is* a
+navigation and *should* be a history entry — that is what makes browser back
+work.
 
 ### sourceFilters is supplied at send time
 
@@ -207,11 +245,22 @@ navigation instead of racing it.
 
 ### The handoff URL
 
+Handoff params (`ask`, `via`, `cid`) plus whatever the target binding's own
+`serializeFilters` emits.
+
+To Events, whose binding emits readable params:
+
 ```
-/app/events?q=<question>&filters=<base64url json>&from=people&cid=<id>
+/app/events?country=Germany&category=Packaging&ask=<question>&via=people&cid=<id>
 ```
 
-`from=companies` only becomes reachable in 3b. Until then the two live handoff
+To People, whose binding emits one base64url blob:
+
+```
+/app/people?pf=<base64url json>&ask=<question>&via=events&cid=<id>
+```
+
+`via=companies` only becomes reachable in 3b. Until then the two live handoff
 directions are People to Events and Events to People.
 
 ### Data flow, cancelled handoff
