@@ -5,6 +5,7 @@ import {
     InternalServerError,
     UnauthorizedError,
 } from "@/lib/http/errors";
+import { isSupabaseConfigured, readSupabaseConfig } from "@/lib/supabase/config";
 import { authDebug, maskEmail, maskToken } from "@/lib/auth/auth-debug";
 
 /**
@@ -56,25 +57,17 @@ export type SignUpMetadata = {
     phone?: string;
 };
 
+// Guard with a readable message. The previous Cognito implementation passed an
+// empty clientId straight through to AWS, which surfaced as a raw "2 validation
+// errors detected: Value '' at 'clientId' failed to satisfy constraint" response
+// to the end user. readSupabaseConfig() keeps that property and adds which
+// variable is actually at fault — see lib/supabase/config.ts.
 function config() {
-    const url = process.env.SUPABASE_URL;
-    const anonKey = process.env.SUPABASE_ANON_KEY;
-
-    // Guard with a readable message. The previous Cognito implementation passed
-    // an empty clientId straight through to AWS, which surfaced as a raw
-    // "2 validation errors detected: Value '' at 'clientId' failed to satisfy
-    // constraint" response to the end user.
-    if (!url || !anonKey) {
-        throw new InternalServerError(
-            "Supabase Auth is not configured. Set SUPABASE_URL and SUPABASE_ANON_KEY in .env."
-        );
-    }
-
-    return { url: url.replace(/\/$/, ""), anonKey };
+    return readSupabaseConfig("Auth");
 }
 
 export function isSupabaseAuthConfigured() {
-    return Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY);
+    return isSupabaseConfigured();
 }
 
 /** GoTrue error bodies vary by version; pull a usable message out of any shape. */

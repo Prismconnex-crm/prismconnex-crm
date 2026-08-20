@@ -6,6 +6,7 @@ import {
     InternalServerError,
     UnauthorizedError,
 } from "@/lib/http/errors";
+import { readSupabaseConfig } from "@/lib/supabase/config";
 
 /**
  * Avatar objects in the Supabase Storage `avatars` bucket.
@@ -51,16 +52,7 @@ export const ALLOWED_FORMATS_LABEL = "PNG, JPEG, WebP or GIF";
 export const MAX_AVATAR_BYTES = 5 * 1024 * 1024;
 
 function config() {
-    const url = process.env.SUPABASE_URL;
-    const anonKey = process.env.SUPABASE_ANON_KEY;
-
-    if (!url || !anonKey) {
-        throw new InternalServerError(
-            "Supabase Storage is not configured. Set SUPABASE_URL and SUPABASE_ANON_KEY in .env."
-        );
-    }
-
-    return { url: url.replace(/\/$/, ""), anonKey };
+    return readSupabaseConfig("Storage");
 }
 
 /**
