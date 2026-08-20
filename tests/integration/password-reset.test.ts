@@ -64,7 +64,10 @@ beforeEach(() => {
     process.env.SUPABASE_URL = SUPABASE_URL;
     process.env.SUPABASE_ANON_KEY = ANON_KEY;
 
-    fetchMock = vi.fn().mockResolvedValue(ok());
+    // A fresh Response per call: a body can only be read once, so a single
+    // shared instance throws "Body is unusable" on the second fetch and the
+    // failure surfaces in whichever later test happens to consume it.
+    fetchMock = vi.fn(async () => ok());
     vi.stubGlobal("fetch", fetchMock);
 });
 
