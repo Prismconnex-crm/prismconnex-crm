@@ -24,7 +24,9 @@ function toBase64Url(text: string): string {
   // so "Köln" would fail and "日本" would corrupt.
   const bytes = new TextEncoder().encode(text);
   let binary = '';
-  for (const byte of bytes) binary += String.fromCharCode(byte);
+  // Indexed, not for-of: tsconfig sets no `target`, so tsc defaults to ES5 and
+  // rejects iterating a Uint8Array without downlevelIteration.
+  for (let i = 0; i < bytes.length; i += 1) binary += String.fromCharCode(bytes[i]);
   return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
