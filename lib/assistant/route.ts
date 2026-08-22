@@ -4,6 +4,11 @@
 // module resolution for the WHOLE dev compilation, taking every unrelated
 // route down with it. Same pattern as services/event-query.service.ts.
 import type AnthropicSdk from '@anthropic-ai/sdk';
+import {
+  modelCredentialStatus,
+  noteModelAuthFailure,
+  noteModelSuccess,
+} from './model-config';
 import { adapterFor } from './registry';
 import { ENTITY_SIGNALS } from './signals';
 import { ASSISTANT_ENTITIES, type AssistantEntity } from './types';
@@ -21,8 +26,13 @@ export type ModelClassification = {
 /** Returns null when the model could not be consulted or produced no tool call. */
 export type ModelClassifier = (message: string) => Promise<ModelClassification | null>;
 
+/**
+ * Kept for its existing call sites. "Configured" now means the credential is
+ * usable, not merely present — a key the API has rejected is not configured in
+ * any sense the caller cares about.
+ */
 export function isConfigured(): boolean {
-  return Boolean(process.env.ANTHROPIC_API_KEY);
+  return modelCredentialStatus().state === 'ok';
 }
 
 const TOOL_NAMES: Record<AssistantEntity, string> = {
@@ -127,6 +137,9 @@ export function createModelClassifier(): ModelClassifier {
         { signal: controller.signal }
       );
 
+      // Proves the current key works; clears any remembered rejection.
+      noteModelSuccess();
+
       for (const block of response.content) {
         if (block.type !== 'tool_use') continue;
         const entity = ENTITY_BY_TOOL[block.name];
@@ -137,6 +150,10 @@ export function createModelClassifier(): ModelClassifier {
       // Model answered without calling a tool — treat as unclassified.
       return null;
     } catch (error) {
+      // A 401/403 is a fact about the credential, not just this request, so it
+      // outlives the call. Everything else stays a one-off failure.
+      noteModelAuthFailure((error as { status?: number } | null)?.status ?? 0);
+
       // Any failure degrades to the deterministic classifier rather than
       // surfacing an error — but it is logged, because a bad key, a 404 and a
       // timeout are otherwise indistinguishable from a genuine no-tool-call.

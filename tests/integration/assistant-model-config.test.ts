@@ -97,3 +97,90 @@ describe('credentialNotice', () => {
     expect(credentialNotice(modelCredentialStatus())).not.toContain('supersecret');
   });
 });
+
+describe('createModelClassifier credential reporting', () => {
+  /**
+   * vi.resetModules() gives the dynamically-imported route.ts a FRESH copy of
+   * model-config, with its own module-level `rejectedKey`. The status must
+   * therefore be read from that same copy — asserting against this file's
+   * static import reads a different instance, which the route never wrote to.
+   */
+  async function loadClassifierAndConfig() {
+    const [route, config] = await Promise.all([
+      import('@/lib/assistant/route'),
+      import('@/lib/assistant/model-config'),
+    ]);
+    return { createModelClassifier: route.createModelClassifier, config };
+  }
+
+  it('records a 401 so the next status read reports invalid', async () => {
+    process.env.ANTHROPIC_API_KEY = 'sk-ant-rejected';
+
+    // The SDK is loaded through a dynamic import inside the classifier, so the
+    // rejection is injected by stubbing that module rather than the network.
+    // Registered BEFORE the route import: doMock only affects later imports.
+    vi.doMock('@anthropic-ai/sdk', () => ({
+      default: class {
+        messages = {
+          create: async () => {
+            throw Object.assign(new Error('API key is invalid.'), { status: 401 });
+          },
+        };
+      },
+    }));
+
+    const { createModelClassifier, config } = await loadClassifierAndConfig();
+
+    // Degrades to null rather than throwing — behaviour is unchanged.
+    await expect(createModelClassifier()('shows in germany')).resolves.toBeNull();
+
+    expect(config.modelCredentialStatus()).toEqual({ state: 'invalid', httpStatus: 401 });
+  }, 30000);
+
+  it('leaves the status ok when the classifier fails for a non-auth reason', async () => {
+    process.env.ANTHROPIC_API_KEY = 'sk-ant-valid';
+
+    vi.doMock('@anthropic-ai/sdk', () => ({
+      default: class {
+        messages = {
+          create: async () => {
+            throw Object.assign(new Error('overloaded'), { status: 529 });
+          },
+        };
+      },
+    }));
+
+    const { createModelClassifier, config } = await loadClassifierAndConfig();
+
+    await expect(createModelClassifier()('shows in germany')).resolves.toBeNull();
+
+    expect(config.modelCredentialStatus()).toEqual({ state: 'ok' });
+  }, 30000);
+
+  it('clears a remembered rejection once a call succeeds', async () => {
+    process.env.ANTHROPIC_API_KEY = 'sk-ant-recovering';
+
+    vi.doMock('@anthropic-ai/sdk', () => ({
+      default: class {
+        messages = {
+          create: async () => ({
+            content: [{ type: 'tool_use', name: 'route_to_events', input: { region: 'Europe' } }],
+          }),
+        };
+      },
+    }));
+
+    const { createModelClassifier, config } = await loadClassifierAndConfig();
+
+    // Rejected on the same instance the route will later clear.
+    config.noteModelAuthFailure(401);
+    expect(config.modelCredentialStatus()).toEqual({ state: 'invalid', httpStatus: 401 });
+
+    await expect(createModelClassifier()('shows in germany')).resolves.toEqual({
+      entity: 'events',
+      filters: { region: 'Europe' },
+    });
+
+    expect(config.modelCredentialStatus()).toEqual({ state: 'ok' });
+  }, 30000);
+});
