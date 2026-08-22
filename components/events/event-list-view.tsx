@@ -15,7 +15,7 @@ import {
     type EventQueryState,
 } from '@/lib/events/filters';
 import { emptyEventFilters, type EventFilters } from '@/types/events';
-import { AssistantPanel } from '@/components/assistant/assistant-panel';
+import { AIChatPanel } from '@/components/assistant/ai-chat-panel';
 import { useAssistantConversation } from '@/components/assistant/assistant-provider';
 import { eventsBinding } from '@/components/assistant/bindings/events';
 
@@ -224,26 +224,13 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                                 // and the page keeps its single scrollbar.
                                 className="flex flex-col overflow-y-auto rounded-[16px] border border-slate-200 bg-white shadow-sm dark:border-[#22304A] dark:bg-[#111B2E] xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)]"
                             >
-                                <AssistantPanel
-                                    currentPage="events"
-                                    activeFilters={queryState as unknown as Record<string, unknown>}
+                                <AIChatPanel
+                                    entity="events"
                                     rowContext={{
                                         likedIds,
                                         targetIds,
                                         onToggleLike: toggleLike,
                                         onToggleTarget: toggleTarget,
-                                    }}
-                                    onGoBack={(entity, sourceFilters) => {
-                                        // Spec 2b binds People and Events; a
-                                        // back-jump to Companies arrives in 2c.
-                                        if (entity === 'events' && sourceFilters) {
-                                            applyQueryState(
-                                                eventsBinding.applyFilters(
-                                                    queryState,
-                                                    sourceFilters as Partial<EventQueryState>
-                                                )
-                                            );
-                                        }
                                     }}
                                 />
 
@@ -290,26 +277,13 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <AssistantPanel
-                                    currentPage="events"
-                                    activeFilters={queryState as unknown as Record<string, unknown>}
+                                <AIChatPanel
+                                    entity="events"
                                     rowContext={{
                                         likedIds,
                                         targetIds,
                                         onToggleLike: toggleLike,
                                         onToggleTarget: toggleTarget,
-                                    }}
-                                    onGoBack={(entity, sourceFilters) => {
-                                        // Spec 2b binds People and Events; a
-                                        // back-jump to Companies arrives in 2c.
-                                        if (entity === 'events' && sourceFilters) {
-                                            applyQueryState(
-                                                eventsBinding.applyFilters(
-                                                    queryState,
-                                                    sourceFilters as Partial<EventQueryState>
-                                                )
-                                            );
-                                        }
                                     }}
                                 />
                             </motion.div>

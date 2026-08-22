@@ -5,8 +5,7 @@ import { motion } from "framer-motion";
 import { Activity, Bookmark, ChevronDown, Filter, UploadCloud, Users, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PeopleFilterSidebar } from "@/components/people/people-filter-sidebar";
-import { AssistantPanel } from "@/components/assistant/assistant-panel";
-import { peopleBinding } from "@/components/assistant/bindings/people";
+import { AIChatPanel } from "@/components/assistant/ai-chat-panel";
 import { PeopleResultsTable } from "@/components/people/people-results-table";
 import { PeopleBulkToolbar } from "@/components/people/people-bulk-toolbar";
 import { PeopleDetailSlideover } from "@/components/people/people-detail-slideover";
@@ -356,24 +355,14 @@ export function PeopleSection() {
             transition={{ duration: 0.35, delay: 0.1 }}
             className="flex flex-col"
           >
-            <AssistantPanel
-              currentPage="people"
-              activeFilters={filters as unknown as Record<string, unknown>}
+            <AIChatPanel
+              entity="people"
               rowContext={{
                 selectedIds,
                 savedIds,
                 onToggleSelect: toggleSelect,
                 onToggleSaved: toggleSaved,
                 onOpenPerson: setOpenPerson,
-              }}
-              onGoBack={(entity, sourceFilters) => {
-                // Spec 2a only binds People, so a back-jump can only land
-                // here; the events and companies routes arrive in Spec 2b.
-                if (entity === "people" && sourceFilters) {
-                  applyFilters(
-                    peopleBinding.applyFilters(filters, sourceFilters as Partial<PeopleFilters>)
-                  );
-                }
               }}
             />
           </motion.div>

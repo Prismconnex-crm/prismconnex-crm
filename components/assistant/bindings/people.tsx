@@ -1,13 +1,8 @@
 "use client";
 
 import { PeopleResultsTable } from '@/components/people/people-results-table';
-import { decodeFilters, encodeFilters } from '@/lib/assistant/filter-params';
-import {
-  emptyPeopleFilters,
-  hasAnyPeopleFilter,
-  type PeopleFilters,
-  type Person,
-} from '@/types/people';
+import { paramsToFilters, serializePeopleQuery } from '@/lib/people/filters';
+import { emptyPeopleFilters, type PeopleFilters, type Person } from '@/types/people';
 import type { PageBinding } from '../types';
 
 /** The handlers and selection state the People page already owns. */
@@ -45,25 +40,21 @@ export const peopleBinding: PageBinding<PeopleFilters, PeopleRowContext> = {
   },
 
   /**
-   * One opaque param. Fifteen keys, eleven of them arrays — enumerating that
-   * readably buys nothing on a page nobody hand-edits.
+   * Delegates to the codec the People page already reads and writes
+   * (people-section.tsx: "URL as the single source of truth"), exactly as the
+   * events binding delegates to the Events rail's scheme.
+   *
+   * An opaque base64 blob was specified here on the belief that People had no
+   * URL scheme. It does — and a second representation of the same state on the
+   * same page is precisely the drift the events decision exists to prevent:
+   * the panel and the rail would each believe a different set of filters.
+   *
+   * paramsToFilters also validates against the closed vocabulary, so a value
+   * invented by the model or typed into the address bar is dropped rather than
+   * queried.
    */
-  serializeFilters(filters) {
-    // An all-empty PeopleFilters still stringifies to a real object, so without
-    // this an unfiltered page would permanently carry a ?pf= blob meaning
-    // "nothing applied". Events serialises empty to '' — match it.
-    if (!hasAnyPeopleFilter(filters)) return '';
-
-    const encoded = encodeFilters(filters);
-    // Omitted rather than truncated when oversize: the in-memory presetFilters
-    // carries the handoff, and a truncated blob would decode to wrong filters.
-    return encoded ? `?pf=${encoded}` : '';
-  },
-
-  parseFilters(search) {
-    const param = new URLSearchParams(search).get('pf');
-    return decodeFilters(param, emptyPeopleFilters());
-  },
+  serializeFilters: serializePeopleQuery,
+  parseFilters: paramsToFilters,
 
   renderRows(rows, context) {
     // EMPTY_CONTEXT is a defensive default for a page that forgets to pass one;

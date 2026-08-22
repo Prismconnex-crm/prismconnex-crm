@@ -175,15 +175,31 @@ describe('binding filter serialization', () => {
     expect(parsed).toEqual(eventsBinding.emptyFilters());
   });
 
-  it('people round-trips through its base64url blob', () => {
+  it('people round-trips through the codec its own page already uses', () => {
     const filters = peopleBinding.emptyFilters();
     filters.titles = ['VP Engineering'];
     filters.countries = ['Germany'];
     filters.search = 'fintech';
 
     const query = peopleBinding.serializeFilters(filters);
-    expect(query).toMatch(/^\?pf=[A-Za-z0-9_-]+$/);
+    // Readable, and the SAME scheme people-section.tsx reads on mount — a
+    // second representation would let the panel and the rail disagree.
+    expect(query).toContain('title=VP+Engineering');
+    expect(query).toContain('country=Germany');
+    expect(query).toContain('q=fintech');
     expect(peopleBinding.parseFilters(query)).toEqual(filters);
+  });
+
+  it('people ignores the handoff params, which are not its filters', () => {
+    // People owns `q`; that is exactly why the question travels as `ask`.
+    expect(peopleBinding.parseFilters('?ask=who+are+the+CEOs&via=events&cid=abc')).toEqual(
+      peopleBinding.emptyFilters()
+    );
+  });
+
+  it('people drops a value outside its closed vocabulary', () => {
+    // paramsToFilters validates; an invented seniority never reaches a query.
+    expect(peopleBinding.parseFilters('?seniority=Sovereign').seniorities).toEqual([]);
   });
 
   it('people serialises empty filters to an empty string', () => {
@@ -194,13 +210,6 @@ describe('binding filter serialization', () => {
     expect(peopleBinding.parseFilters('?pf=!!!garbage!!!')).toEqual(
       peopleBinding.emptyFilters()
     );
-  });
-
-  it('people omits the param entirely when it would exceed the cap', () => {
-    const filters = peopleBinding.emptyFilters();
-    filters.keywords = Array.from({ length: 2000 }, (_, i) => `keyword-${i}`);
-    // Omitted, not truncated: a truncated blob would decode to the wrong filters.
-    expect(peopleBinding.serializeFilters(filters)).toBe('');
   });
 
   it('neither binding throws on an empty search string', () => {
