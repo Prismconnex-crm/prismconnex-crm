@@ -36,6 +36,12 @@ export type ProfileView = {
     joiningDate: string | null;
     skills: string[];
 
+    company: string | null;
+    bio: string | null;
+    /** Absolute, scheme included — normalised by UpdateProfessionalInfoSchema. */
+    website: string | null;
+    linkedinUrl: string | null;
+
     accountStatus: string;
     lastLoginAt: string | null;
     deactivatedAt: string | null;

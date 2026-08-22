@@ -12,6 +12,7 @@ import {
     SecondaryButton,
     SectionCard,
     StatusMessage,
+    TextAreaField,
     formatDate,
     useAutoClearedStatus,
 } from "./profile-ui";
@@ -19,22 +20,54 @@ import { toDateInputValue, type ProfileView } from "./types";
 
 type FormState = {
     employeeId: string;
+    company: string;
     department: string;
     designation: string;
     reportingManager: string;
     team: string;
     joiningDate: string;
+    website: string;
+    linkedinUrl: string;
+    bio: string;
 };
 
 function toFormState(profile: ProfileView): FormState {
     return {
         employeeId: profile.employeeId ?? "",
+        company: profile.company ?? "",
         department: profile.department ?? "",
         designation: profile.designation ?? "",
         reportingManager: profile.reportingManager ?? "",
         team: profile.team ?? "",
         joiningDate: toDateInputValue(profile.joiningDate),
+        website: profile.website ?? "",
+        linkedinUrl: profile.linkedinUrl ?? "",
+        bio: profile.bio ?? "",
     };
+}
+
+/**
+ * A stored link, rendered as an anchor with its scheme stripped for display.
+ *
+ * The href keeps the absolute URL the schema normalised; only the visible text
+ * loses the "https://", because that prefix is noise in a profile card and its
+ * absence in the href is what would actually break the link.
+ *
+ * `rel="noopener noreferrer"` is not optional on a user-supplied target="_blank"
+ * link: without noopener the destination gets a handle on this window and can
+ * navigate it somewhere else.
+ */
+function LinkValue({ url }: { url: string }) {
+    return (
+        <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand underline-offset-2 hover:underline dark:text-brand-hover"
+        >
+            {url.replace(/^https?:\/\//, "")}
+        </a>
+    );
 }
 
 /** Professional Information, including the skills chip editor. */
@@ -176,6 +209,15 @@ export function ProfessionalInfoCard({
                             placeholder="PCX-0142"
                         />
                         <Field
+                            label="Company"
+                            name="company"
+                            value={form.company}
+                            onChange={set("company")}
+                            error={fieldErrors.company}
+                            placeholder="Prismconnex GmbH"
+                            autoComplete="organization"
+                        />
+                        <Field
                             label="Department"
                             name="department"
                             value={form.department}
@@ -215,7 +257,36 @@ export function ProfessionalInfoCard({
                             onChange={set("joiningDate")}
                             error={fieldErrors.joiningDate}
                         />
+                        <Field
+                            label="Website"
+                            name="website"
+                            value={form.website}
+                            onChange={set("website")}
+                            error={fieldErrors.website}
+                            placeholder="example.com"
+                            hint="https:// is added if you leave it out"
+                            autoComplete="url"
+                        />
+                        <Field
+                            label="LinkedIn"
+                            name="linkedinUrl"
+                            value={form.linkedinUrl}
+                            onChange={set("linkedinUrl")}
+                            error={fieldErrors.linkedinUrl}
+                            placeholder="linkedin.com/in/your-handle"
+                        />
                     </div>
+
+                    <TextAreaField
+                        label="About"
+                        name="bio"
+                        value={form.bio}
+                        onChange={set("bio")}
+                        error={fieldErrors.bio}
+                        placeholder="A short introduction shown on your profile."
+                        maxLength={1000}
+                        hint={`${form.bio.length}/1000`}
+                    />
 
                     {/* ── Skills ── */}
                     <div>
@@ -314,6 +385,7 @@ export function ProfessionalInfoCard({
                             value={profile.employeeId ?? <NotSet />}
                             mono={Boolean(profile.employeeId)}
                         />
+                        <ReadOnlyField label="Company" value={profile.company ?? <NotSet />} />
                         <ReadOnlyField
                             label="Department"
                             value={profile.department ?? <NotSet />}
@@ -333,7 +405,40 @@ export function ProfessionalInfoCard({
                                 profile.joiningDate ? formatDate(profile.joiningDate) : <NotSet />
                             }
                         />
+                        <ReadOnlyField
+                            label="Website"
+                            value={
+                                profile.website ? <LinkValue url={profile.website} /> : <NotSet />
+                            }
+                        />
+                        <ReadOnlyField
+                            label="LinkedIn"
+                            value={
+                                profile.linkedinUrl ? (
+                                    <LinkValue url={profile.linkedinUrl} />
+                                ) : (
+                                    <NotSet />
+                                )
+                            }
+                        />
                     </dl>
+
+                    {profile.bio ? (
+                        <div className="mt-3">
+                            <p className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                                About
+                            </p>
+                            {/*
+                                whitespace-pre-line, not a dangerouslySetInnerHTML
+                                render: the bio is user input, so the newlines the
+                                user typed are honoured by CSS while the content
+                                itself stays plain text and cannot inject markup.
+                            */}
+                            <p className="mt-1 whitespace-pre-line text-[13px] leading-relaxed text-slate-900 dark:text-slate-100">
+                                {profile.bio}
+                            </p>
+                        </div>
+                    ) : null}
 
                     <div className="mt-3">
                         <p className="text-[11px] font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">

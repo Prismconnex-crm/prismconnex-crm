@@ -81,6 +81,21 @@ model Profile {
   /// here, never queried or aggregated across users.
   skills           String[]  @default([])
 
+  /// The user's employer, free text rather than a FK to Workspace: a profile's
+  /// company is not always the workspace that owns the seat, and the workspace
+  /// name is already shown read-only by the Account Information card.
+  company String?
+  /// Free-form "about me". The 1000-character cap lives in
+  /// UpdateProfessionalInfoSchema, where it can return a readable message.
+  bio     String?
+
+  /// Absolute URLs including the scheme — UpdateProfessionalInfoSchema prefixes
+  /// https:// and rejects any scheme other than http/https, so these can never
+  /// hold a bare host (which an <a href> resolves as a relative path) or a
+  /// javascript: URL (stored XSS in the anchor the profile card renders).
+  website     String?
+  linkedinUrl String? @map("linkedin_url")
+
   /// active | inactive | deleted. Soft-delete only — the auth.users row is
   /// never removed, because hard deletion needs the service_role key which
   /// this project deliberately does not hold (see docs/PROFILE.md).

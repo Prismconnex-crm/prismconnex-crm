@@ -139,6 +139,10 @@ export class ProfileRepository {
             team: string | null;
             joiningDate: Date | null;
             skills: string[];
+            company: string | null;
+            bio: string | null;
+            website: string | null;
+            linkedinUrl: string | null;
         }
     ) {
         return prisma.profile.update({ where: { id }, data });

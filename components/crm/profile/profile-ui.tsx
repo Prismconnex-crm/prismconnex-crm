@@ -225,6 +225,84 @@ export function Field({
     );
 }
 
+/**
+ * Multi-line sibling of `Field`, for the profile bio.
+ *
+ * Same label/hint/error contract, so a caller swapping one for the other keeps
+ * its validation wiring. `CONTROL_CLASSES` carries a fixed control height, so
+ * it is deliberately not reused here — the height comes from `rows` instead,
+ * and the rest of the styling is repeated to stay visually identical.
+ */
+export function TextAreaField({
+    label,
+    name,
+    value,
+    onChange,
+    placeholder,
+    disabled,
+    error,
+    hint,
+    rows = 4,
+    maxLength,
+}: {
+    label: string;
+    name: string;
+    value: string;
+    onChange: (value: string) => void;
+    placeholder?: string;
+    disabled?: boolean;
+    error?: string;
+    hint?: string;
+    rows?: number;
+    maxLength?: number;
+}) {
+    const id = useId();
+    const describedBy = [error ? `${id}-error` : null, hint ? `${id}-hint` : null]
+        .filter(Boolean)
+        .join(" ");
+
+    return (
+        <div>
+            <label
+                htmlFor={id}
+                className="mb-1 block text-[12px] font-medium text-slate-700 dark:text-slate-300"
+            >
+                {label}
+            </label>
+            <textarea
+                id={id}
+                name={name}
+                value={value}
+                onChange={(event) => onChange(event.target.value)}
+                placeholder={placeholder}
+                disabled={disabled}
+                rows={rows}
+                maxLength={maxLength}
+                aria-invalid={error ? true : undefined}
+                aria-describedby={describedBy || undefined}
+                className={cn(
+                    "w-full rounded-lg border border-slate-300 bg-white px-2.5 py-2 text-[13px] text-slate-900 placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/25 disabled:cursor-not-allowed disabled:opacity-60 dark:border-[#22304A] dark:bg-[#0F1729] dark:text-white",
+                    error &&
+                        "border-red-400 focus:border-red-500 focus:ring-red-500/25 dark:border-red-500/60"
+                )}
+            />
+            {hint && !error ? (
+                <p id={`${id}-hint`} className="mt-1 text-[11px] text-slate-500 dark:text-slate-400">
+                    {hint}
+                </p>
+            ) : null}
+            {error ? (
+                <p
+                    id={`${id}-error`}
+                    className="mt-1 text-[11px] font-medium text-red-600 dark:text-red-400"
+                >
+                    {error}
+                </p>
+            ) : null}
+        </div>
+    );
+}
+
 export function SelectField({
     label,
     value,

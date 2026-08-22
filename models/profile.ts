@@ -36,6 +36,11 @@ export const ProfileSchema = z.object({
     joiningDate: z.date().nullable(),
     skills: z.array(z.string()),
 
+    company: z.string().nullable(),
+    bio: z.string().nullable(),
+    website: z.string().nullable(),
+    linkedinUrl: z.string().nullable(),
+
     accountStatus: z.string(),
     lastLoginAt: z.date().nullable(),
     deactivatedAt: z.date().nullable(),
@@ -114,6 +119,66 @@ const optionalPhone = z
     });
 
 /**
+ * Optional URL, stored absolute or not at all.
+ *
+ * Two jobs, and both matter:
+ *
+ * 1. People type "linkedin.com/in/ada", not "https://linkedin.com/in/ada".
+ *    Stored bare, the browser resolves the resulting `href` as a RELATIVE
+ *    path, so the profile's LinkedIn link quietly points at
+ *    /app/profile/linkedin.com/in/ada. Prefixing https:// here means the
+ *    column only ever holds something a browser treats as absolute.
+ *
+ * 2. An unchecked href is a stored-XSS vector: `javascript:alert(1)` survives
+ *    every "is it a string" check and executes on click. Only http and https
+ *    are allowed through — and note that a scheme must be REJECTED rather
+ *    than stripped, since stripping `javascript:` leaves `alert(1)`, which
+ *    would then be helpfully prefixed into `https://alert(1)`.
+ *
+ * The URL constructor does the parsing rather than a regex, because it is the
+ * same parser the browser will use on the value we store.
+ */
+const optionalUrl = (max: number) =>
+    z
+        .string()
+        .trim()
+        .max(max, `Must be ${max} characters or fewer`)
+        .transform((value) => (value === "" ? null : value))
+        .nullable()
+        .optional()
+        .transform((value, ctx) => {
+            if (value === null || value === undefined) return value;
+
+            // A bare host has no "scheme:" prefix, so it is safe to add one.
+            // Anything that already carries a scheme is left alone, so that
+            // the check below sees the scheme the user actually supplied.
+            const candidate = /^[a-z][a-z0-9+.-]*:/i.test(value) ? value : `https://${value}`;
+
+            let parsed: URL;
+            try {
+                parsed = new URL(candidate);
+            } catch {
+                ctx.addIssue({ code: "custom", message: "Enter a valid URL" });
+                return z.NEVER;
+            }
+
+            if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
+                ctx.addIssue({ code: "custom", message: "Only http and https links are allowed" });
+                return z.NEVER;
+            }
+
+            // `new URL("https://not a url")` throws, but "https://nohost" does
+            // not — it parses with hostname "nohost". Requiring a dot rejects
+            // the single-word typo without banning it from a real path.
+            if (!parsed.hostname.includes(".")) {
+                ctx.addIssue({ code: "custom", message: "Enter a valid URL" });
+                return z.NEVER;
+            }
+
+            return candidate;
+        });
+
+/**
  * `YYYY-MM-DD` from a native <input type="date">, or null when cleared.
  *
  * Kept as a string at the boundary and converted to a Date in the service:
@@ -168,6 +233,20 @@ export const UpdateProfessionalInfoSchema = z.object({
     reportingManager: optionalText(120),
     team: optionalText(80),
     joiningDate: optionalDateString,
+
+    company: optionalText(120),
+    /**
+     * Capped at 1000 rather than left unbounded: the bio is returned by every
+     * profile read and rendered in a fixed card, so an unbounded value is both
+     * a layout break and a trivial way to bloat the response.
+     */
+    bio: optionalText(1000),
+    /**
+     * 2048 matches the practical URL ceiling browsers and proxies enforce, so
+     * a value that passes here is one that can actually be followed.
+     */
+    website: optionalUrl(2048),
+    linkedinUrl: optionalUrl(2048),
     /**
      * Deduplicated case-insensitively and capped. The cap is not arbitrary
      * politeness: skills render as chips in a fixed-height card, and an

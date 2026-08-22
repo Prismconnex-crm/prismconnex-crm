@@ -51,6 +51,11 @@ function toDTO(row: ProfileRow): ProfileDTO {
         joiningDate: row.joiningDate,
         skills: row.skills,
 
+        company: row.company,
+        bio: row.bio,
+        website: row.website,
+        linkedinUrl: row.linkedinUrl,
+
         accountStatus: row.accountStatus,
         lastLoginAt: row.lastLoginAt,
         deactivatedAt: row.deactivatedAt,
@@ -245,6 +250,10 @@ export class ProfileService {
             team: data.team ?? null,
             joiningDate: parseDateOnly(data.joiningDate),
             skills: data.skills ?? [],
+            company: data.company ?? null,
+            bio: data.bio ?? null,
+            website: data.website ?? null,
+            linkedinUrl: data.linkedinUrl ?? null,
         });
 
         return toDTO(row);

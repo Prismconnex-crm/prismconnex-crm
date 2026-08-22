@@ -57,6 +57,21 @@ straight to Supabase Auth and live only in `auth.users.encrypted_password`.
 copy at `supabase/sql/002_extend_profiles.sql` for the Supabase SQL editor. Adds
 34 columns to `public.profiles`, all nullable or defaulted.
 
+`prisma/migrations/20260822120000_add_profile_bio_and_links/` — identical copy
+at `supabase/sql/005_profile_bio_and_links.sql`. Adds the last four fields the
+Professional Information card owns: `company`, `bio`, `website`,
+`linkedin_url`, all `text` and all nullable.
+
+No index was added for those four. They are display-only — nothing filters,
+sorts, joins or aggregates on them, and the page reads one row by primary key —
+so an index would cost every profile save and serve no read.
+
+`website` and `linkedin_url` store **absolute** URLs including the scheme.
+`optionalUrl()` in `models/profile.ts` prefixes `https://` when the user omits
+it and rejects any other scheme. Both halves matter: a bare `example.com` in an
+`href` is resolved by the browser as a *relative* path, and an unrejected
+`javascript:` URL is stored XSS in the anchor the card renders.
+
 > Every column **must** stay nullable-or-defaulted. The
 > `on_auth_user_created` trigger inserts only the seven original columns, and it
 > runs inside the signup transaction — a `NOT NULL` column without a default
@@ -72,14 +87,48 @@ Also adds:
 RLS needed no changes: policies filter *rows*, so every new column is covered by
 the existing own-row rules.
 
-### Still to run by hand
+### Storage
 
 `supabase/sql/003_avatars_storage.sql` — creates the `avatars` Storage bucket
-(public, 2 MiB, images only) and its RLS policies. **Photo upload returns a
-"bucket does not exist" error until this is run.** There is no Prisma
-counterpart: `storage.objects` is not a schema Prisma manages.
+(public, **5 MiB**, images only) and its four RLS policies. There is no Prisma
+counterpart: `storage.objects` is not a schema Prisma manages, so this file is
+the only definition.
 
-Run it in **Supabase Dashboard → SQL Editor**.
+**Applied** — verified against the live project on 2026-08-22: the bucket
+exists with a 5242880-byte limit and the PNG/JPEG/JPG/WebP/GIF mime list, and
+`avatars_public_read`, `avatars_insert_own`, `avatars_update_own` and
+`avatars_delete_own` are all present. If you rebuild the project from scratch,
+run it in **Supabase Dashboard → SQL Editor**; until it is run, photo upload
+fails with a "bucket does not exist" error.
+
+The 5 MiB limit is enforced twice: at the bucket, and again by
+`MAX_AVATAR_BYTES` in `lib/supabase/storage.ts`. Keep the two in step — if the
+bucket is the stricter of the two, the readable server-side error is skipped
+and the failure surfaces from Storage instead.
+
+---
+
+### Migration-history drift (pre-existing)
+
+`_prisma_migrations` in the live project has two rows for
+`20260801_add_company_contact` — one `finished_at IS NULL` (a failed attempt)
+and one successful — and a row for `20260819120000_add_user_sessions_valid_from`
+whose folder is no longer in `prisma/migrations/`.
+
+**`prisma migrate deploy` will refuse to run** while the failed row is there,
+reporting the migration as failed. This predates the Profile page and is
+untouched here because clearing it means deleting a row from migration history,
+which is the project owner's call. Resolve it with either:
+
+```
+npx prisma migrate resolve --applied 20260801_add_company_contact
+# or, if that attempt genuinely did nothing:
+npx prisma migrate resolve --rolled-back 20260801_add_company_contact
+```
+
+Until then, apply new migrations the way `20260822120000_add_profile_bio_and_links`
+was: run the `supabase/sql/*.sql` twin in the Dashboard SQL Editor, then record
+it with `prisma migrate resolve --applied <name>`.
 
 ---
 
@@ -192,6 +241,8 @@ unavailable).
 | Personal info | Edit → enter phone `12345` → inline error; fix → Save |
 | Email change | Change the address → confirmation link is emailed; the column only moves once confirmed |
 | Professional | Add skills with Enter/comma; duplicates (differing only in case) are dropped |
+| Company / About | Edit → Save → reopen: both persist. A bio over 1000 chars is refused inline |
+| Website / LinkedIn | Type `linkedin.com/in/you` → saved as `https://linkedin.com/in/you`, and the read view links to it. `javascript:alert(1)` → rejected inline |
 | Password | Wrong current password → "Your current password is incorrect" |
 | 2FA | Enable → scan QR → enter code. Then sign out and back in: the code step appears |
 | 2FA via OAuth | With 2FA on, "Continue with Google" also lands on the code step |
