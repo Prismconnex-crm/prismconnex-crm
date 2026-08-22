@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 
+import type { AssistantEntity } from "@/lib/assistant/types";
+
 /**
  * Browser-local store of natural-language searches, shared by the Companies
  * "Find anything" panel and the Events Explorer. Entries are tagged by `type`
@@ -27,7 +29,24 @@ export type SavedQuery = {
    * search rather than re-asking the model.
    */
   payload?: unknown;
+  /**
+   * Which page "View" reopens. Optional because entries predating this field
+   * live in localStorage, where no migration can run — `targetEntityOf`
+   * infers it from `type` instead.
+   */
+  targetEntity?: AssistantEntity;
 };
+
+const ENTITY_BY_KIND: Record<SavedQueryKind, AssistantEntity> = {
+  lead_query: "companies",
+  event_query: "events",
+  people_query: "people",
+};
+
+/** The explicit field when present, otherwise inferred from the legacy kind. */
+export function targetEntityOf(entry: SavedQuery): AssistantEntity {
+  return entry.targetEntity ?? ENTITY_BY_KIND[entry.type] ?? "companies";
+}
 
 const STORAGE_KEY = "pcx_search_queries";
 const MAX_RECENT = 12;
