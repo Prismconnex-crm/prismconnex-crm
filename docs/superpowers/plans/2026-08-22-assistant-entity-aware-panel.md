@@ -42,7 +42,7 @@
   - `encodeFilters(filters: unknown): string | null` — base64url, `null` when over the cap or unserializable
   - `decodeFilters<T>(param: string | null | undefined, fallback: T): T` — never throws
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/integration/assistant-filter-params.test.ts`:
 
@@ -129,12 +129,12 @@ describe('decodeFilters', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run tests/integration/assistant-filter-params.test.ts`
 Expected: FAIL — `Cannot find package '@/lib/assistant/filter-params'`.
 
-- [ ] **Step 3: Write minimal implementation**
+- [x] **Step 3: Write minimal implementation**
 
 Create `lib/assistant/filter-params.ts`:
 
@@ -211,12 +211,12 @@ export function decodeFilters<T>(param: string | null | undefined, fallback: T):
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `npx vitest run tests/integration/assistant-filter-params.test.ts`
 Expected: PASS — 14 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add lib/assistant/filter-params.ts tests/integration/assistant-filter-params.test.ts
@@ -239,7 +239,7 @@ git commit -m "feat(assistant): base64url codec for People's filter param"
   - `readScroll(key: string): number` — `0` when unknown
   - `resetScrollsForTests(): void`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/integration/assistant-scroll-store.test.ts`:
 
@@ -314,12 +314,12 @@ describe('saveScroll / readScroll', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run tests/integration/assistant-scroll-store.test.ts`
 Expected: FAIL — `Cannot find package '@/components/assistant/scroll-store'`.
 
-- [ ] **Step 3: Write minimal implementation**
+- [x] **Step 3: Write minimal implementation**
 
 Create `components/assistant/scroll-store.ts`:
 
@@ -360,12 +360,12 @@ export function resetScrollsForTests(): void {
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `npx vitest run tests/integration/assistant-scroll-store.test.ts`
 Expected: PASS — 11 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add components/assistant/scroll-store.ts tests/integration/assistant-scroll-store.test.ts
@@ -388,7 +388,7 @@ git commit -m "feat(assistant): remember thread scroll per conversation and enti
   - `serializeFilters(filters: F): string` — a leading-`?` query string, or `''`
   - `parseFilters(search: string): F` — never throws
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Append to `tests/integration/assistant-bindings.test.ts`:
 
@@ -465,12 +465,12 @@ import { eventsBinding } from '@/components/assistant/bindings/events';
 import { peopleBinding } from '@/components/assistant/bindings/people';
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run tests/integration/assistant-bindings.test.ts`
 Expected: FAIL — `eventsBinding.serializeFilters is not a function`.
 
-- [ ] **Step 3: Extend the PageBinding type**
+- [x] **Step 3: Extend the PageBinding type**
 
 In `components/assistant/types.ts`, add two members to `PageBinding`, immediately after `applyFilters`:
 
@@ -487,7 +487,7 @@ In `components/assistant/types.ts`, add two members to `PageBinding`, immediatel
   parseFilters(search: string): F;
 ```
 
-- [ ] **Step 4: Implement on the events binding**
+- [x] **Step 4: Implement on the events binding**
 
 In `components/assistant/bindings/events.tsx`, add these imports:
 
@@ -506,7 +506,7 @@ Then add to the `eventsBinding` object, after `applyFilters`:
   parseFilters: parseEventQueryState,
 ```
 
-- [ ] **Step 5: Implement on the people binding**
+- [x] **Step 5: Implement on the people binding**
 
 In `components/assistant/bindings/people.tsx`, add this import:
 
@@ -534,12 +534,12 @@ Then add to the `peopleBinding` object, after `applyFilters`:
   },
 ```
 
-- [ ] **Step 6: Run tests to verify they pass**
+- [x] **Step 6: Run tests to verify they pass**
 
 Run: `npx vitest run tests/integration/assistant-bindings.test.ts`
 Expected: PASS — the existing 19 tests plus 8 new.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add components/assistant/types.ts components/assistant/bindings/events.tsx components/assistant/bindings/people.tsx tests/integration/assistant-bindings.test.ts
@@ -563,7 +563,7 @@ git commit -m "feat(assistant): let each binding own its URL filter representati
   - `ConversationState.handoffWarning: string | null`
   - `ConversationAction`: `send` gains `sourceFilters: unknown`; new `{ type: 'cancel_handoff' }`, `{ type: 'handoff_navigating' }` and `{ type: 'handoff_failed'; reason: string }`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Append to `tests/integration/assistant-reducer.test.ts`:
 
@@ -681,12 +681,12 @@ describe('conversationReducer — cancel and failure', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run tests/integration/assistant-reducer.test.ts`
 Expected: FAIL — `sourceFilters` is not accepted on the `send` action and `handoffMessage` is `undefined`.
 
-- [ ] **Step 3: Extend the types**
+- [x] **Step 3: Extend the types**
 
 In `components/assistant/types.ts`:
 
@@ -727,7 +727,7 @@ In `emptyConversation`, add after `pendingHandoff: null`:
     handoffWarning: null,
 ```
 
-- [ ] **Step 4: Extend the reducer**
+- [x] **Step 4: Extend the reducer**
 
 In `components/assistant/conversation-reducer.ts`, extend `ConversationAction`:
 
@@ -850,19 +850,19 @@ Add the three new cases, immediately before `case 'clear_handoff'`:
       return withHandoffStatus(state, 'cancelled', action.reason);
 ```
 
-- [ ] **Step 5: Run tests to verify they pass**
+- [x] **Step 5: Run tests to verify they pass**
 
 Run: `npx vitest run tests/integration/assistant-reducer.test.ts`
 Expected: PASS — the existing 17 tests plus 12 new.
 
 Existing tests that dispatch `send` without `sourceFilters` will fail to typecheck. Add `sourceFilters: null` to each — there are two helpers near the top of the file.
 
-- [ ] **Step 6: Verify the rest of the suite still typechecks**
+- [x] **Step 6: Verify the rest of the suite still typechecks**
 
 Run: `npx tsc --noEmit`
 Expected: exit 0. Any error is a `send` dispatch missing `sourceFilters`; add it.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add components/assistant/types.ts components/assistant/conversation-reducer.ts tests/integration/assistant-reducer.test.ts
@@ -886,7 +886,7 @@ git commit -m "feat(assistant): keep handoffMessage and real sourceFilters"
   - `backUrl(input: BackUrlInput): string`
   - `HANDOFF_PARAMS: readonly ['ask', 'via', 'cid']`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Append to `tests/integration/assistant-handoff.test.ts`:
 
@@ -1055,12 +1055,12 @@ import { phaseTwoRequest } from '@/components/assistant/handoff';
 import { emptyConversation } from '@/components/assistant/types';
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run tests/integration/assistant-handoff.test.ts`
 Expected: FAIL — `handoffUrl is not a function`.
 
-- [ ] **Step 3: Write the implementation**
+- [x] **Step 3: Write the implementation**
 
 Append to `components/assistant/handoff.ts`:
 
@@ -1148,12 +1148,12 @@ export function supersede(state: ConversationState): SupersedeDecision {
 }
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `npx vitest run tests/integration/assistant-handoff.test.ts`
 Expected: PASS — the existing 8 tests plus 15 new.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add components/assistant/handoff.ts tests/integration/assistant-handoff.test.ts
@@ -1172,7 +1172,7 @@ git commit -m "feat(assistant): namespaced handoff URLs and the cancel re-ask"
 - Consumes: nothing.
 - Produces: `sessionKeyFor(conversationId: string): string`. `SESSION_KEY` stays exported as the legacy/unkeyed key.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Append to `tests/integration/assistant-session-mirror.test.ts`:
 
@@ -1202,12 +1202,12 @@ describe('sessionKeyFor', () => {
 
 Add `sessionKeyFor` to the file's existing import from `@/components/assistant/session-mirror`.
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run tests/integration/assistant-session-mirror.test.ts`
 Expected: FAIL — `sessionKeyFor is not a function`.
 
-- [ ] **Step 3: Write the implementation**
+- [x] **Step 3: Write the implementation**
 
 In `components/assistant/session-mirror.ts`, add below the existing `SESSION_KEY`:
 
@@ -1225,12 +1225,12 @@ export function sessionKeyFor(conversationId: string): string {
 }
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `npx vitest run tests/integration/assistant-session-mirror.test.ts`
 Expected: PASS — the existing 7 tests plus 4 new.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add components/assistant/session-mirror.ts tests/integration/assistant-session-mirror.test.ts
@@ -1249,7 +1249,7 @@ git commit -m "feat(assistant): one sessionStorage slot per conversation"
 - Consumes: `AssistantEntity` from `@/lib/assistant/types`.
 - Produces: `SavedQuery.targetEntity?: AssistantEntity`; `targetEntityOf(entry: SavedQuery): AssistantEntity`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/integration/query-store-entity.test.ts`:
 
@@ -1297,12 +1297,12 @@ describe('targetEntityOf', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run tests/integration/query-store-entity.test.ts`
 Expected: FAIL — `targetEntityOf is not a function`.
 
-- [ ] **Step 3: Write the implementation**
+- [x] **Step 3: Write the implementation**
 
 In `components/search/query-store.ts`, add the import:
 
@@ -1336,12 +1336,12 @@ export function targetEntityOf(entry: SavedQuery): AssistantEntity {
 }
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `npx vitest run tests/integration/query-store-entity.test.ts`
 Expected: PASS — 5 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add components/search/query-store.ts tests/integration/query-store-entity.test.ts
@@ -1360,7 +1360,7 @@ git commit -m "feat(search): saved queries carry their target entity"
 - Consumes: nothing.
 - Produces: the request body may carry `conversationId: string`, 64 characters or fewer. Logged only — it changes no behaviour.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/integration/assistant-conversation-id.test.ts`:
 
@@ -1451,12 +1451,12 @@ describe('conversationId', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run tests/integration/assistant-conversation-id.test.ts`
 Expected: FAIL — the over-length and non-string cases return 200, because nothing validates the field.
 
-- [ ] **Step 3: Write the implementation**
+- [x] **Step 3: Write the implementation**
 
 In `app/api/assistant/chat/route.ts`, add to the `ChatBody` type:
 
@@ -1488,12 +1488,12 @@ In `POST`, after the `presetFilters` block and before the rate limit call:
     }
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `npx vitest run tests/integration/assistant-conversation-id.test.ts`
 Expected: PASS — 5 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add app/api/assistant/chat/route.ts tests/integration/assistant-conversation-id.test.ts
@@ -1520,7 +1520,7 @@ git commit -m "feat(assistant): accept and validate a conversation id"
   - `useUrlFilters<F>(entity: AssistantEntity): { filters: F; setFilters(next: F): void; isHydrated: boolean }`
   - `HandoffCountdown({ to, message, onCancel }: { to: AssistantEntity; message: string; onCancel(): void })`
 
-- [ ] **Step 1: Write the URL hook**
+- [x] **Step 1: Write the URL hook**
 
 Create `components/assistant/use-url-filters.ts`:
 
@@ -1588,7 +1588,7 @@ type PageBindingLike<F> = {
 };
 ```
 
-- [ ] **Step 2: Write the countdown card**
+- [x] **Step 2: Write the countdown card**
 
 Create `components/assistant/handoff-countdown.tsx`:
 
@@ -1642,12 +1642,12 @@ export function HandoffCountdown({
 }
 ```
 
-- [ ] **Step 3: Verify it compiles**
+- [x] **Step 3: Verify it compiles**
 
 Run: `npx tsc --noEmit`
 Expected: exit 0.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add components/assistant/use-url-filters.ts components/assistant/handoff-countdown.tsx
@@ -1665,7 +1665,7 @@ git commit -m "feat(assistant): URL-backed filter hook and the countdown card"
 - Consumes: `supersede`, `cancelToPhaseTwo`, `handoffUrl` from Task 5; `sessionKeyFor` from Task 6; `HANDOFF_PARAMS` from Task 5.
 - Produces: context gains `conversationId: string` and `cancelHandoff: () => void`; `SendInput` gains `sourceFilters?: unknown`.
 
-- [ ] **Step 1: Add the conversation id**
+- [x] **Step 1: Add the conversation id**
 
 In `components/assistant/assistant-provider.tsx`, add these imports:
 
@@ -1725,7 +1725,7 @@ Inside the component, replace the mount/mirror effects with:
 
 Add `useState` to the React import at the top of the file.
 
-- [ ] **Step 2: Carry sourceFilters and the id on every send**
+- [x] **Step 2: Carry sourceFilters and the id on every send**
 
 Extend `SendInput`:
 
@@ -1761,7 +1761,7 @@ and add `conversationId` to the fetch body, after `page: 1`:
 
 Add `conversationId` to `run`'s dependency array.
 
-- [ ] **Step 3: Cancel a pending navigation before starting a new one**
+- [x] **Step 3: Cancel a pending navigation before starting a new one**
 
 Add a timer ref beside the existing refs:
 
@@ -1792,7 +1792,7 @@ At the very top of `run`, before creating the controller:
 
 Add `clearTimer` to `run`'s dependency array.
 
-- [ ] **Step 4: Replace the navigation effect**
+- [x] **Step 4: Replace the navigation effect**
 
 Replace the whole "Navigate on a pending handoff" effect with:
 
@@ -1858,7 +1858,7 @@ Add the delay constant beside `ENDPOINT`:
 const HANDOFF_DELAY_MS = 1500;
 ```
 
-- [ ] **Step 5: Expose cancellation**
+- [x] **Step 5: Expose cancellation**
 
 In the `useMemo` context value, add:
 
@@ -1892,7 +1892,7 @@ type ContextValue = {
 
 Add `conversationId` and `clearTimer` to the `useMemo` dependency array.
 
-- [ ] **Step 6: Verify it compiles and the suite is green**
+- [x] **Step 6: Verify it compiles and the suite is green**
 
 Run: `npx tsc --noEmit`
 Expected: exit 0.
@@ -1900,7 +1900,7 @@ Expected: exit 0.
 Run: `npx vitest run --no-file-parallelism`
 Expected: all pass.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add components/assistant/assistant-provider.tsx
@@ -1918,7 +1918,7 @@ git commit -m "feat(assistant): cancellable countdown and a conversation identit
 - Consumes: `ConversationMessage.handoffMessage` from Task 4.
 - Produces: `AssistantMessage` gains optional `onAnswerHere`, `onConfirm` and `onApplyFilters` props. All optional, so existing call sites keep compiling until Task 12 supplies them.
 
-- [ ] **Step 1: Add the props**
+- [x] **Step 1: Add the props**
 
 In `components/assistant/assistant-message.tsx`, extend the component's props:
 
@@ -1944,7 +1944,7 @@ export function AssistantMessage({
 
 Keep whatever prop names the file already uses for `message`, `rowContext`, `onSuggestion` and `onRetry`; only add the two new ones. Import `AssistantEntity` from `@/lib/assistant/types` if it is not already imported.
 
-- [ ] **Step 2: Render the confirm question with answers**
+- [x] **Step 2: Render the confirm question with answers**
 
 Add, immediately before the `showRows` block:
 
@@ -1979,7 +1979,7 @@ const ENTITY_LABEL: Record<AssistantEntity, string> = {
 };
 ```
 
-- [ ] **Step 3: Render the navigate badge**
+- [x] **Step 3: Render the navigate badge**
 
 Add immediately after the confirm block:
 
@@ -1998,7 +1998,7 @@ Add immediately after the confirm block:
       )}
 ```
 
-- [ ] **Step 4: Add "Apply filters" to the chip row**
+- [x] **Step 4: Add "Apply filters" to the chip row**
 
 Find the block that renders `message.chips` and add, as its last child inside the same container:
 
@@ -2014,7 +2014,7 @@ Find the block that renders `message.chips` and add, as its last child inside th
           )}
 ```
 
-- [ ] **Step 5: Verify it compiles**
+- [x] **Step 5: Verify it compiles**
 
 Run: `npx tsc --noEmit`
 Expected: exit 0.
@@ -2022,7 +2022,7 @@ Expected: exit 0.
 Run: `npx vitest run --no-file-parallelism tests/integration/assistant-reducer.test.ts tests/integration/assistant-bindings.test.ts`
 Expected: PASS.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add components/assistant/assistant-message.tsx
@@ -2043,13 +2043,13 @@ git commit -m "feat(assistant): render confirm, navigate and applicable filters"
 - Consumes: `useUrlFilters` from Task 9; `HandoffCountdown` from Task 9; `cancelHandoff` and `conversationId` from Task 10.
 - Produces: `AIChatPanel({ entity, rowContext })`. `activeFilters` and `onGoBack` are gone.
 
-- [ ] **Step 1: Rename the file**
+- [x] **Step 1: Rename the file**
 
 ```bash
 git mv components/assistant/assistant-panel.tsx components/assistant/ai-chat-panel.tsx
 ```
 
-- [ ] **Step 2: Rewrite the panel's signature and handoff rendering**
+- [x] **Step 2: Rewrite the panel's signature and handoff rendering**
 
 In `components/assistant/ai-chat-panel.tsx`:
 
@@ -2117,7 +2117,7 @@ Add the import:
 import { HandoffCountdown } from './handoff-countdown';
 ```
 
-- [ ] **Step 3: Update the chat hook**
+- [x] **Step 3: Update the chat hook**
 
 Rewrite `components/assistant/use-assistant-chat.ts`:
 
@@ -2180,7 +2180,7 @@ export function useAssistantChat({ entity }: { entity: AssistantEntity }) {
 
 Destructure `conversationId` from `useAssistantConversation()` alongside the rest.
 
-- [ ] **Step 4: Update the People call site**
+- [x] **Step 4: Update the People call site**
 
 In `components/crm/people-section.tsx`, replace the `<AssistantPanel .../>` element with:
 
@@ -2190,7 +2190,7 @@ In `components/crm/people-section.tsx`, replace the `<AssistantPanel .../>` elem
 
 Delete the now-unused `onGoBack` closure and the `activeFilters` prop. Keep whatever expression the file already passes as `rowContext`. Update the import to `import { AIChatPanel } from '@/components/assistant/ai-chat-panel';`.
 
-- [ ] **Step 5: Update both Events call sites**
+- [x] **Step 5: Update both Events call sites**
 
 In `components/events/event-list-view.tsx`, replace each of the two `<AssistantPanel .../>` elements with:
 
@@ -2200,7 +2200,7 @@ In `components/events/event-list-view.tsx`, replace each of the two `<AssistantP
 
 Delete both `onGoBack` closures and both `activeFilters` props, keeping each site's existing `rowContext` expression. Update the import to `import { AIChatPanel } from '@/components/assistant/ai-chat-panel';`.
 
-- [ ] **Step 6: Restore the thread's scroll position**
+- [x] **Step 6: Restore the thread's scroll position**
 
 Without this, `scroll-store.ts` from Task 2 has no consumer and every handoff
 drops the user at the top of a thread they were reading.
@@ -2235,7 +2235,7 @@ Attach both to the thread container — replace its opening tag:
       >
 ```
 
-- [ ] **Step 7: Show a back chip when the user arrived via a handoff**
+- [x] **Step 7: Show a back chip when the user arrived via a handoff**
 
 The arrival bar in Step 2 keys off `handoff.status`, which does not survive a
 refresh — `session-mirror.ts` deliberately never restores `pendingHandoff`. The
@@ -2274,7 +2274,7 @@ condition that also covers a refreshed arrival:
       )}
 ```
 
-- [ ] **Step 8: Open a saved query on its own page**
+- [x] **Step 8: Open a saved query on its own page**
 
 Otherwise `targetEntityOf` from Task 7 has no consumer. A saved People query
 picked from the Events panel should reopen People with its filters restored,
@@ -2319,12 +2319,12 @@ Change both `onSelectQuery` props — on `AiSearchPanel` and on `CompactSearchBa
         onSelectQuery={openSaved}
 ```
 
-- [ ] **Step 9: Confirm no caller of the old name survives**
+- [x] **Step 9: Confirm no caller of the old name survives**
 
 Run: `grep -rn "AssistantPanel\|assistant-panel" --include=*.ts --include=*.tsx . | grep -v node_modules`
 Expected: no output.
 
-- [ ] **Step 10: Verify it compiles and lints**
+- [x] **Step 10: Verify it compiles and lints**
 
 Run: `npx tsc --noEmit`
 Expected: exit 0.
@@ -2332,7 +2332,7 @@ Expected: exit 0.
 Run: `npm run lint`
 Expected: `✔ No ESLint warnings or errors`. This takes over two minutes — run it in the background.
 
-- [ ] **Step 11: Commit**
+- [x] **Step 11: Commit**
 
 ```bash
 git add -A components/assistant components/crm/people-section.tsx components/events/event-list-view.tsx
@@ -2345,7 +2345,7 @@ git commit -m "feat(assistant): AIChatPanel reads its own filters from the URL"
 
 **Files:** none modified.
 
-- [ ] **Step 1: Run the full suite sequentially**
+- [x] **Step 1: Run the full suite sequentially**
 
 Run: `npx vitest run --no-file-parallelism`
 
@@ -2356,7 +2356,7 @@ unrelated to this work and must not be "fixed" by editing
 
 Expected: all files pass, including the five new test files from Tasks 1, 2, 7 and 8.
 
-- [ ] **Step 2: Confirm Companies is untouched**
+- [x] **Step 2: Confirm Companies is untouched**
 
 Run: `grep -n "companies" components/assistant/registry.ts`
 Expected: only the `// companies lands in Spec 2c.` comment — `hasBinding('companies')` must still be false.
@@ -2364,12 +2364,12 @@ Expected: only the `// companies lands in Spec 2c.` comment — `hasBinding('com
 Run: `test -f app/api/companies/ask/route.ts && test -f app/api/events/search/route.ts && echo "both legacy routes intact"`
 Expected: `both legacy routes intact`.
 
-- [ ] **Step 3: Confirm no handoff param collides**
+- [x] **Step 3: Confirm no handoff param collides**
 
 Run: `grep -n "'ask'\|'via'\|'cid'" lib/events/filters.ts`
 Expected: no output — Events must own none of the three.
 
-- [ ] **Step 4: Report; commit nothing**
+- [x] **Step 4: Report; commit nothing**
 
 Report the suite result and the three checks above.
 
@@ -2379,3 +2379,77 @@ this repo. Their pure inputs are covered; their wiring is not. A green suite is
 not evidence that the countdown fires, that Cancel re-asks, or that browser back
 restores filters — those need a manual pass on `/app/people` and `/app/events`,
 which needs a real Supabase account since the app is gated.
+
+
+---
+
+## Execution notes (2026-08-22)
+
+All thirteen tasks executed. Final state: **558 tests across 51 files**, `tsc
+--noEmit` exit 0, `✔ No ESLint warnings or errors`.
+
+### The spec was wrong about People, and the plan inherited it
+
+Task 3 shipped a base64url `?pf=` blob for People, on the spec's statement that
+`PeopleFilters` has "fifteen keys and eleven of them arrays" and that
+enumerating them readably "buys nothing on a page nobody hand-edits".
+
+People already had a readable URL codec. `components/crm/people-section.tsx`
+carries a section comment reading *"URL as the single source of truth"* and has
+been round-tripping through `lib/people/filters.ts` — `paramsToFilters` and
+`serializePeopleQuery`, whose signatures are already exactly `PageBinding`'s
+`parseFilters` and `serializeFilters`.
+
+Shipping the blob would have put **two representations of the same state on one
+page** — precisely the drift the spec's own Events decision exists to prevent —
+and the panel and the rail would each have believed a different set of filters.
+The binding now delegates, exactly as the events binding does. The delegated
+codec is also strictly better: `paramsToFilters` validates against the closed
+vocabulary, so a value the model invents or a user types into the address bar is
+dropped rather than queried. That is Phase 4's enum-guard, already present for
+People.
+
+`lib/assistant/filter-params.ts` was deleted with its 12 tests. It had no
+consumer but its own test file, and Spec 3b gives Companies a readable
+`lib/companies/filters.ts` too, so it had no future consumer either.
+
+**The lesson for Spec 3b:** check what the page already does before specifying a
+new representation for it. Both times the spec proposed a codec, the page turned
+out to have one.
+
+### The handoff sentence arrives twice
+
+`lib/assistant/stream.ts` puts `handoffLine()` on the route event as
+`handoffMessage` *and* chunks the same string into tokens, so the typing
+animation matches the model path. Task 11's badge renders the first; the
+existing prose paragraph would have rendered the second, printing the sentence
+twice. `assistant-message.tsx` suppresses the paragraph for navigate and confirm
+turns. Confirmed against the live server: one `route` event carrying the
+sentence, then twelve `token` events spelling out the same sentence.
+
+### Two smaller corrections
+
+`tsc` defaults to an ES5 target — the repo's `tsconfig.json` sets `lib` but no
+`target` — so `for (const b of someUint8Array)` fails to compile while passing
+under vitest's esbuild. Indexed loops only, for any byte iteration.
+
+`reset()` in the provider did not clear the countdown timer. Left as written, a
+reset mid-countdown would fire a navigation into a conversation that no longer
+existed.
+
+### Redundancy left in place deliberately
+
+`components/events/event-list-view.tsx:125` still applies `pendingHandoff`
+filters to the rail directly. Since Task 10 the same filters also arrive in the
+URL, which that file parses on mount, so the two paths now agree and the effect
+is redundant. It is not removed here: it works, it is guarded by its own
+question-keyed ref, and removing it belongs with Spec 3b's consolidation rather
+than with a rename.
+
+### Unverified, by construction
+
+The countdown firing, Cancel re-asking in place, `popstate`, scroll restoration
+and the `?via=` back chip are React and browser behaviour with no test harness
+in this repo. Their pure inputs are covered; their wiring is not. The app is
+auth-gated and there is no seeded local password, so none of it has been seen in
+a browser. A green suite is not evidence that any of it works on screen.
