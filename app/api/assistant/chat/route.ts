@@ -19,6 +19,9 @@ import { ASSISTANT_ENTITIES, type AssistantEntity } from '@/lib/assistant/types'
  * delivered AS A STREAM EVENT so the client has exactly one code path.
  */
 
+/** Long enough for a generated id, short enough not to be a payload. */
+const MAX_CONVERSATION_ID = 64;
+
 const NDJSON_HEADERS = {
   'Content-Type': 'application/x-ndjson; charset=utf-8',
   'Cache-Control': 'no-store, no-transform',
@@ -32,6 +35,7 @@ type ChatBody = {
   page?: unknown;
   forceEntity?: unknown;
   presetFilters?: unknown;
+  conversationId?: unknown;
 };
 
 function isEntity(value: unknown): value is AssistantEntity {
@@ -101,6 +105,19 @@ export async function POST(request: Request) {
       body.presetFilters && typeof body.presetFilters === 'object'
         ? (body.presetFilters as Record<string, unknown>)
         : undefined;
+
+    // Accepted and logged only — it changes no behaviour here. Validated
+    // anyway: it is client-supplied and this route is not tenant-gated.
+    if (body.conversationId !== undefined) {
+      if (
+        typeof body.conversationId !== 'string' ||
+        body.conversationId.length > MAX_CONVERSATION_ID
+      ) {
+        throw new BadRequestError(
+          `conversationId must be a string of at most ${MAX_CONVERSATION_ID} characters`
+        );
+      }
+    }
 
     const limit = consumeRateLimit(clientKey(request));
     if (!limit.allowed) {
