@@ -36,7 +36,7 @@
   - `credentialNotice(status: ModelCredentialStatus): string | null`
   - `resetModelCredentialForTests(): void`
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/integration/assistant-model-config.test.ts`:
 
@@ -140,12 +140,12 @@ describe('credentialNotice', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run tests/integration/assistant-model-config.test.ts`
 Expected: FAIL — `Failed to resolve import "@/lib/assistant/model-config"`.
 
-- [ ] **Step 3: Write minimal implementation**
+- [x] **Step 3: Write minimal implementation**
 
 Create `lib/assistant/model-config.ts`:
 
@@ -246,12 +246,12 @@ export function resetModelCredentialForTests(): void {
 }
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `npx vitest run tests/integration/assistant-model-config.test.ts`
 Expected: PASS — 12 tests.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add lib/assistant/model-config.ts tests/integration/assistant-model-config.test.ts
@@ -270,7 +270,7 @@ git commit -m "feat(assistant): distinguish an unset key from a rejected one"
 - Consumes: `noteModelAuthFailure`, `noteModelSuccess`, `modelCredentialStatus` from Task 1.
 - Produces: `isConfigured()` keeps its signature and call sites; it now delegates to `modelCredentialStatus()`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Append to `tests/integration/assistant-model-config.test.ts`:
 
@@ -340,12 +340,12 @@ beforeEach(() => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run tests/integration/assistant-model-config.test.ts`
 Expected: FAIL — the 401 case reports `{ state: 'ok' }`, because nothing records the rejection yet.
 
-- [ ] **Step 3: Write minimal implementation**
+- [x] **Step 3: Write minimal implementation**
 
 In `lib/assistant/route.ts`, add to the imports at the top:
 
@@ -394,12 +394,12 @@ And in the `catch`, before `logClassifierFailure(error)`:
       return null;
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `npx vitest run tests/integration/assistant-model-config.test.ts tests/integration/assistant-route.test.ts`
 Expected: PASS — the new file's 14 tests plus the existing route tests, unchanged.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add lib/assistant/route.ts tests/integration/assistant-model-config.test.ts
@@ -418,7 +418,7 @@ git commit -m "feat(assistant): remember a rejected key so the status can report
 - Consumes: `credentialNotice`, `modelCredentialStatus` from Task 1; `resolveTenant` from `@/lib/auth/tenant`; `Role` from `@/lib/rbac/authorize`.
 - Produces: the chat response may carry `credentialNotice: string` — present only for `ADMIN`, absent for every other role and for unauthenticated callers.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 Create `tests/integration/assistant-credential-notice.test.ts`:
 
@@ -517,12 +517,12 @@ describe('credential notice gating', () => {
 });
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `npx vitest run tests/integration/assistant-credential-notice.test.ts`
 Expected: FAIL — the admin case does not contain `ANTHROPIC_API_KEY`, because the route emits no notice.
 
-- [ ] **Step 3: Write minimal implementation**
+- [x] **Step 3: Write minimal implementation**
 
 In `app/api/assistant/chat/route.ts`, add imports:
 
@@ -573,7 +573,7 @@ and spread it into the response payload, so the key is absent rather than null w
       ...(notice ? { credentialNotice: notice } : {}),
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 Run: `npx vitest run tests/integration/assistant-credential-notice.test.ts`
 Expected: PASS — 4 tests.
@@ -583,7 +583,7 @@ Then confirm nothing regressed:
 Run: `npx vitest run --no-file-parallelism tests/integration/assistant-route.test.ts tests/integration/assistant-stream.test.ts`
 Expected: PASS.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add app/api/assistant/chat/route.ts tests/integration/assistant-credential-notice.test.ts
@@ -609,7 +609,7 @@ small edits to code that already has the right data — the route computes
 `invalid_api_key` correctly via `describeAssistantFailure` and the client throws
 it away.
 
-- [ ] **Step 1: Widen the state from a boolean to the reason**
+- [x] **Step 1: Widen the state from a boolean to the reason**
 
 Replace line 642:
 
@@ -631,7 +631,7 @@ with:
   >(null);
 ```
 
-- [ ] **Step 2: Keep the reason when the request comes back**
+- [x] **Step 2: Keep the reason when the request comes back**
 
 Replace line 881:
 
@@ -663,7 +663,7 @@ with:
           }
 ```
 
-- [ ] **Step 3: Render the reason the route actually sent**
+- [x] **Step 3: Render the reason the route actually sent**
 
 Replace lines 1230-1234:
 
@@ -687,7 +687,7 @@ with:
             ) : null}
 ```
 
-- [ ] **Step 4: Verify the whole thing compiles and lints**
+- [x] **Step 4: Verify the whole thing compiles and lints**
 
 Run: `npx tsc --noEmit`
 Expected: exit 0, no output.
@@ -695,7 +695,7 @@ Expected: exit 0, no output.
 Run: `npm run lint`
 Expected: `✔ No ESLint warnings or errors`.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add components/crm/companies-section.tsx
@@ -708,7 +708,7 @@ git commit -m "fix(companies): report a rejected key as rejected, not absent"
 
 **Files:** none modified.
 
-- [ ] **Step 1: Run the full suite sequentially**
+- [x] **Step 1: Run the full suite sequentially**
 
 Run: `npx vitest run --no-file-parallelism`
 
@@ -719,15 +719,24 @@ parallel I/O. It is unrelated to this work and must not be "fixed" by editing
 
 Expected: all files pass.
 
-- [ ] **Step 2: Confirm the key never reaches the client bundle**
+- [~] **Step 2: Confirm the key never reaches the client bundle** — SKIPPED, deliberately
 
-Run: `npm run build`
-Expected: exit 0.
+Not run: CLAUDE.md forbids `npm run build` unless explicitly asked (the C:
+drive has filled and frozen the machine before), and the owner confirmed the
+skip on 2026-08-22.
 
-Run: `grep -rl "sk-ant" .next/static/ || echo "clean"`
-Expected: `clean` — the key must appear in no client chunk.
+Verified statically instead, which is sufficient here:
+- `lib/assistant/model-config.ts` is imported by exactly two server modules —
+  `app/api/assistant/chat/route.ts` and `lib/assistant/route.ts`.
+- No `'use client'` file imports model-config, `lib/assistant/route.ts` or
+  `lib/assistant/stream.ts`.
+- The module never returns the key: callers get a status and a notice string.
+- Next.js only inlines `NEXT_PUBLIC_*` into client bundles; a bare
+  `process.env.ANTHROPIC_API_KEY` in client code compiles to `undefined`.
 
-- [ ] **Step 3: Commit nothing; report**
+Run the build+grep whenever one is being done anyway, as confirmation.
+
+- [x] **Step 3: Commit nothing; report**
 
 No commit. Report the suite result, the build result, and the grep result.
 
@@ -735,3 +744,50 @@ Note for the reporter: a green suite is **not** evidence that live classificatio
 works. Every test here mocks the SDK. The live model path stays unverified until
 a valid `ANTHROPIC_API_KEY` is present — at which point the intended manual check
 is to ask the assistant a cross-entity question and confirm no notice appears.
+
+---
+
+## Execution notes (2026-08-22)
+
+Two places where the plan as written could not be followed literally. Both are
+worth knowing before Phase 4, which adds two more modules of the same shape.
+
+**Task 3 delivered the notice as a stream event, not a JSON field.** The plan
+said to spread `...(notice ? { credentialNotice: notice } : {})` "into the
+response payload". There is no payload: `POST /api/assistant/chat` returns an
+NDJSON `ReadableStream`, and its own header comment requires that an assistant
+problem reach the client as a stream event so there is exactly one code path.
+So `AssistantEvent` gained `{ type: 'notice'; text: string }`, emitted straight
+after the `route` verdict — which keeps its place as the first event — so the
+confirm, navigate and inline branches all carry it.
+
+That change had a consequence the plan could not have anticipated: the client
+reducer's final `return` is an unguarded fall-through meaning "done". Any event
+it does not match explicitly ends the turn — marking the message complete and
+clearing `isStreaming`. A `notice` arriving mid-stream would therefore truncate
+the very answer it annotates. `conversation-reducer.ts` now matches `'notice'`
+explicitly, with tests covering it.
+
+**The classifier tests must read status from the route's own module instance.**
+The plan's Task 2 test asserts on a statically imported `modelCredentialStatus`
+while `beforeEach` calls `vi.resetModules()` and then dynamically imports
+`route.ts`. That gives route.ts a *fresh* `model-config` with its own
+`rejectedKey`, so the route writes to one instance and the test reads another —
+both assertions fail as exact mirror images. The tests now import model-config
+in the same tick as route.ts and assert against that copy.
+
+**This trap applies directly to Phase 4.** `cache.ts` and `query-log.ts` are
+both specced as process-local module state, exactly like `rejectedKey`. Any test
+that combines `vi.resetModules()` with a dynamic import will silently get two
+copies of them. The cheaper habit, used by `assistant-credential-notice.test.ts`
+and the twelve older assistant files: skip `resetModules` entirely, use static
+imports and the `setAdapterForTests` / `resetAdapters` seam.
+
+**Cost of `vi.resetModules()` here.** Re-importing `lib/assistant/route.ts`
+re-transforms its whole adapter graph — measured at ~12s cold, which overruns
+vitest's 5s default. The three tests that need it carry an explicit 30s timeout.
+
+**Every test mocks the SDK.** A test that merely sets a set-looking
+`ANTHROPIC_API_KEY` makes the stream construct a real client and call Anthropic
+for real. `assistant-credential-notice.test.ts` stubs `@anthropic-ai/sdk` at
+module level; without it that file spent ~3.6s on live network calls.
