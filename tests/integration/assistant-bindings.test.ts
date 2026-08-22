@@ -144,3 +144,67 @@ describe('registry — events registered', () => {
     expect(() => bindingFor('companies')).toThrow(/no binding/i);
   });
 });
+
+describe('binding filter serialization', () => {
+  /**
+   * Each binding owns its own URL representation. Events has a shipped readable
+   * scheme; People has one opaque blob. A single shared codec would have to be
+   * one or the other, and on Events it would compete with the scheme the rail
+   * already reads — two representations of the same state, free to drift.
+   */
+  it('events round-trips through its own readable scheme', () => {
+    const filters = eventsBinding.emptyFilters();
+    filters.filters.countries = ['Germany'];
+    filters.filters.categories = ['Packaging'];
+    filters.search = 'expo';
+
+    const query = eventsBinding.serializeFilters(filters);
+    expect(query).toContain('country=Germany');
+    expect(query).toContain('category=Packaging');
+    expect(eventsBinding.parseFilters(query)).toEqual(filters);
+  });
+
+  it('events serialises empty filters to an empty string, not "?"', () => {
+    expect(eventsBinding.serializeFilters(eventsBinding.emptyFilters())).toBe('');
+  });
+
+  it('events ignores the handoff params, which are not its filters', () => {
+    // ask/via/cid must never be read as event filters. `q` and `from` ARE its
+    // own, which is exactly why the handoff params are named differently.
+    const parsed = eventsBinding.parseFilters('?ask=trade%20shows&via=people&cid=abc');
+    expect(parsed).toEqual(eventsBinding.emptyFilters());
+  });
+
+  it('people round-trips through its base64url blob', () => {
+    const filters = peopleBinding.emptyFilters();
+    filters.titles = ['VP Engineering'];
+    filters.countries = ['Germany'];
+    filters.search = 'fintech';
+
+    const query = peopleBinding.serializeFilters(filters);
+    expect(query).toMatch(/^\?pf=[A-Za-z0-9_-]+$/);
+    expect(peopleBinding.parseFilters(query)).toEqual(filters);
+  });
+
+  it('people serialises empty filters to an empty string', () => {
+    expect(peopleBinding.serializeFilters(peopleBinding.emptyFilters())).toBe('');
+  });
+
+  it('people falls back to empty filters for a corrupt param', () => {
+    expect(peopleBinding.parseFilters('?pf=!!!garbage!!!')).toEqual(
+      peopleBinding.emptyFilters()
+    );
+  });
+
+  it('people omits the param entirely when it would exceed the cap', () => {
+    const filters = peopleBinding.emptyFilters();
+    filters.keywords = Array.from({ length: 2000 }, (_, i) => `keyword-${i}`);
+    // Omitted, not truncated: a truncated blob would decode to the wrong filters.
+    expect(peopleBinding.serializeFilters(filters)).toBe('');
+  });
+
+  it('neither binding throws on an empty search string', () => {
+    expect(eventsBinding.parseFilters('')).toEqual(eventsBinding.emptyFilters());
+    expect(peopleBinding.parseFilters('')).toEqual(peopleBinding.emptyFilters());
+  });
+});

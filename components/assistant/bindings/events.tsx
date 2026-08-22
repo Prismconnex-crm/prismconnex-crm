@@ -1,7 +1,11 @@
 "use client";
 
 import { EventsInlineRows } from '@/components/events/events-inline-rows';
-import type { EventQueryState } from '@/lib/events/filters';
+import {
+  parseEventQueryState,
+  serializeEventQueryState,
+  type EventQueryState,
+} from '@/lib/events/filters';
 import { emptyEventFilters, type EventFilters } from '@/types/events';
 import type { FindShowEvent } from '@/types/find-shows';
 import type { PageBinding } from '../types';
@@ -28,6 +32,11 @@ export const eventsBinding: PageBinding<EventQueryState, EventRowContext> = {
   emptyFilters() {
     return { filters: emptyEventFilters(), search: '' };
   },
+
+  // Delegates to the scheme the rail already reads and writes, so the assistant
+  // and the sidebar can never disagree about what the URL means.
+  serializeFilters: serializeEventQueryState,
+  parseFilters: parseEventQueryState,
 
   /**
    * The nested `filters` object is merged PER KEY over the incoming object's own

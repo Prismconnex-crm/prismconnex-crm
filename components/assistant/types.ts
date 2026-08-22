@@ -58,6 +58,16 @@ export type PageBinding<F, C = unknown> = {
   emptyFilters(): F;
   /** Incoming keys replace conflicting ones; unrelated current filters survive. */
   applyFilters(current: F, incoming: Partial<F>): F;
+  /**
+   * This entity's filters as a leading-`?` query string, or '' when empty.
+   *
+   * Per-binding rather than shared: Events already had a readable scheme worth
+   * keeping, and a second representation of the same state on the same page
+   * would drift from it.
+   */
+  serializeFilters(filters: F): string;
+  /** Never throws — the param is attacker-controllable. Falls back to empty. */
+  parseFilters(search: string): F;
   renderRows(rows: unknown[], context: C): ReactNode;
 };
 
