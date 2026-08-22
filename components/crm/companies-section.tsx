@@ -639,7 +639,15 @@ export function CompaniesSection() {
   const [isAsking, setIsAsking] = useState(false);
   // Set when /api/companies/ask reports no ANTHROPIC_API_KEY, so the UI can
   // explain why an event question did nothing instead of failing silently.
-  const [askUnavailable, setAskUnavailable] = useState(false);
+  /**
+   * Null when fine, otherwise WHY the assistant is unavailable. Was a boolean,
+   * which is what forced the message to hardcode one cause: the route sends
+   * `reason: 'invalid_api_key'` for a key the API rejected, and a boolean has
+   * nowhere to put it, so a set-but-invalid key read as "not configured".
+   */
+  const [askUnavailable, setAskUnavailable] = useState<
+    null | "missing_api_key" | "invalid_api_key"
+  >(null);
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [categorySearch, setCategorySearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -878,7 +886,7 @@ export function CompaniesSection() {
       if (query.length < 2) return;
 
       setIsAsking(true);
-      setAskUnavailable(false);
+      setAskUnavailable(null);
       try {
         const response = await fetch("/api/companies/ask", {
           method: "POST",
@@ -893,7 +901,9 @@ export function CompaniesSection() {
           // surfacing. Everything else (rate limit, overload, network) comes
           // back as a 200 with `degraded` and stays silent.
           if (result?.intent === "unavailable") {
-            setAskUnavailable(true);
+            setAskUnavailable(
+              result.reason === "invalid_api_key" ? "invalid_api_key" : "missing_api_key"
+            );
           }
           setEventSearch(null);
           return;
@@ -1229,7 +1239,9 @@ export function CompaniesSection() {
             </p>
             {askUnavailable ? (
               <p className="mt-2 rounded-[8px] border border-amber-200 bg-amber-50 px-2.5 py-2 text-[11px] font-medium text-amber-700 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-400">
-                Event search is unavailable — ANTHROPIC_API_KEY is not configured.
+                {askUnavailable === "invalid_api_key"
+                  ? "Event search is unavailable — the configured ANTHROPIC_API_KEY was rejected (HTTP 401). The variable is set; the key itself is not valid."
+                  : "Event search is unavailable — ANTHROPIC_API_KEY is not set."}
               </p>
             ) : null}
 
