@@ -3,6 +3,7 @@ import {
   restoreConversation,
   serializeConversation,
   SESSION_KEY,
+  sessionKeyFor,
 } from '@/components/assistant/session-mirror';
 import { conversationReducer } from '@/components/assistant/conversation-reducer';
 import { emptyConversation } from '@/components/assistant/types';
@@ -66,5 +67,27 @@ describe('session mirror', () => {
 
   it('returns an empty conversation when messages is not an array', () => {
     expect(restoreConversation(JSON.stringify({ messages: 'nope' }))).toEqual(emptyConversation());
+  });
+});
+
+describe('sessionKeyFor', () => {
+  it('gives each conversation its own slot', () => {
+    // A pasted link with a cid must rejoin its own thread rather than opening
+    // someone else's, or starting a fourth one.
+    expect(sessionKeyFor('c1')).not.toBe(sessionKeyFor('c2'));
+  });
+
+  it('is stable for one conversation', () => {
+    expect(sessionKeyFor('c1')).toBe(sessionKeyFor('c1'));
+  });
+
+  it('is namespaced under the existing key, so old entries are recognisable', () => {
+    expect(sessionKeyFor('c1')).toContain(SESSION_KEY);
+  });
+
+  it('round-trips a thread stored under its own key', () => {
+    const state = { ...emptyConversation(), previousEntity: 'events' as const };
+    const restored = restoreConversation(serializeConversation(state));
+    expect(restored.previousEntity).toBe('events');
   });
 });
