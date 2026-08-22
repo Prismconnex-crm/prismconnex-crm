@@ -13,6 +13,7 @@ function sampleState() {
     message: 'people in Germany',
     id: 'a1',
     currentPage: 'people',
+    sourceFilters: null,
   });
   return conversationReducer(sent, {
     type: 'event',

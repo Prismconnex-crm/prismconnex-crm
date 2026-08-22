@@ -24,6 +24,8 @@ export type SendInput = {
   message: string;
   currentPage: AssistantEntity;
   activeFilters?: Record<string, unknown>;
+  /** The asking page's live filters, recorded so "go back" can restore them. */
+  sourceFilters?: unknown;
   forceEntity?: AssistantEntity;
   presetFilters?: unknown;
 };
@@ -87,7 +89,13 @@ export function AssistantConversationProvider({ children }: { children: React.Re
     lastSendRef.current = input;
 
     const id = newId();
-    dispatch({ type: 'send', message: input.message, id, currentPage: input.currentPage });
+    dispatch({
+      type: 'send',
+      message: input.message,
+      id,
+      currentPage: input.currentPage,
+      sourceFilters: input.sourceFilters ?? null,
+    });
 
     try {
       const response = await fetch(ENDPOINT, {

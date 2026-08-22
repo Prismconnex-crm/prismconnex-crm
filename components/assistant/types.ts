@@ -15,6 +15,8 @@ export type ConversationMessage = {
   /** Null when counting is too expensive — companies always is. */
   total: number | null;
   suggestions: string[];
+  /** The server's own sentence explaining a handoff. Null unless action is navigate. */
+  handoffMessage: string | null;
   isComplete: boolean;
   /**
    * Operator diagnostics from the server (e.g. a rejected API key). Only ever
@@ -33,6 +35,12 @@ export type PendingHandoff = {
   presetFilters: unknown;
   /** The question that triggered the handoff, re-sent in phase two. */
   message: string;
+  /**
+   * counting_down — the card is showing and the timer is armed
+   * navigating     — router.push has fired; phase two runs on arrival
+   * cancelled      — the user cancelled, or the jump failed; re-ask in place
+   */
+  status: 'counting_down' | 'navigating' | 'cancelled';
 };
 
 export type ConversationState = {
@@ -41,6 +49,8 @@ export type ConversationState = {
   error: string | null;
   previousEntity: AssistantEntity | null;
   pendingHandoff: PendingHandoff | null;
+  /** Why the navigation did not happen. Rendered as a banner; null when fine. */
+  handoffWarning: string | null;
 };
 
 /**
@@ -85,6 +95,7 @@ export function emptyMessage(id: string, role: 'user' | 'assistant'): Conversati
     rows: [],
     total: null,
     suggestions: [],
+    handoffMessage: null,
     isComplete: role === 'user',
     notice: null,
     error: null,
@@ -98,5 +109,6 @@ export function emptyConversation(): ConversationState {
     error: null,
     previousEntity: null,
     pendingHandoff: null,
+    handoffWarning: null,
   };
 }

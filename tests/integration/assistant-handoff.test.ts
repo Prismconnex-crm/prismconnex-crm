@@ -10,6 +10,7 @@ const handoff: PendingHandoff = {
   to: 'events',
   sourceFilters: { country: 'Germany', category: 'SaaS' },
   presetFilters: { city: 'Berlin' },
+  status: 'counting_down',
   message: 'what conferences are in Berlin',
 };
 
@@ -47,6 +48,7 @@ describe('the bounce is structurally impossible', () => {
       message: 'what conferences are in Berlin',
       id: 'a1',
       currentPage: 'people',
+    sourceFilters: null,
     });
     return events.reduce(
       (acc, event) => conversationReducer(acc, { type: 'event', id: 'a1', event }),

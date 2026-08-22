@@ -4,13 +4,24 @@ import {
   emptyMessage,
   type ConversationMessage,
   type ConversationState,
+  type PendingHandoff,
 } from './types';
 
 export type ConversationAction =
-  | { type: 'send'; message: string; id: string; currentPage: AssistantEntity }
+  | {
+      type: 'send';
+      message: string;
+      id: string;
+      currentPage: AssistantEntity;
+      /** The asking page's live filters — what "go back" restores. */
+      sourceFilters: unknown;
+    }
   | { type: 'event'; id: string; event: AssistantEvent }
   | { type: 'stream_ended'; id: string }
   | { type: 'failed'; id: string; message: string }
+  | { type: 'cancel_handoff' }
+  | { type: 'handoff_navigating' }
+  | { type: 'handoff_failed'; reason: string }
   | { type: 'clear_handoff' }
   | { type: 'restore'; state: ConversationState }
   | { type: 'reset' };
@@ -44,6 +55,20 @@ function sourcePageOf(state: ConversationState, id: string): AssistantEntity {
   return user?.entity ?? state.previousEntity ?? 'people';
 }
 
+/** Moves a pending handoff to a new status, or leaves state untouched. */
+function withHandoffStatus(
+  state: ConversationState,
+  status: PendingHandoff['status'],
+  warning: string | null
+): ConversationState {
+  if (!state.pendingHandoff) return state;
+  return {
+    ...state,
+    pendingHandoff: { ...state.pendingHandoff, status },
+    handoffWarning: warning,
+  };
+}
+
 /**
  * Folds NDJSON events into conversation state.
  *
@@ -62,6 +87,7 @@ export function conversationReducer(
         ...emptyMessage(`${action.id}-user`, 'user'),
         text: action.message,
         entity: action.currentPage,
+        filters: action.sourceFilters,
       };
       const assistant = emptyMessage(action.id, 'assistant');
       return {
@@ -69,6 +95,8 @@ export function conversationReducer(
         messages: [...state.messages, user, assistant],
         isStreaming: true,
         error: null,
+        // A new question supersedes the last one's complaint.
+        handoffWarning: null,
       };
     }
 
@@ -82,6 +110,9 @@ export function conversationReducer(
           confidence: event.confidence,
           filters: event.interpretedFilters,
           droppedFilters: event.droppedFilters,
+          // Only a handoff carries an explanation; an inline answer explains
+          // nothing, and storing '' there would render an empty bubble.
+          handoffMessage: event.action === 'navigate' ? event.handoffMessage : null,
         });
 
         // A navigate decision is the only thing that opens a handoff. The
@@ -95,9 +126,11 @@ export function conversationReducer(
           pendingHandoff: {
             from: sourcePageOf(state, action.id),
             to: event.targetEntity,
-            sourceFilters: null,
+            // Recorded on the user turn at send time — see case 'send'.
+            sourceFilters: find(state, `${action.id}-user`)?.filters ?? null,
             presetFilters: event.interpretedFilters,
             message: find(state, `${action.id}-user`)?.text ?? '',
+            status: 'counting_down',
           },
         };
       }
@@ -161,6 +194,21 @@ export function conversationReducer(
         isStreaming: false,
         error: action.message,
       };
+
+    // Cancelled, not cleared: the re-ask still needs the handoff's message and
+    // presetFilters, and the banner needs a target for its "Open" button.
+    case 'cancel_handoff':
+      return withHandoffStatus(
+        state,
+        'cancelled',
+        'Stayed on this page — answering here instead.'
+      );
+
+    case 'handoff_navigating':
+      return withHandoffStatus(state, 'navigating', null);
+
+    case 'handoff_failed':
+      return withHandoffStatus(state, 'cancelled', action.reason);
 
     case 'clear_handoff':
       return { ...state, pendingHandoff: null };

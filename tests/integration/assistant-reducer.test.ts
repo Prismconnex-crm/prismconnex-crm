@@ -12,6 +12,7 @@ function afterSend(message = 'people in Germany'): ConversationState {
     message,
     id: ASSISTANT_ID,
     currentPage: 'people',
+    sourceFilters: null,
   });
 }
 
@@ -110,6 +111,7 @@ describe('conversationReducer — navigate', () => {
       sourceFilters: null,
       presetFilters: { city: 'Berlin' },
       message: 'what conferences are in Berlin',
+      status: 'counting_down',
     });
     expect(state.messages[1].droppedFilters).toEqual(['verification']);
   });
@@ -250,5 +252,117 @@ describe('conversationReducer — notice', () => {
   it('leaves notice null when none arrives', () => {
     const state = feed(afterSend(), [inlineRoute, { type: 'done' }]);
     expect(state.messages.find((m) => m.id === ASSISTANT_ID)?.notice).toBeNull();
+  });
+});
+
+const navigateRoute: AssistantEvent = {
+  type: 'route',
+  targetEntity: 'events',
+  action: 'navigate',
+  confidence: 0.8,
+  handoffMessage: "That's a question about events — opening Events with your search applied.",
+  interpretedFilters: { filters: { countries: ['Germany'] }, search: '' },
+  droppedFilters: [],
+  crossReference: null,
+};
+
+function afterSendWithFilters(sourceFilters: unknown): ConversationState {
+  return conversationReducer(emptyConversation(), {
+    type: 'send',
+    message: 'trade shows in Germany',
+    id: ASSISTANT_ID,
+    currentPage: 'people',
+    sourceFilters,
+  });
+}
+
+describe('conversationReducer — handoffMessage', () => {
+  it('keeps the sentence the server sent to explain the jump', () => {
+    // Previously parsed and thrown away, which is why the panel had nothing to
+    // show and invented its own copy.
+    const state = feed(afterSendWithFilters(null), [navigateRoute]);
+    expect(state.messages.find((m) => m.id === ASSISTANT_ID)?.handoffMessage).toBe(
+      "That's a question about events — opening Events with your search applied."
+    );
+  });
+
+  it('leaves it null for an inline answer, which explains nothing', () => {
+    const state = feed(afterSend(), [inlineRoute]);
+    expect(state.messages.find((m) => m.id === ASSISTANT_ID)?.handoffMessage).toBeNull();
+  });
+});
+
+describe('conversationReducer — sourceFilters', () => {
+  it('carries the page filters supplied at send into the handoff', () => {
+    // The reducer has no router and no page access; send time is the only
+    // moment this fact is available, and "go back" depends on it.
+    const filters = { titles: ['CEO'], search: 'fintech' };
+    const state = feed(afterSendWithFilters(filters), [navigateRoute]);
+    expect(state.pendingHandoff?.sourceFilters).toEqual(filters);
+  });
+
+  it('opens the handoff counting down', () => {
+    const state = feed(afterSendWithFilters(null), [navigateRoute]);
+    expect(state.pendingHandoff?.status).toBe('counting_down');
+  });
+
+  it('records the source page and target', () => {
+    const state = feed(afterSendWithFilters(null), [navigateRoute]);
+    expect(state.pendingHandoff?.from).toBe('people');
+    expect(state.pendingHandoff?.to).toBe('events');
+  });
+});
+
+describe('conversationReducer — cancel and failure', () => {
+  it('cancel_handoff marks the handoff cancelled without discarding it', () => {
+    // Kept, not cleared: the re-ask needs its message and presetFilters, and
+    // the banner needs somewhere to point its "Open Events" button.
+    const state = conversationReducer(feed(afterSendWithFilters(null), [navigateRoute]), {
+      type: 'cancel_handoff',
+    });
+    expect(state.pendingHandoff?.status).toBe('cancelled');
+    expect(state.pendingHandoff?.message).toBe('trade shows in Germany');
+  });
+
+  it('cancel_handoff sets a warning the panel can render', () => {
+    const state = conversationReducer(feed(afterSendWithFilters(null), [navigateRoute]), {
+      type: 'cancel_handoff',
+    });
+    expect(state.handoffWarning).toBeTruthy();
+  });
+
+  it('handoff_failed cancels and reports why', () => {
+    const state = conversationReducer(feed(afterSendWithFilters(null), [navigateRoute]), {
+      type: 'handoff_failed',
+      reason: 'Events did not load.',
+    });
+    expect(state.pendingHandoff?.status).toBe('cancelled');
+    expect(state.handoffWarning).toBe('Events did not load.');
+  });
+
+  it('handoff_navigating marks the jump as under way', () => {
+    const state = conversationReducer(feed(afterSendWithFilters(null), [navigateRoute]), {
+      type: 'handoff_navigating',
+    });
+    expect(state.pendingHandoff?.status).toBe('navigating');
+  });
+
+  it('cancelling with no pending handoff is a no-op, not a crash', () => {
+    const before = afterSendWithFilters(null);
+    expect(conversationReducer(before, { type: 'cancel_handoff' })).toEqual(before);
+  });
+
+  it('a new send clears the previous warning', () => {
+    const cancelled = conversationReducer(feed(afterSendWithFilters(null), [navigateRoute]), {
+      type: 'cancel_handoff',
+    });
+    const next = conversationReducer(cancelled, {
+      type: 'send',
+      message: 'something else',
+      id: 'a2',
+      currentPage: 'people',
+      sourceFilters: null,
+    });
+    expect(next.handoffWarning).toBeNull();
   });
 });
