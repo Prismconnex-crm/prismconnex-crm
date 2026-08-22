@@ -212,3 +212,43 @@ describe('conversationReducer — housekeeping', () => {
     expect(conversationReducer(source, { type: 'reset' })).toEqual(emptyConversation());
   });
 });
+
+describe('conversationReducer — notice', () => {
+  /**
+   * The reducer's final `return` is an unguarded fall-through meaning "done".
+   * An event it does not recognise therefore ENDS the turn: marks the message
+   * complete and clears isStreaming. A notice arrives mid-stream, so it has to
+   * be matched explicitly or it truncates the answer it was meant to annotate.
+   */
+  it('records the notice without ending the turn', () => {
+    const state = feed(afterSend(), [
+      inlineRoute,
+      { type: 'notice', text: 'AI search is falling back: ANTHROPIC_API_KEY is not set.' },
+    ]);
+
+    const assistant = state.messages.find((m) => m.id === ASSISTANT_ID);
+    expect(assistant?.notice).toContain('ANTHROPIC_API_KEY');
+    expect(assistant?.isComplete).toBe(false);
+    expect(state.isStreaming).toBe(true);
+  });
+
+  it('still lets the tokens that follow it land', () => {
+    const state = feed(afterSend(), [
+      inlineRoute,
+      { type: 'notice', text: 'AI search is falling back: ANTHROPIC_API_KEY is not set.' },
+      { type: 'token', text: 'Four ' },
+      { type: 'token', text: 'people match.' },
+      { type: 'done' },
+    ]);
+
+    const assistant = state.messages.find((m) => m.id === ASSISTANT_ID);
+    expect(assistant?.text).toBe('Four people match.');
+    expect(assistant?.isComplete).toBe(true);
+    expect(state.isStreaming).toBe(false);
+  });
+
+  it('leaves notice null when none arrives', () => {
+    const state = feed(afterSend(), [inlineRoute, { type: 'done' }]);
+    expect(state.messages.find((m) => m.id === ASSISTANT_ID)?.notice).toBeNull();
+  });
+});

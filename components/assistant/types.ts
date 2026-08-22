@@ -16,6 +16,11 @@ export type ConversationMessage = {
   total: number | null;
   suggestions: string[];
   isComplete: boolean;
+  /**
+   * Operator diagnostics from the server (e.g. a rejected API key). Only ever
+   * populated for admins — the server decides, the client only renders.
+   */
+  notice: string | null;
   error: { code: string; message: string } | null;
 };
 
@@ -71,6 +76,7 @@ export function emptyMessage(id: string, role: 'user' | 'assistant'): Conversati
     total: null,
     suggestions: [],
     isComplete: role === 'user',
+    notice: null,
     error: null,
   };
 }

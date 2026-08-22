@@ -28,6 +28,11 @@ export type AssistantStreamInput = {
   forceEntity?: AssistantEntity;
   /** Filters already extracted during phase one, used verbatim. */
   presetFilters?: Record<string, unknown>;
+  /**
+   * Operator-facing explanation of a degraded classifier, already gated by the
+   * caller. The stream does not decide who may see it — it only carries it.
+   */
+  credentialNotice?: string;
   classifyWithModel?: ModelClassifier;
   generateAnswer?: AnswerGenerator;
 };
@@ -171,6 +176,13 @@ export function createAssistantStream(input: AssistantStreamInput): ReadableStre
           crossReference: null,
           ...(degraded ? { degraded } : {}),
         });
+
+        // The route verdict keeps its place as the first event; the notice
+        // follows it so every branch below — confirm, navigate, inline — has
+        // already emitted it before returning.
+        if (input.credentialNotice) {
+          send({ type: 'notice', text: input.credentialNotice });
+        }
 
         // 4a. Ambiguous — ask, and do not spend a query on a guess.
         if (decision.action === 'confirm') {

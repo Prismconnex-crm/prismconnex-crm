@@ -35,6 +35,8 @@ export type AssistantEvent =
   | ({ type: 'route' } & RouteDecision)
   | { type: 'filters'; chips: FilterChip[] }
   | { type: 'results'; rows: unknown[]; total: number | null }
+  /** Operator diagnostics (e.g. a rejected API key). Admin-only, server-gated. */
+  | { type: 'notice'; text: string }
   | { type: 'token'; text: string }
   | { type: 'suggestions'; items: string[] }
   | { type: 'done' }

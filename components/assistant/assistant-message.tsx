@@ -75,6 +75,15 @@ export function AssistantMessage({
         </p>
       )}
 
+      {/* Server-gated to admins: a non-admin's payload never carries the text,
+          so this renders nothing rather than being hidden. Amber, not red —
+          the answer above it is correct, merely not model-ranked. */}
+      {message.notice && (
+        <p className="rounded-[8px] border border-amber-200 bg-amber-50 px-2.5 py-2 text-[11px] font-medium text-amber-700 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-400">
+          {message.notice}
+        </p>
+      )}
+
       {message.error && (
         <div className="flex items-center gap-2 text-[12px] text-[#DC2626]">
           <span>{message.error.message}</span>

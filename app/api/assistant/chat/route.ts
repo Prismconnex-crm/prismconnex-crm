@@ -1,4 +1,7 @@
 import { BadRequestError } from '@/lib/http/errors';
+import { credentialNotice, modelCredentialStatus } from '@/lib/assistant/model-config';
+import { resolveTenant } from '@/lib/auth/tenant';
+import { Role } from '@/lib/rbac/authorize';
 import { jsonError } from '@/lib/http/response';
 import { consumeRateLimit } from '@/lib/assistant/rate-limit';
 import { createAssistantErrorStream, createAssistantStream } from '@/lib/assistant/stream';
@@ -39,6 +42,32 @@ function clientKey(request: Request): string {
   const forwarded = request.headers.get('x-forwarded-for');
   if (forwarded) return forwarded.split(',')[0].trim();
   return request.headers.get('x-real-ip') ?? 'unknown';
+}
+
+/**
+ * The notice describes a server misconfiguration, so only an admin sees it.
+ *
+ * This route is deliberately not tenant-gated — the assistant answers from
+ * shared catalogs — and adding an auth requirement here would change who can
+ * use it. The tenant lookup exists solely to decide whether to EXPLAIN the
+ * degradation, never whether to answer, and is skipped entirely when there is
+ * nothing to explain, so the healthy path costs no query.
+ *
+ * `resolveTenant()` resolves `null` for a signed-out caller rather than
+ * throwing, so the null branch is the normal path for anonymous use, not an
+ * error case. The try/catch is for database trouble underneath it: a failed
+ * lookup must cost the caller a notice, never a reply.
+ */
+async function adminCredentialNotice(): Promise<string | undefined> {
+  const notice = credentialNotice(modelCredentialStatus());
+  if (!notice) return undefined;
+
+  try {
+    const tenant = await resolveTenant();
+    return tenant?.role === Role.ADMIN ? notice : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 export async function POST(request: Request) {
@@ -84,6 +113,8 @@ export async function POST(request: Request) {
       );
     }
 
+    const notice = await adminCredentialNotice();
+
     return new Response(
       // No classifier passed: the stream resolves the real one itself, so a
       // missing API key is reported as missing_api_key rather than as a model
@@ -96,6 +127,7 @@ export async function POST(request: Request) {
         page,
         forceEntity,
         presetFilters,
+        credentialNotice: notice,
       }),
       { status: 200, headers: NDJSON_HEADERS }
     );

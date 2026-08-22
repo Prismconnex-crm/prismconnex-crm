@@ -117,6 +117,13 @@ export function conversationReducer(
         return patch(state, action.id, { suggestions: event.items });
       }
 
+      // Annotates the turn; it does NOT end it. Falling through to the `done`
+      // return below would mark the message complete mid-stream and drop the
+      // answer this notice exists to explain.
+      if (event.type === 'notice') {
+        return patch(state, action.id, { notice: event.text });
+      }
+
       if (event.type === 'error') {
         return {
           ...patch(state, action.id, {
