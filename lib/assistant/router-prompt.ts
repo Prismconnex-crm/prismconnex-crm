@@ -34,9 +34,23 @@
  *   Asking the model to canonicalize the open vocabulary is what produces
  *   plausible values that match no row.
  *
+ *   `answer_needed` marks the queries that are filter commands rather than
+ *   questions, so a caller can render the grid and skip the answering model.
+ *   Today it would save nothing: `generateAnswer` in `lib/assistant/stream.ts`
+ *   is injected only by tests, so the live inline path already answers from
+ *   `adapter.describe()` — a local template, not a model. The field is carried
+ *   here so that whenever a real answerer IS wired in, the prompt and the skip
+ *   branch agree from the start rather than being retrofitted.
+ *
  * The vocabularies below are transcribed from `lib/find-shows/catalog.ts` and
  * `types/people.ts`. They are duplicated as prose because a system prompt is a
  * string, not a type — if either source list changes, update this file too.
+ *
+ * The people vocabularies are the ones worth getting exactly right.
+ * `paramsToFilters` in `lib/people/filters.ts` filters unrecognised values out
+ * of a closed key instead of rejecting them, so "Verified" (capitalised) or
+ * "IC" does not fail — it collapses to an empty list, which reads downstream as
+ * no constraint at all. A near-miss therefore widens the result set silently.
  *
  * Known gap: `employeeRange` uses the seven clean bands from `HEADCOUNT_BANDS`,
  * while `COMPANY_EMPLOYEE_RANGES` in `lib/company-classification.ts` is finer
@@ -70,6 +84,7 @@ Return ONLY a single JSON object. No prose, no markdown fences, no preamble.
   "target": "events" | "companies" | "people" | "leads" | "deals",
   "off_topic": boolean,
   "carry_context": boolean,
+  "answer_needed": boolean,
   "message": string,
   "filters": { ... shape depends on target, see FILTERS ... }
 }
@@ -109,6 +124,21 @@ When true the app carries the current tab's filters forward and applies yours
 on top. If no prior result set exists the app treats it as an error — so set
 carry_context on the language alone and never fabricate the filters you think
 were previously applied.
+
+ANSWER_NEEDED
+
+Set true only when the user asked something that needs prose back: "how many",
+"which of these", "compare", "summarise", "who should I target", "is it worth".
+Set false when the query is a filter command and the grid itself is the answer:
+"UK events", "verified marketing managers in Germany", "companies in Packaging".
+
+False is the common case. When false the app applies the filters, renders the
+rows and skips the answering model entirely, so a wrong true costs a call the
+user did not need. Prefer false when the query names only criteria and no
+question word.
+
+Navigation is independent of this: a handoff can carry answer_needed false, in
+which case the destination tab simply opens filtered with no written reply.
 
 FILTERS
 
@@ -184,8 +214,24 @@ country filter is CORRECT and is not an empty query.
   "industries":   string[], // OPEN and UNNORMALIZED, as for companies.
   "headcounts":   string[], // CLOSED, same bands as employeeRange above.
   "buyingIntents":string[], // CLOSED: "high" | "medium" | "low" | "none"
+  "sources":      string[], // CLOSED: "user_import" | "licensed_dataset"
+                            //   | "enrichment"
+  "verification": string,   // CLOSED, SINGLE value not an array:
+                            //   "verified" | "needs_verification" | "invalid"
+                            // Note the spelling. "Verified" capitalised, or
+                            // "Probable" / "Unverified" / "Bounced", are NOT
+                            // values this app holds.
+  "minConfidence":number,   // CLOSED: 50 | 70 | 90. A floor, not an exact
+                            //   score. "high confidence" -> 90.
   "keywords":     string[]
 }
+
+Every CLOSED people value above is lowercase snake_case except the seniority
+and department labels, which are capitalised exactly as shown. This matters
+more here than elsewhere: the app drops unrecognised values from a closed key
+rather than rejecting them, so a near-miss like "Verified" or "IC" silently
+becomes NO constraint and the grid quietly returns rows the user excluded.
+Emit a value exactly as listed or omit the key.
 
 --- target "leads" ---
 Same keys as "companies".
@@ -238,28 +284,37 @@ Good: "Opening Companies exhibiting at these shows."
 EXAMPLES
 
 Current tab: events. Current date: 2026-08-23. Query: "UK events"
-{"target":"events","off_topic":false,"carry_context":false,"message":"Showing trade shows in the United Kingdom.","filters":{"countries":["United Kingdom"]}}
+{"target":"events","off_topic":false,"carry_context":false,"answer_needed":false,"message":"Showing trade shows in the United Kingdom.","filters":{"countries":["United Kingdom"]}}
 
 Current tab: events. Current date: 2026-08-23. Query: "which companies are exhibiting at these events"
-{"target":"companies","off_topic":false,"carry_context":true,"message":"Opening Companies exhibiting at these shows.","filters":{}}
+{"target":"companies","off_topic":false,"carry_context":true,"answer_needed":false,"message":"Opening Companies exhibiting at these shows.","filters":{}}
+
+Current tab: events. Current date: 2026-08-23. Query: "how many of these are in London"
+{"target":"events","off_topic":false,"carry_context":true,"answer_needed":true,"message":"Counting shows in London.","filters":{"cities":["London"]}}
 
 Current tab: events. Current date: 2026-08-23. Query: "medtech shows in Germany and France next spring"
-{"target":"events","off_topic":false,"carry_context":false,"message":"Showing medical shows in Germany and France next spring.","filters":{"countries":["Germany","France"],"categories":["Medical & Healthcare"],"dateFrom":"2027-03-01","dateTo":"2027-05-31"}}
+{"target":"events","off_topic":false,"carry_context":false,"answer_needed":false,"message":"Showing medical shows in Germany and France next spring.","filters":{"countries":["Germany","France"],"categories":["Medical & Healthcare"],"dateFrom":"2027-03-01","dateTo":"2027-05-31"}}
 
 Current tab: companies. Current date: 2026-08-23. Query: "when is the next packaging expo in Dubai"
-{"target":"events","off_topic":false,"carry_context":false,"message":"Opening packaging shows in Dubai.","filters":{"countries":["United Arab Emirates"],"cities":["Dubai"],"categories":["Packaging"]}}
+{"target":"events","off_topic":false,"carry_context":false,"answer_needed":true,"message":"Opening packaging shows in Dubai.","filters":{"countries":["United Arab Emirates"],"cities":["Dubai"],"categories":["Packaging"]}}
 
 Current tab: companies. Current date: 2026-08-23. Query: "mid-market fintech firms in Germany"
-{"target":"companies","off_topic":false,"carry_context":false,"message":"Showing mid-market fintech companies in Germany.","filters":{"industryTerms":["fintech"],"country":"Germany","employeeRange":"201-500"}}
+{"target":"companies","off_topic":false,"carry_context":false,"answer_needed":false,"message":"Showing mid-market fintech companies in Germany.","filters":{"industryTerms":["fintech"],"country":"Germany","employeeRange":"201-500"}}
+
+Current tab: people. Current date: 2026-08-23. Query: "verified marketing managers in Germany"
+{"target":"people","off_topic":false,"carry_context":false,"answer_needed":false,"message":"Showing verified marketing contacts in Germany.","filters":{"titles":["Marketing Manager"],"departments":["Marketing"],"countries":["Germany"],"verification":"verified"}}
+
+Current tab: people. Current date: 2026-08-23. Query: "high confidence C-suite from licensed data"
+{"target":"people","off_topic":false,"carry_context":false,"answer_needed":false,"message":"Showing high-confidence C-level contacts from licensed data.","filters":{"seniorities":["C-Level"],"minConfidence":90,"sources":["licensed_dataset"]}}
 
 Current tab: events. Current date: 2026-08-23. Query: "who runs procurement at Siemens"
-{"target":"people","off_topic":false,"carry_context":false,"message":"Opening procurement contacts at Siemens.","filters":{"companies":["Siemens"],"departments":["Procurement"]}}
+{"target":"people","off_topic":false,"carry_context":false,"answer_needed":true,"message":"Opening procurement contacts at Siemens.","filters":{"companies":["Siemens"],"departments":["Procurement"]}}
 
 Current tab: people. Current date: 2026-08-23. Query: "is SHOT Show worth attending"
-{"target":"events","off_topic":false,"carry_context":false,"message":"Opening SHOT Show.","filters":{"keywords":["SHOT Show"]}}
+{"target":"events","off_topic":false,"carry_context":false,"answer_needed":true,"message":"Opening SHOT Show.","filters":{"keywords":["SHOT Show"]}}
 
 Current tab: people. Current date: 2026-08-23. Query: "what's the weather in Berlin"
-{"target":"people","off_topic":true,"carry_context":false,"message":"Try asking about shows, companies, people or pipeline.","filters":{}}`;
+{"target":"people","off_topic":true,"carry_context":false,"answer_needed":false,"message":"Try asking about shows, companies, people or pipeline.","filters":{}}`;
 
 /** The five tabs this prompt can route between. Wider than `AssistantEntity`. */
 export type RouterTab = 'events' | 'companies' | 'people' | 'leads' | 'deals';
