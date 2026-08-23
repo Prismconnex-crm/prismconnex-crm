@@ -3,6 +3,7 @@ import {
   applyPeopleFilters,
   computePeopleFacets,
   paramsToFilters,
+  parsePeopleFilters,
   serializePeopleQuery,
 } from '@/lib/people/filters';
 import { emptyPeopleFilters, type PeopleFilters, type Person } from '@/types/people';
@@ -229,5 +230,63 @@ describe('URL round-trip', () => {
 
   it('ignores unknown params instead of throwing', () => {
     expect(paramsToFilters('?nonsense=1&country=Germany').countries).toEqual(['Germany']);
+  });
+});
+
+/**
+ * The lenient drop above is deliberate for the rail and the assistant binding:
+ * a value invented by a model must never reach a query, and a stale shared link
+ * must still render. But a machine caller wants the opposite — being told, so a
+ * near-miss like `verification=Verified` fails loudly instead of quietly
+ * returning every row. `parsePeopleFilters` reports; `paramsToFilters` does not.
+ */
+describe('parsePeopleFilters', () => {
+  it('reports a dropped list value and keeps the valid ones', () => {
+    const { filters, dropped } = parsePeopleFilters('?seniority=Wizard&seniority=VP');
+
+    expect(filters.seniorities).toEqual(['VP']);
+    expect(dropped).toEqual([{ key: 'seniorities', value: 'Wizard' }]);
+  });
+
+  it('reports a dropped verification value', () => {
+    const { filters, dropped } = parsePeopleFilters('?verification=Verified');
+
+    expect(filters.verification).toBeNull();
+    expect(dropped).toEqual([{ key: 'verification', value: 'Verified' }]);
+  });
+
+  it('reports a dropped confidence floor', () => {
+    const { filters, dropped } = parsePeopleFilters('?minConfidence=85');
+
+    expect(filters.minConfidence).toBeNull();
+    expect(dropped).toEqual([{ key: 'minConfidence', value: '85' }]);
+  });
+
+  it('reports nothing for a query whose values are all accepted', () => {
+    const { filters, dropped } = parsePeopleFilters(
+      '?seniority=VP&verification=verified&minConfidence=90&country=Germany'
+    );
+
+    expect(dropped).toEqual([]);
+    expect(filters.seniorities).toEqual(['VP']);
+    expect(filters.verification).toBe('verified');
+    expect(filters.minConfidence).toBe(90);
+  });
+
+  it('does not report an unknown param name, only an unknown value', () => {
+    // `nonsense` is not a filter at all. Reporting it would make every stray
+    // tracking param a 400.
+    expect(parsePeopleFilters('?nonsense=1&country=Germany').dropped).toEqual([]);
+  });
+
+  it('does not report an open-vocabulary value', () => {
+    // Titles and countries are matched against the data, not against a list.
+    expect(parsePeopleFilters('?title=Chief+Vibes+Officer').dropped).toEqual([]);
+  });
+
+  it('agrees with paramsToFilters on the resulting filters', () => {
+    const query = '?verification=Verified&seniority=Wizard&seniority=VP&country=Germany';
+
+    expect(parsePeopleFilters(query).filters).toEqual(paramsToFilters(query));
   });
 });

@@ -56,31 +56,86 @@ const CLOSED_VOCABULARY: Partial<Record<PeopleFilterListKey, readonly string[]>>
   sources: DATA_SOURCES,
 };
 
-export function paramsToFilters(search: string | URLSearchParams): PeopleFilters {
+/** One value that was not in its key's closed vocabulary, and so was ignored. */
+export type DroppedFilterValue = { key: string; value: string };
+
+export type ParsedPeopleFilters = {
+  filters: PeopleFilters;
+  /** Empty when every supplied value was accepted. */
+  dropped: DroppedFilterValue[];
+};
+
+/**
+ * Parses filters AND reports what it refused, for callers that must not fail
+ * silently.
+ *
+ * Dropping an unrecognised value is the right behaviour for the rail and the
+ * assistant binding: an invented value must never reach a query, and a stale
+ * shared link must still render. It is the wrong behaviour for a machine
+ * caller, because a dropped key reads downstream as NO constraint — so
+ * `?verification=Verified` returns every person, verified or not, and nothing
+ * says the filter was ignored.
+ *
+ * The two needs differ only in whether the caller is told. This function tells;
+ * `paramsToFilters` does not. Nothing else about the parse differs, so the
+ * filters returned here are always identical to the lenient ones.
+ *
+ * Only CLOSED vocabularies can drop. An unknown param name is not reported —
+ * it was never a filter — and an open key (title, company, location, industry,
+ * keyword) accepts any non-empty string by design.
+ */
+export function parsePeopleFilters(search: string | URLSearchParams): ParsedPeopleFilters {
   const params = typeof search === 'string' ? new URLSearchParams(search) : search;
   const filters = emptyPeopleFilters();
+  const dropped: DroppedFilterValue[] = [];
 
   for (const key of PEOPLE_FILTER_LIST_KEYS) {
     const values = params.getAll(LIST_PARAM[key]).filter(Boolean);
     const allowed = CLOSED_VOCABULARY[key];
-    filters[key] = allowed ? values.filter((value) => allowed.includes(value)) : values;
+    if (!allowed) {
+      filters[key] = values;
+      continue;
+    }
+    filters[key] = values.filter((value) => {
+      if (allowed.includes(value)) return true;
+      dropped.push({ key, value });
+      return false;
+    });
   }
 
   const verification = params.get('verification');
-  filters.verification =
-    verification && (VERIFICATION_STATUSES as readonly string[]).includes(verification)
-      ? (verification as VerificationStatus)
-      : null;
+  if (verification && (VERIFICATION_STATUSES as readonly string[]).includes(verification)) {
+    filters.verification = verification as VerificationStatus;
+  } else {
+    filters.verification = null;
+    if (verification) dropped.push({ key: 'verification', value: verification });
+  }
 
-  const minConfidence = Number(params.get('minConfidence'));
-  filters.minConfidence = (CONFIDENCE_THRESHOLDS as readonly number[]).includes(minConfidence)
-    ? (minConfidence as ConfidenceThreshold)
-    : null;
+  // Read as a string first: the raw text is what a 400 has to quote back, and
+  // Number('') is 0, which would report a missing param as a rejected one.
+  const rawConfidence = params.get('minConfidence');
+  const minConfidence = Number(rawConfidence);
+  if ((CONFIDENCE_THRESHOLDS as readonly number[]).includes(minConfidence)) {
+    filters.minConfidence = minConfidence as ConfidenceThreshold;
+  } else {
+    filters.minConfidence = null;
+    if (rawConfidence) dropped.push({ key: 'minConfidence', value: rawConfidence });
+  }
 
   filters.lookalikeSeedId = params.get('lookalike') || null;
   filters.search = params.get('q') ?? '';
 
-  return filters;
+  return { filters, dropped };
+}
+
+/**
+ * The lenient parse. Unrecognised values are dropped without complaint.
+ *
+ * Kept as the default because both React callers parse during render, where a
+ * throw would replace a slightly-wrong grid with a blank page.
+ */
+export function paramsToFilters(search: string | URLSearchParams): PeopleFilters {
+  return parsePeopleFilters(search).filters;
 }
 
 export function filtersToParams(filters: PeopleFilters): URLSearchParams {

@@ -2,7 +2,7 @@ import { computePeopleStats, loadPeople } from '@/lib/people/data';
 import {
   applyPeopleFilters,
   computePeopleFacets,
-  paramsToFilters,
+  parsePeopleFilters,
 } from '@/lib/people/filters';
 import { rankLookalikes } from '@/lib/people/lookalikes';
 import { BadRequestError } from '@/lib/http/errors';
@@ -35,7 +35,17 @@ export async function GET(request: Request) {
       ? Math.min(MAX_PAGE_SIZE, Math.max(1, Math.trunc(requestedSize)))
       : DEFAULT_PAGE_SIZE;
 
-    const filters = paramsToFilters(params);
+    // Strict here, lenient in the UI. The rail and the assistant binding parse
+    // during render and must survive a stale link, but a caller of this route
+    // is a machine: a dropped closed-vocabulary value reads as no constraint,
+    // so `?verification=Verified` would answer "verified contacts" with the
+    // entire dataset and report nothing. Fail instead.
+    const { filters, dropped } = parsePeopleFilters(params);
+    if (dropped.length > 0) {
+      const detail = dropped.map(({ key, value }) => `${key}=${value}`).join(', ');
+      throw new BadRequestError(`unknown filter values: ${detail}`);
+    }
+
     const everyone = loadPeople();
 
     const matched = applyPeopleFilters(everyone, filters);

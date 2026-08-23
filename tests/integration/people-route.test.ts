@@ -98,4 +98,49 @@ describe('GET /api/people', () => {
     expect(json.results.map((person: { id: string }) => person.id)).not.toContain(seedId);
     expect(json.results.length).toBeGreaterThan(0);
   });
+
+  /**
+   * A near-miss used to return 200 and the WHOLE dataset, because a dropped
+   * closed-vocabulary key reads as no constraint. Answering "verified contacts"
+   * with 2418 people of whom 927 are unverified is worse than failing.
+   */
+  describe('unknown filter values', () => {
+    it('rejects a miscased verification instead of ignoring it', async () => {
+      const response = await GET(get('?verification=Verified'));
+
+      expect(response.status).toBe(400);
+    });
+
+    it('names the offending key and value', async () => {
+      const response = await GET(get('?verification=Verified'));
+      const json = await response.json();
+
+      expect(JSON.stringify(json)).toContain('verification');
+      expect(JSON.stringify(json)).toContain('Verified');
+    });
+
+    it('rejects an unknown seniority', async () => {
+      expect((await GET(get('?seniority=IC'))).status).toBe(400);
+    });
+
+    it('rejects a confidence floor that is not an offered threshold', async () => {
+      expect((await GET(get('?minConfidence=85'))).status).toBe(400);
+    });
+
+    it('still accepts the correct spellings', async () => {
+      const response = await GET(
+        get('?verification=verified&seniority=Individual%20Contributor&minConfidence=90')
+      );
+
+      expect(response.status).toBe(200);
+    });
+
+    it('still ignores a param that is not a filter at all', async () => {
+      expect((await GET(get('?utm_source=newsletter'))).status).toBe(200);
+    });
+
+    it('still accepts an open-vocabulary value it cannot validate', async () => {
+      expect((await GET(get('?title=Chief%20Vibes%20Officer'))).status).toBe(200);
+    });
+  });
 });
