@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, PanelLeftClose, PanelLeft, Building, X } from "lucide-react";
 import { BrandLogo } from "@/components/brand-logo";
+import { BrandWordmark } from "@/components/brand-wordmark";
 import { navItems } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { WorkspaceSwitcher } from "./workspace-switcher";
@@ -68,7 +69,7 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
                 the mark only, so there is no duplicate wordmark. */}
             <div className="leading-tight overflow-hidden whitespace-nowrap">
               <p className="text-sm font-bold tracking-wide text-slate-900 dark:text-white">
-                Prismconnex
+                <BrandWordmark />
               </p>
               <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-slate-600 dark:text-slate-300">
                 Global Solutions

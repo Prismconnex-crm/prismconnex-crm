@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Menu, X, ArrowRight, Sun, MoonStar, Monitor } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { BrandLogo } from '@/components/brand-logo';
+import { BrandWordmark } from '@/components/brand-wordmark';
 import { useLocale, useTranslations } from 'next-intl';
 import { localizePathname } from '@/lib/locale';
 import type { Locale } from '@/types';
@@ -407,7 +408,7 @@ export function PublicNavbar() {
             </div>
             <div className="flex flex-col leading-tight">
               <span className="text-[15px] font-bold tracking-tight text-slate-900 dark:text-white">
-                Prismconnex
+                <BrandWordmark />
               </span>
               <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-slate-600 dark:text-slate-300">
                 Global Solutions
