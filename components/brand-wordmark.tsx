@@ -24,15 +24,23 @@ export function BrandWordmark({ className }: { className?: string }) {
       <span aria-hidden="true" className="inline-flex items-baseline">
         Prismc
         {/*
-          0.58em ≈ the x-height of the surrounding type, plus the optical
-          overshoot a round glyph needs to look the same size as a square one.
-          The nudge down sits it on the baseline rather than the text box.
+          0.82em — deliberately taller than the x-height it replaces. Matching
+          the "o" exactly (0.58em) made the mark disappear into the word at a
+          glance; the artwork draws it above cap height for the same reason, so
+          the emblem reads as the logo rather than as a slightly odd letter.
+          The nudge down sits it on the baseline rather than the text box, and
+          the side margins stop a round glyph crowding the flat-sided c and n.
         */}
         <span
           className="relative inline-block shrink-0"
-          style={{ width: "0.58em", height: "0.58em", transform: "translateY(0.04em)" }}
+          style={{
+            width: "0.82em",
+            height: "0.82em",
+            marginInline: "0.04em",
+            transform: "translateY(0.12em)",
+          }}
         >
-          <BrandLogo fill sizes="16px" className="object-contain" />
+          <BrandLogo fill sizes="24px" className="object-contain" />
         </span>
         nnex
       </span>
