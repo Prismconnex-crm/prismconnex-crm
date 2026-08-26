@@ -44,6 +44,7 @@ import { findShowEvents, findShowMonthOptions } from "@/lib/find-shows/catalog";
 import type { FindShowEvent } from "@/types/find-shows";
 import type { WorkspacePreferences } from "@/types";
 import type { Exhibitor } from "@/types/exhibitors";
+import { BettExhibitorGrid } from "./bett-exhibitor-grid";
 import { cn } from "@/lib/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
@@ -89,6 +90,12 @@ const EXPECTED_EXHIBITORS: Record<string, number> = {
     'BETT SHOW': 316,
 };
 
+/**
+ * Events whose Exhibitors tab uses the paginated card grid instead of the
+ * shared vertical list. BETT only for now — every other show keeps the list.
+ */
+const GRID_EXHIBITOR_EVENTS = new Set(['BETT SHOW']);
+
 /** website -> this exhibitor's directory page -> the event's directory root. */
 function exhibitorLink(ex: Exhibitor) {
     return ex.website || ex.profileUrl || ex.directoryUrl || undefined;
@@ -121,6 +128,15 @@ function ExhibitorLogo({ name, logoUrl }: { name: string; logoUrl: string | null
  * falling back to the source directory page when no official site was published.
  */
 function ExhibitorsPanel({ event }: { event: FindShowEvent }) {
+    // BETT gets the card grid; the hooks below only run for the list events.
+    if (GRID_EXHIBITOR_EVENTS.has(event.name)) {
+        return <BettExhibitorGrid eventSlug={event.slug} expected={EXPECTED_EXHIBITORS[event.name] ?? null} />;
+    }
+    return <ExhibitorsListPanel event={event} />;
+}
+
+/** The original list rendering, kept for every non-grid event. */
+function ExhibitorsListPanel({ event }: { event: FindShowEvent }) {
     const [exhibitors, setExhibitors] = useState<Exhibitor[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -606,9 +622,37 @@ export function EventsSection({ eventId, preferences, mode = 'all' }: EventsSect
 // EVENT DETAIL VIEW (NEW)
 // ----------------------------------------------------------------------
 
+const EVENT_TABS = ['Overview', 'Location & Venue', 'Exhibitors', 'Notes'] as const;
+
 function EventDetailView({ event }: { event: FindShowEvent }) {
     const router = useRouter();
-    const [activeTab, setActiveTab] = useState('Overview');
+    // Tab lives in the URL (?tab=) so a refresh lands back where the user was —
+    // which is what makes the Exhibitors grid's own ?page/?pageSize meaningful.
+    const [activeTab, setActiveTab] = useState<string>('Overview');
+
+    // Read after mount, not during render: the server has no URL search string,
+    // so seeding state from it directly would be a hydration mismatch.
+    useEffect(() => {
+        const fromUrl = new URLSearchParams(window.location.search).get('tab');
+        if (fromUrl && EVENT_TABS.includes(fromUrl as (typeof EVENT_TABS)[number])) setActiveTab(fromUrl);
+    }, []);
+
+    // replaceState, not router.push: switching tabs must not re-navigate the app.
+    const selectTab = (tab: string) => {
+        setActiveTab(tab);
+        if (typeof window === 'undefined') return;
+        const params = new URLSearchParams(window.location.search);
+        if (tab === 'Overview') params.delete('tab');
+        else params.set('tab', tab);
+        if (tab !== 'Exhibitors') {
+            params.delete('page');
+            params.delete('pageSize');
+            params.delete('q');
+            params.delete('sort');
+        }
+        const search = params.toString();
+        window.history.replaceState(null, '', search ? `${window.location.pathname}?${search}` : window.location.pathname);
+    };
 
     return (
         <div className="relative isolate min-h-screen space-y-6 max-w-[1600px] mx-auto pb-12">
@@ -715,12 +759,12 @@ function EventDetailView({ event }: { event: FindShowEvent }) {
 
             {/* Main Tabs */}
             <div className="flex items-center gap-2 border-b border-slate-200 dark:border-[#22304A]">
-                {['Overview', 'Location & Venue', 'Exhibitors', 'Notes'].map((tab) => {
+                {EVENT_TABS.map((tab) => {
                     const isActive = activeTab === tab;
                     return (
                         <button 
                             key={tab}
-                            onClick={() => setActiveTab(tab)}
+                            onClick={() => selectTab(tab)}
                             className={cn(
                                 "px-6 py-4 text-[14px] font-black transition-all relative",
                                 isActive ? "text-indigo-600 dark:text-indigo-400" : "text-slate-500 dark:text-[#9CA3AF] hover:text-slate-900 dark:hover:text-slate-200"
