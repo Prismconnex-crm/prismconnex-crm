@@ -110,15 +110,16 @@ describe('filterEvents', () => {
     expect(totalMatched).toBeGreaterThan(0);
   });
 
+  // Derived from the catalog rather than pinned: this was hardcoded at 1306 and
+  // broke the moment the eventseye import widened the catalog to 11,635 shows.
+  // What must hold is that an uncategorised country query returns every French
+  // show in the catalog — not one particular total.
   it('finds every trade show in France when no category is set', () => {
-    // Derived from the catalog rather than pinned: the total changes with every
-    // import (the Aug 2026 - Jul 2027 refresh moved it from 1,306 to 1,385), and
-    // a hardcoded number only ever produces a false failure. What matters is
-    // that dropping the category filter matches the whole country.
-    const expected = findShowEvents.filter((event) => event.country === 'France').length;
     const { totalMatched } = filterEvents({ country: 'France', category: null });
+    const expected = findShowEvents.filter((event) => event.country === 'France').length;
+
+    expect(expected).toBeGreaterThan(0);
     expect(totalMatched).toBe(expected);
-    expect(totalMatched).toBeGreaterThan(0);
   });
 
   it('exposes the seed logo url on each result', () => {
