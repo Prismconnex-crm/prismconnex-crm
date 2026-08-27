@@ -1035,12 +1035,27 @@
                          this pair of keyframes; nothing else in the block
                          encodes a direction.
 
-   Colour is --brand-hover (#0086E6) in *both* themes, not the light/dark
-   --brand swap the logo makes. The brief asks for one blue everywhere, and
-   #0086E6 is the only brand blue that clears contrast on both grounds:
-   3.78:1 on #FFFFFF and 5.08:1 on #0A0E1A. (#005C9D would be 2.77:1 in dark —
-   a smudge.) The glow is a wide, low-alpha text-shadow in the same blue, one
-   step stronger in dark mode where it does real legibility work.
+   ── Brightness ──
+   Four alpha multipliers stack on this text: the mask plateau, the float
+   keyframes, .pcx-tagline__rest, and (for the separator) .pcx-tagline__dot.
+   They used to compound to ~0.59 effective alpha, which left the tagline at
+   roughly 2.2:1 in light and 2.5:1 in dark — legible only as a smudge. Each is
+   now lifted just far enough to clear AA while keeping what it was there for:
+   the mask still fades to nothing at both edges and still peaks dead centre,
+   and the float still breathes. Only the floors moved, never the shapes.
+
+   Colour follows the SAME light/dark swap BrandLogo makes, rather than pinning
+   one blue to both grounds. That swap is what buys the contrast: --brand
+   (#005C9D) is 6.98:1 on #FFFFFF but only 2.77:1 on #0A0E1A, while
+   --brand-hover (#0086E6) is 5.10:1 on #0A0E1A but a pale 3.78:1 on white.
+   Each theme takes the one that works on its own background. Note this makes
+   light mode DEEPER, not lighter — on a white ground "more visible" and
+   "lighter" pull in opposite directions, and visibility wins.
+
+   The glow is a wide, low-alpha text-shadow tinted to whichever blue the theme
+   is using, one step stronger in dark mode where it does real legibility work.
+   It stays under half alpha: past that it blooms and starts eating the
+   counters of the glyphs it is meant to lift.
    ───────────────────────────────────────────────────────────────────────────*/
 
 @keyframes pcx-tagline-scroll {
@@ -1056,7 +1071,10 @@
   0%,
   100% {
     transform: translate3d(0, 0, 0);
-    opacity: 0.92;
+    /* Was 0.92. The swell is still there, but its trough no longer costs 8%
+       of the text's contrast for the majority of the cycle. Transform is
+       untouched, so the motion itself is identical. */
+    opacity: 0.97;
   }
   50% {
     transform: translate3d(0, -3px, 0);
@@ -1069,25 +1087,32 @@
   width: 100%;
   overflow: hidden;
   /* Alpha ramp: invisible at the edges, full strength through the centre.
-     Doubles as the "brighten while passing the middle" effect. */
+     Doubles as the "brighten while passing the middle" effect.
+
+     Same seven stops and the same shape as before — still transparent at both
+     ends, still peaking at 50% — but the middle band is raised (0.78 -> 0.96,
+     0.3 -> 0.55). The taper was doing double duty: hiding the marquee's entry
+     and exit, which it must, AND holding the whole readable centre of the
+     strip at 78%, which it should not. The fade now happens over the outer
+     eighth and gets out of the way. */
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    rgba(0, 0, 0, 0.3) 8%,
-    rgba(0, 0, 0, 0.78) 24%,
+    rgba(0, 0, 0, 0.55) 8%,
+    rgba(0, 0, 0, 0.96) 24%,
     rgb(0, 0, 0) 50%,
-    rgba(0, 0, 0, 0.78) 76%,
-    rgba(0, 0, 0, 0.3) 92%,
+    rgba(0, 0, 0, 0.96) 76%,
+    rgba(0, 0, 0, 0.55) 92%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    rgba(0, 0, 0, 0.3) 8%,
-    rgba(0, 0, 0, 0.78) 24%,
+    rgba(0, 0, 0, 0.55) 8%,
+    rgba(0, 0, 0, 0.96) 24%,
     rgb(0, 0, 0) 50%,
-    rgba(0, 0, 0, 0.78) 76%,
-    rgba(0, 0, 0, 0.3) 92%,
+    rgba(0, 0, 0, 0.96) 76%,
+    rgba(0, 0, 0, 0.55) 92%,
     transparent 100%
   );
 }
@@ -1113,12 +1138,17 @@
   display: block;
   flex: none;
   white-space: nowrap;
-  color: rgb(var(--brand-hover));
-  text-shadow: 0 0 18px rgba(0, 134, 230, 0.22);
+  /* Light mode takes the deeper brand blue: 6.98:1 on white, against 3.78:1
+     for --brand-hover. The glow is tinted to match so it reads as the text's
+     own halo rather than a second colour behind it. */
+  color: rgb(var(--brand));
+  text-shadow: 0 0 16px rgba(0, 92, 157, 0.2);
 }
 
 .dark .pcx-tagline__item {
-  text-shadow: 0 0 22px rgba(0, 134, 230, 0.34);
+  /* #0086E6 on #0A0E1A is 5.10:1; --brand would be 2.77:1 here. */
+  color: rgb(var(--brand-hover));
+  text-shadow: 0 0 22px rgba(0, 134, 230, 0.45);
 }
 
 /* "One Platform." carries the emphasis; the rest stays lighter and calmer. */
@@ -1128,12 +1158,17 @@
 }
 
 .pcx-tagline__rest {
+  /* Was 0.82. The weight difference (700 vs 500) already carries the
+     hierarchy, so the extra alpha was buying emphasis the type had covered —
+     at the cost of the longest and least legible part of the sentence. */
   font-weight: 500;
-  opacity: 0.82;
+  opacity: 0.95;
 }
 
 .pcx-tagline__dot {
-  opacity: 0.4;
+  /* Stays clearly subordinate — it is a separator, not content — but 0.4 on
+     top of the mask left it near-invisible anywhere but dead centre. */
+  opacity: 0.55;
 }
 
 @media (prefers-reduced-motion: reduce) {
