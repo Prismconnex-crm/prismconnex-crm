@@ -262,12 +262,17 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
         </form>
       ) : (
       <form onSubmit={onSubmit} noValidate className="space-y-4">
+        {/*
+          Both fields start empty. They previously carried `defaultValue`
+          credentials for a shared demo account, which meant every real user
+          arrived at a login form already filled in with someone else's
+          account — and put a password in the client source. Leave them blank.
+        */}
         <FormField
           name="email"
           label={t('fields.identifier')}
           placeholder={t('placeholders.identifier')}
           autoComplete="username"
-          defaultValue="owner@prismconnex.demo"
           error={fieldErrors.email}
         />
 
@@ -276,7 +281,6 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
           label={t('fields.secret')}
           placeholder={t('placeholders.secret')}
           autoComplete="current-password"
-          defaultValue="Prism123!"
           showLabel={t('actions.showPassword')}
           hideLabel={t('actions.hidePassword')}
           error={fieldErrors.password}
