@@ -17,6 +17,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 import { UserAvatar } from "./user-avatar";
 import { AvatarViewer } from "./avatar-viewer";
+import { SignOutDialog, type SignOutScope } from "./sign-out-dialog";
 import { AVATAR_CHANGED_EVENT, type AvatarChangedDetail } from "@/lib/profile-events";
 import type { AppShellUser } from "./app-shell";
 
@@ -84,31 +85,40 @@ export function AppTopbar({
     window.dispatchEvent(new CustomEvent("pcx:company-search", { detail: query }));
   };
 
-  const [signingOut, setSigningOut] = useState(false);
+  const [signOutOpen, setSignOutOpen] = useState(false);
 
-  const handleSignOut = async () => {
-    if (signingOut) return;
-    setSigningOut(true);
+  /**
+   * Runs the sign-out the modal asked for.
+   *
+   * `scope` is the only thing that varies: the route revokes the Supabase
+   * session at that scope ("local" = this browser, "global" = every device) and
+   * expires this browser's auth cookies either way. It always returns 200 and
+   * always clears cookies, even when the Supabase call failed.
+   *
+   * Errors are re-thrown rather than swallowed so SignOutDialog can show them
+   * and offer a retry. That is the deliberate change from the old behaviour,
+   * which redirected regardless: a fetch that never reached the server also
+   * never cleared the cookies, so redirecting would have claimed a sign-out
+   * that did not happen. The cookies are httpOnly and cannot be cleared from
+   * here, so the client has no way to end the session on its own.
+   */
+  const handleSignOut = async (scope: SignOutScope) => {
+    const res = await fetch("/api/auth/sign-out", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ scope }),
+    });
 
-    try {
-      // Revokes the Supabase session (supabase.auth.signOut, scope=global) and
-      // expires every auth cookie. The route always returns 200 and always
-      // clears cookies, even if the Supabase call failed.
-      const res = await fetch("/api/auth/sign-out", { method: "POST" });
-      if (!res.ok) throw new Error(`Sign out failed: ${res.status}`);
-    } catch (error) {
-      // Logged, not surfaced: the redirect below still ends the session. The
-      // cookies are httpOnly so they cannot be cleared here, but /login and
-      // every private route are guarded server-side, so a stale or partially
-      // cleared cookie cannot get the user back into the app.
-      console.error("[sign-out]", error);
-    } finally {
-      // ?signedOut=1 makes the login page show the confirmation banner.
-      router.replace("/login?signedOut=1");
-      // Drops the cached RSC payload for /app so a back-navigation cannot
-      // render the authenticated shell from cache.
-      router.refresh();
+    if (!res.ok) {
+      console.error("[sign-out] failed", res.status);
+      throw new Error("We could not sign you out just now. Please try again.");
     }
+
+    // ?signedOut=1 makes the login page show the confirmation banner.
+    router.replace("/login?signedOut=1");
+    // Drops the cached RSC payload for /app so a back-navigation cannot
+    // render the authenticated shell from cache.
+    router.refresh();
   };
 
   return (
@@ -297,15 +307,15 @@ export function AppTopbar({
                   <Settings className="size-3.5" /> Settings
                 </button>
                 <div className="my-1 border-t border-slate-200 dark:border-white/[0.04]" />
-                {/* Sign-out now makes a round trip to revoke the Supabase
-                    session, so the control is disabled while it is in flight. */}
+                {/* Opens the confirmation modal rather than signing out on the
+                    spot — the scope (this device vs. all devices) is chosen
+                    there, and the request is made from there too. */}
                 <button
                   type="button"
                   role="menuitem"
-                  disabled={signingOut}
                   onClick={() => {
                     setUserMenuOpen(false);
-                    handleSignOut();
+                    setSignOutOpen(true);
                   }}
                   className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-500 transition-colors hover:bg-red-500/10 disabled:opacity-60"
                 >
@@ -325,6 +335,12 @@ export function AppTopbar({
         src={avatarUrl}
         initials={initials}
         name={displayName}
+      />
+
+      <SignOutDialog
+        open={signOutOpen}
+        onOpenChange={setSignOutOpen}
+        onConfirm={handleSignOut}
       />
     </header>
   );

@@ -30,6 +30,16 @@ export type AuthResult = {
     profile: ProfileDTO;
 };
 
+/**
+ * Which sessions a sign-out ends. Mirrors GoTrue's `?scope=` parameter, and is
+ * the type the /api/auth/sign-out route validates the request body against.
+ */
+export type SignOutScope = "local" | "global";
+
+export function isSignOutScope(value: unknown): value is SignOutScope {
+    return value === "local" || value === "global";
+}
+
 export class AuthService {
     /**
      * Creates the user in Supabase Auth and returns the profile row that the
@@ -121,14 +131,30 @@ export class AuthService {
      * endpoint rejects an expired token. So the refresh token is exchanged for a
      * fresh access token first, then that is used to revoke.
      *
+     * `scope` selects WHICH sessions die, and maps 1:1 onto GoTrue's
+     * POST /logout?scope= — the wire form of `supabase.auth.signOut({ scope })`:
+     *
+     *   "local"  — only the refresh token behind this browser's session. Other
+     *              devices stay signed in.
+     *   "global" — every refresh token the user holds, on every device. This is
+     *              supabase-js's own default and stays the default here so the
+     *              behaviour of callers that pass nothing is unchanged.
+     *
+     * Note the refresh above is scope-safe: GoTrue's refresh_token grant rotates
+     * the token inside the SAME session, so revoking with the refreshed access
+     * token still targets the session the user is actually sitting in.
+     *
      * Returns whether revocation happened. A false return is not an error: it
      * means the Supabase session was already gone, which is the desired end
      * state anyway. The caller clears cookies regardless.
      */
-    static async signOut(tokens: { access_token: string; refresh_token: string }) {
+    static async signOut(
+        tokens: { access_token: string; refresh_token: string },
+        scope: SignOutScope = "global"
+    ) {
         try {
             const refreshed = await gotrue.refreshSession(tokens.refresh_token);
-            await gotrue.signOut(refreshed.access_token, "global");
+            await gotrue.signOut(refreshed.access_token, scope);
             return true;
         } catch {
             // The refresh token was already revoked or expired — nothing to do.
@@ -137,7 +163,7 @@ export class AuthService {
         try {
             // Fall back to the stored access token in case it is still valid
             // (logout within the first hour, or refresh being unavailable).
-            await gotrue.signOut(tokens.access_token, "global");
+            await gotrue.signOut(tokens.access_token, scope);
             return true;
         } catch {
             return false;
