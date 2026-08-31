@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Menu, X, ArrowRight, Sun, MoonStar, Monitor } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { BrandLogo } from '@/components/brand-logo';
+import { BrandMark } from '@/components/brand-logo';
 import { BrandWordmark } from '@/components/brand-wordmark';
 import { useLocale, useTranslations } from 'next-intl';
 import { localizePathname } from '@/lib/locale';
@@ -392,13 +392,15 @@ export function PublicNavbar() {
 
         <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 md:px-8">
           <Link href={localizePathname('/', locale)} className="flex items-center gap-3">
-            <div className="relative flex size-11 items-center justify-center overflow-hidden rounded-xl">
+            <div className="relative flex size-11 items-center justify-center">
               {/*
-                `mix-blend-multiply` was there to knock the opaque JPEG's white
-                background out against the light navbar. The variants have a
-                real alpha channel, so it is no longer needed.
+                The emblem alone, with no plate behind it. `BrandLogo` is the
+                stacked lockup; at 42px its baked-in wordmark is unreadable and
+                the mark loses its shape, and the wordmark beside this is real
+                text anyway. `mix-blend-multiply` and the rounded clip both went
+                with the opaque JPEG this replaced — the PNG has real alpha.
               */}
-              <BrandLogo
+              <BrandMark
                 width={42}
                 height={42}
                 style={{ width: 'auto', height: 'auto' }}
@@ -406,11 +408,15 @@ export function PublicNavbar() {
                 priority
               />
             </div>
+            {/* Brand blue, matching the wordmark in the logo artwork. On dark
+                it steps to `brand-hover` — the standard globals.css
+                substitution, since #005C9D is too dark to read on the navbar's
+                dark surface. */}
             <div className="flex flex-col leading-tight">
-              <span className="text-[15px] font-bold tracking-tight text-slate-900 dark:text-white">
+              <span className="text-[15px] font-bold tracking-tight text-brand dark:text-brand-hover">
                 <BrandWordmark />
               </span>
-              <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-slate-600 dark:text-slate-300">
+              <span className="text-[9px] font-semibold uppercase tracking-[0.15em] text-brand dark:text-brand-hover">
                 Global Solutions
               </span>
             </div>

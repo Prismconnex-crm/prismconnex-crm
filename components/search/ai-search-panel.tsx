@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type KeyboardEvent, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowUp,
@@ -24,6 +24,141 @@ const TABS = [
 ] as const;
 
 export type TabKey = (typeof TABS)[number]["key"];
+
+/** One typeahead row. `id` is opaque to this file — the caller decides what it means. */
+export type SearchSuggestion = {
+  id: string;
+  label: string;
+  hint?: string;
+};
+
+const NO_SUGGESTIONS: SearchSuggestion[] = [];
+
+/**
+ * Typeahead state for the two search surfaces.
+ *
+ * The composer is a chat box first: Enter sends the typed text to the assistant,
+ * and that must keep working. So the dropdown only intercepts Enter once the
+ * user has actually arrowed onto a row — with nothing highlighted, every key
+ * behaves exactly as it did before this existed.
+ *
+ * The list is keyed by the ids it contains rather than by array identity, since
+ * the caller recomputes it on every render and a plain dependency would reopen a
+ * dismissed dropdown on each keystroke.
+ */
+function useSuggestionList(suggestions: SearchSuggestion[], onSelect?: (id: string) => void) {
+  const [dismissed, setDismissed] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
+  const signature = suggestions.map((item) => item.id).join("|");
+
+  useEffect(() => {
+    setDismissed(false);
+    setActiveIndex(-1);
+  }, [signature]);
+
+  const isOpen = !dismissed && suggestions.length > 0 && Boolean(onSelect);
+
+  const choose = (id: string) => {
+    setDismissed(true);
+    setActiveIndex(-1);
+    onSelect?.(id);
+  };
+
+  /** Returns true when the key was consumed, so the caller skips its own handling. */
+  const handleKeyDown = (event: KeyboardEvent): boolean => {
+    if (!isOpen) return false;
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setActiveIndex((index) => Math.min(index + 1, suggestions.length - 1));
+      return true;
+    }
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveIndex((index) => Math.max(index - 1, -1));
+      return true;
+    }
+    if (event.key === "Escape") {
+      setDismissed(true);
+      return true;
+    }
+    if (event.key === "Enter" && activeIndex >= 0) {
+      event.preventDefault();
+      choose(suggestions[activeIndex].id);
+      return true;
+    }
+    return false;
+  };
+
+  return { isOpen, activeIndex, setActiveIndex, choose, handleKeyDown, dismiss: () => setDismissed(true) };
+}
+
+function SuggestionDropdown({
+  suggestions,
+  activeIndex,
+  onHover,
+  onChoose,
+  onDismiss,
+  className,
+}: {
+  suggestions: SearchSuggestion[];
+  activeIndex: number;
+  onHover: (index: number) => void;
+  onChoose: (id: string) => void;
+  onDismiss: () => void;
+  className?: string;
+}) {
+  return (
+    <>
+      {/* Click-away target — the dropdown floats over the rows below. */}
+      <button
+        type="button"
+        aria-label="Close suggestions"
+        tabIndex={-1}
+        onClick={onDismiss}
+        className="fixed inset-0 z-20 cursor-default"
+      />
+      <motion.div
+        initial={{ opacity: 0, y: -6 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -6 }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
+        role="listbox"
+        className={cn(
+          "absolute z-30 overflow-hidden rounded-[14px] border border-slate-200 bg-white shadow-2xl shadow-slate-900/10 dark:border-[#22304A] dark:bg-[#0D1526] dark:shadow-black/40",
+          className
+        )}
+      >
+        <div className="max-h-[20rem] overflow-y-auto py-1">
+          {suggestions.map((item, index) => (
+            <button
+              key={item.id}
+              type="button"
+              role="option"
+              aria-selected={index === activeIndex}
+              onMouseEnter={() => onHover(index)}
+              onClick={() => onChoose(item.id)}
+              className={cn(
+                "flex w-full items-center gap-2 px-3 py-2 text-left transition-colors",
+                index === activeIndex
+                  ? "bg-indigo-50 dark:bg-indigo-500/10"
+                  : "hover:bg-slate-50 dark:hover:bg-white/[0.04]"
+              )}
+            >
+              <span className="min-w-0 flex-1 truncate text-[13px] font-semibold text-slate-900 dark:text-white">
+                {item.label}
+              </span>
+              {item.hint ? (
+                <span className="shrink-0 truncate text-[11px] font-medium text-slate-500 dark:text-slate-400">
+                  {item.hint}
+                </span>
+              ) : null}
+            </button>
+          ))}
+        </div>
+      </motion.div>
+    </>
+  );
+}
 
 function QueryCard({
   entry,
@@ -181,6 +316,8 @@ export function AiSearchPanel({
   defaultTab = null,
   onSubmit,
   onSelectQuery,
+  suggest,
+  onSelectSuggestion,
   children,
 }: {
   title: string;
@@ -194,6 +331,12 @@ export function AiSearchPanel({
   defaultTab?: TabKey | null;
   onSubmit: (prompt: string) => void;
   onSelectQuery: (entry: SavedQuery) => void;
+  /**
+   * Live typeahead. Called on every keystroke, so give it a stable identity
+   * (`useCallback`) — it is memoised on that plus the typed text.
+   */
+  suggest?: (query: string) => SearchSuggestion[];
+  onSelectSuggestion?: (id: string) => void;
   children?: ReactNode;
 }) {
   const [prompt, setPrompt] = useState("");
@@ -201,6 +344,8 @@ export function AiSearchPanel({
   const { recent, saved, toggleSaved, remove } = useQueryStore(kind);
 
   const entries = activeTab === "saved" ? saved : recent;
+  const suggestions = useMemo(() => suggest?.(prompt) ?? NO_SUGGESTIONS, [suggest, prompt]);
+  const typeahead = useSuggestionList(suggestions, onSelectSuggestion);
 
   const submit = () => {
     const raw = prompt.trim();
@@ -231,7 +376,7 @@ export function AiSearchPanel({
           <p className="mt-1.5 text-[13px] text-slate-900 dark:text-slate-400">{subtitle}</p>
         </div>
 
-        <div className="mx-auto mt-5 w-full max-w-2xl">
+        <div className="relative mx-auto mt-5 w-full max-w-2xl">
           <div className="group relative rounded-[16px] bg-gradient-to-r from-cyan-500/50 via-indigo-500/50 to-fuchsia-500/50 p-px shadow-lg shadow-indigo-500/10 transition-shadow focus-within:shadow-indigo-500/30">
             <div className="relative flex items-start gap-3 rounded-[15px] bg-white p-4 dark:bg-[#0D1526]">
               <Sparkles className="mt-0.5 size-4 shrink-0 text-indigo-500 dark:text-indigo-400" />
@@ -239,6 +384,7 @@ export function AiSearchPanel({
                 value={prompt}
                 onChange={(event) => setPrompt(event.target.value)}
                 onKeyDown={(event) => {
+                  if (typeahead.handleKeyDown(event)) return;
                   if (event.key === "Enter" && !event.shiftKey) {
                     event.preventDefault();
                     submit();
@@ -264,6 +410,19 @@ export function AiSearchPanel({
               </button>
             </div>
           </div>
+
+          <AnimatePresence initial={false}>
+            {typeahead.isOpen ? (
+              <SuggestionDropdown
+                suggestions={suggestions}
+                activeIndex={typeahead.activeIndex}
+                onHover={typeahead.setActiveIndex}
+                onChoose={typeahead.choose}
+                onDismiss={typeahead.dismiss}
+                className="inset-x-0 top-full mt-2"
+              />
+            ) : null}
+          </AnimatePresence>
 
           {note ? <div className="mt-3">{note}</div> : null}
           {children ? <div className="mt-4">{children}</div> : null}
@@ -353,6 +512,8 @@ export function CompactSearchBar({
   onSubmit,
   onClear,
   onSelectQuery,
+  suggest,
+  onSelectSuggestion,
   className,
 }: {
   value: string;
@@ -365,12 +526,20 @@ export function CompactSearchBar({
   /** Full reset — drops the query and every filter, restoring the hero. */
   onClear: () => void;
   onSelectQuery: (entry: SavedQuery) => void;
+  /** See the same prop on `AiSearchPanel`. */
+  suggest?: (query: string) => SearchSuggestion[];
+  onSelectSuggestion?: (id: string) => void;
   className?: string;
 }) {
   const [activeTab, setActiveTab] = useState<TabKey | null>(null);
   const { recent, saved, toggleSaved, remove } = useQueryStore(kind);
 
   const entries = activeTab === "saved" ? saved : recent;
+  const suggestions = useMemo(() => suggest?.(value) ?? NO_SUGGESTIONS, [suggest, value]);
+  const typeahead = useSuggestionList(suggestions, onSelectSuggestion);
+  // The history dropdown and the typeahead occupy the same space; history is
+  // opened by an explicit click, so it wins.
+  const showSuggestions = typeahead.isOpen && activeTab === null;
 
   const submit = () => {
     const raw = value.trim();
@@ -393,6 +562,7 @@ export function CompactSearchBar({
               value={value}
               onChange={(event) => onChange(event.target.value)}
               onKeyDown={(event) => {
+                if (typeahead.handleKeyDown(event)) return;
                 if (event.key === "Enter") {
                   event.preventDefault();
                   submit();
@@ -443,6 +613,19 @@ export function CompactSearchBar({
           </div>
         </div>
       </div>
+
+      <AnimatePresence initial={false}>
+        {showSuggestions ? (
+          <SuggestionDropdown
+            suggestions={suggestions}
+            activeIndex={typeahead.activeIndex}
+            onHover={typeahead.setActiveIndex}
+            onChoose={typeahead.choose}
+            onDismiss={typeahead.dismiss}
+            className="inset-x-3 top-full"
+          />
+        ) : null}
+      </AnimatePresence>
 
       <AnimatePresence initial={false}>
         {activeTab ? (

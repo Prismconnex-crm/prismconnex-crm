@@ -1200,7 +1200,7 @@ function KpiTile({
                         {kpi.label}
                     </span>
                     <span
-                        className="text-[34px] font-black leading-none tracking-tight tabular-nums text-slate-900 dark:text-white"
+                        className="text-[28px] font-black leading-none tracking-tight tabular-nums text-slate-900 dark:text-white"
                         aria-label={`${kpi.label}: ${kpi.format === "pct" ? `${kpi.value}%` : kpi.value.toLocaleString()}`}
                     >
                         {shown}

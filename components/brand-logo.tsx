@@ -5,9 +5,15 @@ import { cn } from "@/lib/utils";
 export const LOGO_BLUE_SRC = "/images/logo-blue.png";
 export const LOGO_BLUE_DARK_SRC = "/images/logo-blue-dark.png";
 
+export const LOGO_MARK_SRC = "/images/logo-mark-blue.png";
+export const LOGO_MARK_DARK_SRC = "/images/logo-mark-blue-dark.png";
+
 /** Intrinsic pixels of the source artwork — used only to reserve aspect ratio. */
 const INTRINSIC_WIDTH = 800;
 const INTRINSIC_HEIGHT = 705;
+
+/** The emblem crop is square by construction — see scripts/generate-logo-mark.mjs. */
+const MARK_INTRINSIC_SIZE = 522;
 
 const DEFAULT_ALT = "Prismconnex Global Solutions";
 
@@ -75,6 +81,62 @@ export function BrandLogo({
         alt=""
         aria-hidden="true"
         src={LOGO_BLUE_DARK_SRC}
+        className={cn(className, "hidden dark:block")}
+      />
+    </>
+  );
+}
+
+/**
+ * The emblem on its own — the circle-and-peaks mark, without the "Prismconnex /
+ * GLOBAL SOLUTIONS" wordmark baked underneath it.
+ *
+ * Use this anywhere the logo is rendered small (the app sidebar and the public
+ * navbar both give it a ~36-42px box). `BrandLogo` is the full stacked lockup:
+ * at that size its wordmark is roughly three pixels tall, so the mark loses its
+ * shape and reads as a grey rectangle. Those call sites pair the emblem with
+ * real DOM text anyway, so the baked-in wordmark was never wanted there.
+ *
+ * `BrandLogo` remains correct for the large, standalone placements — the auth
+ * shell, the footer, onboarding — where the lockup is the whole point.
+ *
+ * Colour and the light/dark swap work exactly as they do in `BrandLogo`: brand
+ * blue in both themes, one step lighter on dark for contrast, both variants in
+ * the DOM and toggled by Tailwind's `dark:` so CSS resolves it before first
+ * paint with no hydration flash. Not a white mark — see the note above.
+ */
+export function BrandMark({
+  className,
+  alt = DEFAULT_ALT,
+  fill,
+  width,
+  height,
+  ...rest
+}: BrandLogoProps) {
+  const dimensions = fill
+    ? {}
+    : {
+        width: width ?? MARK_INTRINSIC_SIZE,
+        height: height ?? MARK_INTRINSIC_SIZE,
+      };
+
+  const shared = { fill, ...dimensions, ...rest };
+
+  return (
+    <>
+      <Image
+        {...shared}
+        alt={alt}
+        src={LOGO_MARK_SRC}
+        className={cn(className, "dark:hidden")}
+      />
+      {/* aria-hidden + empty alt: both nodes are always mounted, and without
+          this a screen reader would announce the logo twice. */}
+      <Image
+        {...shared}
+        alt=""
+        aria-hidden="true"
+        src={LOGO_MARK_DARK_SRC}
         className={cn(className, "hidden dark:block")}
       />
     </>

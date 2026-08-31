@@ -1,3 +1,4 @@
+import { formatCalendarSelection } from '@/lib/events/filters';
 import { EVENT_FILTER_LIST_KEYS, type EventFilterListKey, type EventFilters } from '@/types/events';
 
 /**
@@ -20,6 +21,7 @@ const LIST_LABEL: Record<EventFilterListKey, string> = {
 };
 
 const DATES_CHIP_ID = 'dates';
+const CALENDAR_CHIP_ID = 'calendar';
 const FAVOURITES_CHIP_ID = 'favourites';
 const SEARCH_CHIP_ID = 'search';
 
@@ -60,6 +62,11 @@ export function buildEventFilterChips(filters: EventFilters, search = ''): Event
     });
   }
 
+  const calendar = formatCalendarSelection(filters.month ?? null, filters.year ?? null);
+  if (calendar) {
+    chips.push({ id: CALENDAR_CHIP_ID, label: 'Month', value: calendar });
+  }
+
   if (filters.favouritesOnly) {
     chips.push({ id: FAVOURITES_CHIP_ID, label: 'Only', value: 'Liked events' });
   }
@@ -79,6 +86,9 @@ export function removeEventFilterChip(
   if (chipId === SEARCH_CHIP_ID) return { filters, search: '' };
   if (chipId === DATES_CHIP_ID) {
     return { filters: { ...filters, dateFrom: null, dateTo: null }, search };
+  }
+  if (chipId === CALENDAR_CHIP_ID) {
+    return { filters: { ...filters, month: null, year: null }, search };
   }
   if (chipId === FAVOURITES_CHIP_ID) {
     return { filters: { ...filters, favouritesOnly: false }, search };

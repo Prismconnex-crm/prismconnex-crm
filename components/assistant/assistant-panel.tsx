@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from 'react';
-import { AiSearchPanel, CompactSearchBar } from '@/components/search/ai-search-panel';
+import {
+  AiSearchPanel,
+  CompactSearchBar,
+  type SearchSuggestion,
+} from '@/components/search/ai-search-panel';
 import type { SavedQueryKind } from '@/components/search/query-store';
 import { useAssistantChat } from './use-assistant-chat';
 import { AssistantMessage } from './assistant-message';
@@ -54,12 +58,23 @@ export function AssistantPanel({
   activeFilters,
   rowContext,
   onGoBack,
+  suggest,
+  onSelectSuggestion,
 }: {
   currentPage: AssistantEntity;
   activeFilters?: Record<string, unknown>;
   /** The page's own row handlers, forwarded opaquely to its binding. */
   rowContext?: unknown;
   onGoBack: (entity: AssistantEntity, filters: unknown) => void;
+  /**
+   * Optional live typeahead over the page's own rows, shown while the composer
+   * is being typed into. The composer stays a chat box — this only adds a plain
+   * name lookup underneath it, for the case where someone types a few letters
+   * and expects to see matching rows rather than an answer. Pages that do not
+   * pass it behave exactly as before.
+   */
+  suggest?: (query: string) => SearchSuggestion[];
+  onSelectSuggestion?: (id: string) => void;
 }) {
   const chat = useAssistantChat({ currentPage, activeFilters });
   const [draft, setDraft] = useState('');
@@ -87,6 +102,8 @@ export function AssistantPanel({
         defaultTab="recent"
         onSubmit={submit}
         onSelectQuery={(entry) => submit(entry.query)}
+        suggest={suggest}
+        onSelectSuggestion={onSelectSuggestion}
       />
     );
   }
@@ -120,6 +137,8 @@ export function AssistantPanel({
           chat.reset();
         }}
         onSelectQuery={(entry) => submit(entry.query)}
+        suggest={suggest}
+        onSelectSuggestion={onSelectSuggestion}
       />
 
       <div className="flex-1 space-y-5 overflow-y-auto pr-1">

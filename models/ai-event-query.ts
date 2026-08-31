@@ -31,6 +31,10 @@ export const eventFiltersSchema = z.object({
   keywords: stringList,
   dateFrom: isoDate.nullable(),
   dateTo: isoDate.nullable(),
+  // Set by the left rail's calendar dropdowns, never by the model — defaulted
+  // so a model response that omits them still parses.
+  month: z.number().int().min(1).max(12).nullable().default(null),
+  year: z.number().int().min(1990).max(2100).nullable().default(null),
   favouritesOnly: z.boolean(),
 });
 

@@ -2,7 +2,7 @@
 
 import { useMemo, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, ChevronDown, Search } from "lucide-react";
+import { Check, ChevronDown, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
@@ -15,6 +15,7 @@ export function FilterAccordion({
   isOpen,
   onToggle,
   summary,
+  onClear,
   children,
 }: {
   label: string;
@@ -22,6 +23,11 @@ export function FilterAccordion({
   onToggle: () => void;
   /** Short badge showing what's applied, e.g. "Europe +2". */
   summary?: string | null;
+  /**
+   * Clears this section only. The X renders whenever this is supplied, so the
+   * caller decides per section by passing undefined when nothing is applied.
+   */
+  onClear?: () => void;
   children: ReactNode;
 }) {
   return (
@@ -33,27 +39,49 @@ export function FilterAccordion({
           : "border-slate-200 bg-slate-50 hover:border-indigo-200 dark:border-[#22304A] dark:bg-[#0B1220] dark:hover:border-indigo-500/30"
       )}
     >
-      <button
-        type="button"
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        className="flex h-10 w-full items-center justify-between gap-2 px-3 text-[13px] font-medium text-slate-700 transition-colors [font-family:var(--font-inter),'Inter',sans-serif] dark:text-slate-200"
-      >
-        <span className="truncate">{label}</span>
-        <span className="flex shrink-0 items-center gap-1.5">
-          {summary ? (
-            <span className="max-w-[110px] truncate rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300">
-              {summary}
-            </span>
-          ) : null}
+      {/* A row of siblings, not one button: the clear control is itself a
+          button, and a <button> inside a <button> is invalid HTML that swallows
+          the inner click. The chevron holds the card's right edge, with the
+          label taking the space left of it and the applied value between. */}
+      <div className="flex h-9 items-center gap-1 pl-2.5 pr-2">
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-expanded={isOpen}
+          className="flex h-9 min-w-0 flex-1 items-center text-left text-[13px] font-medium text-slate-700 transition-colors [font-family:var(--font-inter),'Inter',sans-serif] dark:text-slate-200"
+        >
+          <span className="truncate">{label}</span>
+        </button>
+        {summary ? (
+          <span className="max-w-[110px] shrink-0 truncate rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300">
+            {summary}
+          </span>
+        ) : null}
+        {onClear ? (
+          <button
+            type="button"
+            aria-label={`Clear ${label} filter`}
+            title={`Clear ${label}`}
+            onClick={onClear}
+            className="flex size-5 shrink-0 items-center justify-center rounded-full text-slate-400 transition-colors hover:bg-red-50 hover:text-red-600 dark:text-slate-500 dark:hover:bg-red-500/10 dark:hover:text-red-400"
+          >
+            <X className="size-3.5" />
+          </button>
+        ) : null}
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-label={isOpen ? `Collapse ${label}` : `Expand ${label}`}
+          className="flex shrink-0 items-center"
+        >
           <ChevronDown
             className={cn(
-              "size-4 text-slate-400 transition-transform duration-200",
+              "size-3.5 text-slate-400 transition-transform duration-200",
               isOpen && "rotate-180 text-indigo-500"
             )}
           />
-        </span>
-      </button>
+        </button>
+      </div>
       <AnimatePresence initial={false}>
         {isOpen ? (
           <motion.div
