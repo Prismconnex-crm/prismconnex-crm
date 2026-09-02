@@ -1019,14 +1019,12 @@
    Three independent, GPU-only animations stacked on separate elements so their
    transforms never fight each other:
 
-     .pcx-tagline        the clipping viewport. Owns the edge fade *and* the
-                         centre brightening — both come from one mask gradient,
-                         which is alpha-only and therefore free: fully opaque at
-                         50%, tapering to transparent at both ends, so a word
-                         reads brightest exactly as it crosses the middle.
-     .pcx-tagline__float the breathing wrapper (translateY + a slight opacity
-                         swell). Kept off the track because the track's own
-                         transform is the marquee.
+     .pcx-tagline        the clipping viewport. Owns the edge fade (a mask
+                         gradient, alpha-only and therefore free) and the soft
+                         backdrop band the words ride on.
+     .pcx-tagline__float the breathing wrapper (translateY only; it used to
+                         carry an opacity swell too). Kept off the track because
+                         the track's own transform is the marquee.
      .pcx-tagline__track the marquee itself: four identical copies, animated
                          0 -> -50%. Two copies' worth of travel against four
                          copies of content means the frame at 100% is
@@ -1036,26 +1034,39 @@
                          encodes a direction.
 
    ── Brightness ──
-   Four alpha multipliers stack on this text: the mask plateau, the float
-   keyframes, .pcx-tagline__rest, and (for the separator) .pcx-tagline__dot.
-   They used to compound to ~0.59 effective alpha, which left the tagline at
-   roughly 2.2:1 in light and 2.5:1 in dark — legible only as a smudge. Each is
-   now lifted just far enough to clear AA while keeping what it was there for:
-   the mask still fades to nothing at both edges and still peaks dead centre,
-   and the float still breathes. Only the floors moved, never the shapes.
+   Every alpha multiplier that used to vary *between* words is now flat, because
+   a marquee that brightens in the middle means the same sentence is legible for
+   only part of its pass. The mask ramps from transparent to FULL over the outer
+   tenth and then plateaus at 1 — it still hides the marquee's entry and exit,
+   which is the only thing it has to do — so every word is identical from 10% to
+   90% of the strip. .pcx-tagline__rest (was 0.95) and the float keyframes'
+   opacity swell (was 0.97) are gone for the same reason: the lead/rest split is
+   carried by weight (700 vs 500), which costs no contrast, and the float's
+   translateY is untouched so the motion is unchanged.
 
    Colour follows the SAME light/dark swap BrandLogo makes, rather than pinning
-   one blue to both grounds. That swap is what buys the contrast: --brand
-   (#005C9D) is 6.98:1 on #FFFFFF but only 2.77:1 on #0A0E1A, while
-   --brand-hover (#0086E6) is 5.10:1 on #0A0E1A but a pale 3.78:1 on white.
-   Each theme takes the one that works on its own background. Note this makes
-   light mode DEEPER, not lighter — on a white ground "more visible" and
-   "lighter" pull in opposite directions, and visibility wins.
+   one blue to both grounds — that swap is what buys the contrast. Light takes
+   --brand (#005C9D, 6.98:1 on white; --brand-hover would be a pale 3.78:1).
+   Dark takes a lifted sky blue, #57B6FF, rather than --brand-hover: the token
+   is pinned to 5.10:1 and is shared with every hover state in the app, so it
+   cannot be brightened globally, and 5.10:1 was the ceiling this line kept
+   hitting. #57B6FF is 8.7:1 on #0A0E1A and 7.4:1 over the brightest point of
+   the backdrop band below. Note light mode is DEEPER, not lighter — on a white
+   ground "more visible" and "lighter" pull in opposite directions.
 
-   The glow is a wide, low-alpha text-shadow tinted to whichever blue the theme
-   is using, one step stronger in dark mode where it does real legibility work.
-   It stays under half alpha: past that it blooms and starts eating the
-   counters of the glyphs it is meant to lift.
+   ── Backdrop ──
+   The strip now carries its own band: a vertical gradient that peaks behind the
+   glyphs and fades out before the box's top and bottom edges, with the existing
+   mask taking care of left and right. It has no padding and no box of its own,
+   so it cannot move or resize anything. Dark lifts #0A0E1A by 10% of a pale
+   blue, which reads as lit rather than merely bluer; light can't go brighter
+   than the white page it sits on, so it gets a 5% sheen — enough to separate
+   the strip from flat paper while leaving the text at 6.5:1.
+
+   The glow is a wide, low-alpha text-shadow tinted to the theme's own blue, one
+   step stronger in dark where it does real legibility work, plus a 1px pass at
+   the same colour that thickens the stems instead of blooming. Total stays
+   under half alpha: past that it eats the counters of the glyphs it lifts.
    ───────────────────────────────────────────────────────────────────────────*/
 
 @keyframes pcx-tagline-scroll {
@@ -1071,10 +1082,11 @@
   0%,
   100% {
     transform: translate3d(0, 0, 0);
-    /* Was 0.92. The swell is still there, but its trough no longer costs 8%
-       of the text's contrast for the majority of the cycle. Transform is
-       untouched, so the motion itself is identical. */
-    opacity: 0.97;
+    /* Was 0.92, then 0.97. Now flat: an opacity swell is by definition a
+       periodic dimming, and the words have to read the same on every frame.
+       The translateY below is the float — untouched, so the motion is
+       identical. */
+    opacity: 1;
   }
   50% {
     transform: translate3d(0, -3px, 0);
@@ -1086,34 +1098,51 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  /* Alpha ramp: invisible at the edges, full strength through the centre.
-     Doubles as the "brighten while passing the middle" effect.
+  /* Alpha ramp: invisible at the edges, FULL everywhere else.
 
-     Same seven stops and the same shape as before — still transparent at both
-     ends, still peaking at 50% — but the middle band is raised (0.78 -> 0.96,
-     0.3 -> 0.55). The taper was doing double duty: hiding the marquee's entry
-     and exit, which it must, AND holding the whole readable centre of the
-     strip at 78%, which it should not. The fade now happens over the outer
-     eighth and gets out of the way. */
+     Two stops instead of seven, and no peak. The old ramp held the strip at
+     0.55 an eighth of the way in and only reached 1 dead centre, so a word was
+     visibly dimmer at the start and end of its pass than in the middle — the
+     same sentence, three different brightnesses depending on where you caught
+     it. The taper's one real job is hiding the marquee's entry and exit, so it
+     now does that over the outer tenth and then gets out of the way. */
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    rgba(0, 0, 0, 0.55) 8%,
-    rgba(0, 0, 0, 0.96) 24%,
-    rgb(0, 0, 0) 50%,
-    rgba(0, 0, 0, 0.96) 76%,
-    rgba(0, 0, 0, 0.55) 92%,
+    rgb(0, 0, 0) 10%,
+    rgb(0, 0, 0) 90%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    rgba(0, 0, 0, 0.55) 8%,
-    rgba(0, 0, 0, 0.96) 24%,
-    rgb(0, 0, 0) 50%,
-    rgba(0, 0, 0, 0.96) 76%,
-    rgba(0, 0, 0, 0.55) 92%,
+    rgb(0, 0, 0) 10%,
+    rgb(0, 0, 0) 90%,
     transparent 100%
+  );
+  /* The backdrop band. Vertical only — the mask above already fades left and
+     right — and it peaks across the middle half of the box so it never draws a
+     hard top or bottom edge. No padding, no border, no size of its own: this
+     paints inside the box the strip already occupied. */
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 134, 230, 0) 0%,
+    rgba(0, 134, 230, 0.05) 25%,
+    rgba(0, 134, 230, 0.05) 75%,
+    rgba(0, 134, 230, 0) 100%
+  );
+}
+
+.dark .pcx-tagline {
+  /* A pale blue rather than the brand blue: mixed into #0A0E1A at 10% it lifts
+     the ground to about #151F31, which reads as lit. The brand blue at the same
+     alpha only makes the ground bluer, not brighter. */
+  background-image: linear-gradient(
+    to bottom,
+    rgba(122, 184, 255, 0) 0%,
+    rgba(122, 184, 255, 0.1) 25%,
+    rgba(122, 184, 255, 0.1) 75%,
+    rgba(122, 184, 255, 0) 100%
   );
 }
 
@@ -1139,16 +1168,25 @@
   flex: none;
   white-space: nowrap;
   /* Light mode takes the deeper brand blue: 6.98:1 on white, against 3.78:1
-     for --brand-hover. The glow is tinted to match so it reads as the text's
-     own halo rather than a second colour behind it. */
+     for --brand-hover, and 6.5:1 over the backdrop band. The glow is tinted to
+     match so it reads as the text's own halo rather than a second colour behind
+     it; the 1px pass thickens the stems, which is what actually adds weight on
+     a light ground — a wide blur alone just greys the surrounding pixels. */
   color: rgb(var(--brand));
-  text-shadow: 0 0 16px rgba(0, 92, 157, 0.2);
+  text-shadow:
+    0 0 1px rgba(0, 92, 157, 0.28),
+    0 0 16px rgba(0, 92, 157, 0.18);
 }
 
 .dark .pcx-tagline__item {
-  /* #0086E6 on #0A0E1A is 5.10:1; --brand would be 2.77:1 here. */
-  color: rgb(var(--brand-hover));
-  text-shadow: 0 0 22px rgba(0, 134, 230, 0.45);
+  /* 8.7:1 on #0A0E1A, 7.4:1 over the band's brightest point. Deliberately not
+     --brand-hover (5.10:1): that token is shared with every hover state in the
+     app and is pinned to its own contrast budget, so this line takes a local
+     value instead of dragging the token up with it. */
+  color: #57b6ff;
+  text-shadow:
+    0 0 1px rgba(87, 182, 255, 0.3),
+    0 0 20px rgba(87, 182, 255, 0.4);
 }
 
 /* "One Platform." carries the emphasis; the rest stays lighter and calmer. */
@@ -1158,25 +1196,34 @@
 }
 
 .pcx-tagline__rest {
-  /* Was 0.82. The weight difference (700 vs 500) already carries the
-     hierarchy, so the extra alpha was buying emphasis the type had covered —
-     at the cost of the longest and least legible part of the sentence. */
+  /* Was 0.82, then 0.95, now none at all. The weight difference (700 vs 500)
+     carries the hierarchy on its own and costs no contrast, whereas any alpha
+     here dims four fifths of the sentence relative to the two words in front
+     of it. Weight is left alone: it is also what sizes the track, and the
+     marquee's duration is fixed while its travel is half the track's width, so
+     changing it would change the scroll speed. */
   font-weight: 500;
-  opacity: 0.95;
 }
 
 .pcx-tagline__dot {
-  /* Stays clearly subordinate — it is a separator, not content — but 0.4 on
-     top of the mask left it near-invisible anywhere but dead centre. */
-  opacity: 0.55;
+  /* Still subordinate — it is a separator, not content — but it sits between
+     two copies of the sentence, so at 0.55 it read as a gap rather than a
+     join. */
+  opacity: 0.75;
 }
 
 @media (prefers-reduced-motion: reduce) {
   /* No travel at all: drop to a single centred copy that wraps normally, so the
      full sentence is still readable without motion. */
-  .pcx-tagline {
+  .pcx-tagline,
+  .dark .pcx-tagline {
     -webkit-mask-image: none;
     mask-image: none;
+    /* The band's left and right fade comes from the mask, and the line wraps to
+       several rows here, so without both it would be a hard-edged rectangle
+       behind one of them. The text keeps its full contrast on the page colour
+       (6.98:1 light, 8.7:1 dark). */
+    background-image: none;
   }
 
   .pcx-tagline__float,

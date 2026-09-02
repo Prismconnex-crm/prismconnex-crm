@@ -8,7 +8,6 @@ import { PersonalInfoCard } from "./profile/personal-info-card";
 import { ProfessionalInfoCard } from "./profile/professional-info-card";
 import { AccountInfoCard } from "./profile/account-info-card";
 import { SecurityCard } from "./profile/security-card";
-import { NotificationsCard } from "./profile/notifications-card";
 import { ActivityCard } from "./profile/activity-card";
 import { UpgradePlanCard } from "./profile/upgrade-plan-card";
 import { ReferUserCard } from "./profile/refer-user-card";
@@ -192,9 +191,10 @@ export function ProfileSection() {
 
             {/*
                 Plan, referrals, members and credits sit together, after the
-                identity cards and before the historical ones: they are the
-                things the user acts ON, whereas Notifications and Activity are
-                settings and history.
+                identity cards and before the historical one: they are the
+                things the user acts ON, whereas Activity is history.
+                Notification Settings is not here — it lives in
+                Settings › Notifications, with the workspace preferences.
             */}
             <UpgradePlanCard usage={credits} loading={creditsLoading} />
 
@@ -203,8 +203,6 @@ export function ProfileSection() {
             <ManageUsersCard account={account} />
 
             <CreditUsageCard usage={credits} loading={creditsLoading} />
-
-            <NotificationsCard profile={profile} onProfileChange={setProfile} />
 
             <ActivityCard activity={activity} loading={activityLoading} />
         </div>

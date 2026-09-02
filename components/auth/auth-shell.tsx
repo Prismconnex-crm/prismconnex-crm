@@ -41,8 +41,13 @@ export function AuthShell({ children }: { children: ReactNode }) {
         topbar, so without this there is no way to change theme from a signed-out
         page. It is the same shared control the app topbar mounts — its own
         `bg-surface`/`border-border` tokens already track the theme.
+
+        `fixed` rather than `absolute`: the brand panel below is sticky, so an
+        absolutely-positioned toggle would ride up over it as the form scrolls
+        and then leave the page entirely. Fixed keeps it in the same corner and
+        reachable, and its z-30 stays above the panel's z-20.
       */}
-      <div className="absolute right-4 top-4 z-30 sm:right-6 sm:top-6">
+      <div className="fixed right-4 top-4 z-30 sm:right-6 sm:top-6">
         <ThemeToggle />
       </div>
 
@@ -77,9 +82,35 @@ export function AuthShell({ children }: { children: ReactNode }) {
  * same asset, same size ramp, same link target; the column just shifts it down
  * by half the tagline's height so the group stays optically centred.
  *
- * The asymmetric `pt-20 pb-10` below `lg` is clearance, not taste: where the
- * panel stacks first, its top edge is exactly where the absolutely-positioned
- * ThemeToggle floats, and the old `py-10` put the tagline underneath it.
+ * ── Sticky brand ──
+ * The panel is `position: sticky; top: 0` at every breakpoint, so the mark stays
+ * on screen for the whole of a form that is taller than the viewport — the
+ * sign-up form is, at every size we support.
+ *
+ * From `lg` up that is nearly free, because the panel is already a full-height
+ * centred column. It only needs `self-start`: a grid item is stretched to fill
+ * its area by default, and a box that fills its containing block has nowhere to
+ * stick to. Nothing about the desktop composition changes.
+ *
+ * Below `lg` the panel stacks *above* the form, so sticking it turns it into a
+ * header — and at its hero size that header is 347px, most of a phone. It
+ * compacts instead: `pb-10` drops to `pb-4`, the logo from `w-[200px]` to
+ * `w-[96px]` (`sm:w-[120px]`), and the tagline's gap from `mb-7` to `mb-2`,
+ * taking the bar to about 196px.
+ *
+ * The top padding only tightens, from `pt-20` to `pt-16` (`sm:pt-[72px]`),
+ * because it is still doing its original job: clearing the ThemeToggle that
+ * floats at the panel's top edge. That control is a three-way segmented switch
+ * about 229px wide, not an icon button, so on a 375px screen there is no
+ * sideways room to sit beside it — the content has to start below it. Those two
+ * numbers track the toggle's own `top-4`/`sm:top-6` offset plus its 38px height,
+ * so if the toggle changes size they have to move with it.
+ *
+ * A sticky panel needs an opaque surface or the form scrolls visibly through it,
+ * so below `lg` it takes the page colour flat — 95% plus a backdrop blur left the
+ * form ghosting through it — with a hairline bottom edge. From `lg` up it still
+ * has no background of its own: the two columns have to read as one page (see
+ * below), and there is no seam to cover when the panel never overlaps anything.
  *
  * This used to render the wordmark as text because the only asset available,
  * `public/prismconnex-logo.jpeg`, is a white-background JPEG that would show as
@@ -117,7 +148,7 @@ export function AuthShell({ children }: { children: ReactNode }) {
  */
 function AuthBrandPanel() {
   return (
-    <div className="relative order-1 flex flex-col items-center justify-center overflow-hidden px-6 pb-10 pt-20 lg:order-2 lg:min-h-screen lg:py-0">
+    <div className="sticky top-0 z-20 order-1 flex flex-col items-center justify-center overflow-hidden px-6 pb-4 pt-16 max-lg:border-b max-lg:border-slate-200/80 max-lg:bg-white max-lg:dark:border-[#22304A] max-lg:dark:bg-[#0A0E1A] sm:pt-[72px] lg:order-2 lg:h-screen lg:self-start lg:py-0">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/[0.06] blur-[150px] dark:bg-indigo-600/10 lg:h-[560px] lg:w-[560px]"
@@ -142,8 +173,8 @@ function AuthBrandPanel() {
           width={800}
           height={705}
           priority
-          sizes="(min-width: 1024px) 360px, (min-width: 640px) 280px, 200px"
-          className="h-auto w-[200px] sm:w-[280px] lg:w-[360px]"
+          sizes="(min-width: 1024px) 360px, (min-width: 640px) 120px, 96px"
+          className="h-auto w-[96px] sm:w-[120px] lg:w-[360px]"
         />
       </Link>
     </div>
@@ -182,7 +213,7 @@ const TAGLINE_COPIES = 4;
  */
 function BrandTagline() {
   return (
-    <div className="pcx-tagline relative z-10 mb-7 w-full max-w-[300px] sm:max-w-[460px] lg:mb-10 lg:max-w-[600px]">
+    <div className="pcx-tagline relative z-10 mb-2 w-full max-w-[300px] sm:max-w-[460px] lg:mb-10 lg:max-w-[600px]">
       <div className="pcx-tagline__float">
         <div className="pcx-tagline__track font-sans text-[14px] leading-relaxed tracking-[0.01em] sm:text-[16px] lg:text-[18px]">
           {Array.from({ length: TAGLINE_COPIES }, (_, index) => (

@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     LayoutGrid,
     Globe,
     Palette,
+    Bell,
     Send,
     Lock,
     Database,
@@ -14,20 +16,38 @@ import {
     Monitor,
     Check,
     CheckCircle2,
-    RotateCcw
+    RotateCcw,
+    ShieldCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { SignOutDialog } from "@/components/app-shell/sign-out-dialog";
+import { NotificationSettingsPanel } from "./settings/notification-settings-panel";
 
+/**
+ * The secondary nav. `href` marks the panels that are actually built: those
+ * items navigate, so the panel is addressable and Back returns to the previous
+ * one. The rest stay inert, as they were — a link to a panel that does not
+ * exist would only highlight itself and change nothing on the right.
+ */
 const sidebarItems = [
     { id: "workspace", label: "Workspace", icon: LayoutGrid },
     { id: "localization", label: "Localization", icon: Globe },
-    { id: "theme", label: "Theme", icon: Palette, active: true },
+    { id: "theme", label: "Theme", icon: Palette, href: "/app/settings" },
+    { id: "notifications", label: "Notification Settings", icon: Bell, href: "/app/settings/notifications" },
     { id: "email", label: "Email Sending", icon: Send },
     { id: "privacy", label: "Privacy & Compliance", icon: Lock },
     { id: "data", label: "Data Retention", icon: Database },
 ];
+
+/** Panels with their own content. Anything else falls back to Theme. */
+const PANELS = ["theme", "notifications"] as const;
+type Panel = (typeof PANELS)[number];
+
+function panelFrom(sub: string | undefined): Panel {
+    return PANELS.includes(sub as Panel) ? (sub as Panel) : "theme";
+}
 
 const accentColors = [
     { name: "Indigo", color: "bg-indigo-600" },
@@ -37,7 +57,12 @@ const accentColors = [
     { name: "Slate", color: "bg-slate-500" },
 ];
 
-export function SettingsSection() {
+export function SettingsSection({ sub }: { sub?: string }) {
+    const router = useRouter();
+    // The URL is the source of truth for which panel is open (/app/settings ->
+    // Theme, /app/settings/notifications -> Notification Settings), so Back and
+    // Forward move between them and a panel can be linked to directly.
+    const panel = panelFrom(sub);
     const [selectedTheme, setSelectedTheme] = useState("dark");
     const [selectedAccent, setSelectedAccent] = useState("Indigo");
     const [saving, setSaving] = useState(false);
@@ -50,6 +75,47 @@ export function SettingsSection() {
         highContrast: false,
     });
 
+    // "Sign out from all devices" — the one real, irreversible action on this
+    // page, so it is confirmed in a modal and reports its own outcome instead
+    // of riding on the mock "Save Changes" toast below.
+    const [signOutAllOpen, setSignOutAllOpen] = useState(false);
+    const [signOutAllDone, setSignOutAllDone] = useState(false);
+
+    /**
+     * Posts to the same endpoint the topbar's Sign Out uses, with scope
+     * "global": Supabase revokes every refresh token the user holds
+     * (supabase.auth.signOut({ scope: 'global' })) and the route expires this
+     * browser's auth cookies either way.
+     *
+     * Throwing on a failed request is what lets the dialog show the error and
+     * offer a retry — the auth cookies are httpOnly, so a request that never
+     * reached the server has ended nothing, and redirecting anyway would claim
+     * a sign-out that did not happen.
+     */
+    const handleSignOutEverywhere = async () => {
+        const res = await fetch("/api/auth/sign-out", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ scope: "global" }),
+        });
+
+        if (!res.ok) {
+            console.error("[sign-out] global sign-out failed", res.status);
+            throw new Error(
+                "We could not sign you out from all devices. Please try again."
+            );
+        }
+
+        // Success is stated here and again on the login page: this card is
+        // still on screen for the moment the redirect takes.
+        setSignOutAllDone(true);
+        // ?signedOut=1 makes the login page show the confirmation banner.
+        router.replace("/login?signedOut=1");
+        // Drops the cached RSC payload for /app so a back-navigation cannot
+        // render the authenticated shell from cache.
+        router.refresh();
+    };
+
     const handleSave = () => {
         setSaving(true);
         setTimeout(() => {
@@ -60,12 +126,12 @@ export function SettingsSection() {
     };
 
     return (
-        <div className="flex flex-col h-full space-y-3 max-w-[1200px] mx-auto pb-14 relative overflow-hidden">
+        <div className={cn("flex flex-col h-full space-y-3 max-w-[1200px] mx-auto relative overflow-hidden", panel === "theme" ? "pb-14" : "pb-4")}>
             
             {/* Header Section */}
             <div className="space-y-0.5 shrink-0 border-b dark:border-white/[0.06] border-slate-200 pb-2">
                 <h1 className="text-base font-bold dark:text-white text-slate-900 tracking-tight">Settings</h1>
-                <p className="text-[11px] text-slate-600 dark:text-slate-300">Workspace preferences, localization, theme, and compliance controls</p>
+                <p className="text-[11px] text-slate-600 dark:text-slate-300">Workspace preferences, localization, theme, notifications, and compliance controls</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-4 items-start flex-1 min-h-0 overflow-hidden">
@@ -74,29 +140,38 @@ export function SettingsSection() {
                 <nav className="flex flex-col gap-0.5 p-1.5 dark:bg-white/[0.02] bg-white/70 backdrop-blur-xl border dark:border-white/[0.06] border-slate-200 rounded-xl shrink-0">
                     {sidebarItems.map((item) => {
                         const Icon = item.icon;
+                        const active = item.id === panel;
                         return (
                             <button
                                 key={item.id}
+                                type="button"
+                                aria-current={active ? "page" : undefined}
+                                onClick={item.href ? () => router.push(item.href) : undefined}
                                 className={cn(
                                     "flex items-center justify-between px-2.5 py-1.5 rounded-lg transition-all duration-200 text-left text-[10px] font-medium group",
-                                    item.active 
+                                    active 
                                         ? "bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20" 
                                         : "dark:text-slate-400 text-slate-600 hover:dark:text-white hover:text-slate-900 dark:hover:bg-white/5 hover:bg-slate-100 border border-transparent"
                                 )}
                             >
                                 <div className="flex items-center gap-2">
-                                    <Icon className={cn("size-3.5", item.active ? "text-indigo-600 dark:text-indigo-400" : "dark:text-slate-500 text-slate-400 group-hover:dark:text-white group-hover:text-slate-800")} />
+                                    <Icon className={cn("size-3.5", active ? "text-indigo-600 dark:text-indigo-400" : "dark:text-slate-500 text-slate-400 group-hover:dark:text-white group-hover:text-slate-800")} />
                                     {item.label}
                                 </div>
-                                {item.active && <span className="text-[7.5px] font-bold uppercase tracking-wider opacity-60">Active</span>}
+                                {active && <span className="text-[7.5px] font-bold uppercase tracking-wider opacity-60">Active</span>}
                             </button>
                         );
                     })}
                 </nav>
 
                 {/* Content Area */}
-                <div className="space-y-3 overflow-y-auto custom-scrollbar pr-2 pb-20 h-full">
+                <div className={cn("space-y-3 overflow-y-auto custom-scrollbar pr-2 h-full", panel === "theme" ? "pb-20" : "pb-4")}>
                     
+                    {/* One panel at a time, chosen by the URL. The Notification
+                        Settings card is the very same component the Profile
+                        page used to render — imported, not reimplemented, so
+                        the toggles and their PATCH exist in one place. */}
+                    {panel === "notifications" ? <NotificationSettingsPanel /> : (
                     <div className="grid grid-cols-1 xl:grid-cols-2 gap-3">
                         {/* Theme Mode Card */}
                         <div className="dark:bg-white/[0.02] bg-white/70 backdrop-blur-xl border dark:border-white/[0.06] border-slate-200 rounded-xl p-3 space-y-3">
@@ -211,11 +286,52 @@ export function SettingsSection() {
                                 ))}
                             </div>
                         </div>
+
+                        {/* Security Card — session controls. The topbar's Sign
+                            Out ends this device only; ending every session
+                            everywhere lives here, behind a confirmation. */}
+                        <div className="dark:bg-white/[0.02] bg-white/70 backdrop-blur-xl border dark:border-white/[0.06] border-slate-200 rounded-xl p-3 space-y-3">
+                            <h3 className="text-[12px] font-bold dark:text-white text-slate-900">Security</h3>
+                            <div className="flex flex-wrap items-center justify-between gap-2">
+                                <div className="min-w-0 space-y-0.5">
+                                    <p className="text-[10px] font-medium dark:text-slate-300 text-slate-700">Sign out from all devices</p>
+                                    <p className="text-[9.5px] text-slate-600 dark:text-slate-400">Ends every active session, including this one.</p>
+                                </div>
+                                <Button
+                                    onClick={() => setSignOutAllOpen(true)}
+                                    disabled={signOutAllDone}
+                                    variant="outline"
+                                    className="h-7 px-3 rounded-md border-red-500/30 text-red-600 dark:text-red-400 hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 font-bold text-[10px] shrink-0"
+                                >
+                                    <ShieldCheck className="size-3 mr-1.5" />
+                                    Sign out from all devices
+                                </Button>
+                            </div>
+                            {signOutAllDone && (
+                                <p role="status" className="flex items-center gap-1.5 text-[9.5px] font-medium text-emerald-600 dark:text-emerald-400">
+                                    <CheckCircle2 className="size-3 shrink-0" />
+                                    Signed out on every device. Taking you to sign in…
+                                </p>
+                            )}
+                        </div>
                     </div>
+                    )}
                 </div>
             </div>
 
-            {/* Footer Navigation Bar */}
+            {/* Failures are reported inside the dialog, which stays open so the
+                action can be retried. */}
+            <SignOutDialog
+                open={signOutAllOpen}
+                onOpenChange={setSignOutAllOpen}
+                scope="global"
+                onConfirm={handleSignOutEverywhere}
+            />
+
+            {/* Footer Navigation Bar — theme preferences only: the
+                Notification Settings card saves itself, and a second
+                "Save Changes" beside it would be ambiguous. */}
+            {panel === "theme" && (
             <div className="absolute bottom-0 left-0 right-0 h-14 dark:bg-[#070B14]/80 bg-white/80 backdrop-blur-md border-t dark:border-white/[0.06] border-slate-200 flex items-center justify-center z-40 px-4 rounded-b-xl">
                 <div className="w-full flex items-center justify-between">
                     <button className="flex items-center gap-1.5 text-[10px] font-medium dark:text-slate-400 text-slate-600 hover:dark:text-white hover:text-slate-900 transition-colors group">
@@ -231,6 +347,7 @@ export function SettingsSection() {
                     </Button>
                 </div>
             </div>
+            )}
 
             {/* Success Notification */}
             <AnimatePresence>

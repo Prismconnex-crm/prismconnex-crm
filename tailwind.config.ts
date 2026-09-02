@@ -125,6 +125,16 @@ const config: Config = {
           from: { opacity: "0", transform: "scale(0.95)" },
           to: { opacity: "1", transform: "scale(1)" },
         },
+        // Entrance for a viewport-centred dialog. The -50%/-50% translate has
+        // to be repeated in both keyframes because an animation's `transform`
+        // REPLACES the element's own: running plain `scale-in` on a
+        // `-translate-x-1/2 -translate-y-1/2` panel silently drops the
+        // centring and (with `forwards`) parks its top-left corner at the
+        // middle of the screen, so the panel hangs off towards the bottom.
+        "dialog-in": {
+          from: { opacity: "0", transform: "translate(-50%, -50%) scale(0.95)" },
+          to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
+        },
       },
       animation: {
         "fade-in-up": "fade-in-up 0.5s ease-out forwards",
@@ -134,6 +144,7 @@ const config: Config = {
         "pulse-glow": "pulse-glow 3s ease-in-out infinite",
         "slide-in-right": "slide-in-right 0.4s ease-out forwards",
         "scale-in": "scale-in 0.3s ease-out forwards",
+        "dialog-in": "dialog-in 0.3s ease-out forwards",
       },
     },
   },

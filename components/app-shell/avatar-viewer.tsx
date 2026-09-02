@@ -85,10 +85,17 @@ export function AvatarViewer({
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent
-                // animate-scale-in is defined in tailwind.config; the
-                // `animate-in / zoom-in-95` utilities are NOT — this project has
-                // no tailwindcss-animate plugin, so those compile to nothing.
-                className={cn("max-w-[min(92vw,28rem)] p-5", "animate-scale-in")}
+                // animate-dialog-in, NOT animate-scale-in. DialogContent centres
+                // itself with fixed + left/top-50% + a -50%/-50% translate, and a
+                // CSS animation's `transform` replaces the element's own — so the
+                // plain scale keyframes wiped that translate out and (being
+                // `forwards`) left the panel's top-left corner sitting at the
+                // centre of the viewport, i.e. hanging off the bottom. dialog-in
+                // re-states the translate in both keyframes; centring now holds
+                // during the animation and after it settles.
+                // The `animate-in / zoom-in-95` utilities are NOT defined here —
+                // this project has no tailwindcss-animate plugin.
+                className={cn("max-w-[min(92vw,28rem)] p-5", "animate-dialog-in")}
             >
                 <div className="flex flex-col items-center gap-4">
                     {/*

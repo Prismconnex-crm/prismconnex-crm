@@ -3,12 +3,16 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
+  AlertCircle,
   Bell,
   ChevronDown,
+  Gauge,
+  Loader2,
   Menu,
   Search,
   Plus,
   LogOut,
+  Sparkles,
   User,
   Settings,
 } from "lucide-react";
@@ -17,7 +21,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 import { UserAvatar } from "./user-avatar";
 import { AvatarViewer } from "./avatar-viewer";
-import { SignOutDialog, type SignOutScope } from "./sign-out-dialog";
+import type { SignOutScope } from "./sign-out-dialog";
 import { AVATAR_CHANGED_EVENT, type AvatarChangedDetail } from "@/lib/profile-events";
 import type { AppShellUser } from "./app-shell";
 
@@ -85,22 +89,28 @@ export function AppTopbar({
     window.dispatchEvent(new CustomEvent("pcx:company-search", { detail: query }));
   };
 
-  const [signOutOpen, setSignOutOpen] = useState(false);
+  // No confirmation step: this menu item signs out on the spot. The state is
+  // only there to keep the click from firing twice and to report a failure —
+  // the modal that used to ask first is gone. "Sign out from all devices" is
+  // the destructive one, and it still confirms, over in Settings › Security.
+  const [signingOut, setSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState<string | null>(null);
 
   /**
-   * Runs the sign-out the modal asked for.
+   * Runs the sign-out.
    *
-   * `scope` is the only thing that varies: the route revokes the Supabase
+   * `scope` is the only thing that varies — "local" here, since the topbar's
+   * item signs out this device only: the route revokes the Supabase
    * session at that scope ("local" = this browser, "global" = every device) and
    * expires this browser's auth cookies either way. It always returns 200 and
    * always clears cookies, even when the Supabase call failed.
    *
-   * Errors are re-thrown rather than swallowed so SignOutDialog can show them
-   * and offer a retry. That is the deliberate change from the old behaviour,
-   * which redirected regardless: a fetch that never reached the server also
-   * never cleared the cookies, so redirecting would have claimed a sign-out
-   * that did not happen. The cookies are httpOnly and cannot be cleared from
-   * here, so the client has no way to end the session on its own.
+   * Errors are re-thrown rather than swallowed so the caller below can show
+   * them in the menu and let the user try again, instead of redirecting
+   * regardless: a fetch that never reached the server also never cleared the
+   * cookies, so redirecting would have claimed a sign-out that did not happen.
+   * The cookies are httpOnly and cannot be cleared from here, so the client has
+   * no way to end the session on its own.
    */
   const handleSignOut = async (scope: SignOutScope) => {
     const res = await fetch("/api/auth/sign-out", {
@@ -119,6 +129,30 @@ export function AppTopbar({
     // Drops the cached RSC payload for /app so a back-navigation cannot
     // render the authenticated shell from cache.
     router.refresh();
+  };
+
+  /**
+   * The menu item's click handler. The menu stays open for the round trip so
+   * the spinner — and a failure, if it comes to that — has somewhere to show;
+   * on success the redirect unmounts the whole shell anyway.
+   */
+  const onSignOutClick = async () => {
+    if (signingOut) return;
+    setSigningOut(true);
+    setSignOutError(null);
+
+    try {
+      await handleSignOut("local");
+      // Deliberately no setSigningOut(false) on success: we are navigating
+      // away, and clearing it first would flash the idle item back for a frame.
+    } catch (cause) {
+      setSignOutError(
+        cause instanceof Error && cause.message
+          ? cause.message
+          : "We could not sign you out just now. Please try again."
+      );
+      setSigningOut(false);
+    }
   };
 
   return (
@@ -295,6 +329,31 @@ export function AppTopbar({
                 >
                   <User className="size-3.5" /> Profile
                 </button>
+                {/* Upgrade Plan and Credit Usage sit directly under Profile:
+                    both are account-level views of the signed-in user's
+                    workspace, and both are reached only from here. */}
+                <button
+                  type="button"
+                  role="menuitem"
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
+                  onClick={() => {
+                    setUserMenuOpen(false);
+                    router.push("/app/upgrade-plan");
+                  }}
+                >
+                  <Sparkles className="size-3.5" /> Upgrade Plan
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-700 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
+                  onClick={() => {
+                    setUserMenuOpen(false);
+                    router.push("/app/credit-usage");
+                  }}
+                >
+                  <Gauge className="size-3.5" /> Credit Usage
+                </button>
                 <button
                   type="button"
                   role="menuitem"
@@ -307,20 +366,38 @@ export function AppTopbar({
                   <Settings className="size-3.5" /> Settings
                 </button>
                 <div className="my-1 border-t border-slate-200 dark:border-white/[0.04]" />
-                {/* Opens the confirmation modal rather than signing out on the
-                    spot — the scope (this device vs. all devices) is chosen
-                    there, and the request is made from there too. */}
+                {/* The one sign-out in this menu, and it ends this device's
+                    session only — no confirmation, it just signs out.
+                    "Sign out from all devices" is the one that asks first, and
+                    it lives in Settings › Security. */}
                 <button
                   type="button"
                   role="menuitem"
-                  onClick={() => {
-                    setUserMenuOpen(false);
-                    setSignOutOpen(true);
-                  }}
-                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-500 transition-colors hover:bg-red-500/10 disabled:opacity-60"
+                  onClick={onSignOutClick}
+                  disabled={signingOut}
+                  aria-busy={signingOut || undefined}
+                  className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-500 transition-colors hover:bg-red-500/10 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  <LogOut className="size-3.5" /> Sign Out
+                  {signingOut ? (
+                    <>
+                      <Loader2 className="size-3.5 animate-spin" /> Signing out…
+                    </>
+                  ) : (
+                    <>
+                      <LogOut className="size-3.5" /> Sign Out
+                    </>
+                  )}
                 </button>
+
+                {signOutError ? (
+                  <p
+                    role="alert"
+                    className="flex items-start gap-1.5 px-3 pb-1 pt-0.5 text-[11px] font-medium text-red-600 dark:text-red-400"
+                  >
+                    <AlertCircle className="mt-px size-3 shrink-0" aria-hidden="true" />
+                    <span>{signOutError}</span>
+                  </p>
+                ) : null}
               </div>
             </>
           )}
@@ -335,12 +412,6 @@ export function AppTopbar({
         src={avatarUrl}
         initials={initials}
         name={displayName}
-      />
-
-      <SignOutDialog
-        open={signOutOpen}
-        onOpenChange={setSignOutOpen}
-        onConfirm={handleSignOut}
       />
     </header>
   );

@@ -1,6 +1,7 @@
 "use client";
 
-import { Activity, Clock, History } from "lucide-react";
+import Link from "next/link";
+import { Activity, ChevronRight, Clock, History } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
     EmptyState,
@@ -32,6 +33,28 @@ export function ActivityCard({
             title="Activity"
             description="Your recent sign-ins, profile changes and CRM totals."
             icon={Activity}
+            actions={
+                /*
+                    Top-right of the card, on the heading's row: SectionCard's
+                    header is already a `justify-between` flex, so this is the
+                    slot every other card puts its one action in — no new
+                    layout, and it wraps under the heading on a narrow screen
+                    rather than squeezing the title.
+
+                    `next/link` rather than an onClick + location: the App
+                    Router navigates client-side, keeping the shell — and the
+                    assistant conversation mounted in it — alive, as every
+                    other cross-section link on the Profile page does.
+                */
+                <Link
+                    href="/app/audit-log"
+                    aria-label="View more activity in the audit log"
+                    className="inline-flex h-8 items-center gap-1 rounded-lg px-2.5 text-[12px] font-semibold text-brand transition-colors hover:bg-brand/[0.06] focus:outline-none focus-visible:ring-2 focus-visible:ring-brand/40 dark:text-brand-hover dark:hover:bg-brand-hover/[0.08]"
+                >
+                    View More
+                    <ChevronRight className="size-3.5" aria-hidden="true" />
+                </Link>
+            }
         >
             {loading ? (
                 <div className="space-y-3">
