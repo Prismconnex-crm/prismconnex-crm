@@ -5,7 +5,13 @@ import { Heart, Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FacetOptionList, FilterAccordion } from "@/components/search/filter-accordion";
 import { formatDateRange } from "@/lib/events/chips";
-import { dateRangeForPreset, matchDatePreset, type EventFacets } from "@/lib/events/filters";
+import {
+  dateRangeForPreset,
+  formatCalendarSelection,
+  matchDatePreset,
+  type CalendarFacets,
+  type EventFacets,
+} from "@/lib/events/filters";
 import {
   EVENT_DATE_PRESETS,
   hasAnyEventFilter,
@@ -13,13 +19,14 @@ import {
   type EventFilters,
 } from "@/types/events";
 
-type SectionKey = EventFilterListKey | "dates";
+type SectionKey = EventFilterListKey | "dates" | "calendar";
 
 const SECTIONS: { key: SectionKey; label: string }[] = [
   { key: "regions", label: "Region" },
   { key: "countries", label: "Country" },
   { key: "cities", label: "City / Venue" },
   { key: "categories", label: "Industry" },
+  { key: "calendar", label: "Month" },
   { key: "dates", label: "Date range" },
   { key: "organizers", label: "Organizer" },
   { key: "keywords", label: "Keywords" },
@@ -39,6 +46,7 @@ export function EventsFilterSidebar({
   filters,
   search,
   facets,
+  calendarFacets,
   resultCount,
   onFiltersChange,
   onSearchChange,
@@ -47,6 +55,7 @@ export function EventsFilterSidebar({
   filters: EventFilters;
   search: string;
   facets: EventFacets;
+  calendarFacets: CalendarFacets;
   resultCount: number;
   onFiltersChange: (next: EventFilters) => void;
   onSearchChange: (next: string) => void;
@@ -83,7 +92,25 @@ export function EventsFilterSidebar({
 
   const summaryFor = (key: SectionKey): string | null => {
     if (key === "dates") return formatDateRange(filters.dateFrom, filters.dateTo) || null;
+    if (key === "calendar") return formatCalendarSelection(filters.month, filters.year) || null;
     return summarise(filters[key]);
+  };
+
+  /**
+   * Per-section reset. Returning undefined (rather than a no-op) is what hides
+   * the X, so an untouched section shows no clear control at all.
+   */
+  const clearFor = (key: SectionKey): (() => void) | undefined => {
+    if (key === "dates") {
+      if (!filters.dateFrom && !filters.dateTo) return undefined;
+      return () => onFiltersChange({ ...filters, dateFrom: null, dateTo: null });
+    }
+    if (key === "calendar") {
+      if (!filters.month && !filters.year) return undefined;
+      return () => onFiltersChange({ ...filters, month: null, year: null });
+    }
+    if (filters[key].length === 0) return undefined;
+    return () => onFiltersChange({ ...filters, [key]: [] });
   };
 
   return (
@@ -151,8 +178,60 @@ export function EventsFilterSidebar({
             isOpen={openSection === section.key}
             onToggle={() => setOpenSection(openSection === section.key ? null : section.key)}
             summary={summaryFor(section.key)}
+            onClear={clearFor(section.key)}
           >
-            {section.key === "dates" ? (
+            {section.key === "calendar" ? (
+              <div className="grid grid-cols-2 gap-2 p-1">
+                <label className="block">
+                  <span className="mb-1 block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                    Month
+                  </span>
+                  <select
+                    value={filters.month ?? ""}
+                    onChange={(event) =>
+                      onFiltersChange({
+                        ...filters,
+                        month: event.target.value ? Number(event.target.value) : null,
+                      })
+                    }
+                    className="h-9 w-full rounded-[9px] border border-slate-200 bg-slate-50 px-2 text-[12px] font-medium text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
+                  >
+                    <option value="">Any month</option>
+                    {calendarFacets.months.map((option) => (
+                      <option key={option.month} value={option.month} disabled={option.count === 0}>
+                        {option.label} ({option.count.toLocaleString()})
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <label className="block">
+                  <span className="mb-1 block text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                    Year
+                  </span>
+                  <select
+                    value={filters.year ?? ""}
+                    onChange={(event) =>
+                      onFiltersChange({
+                        ...filters,
+                        year: event.target.value ? Number(event.target.value) : null,
+                      })
+                    }
+                    className="h-9 w-full rounded-[9px] border border-slate-200 bg-slate-50 px-2 text-[12px] font-medium text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
+                  >
+                    <option value="">Any year</option>
+                    {calendarFacets.years.map((option) => (
+                      <option key={option.year} value={option.year}>
+                        {option.year} ({option.count.toLocaleString()})
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <p className="col-span-2 text-[11px] text-slate-400 dark:text-slate-500">
+                  Counts are for the whole catalog under your other filters. A month with no
+                  year means every year.
+                </p>
+              </div>
+            ) : section.key === "dates" ? (
               <div className="space-y-3 p-1">
                 <div className="grid grid-cols-2 gap-1.5">
                   {EVENT_DATE_PRESETS.map((preset) => (

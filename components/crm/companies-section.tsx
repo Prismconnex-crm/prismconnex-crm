@@ -1190,7 +1190,7 @@ export function CompaniesSection() {
           "grid grid-cols-1 items-stretch gap-5",
           // Event results take the whole width — the 7-column catalog table
           // needs the same room it gets on the Events page.
-          !eventSearch && "xl:grid-cols-[360px_1fr] 2xl:grid-cols-[390px_1fr]"
+          !eventSearch && "xl:grid-cols-[300px_1fr] 2xl:grid-cols-[320px_1fr]"
         )}
       >
         <motion.div
@@ -1347,8 +1347,10 @@ export function CompaniesSection() {
                   >
                     {/* A row, not one button: the selected value carries its own
                         remove control, and a <button> cannot be nested inside a
-                        <button>. Both the label and the chevron still toggle. */}
-                    <div className="flex h-10 w-full items-center justify-between gap-2 px-3">
+                        <button>. Both the label and the chevron still toggle,
+                        and the chevron holds the card's right edge to match the
+                        Events and People rails. */}
+                    <div className="flex h-9 w-full items-center gap-1 pl-2.5 pr-2">
                       <button
                         type="button"
                         onClick={() => setOpenFilter(isOpen ? null : option.key)}
@@ -1357,7 +1359,7 @@ export function CompaniesSection() {
                       >
                         <span className="truncate">{option.label}</span>
                       </button>
-                      <span className="flex shrink-0 items-center gap-1.5">
+                      <span className="flex min-w-0 shrink-0 items-center gap-1">
                         {activeValue ? (
                           <span className="flex max-w-[130px] items-center gap-1 rounded-full bg-indigo-50 py-0.5 pl-2 pr-1 text-[10px] font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300">
                             <span className="truncate">{activeValue}</span>
@@ -1379,11 +1381,11 @@ export function CompaniesSection() {
                           type="button"
                           onClick={() => setOpenFilter(isOpen ? null : option.key)}
                           aria-label={isOpen ? `Collapse ${option.label}` : `Expand ${option.label}`}
-                          className="flex items-center"
+                          className="flex shrink-0 items-center"
                         >
                           <ChevronDown
                             className={cn(
-                              "size-4 text-slate-400 transition-transform duration-200",
+                              "size-3.5 text-slate-400 transition-transform duration-200",
                               isOpen && "rotate-180 text-indigo-500"
                             )}
                           />

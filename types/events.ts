@@ -22,6 +22,14 @@ export type EventFilters = {
   /** Inclusive ISO YYYY-MM-DD bounds, matched against the event's run dates. */
   dateFrom: string | null;
   dateTo: string | null;
+  /**
+   * Calendar picker, kept separate from `dateFrom`/`dateTo` so the two never
+   * overwrite each other: the rail can hold "every January" while a hand-typed
+   * range narrows it further. 1-12, or null for "any month".
+   */
+  month: number | null;
+  /** Four-digit year, or null for "any year". */
+  year: number | null;
   favouritesOnly: boolean;
 };
 
@@ -59,6 +67,8 @@ export function emptyEventFilters(): EventFilters {
     keywords: [],
     dateFrom: null,
     dateTo: null,
+    month: null,
+    year: null,
     favouritesOnly: false,
   };
 }
@@ -68,9 +78,27 @@ export function hasAnyEventFilter(filters: EventFilters): boolean {
     EVENT_FILTER_LIST_KEYS.some((key) => filters[key].length > 0) ||
     Boolean(filters.dateFrom) ||
     Boolean(filters.dateTo) ||
+    Boolean(filters.month) ||
+    Boolean(filters.year) ||
     filters.favouritesOnly
   );
 }
+
+/** Month names indexed 0-11, so `EVENT_MONTH_LABELS[month - 1]` reads a 1-12 value. */
+export const EVENT_MONTH_LABELS = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+] as const;
 
 export type EventDatePresetId = 'next-30-days' | 'next-3-months' | 'next-6-months' | 'this-year';
 

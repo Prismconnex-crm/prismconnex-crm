@@ -1,8 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import {
+  calendarRange,
+  computeCalendarFacets,
   computeEventFacets,
   dateRangeForPreset,
   filterEventList,
+  formatCalendarSelection,
   matchDatePreset,
   parseEventQueryState,
   serializeEventQueryState,
@@ -100,6 +103,8 @@ describe('event query URL state', () => {
         keywords: ['robotics'],
         dateFrom: '2026-01-01',
         dateTo: '2026-03-31',
+        month: 3,
+        year: 2026,
         favouritesOnly: true,
       }),
       search: 'packaging',
@@ -182,6 +187,61 @@ describe('filterEventList', () => {
   it('applies the free-text box against the searchable blob', () => {
     expect(filterEventList(events, emptyEventFilters(), 'informa', noFavourites)).toHaveLength(1);
   });
+
+  it('matches a single letter as a word prefix, not a substring', () => {
+    // Every fixture sits in "Messe Berlin", so "b" legitimately reaches all
+    // three through the venue. "l" is the discriminating letter: only BuildEx
+    // London has a word starting with it. The old blob substring matched all
+    // three on the "l" inside "Plastics".
+    expect(
+      filterEventList(events, emptyEventFilters(), 'l', noFavourites).map((e) => e.slug)
+    ).toEqual(['build-london']);
+  });
+
+  it('does not match mid-word', () => {
+    // "lastics" is inside "Plastics" but starts no word, so nothing matches.
+    expect(filterEventList(events, emptyEventFilters(), 'lastics', noFavourites)).toEqual([]);
+  });
+
+  it('finds an event from the first letters of its name', () => {
+    expect(
+      filterEventList(events, emptyEventFilters(), 'buil', noFavourites).map((e) => e.slug)
+    ).toEqual(['build-london']);
+  });
+
+  it('ANDs terms across fields, so a full name still matches', () => {
+    expect(
+      filterEventList(events, emptyEventFilters(), 'buildex london', noFavourites).map((e) => e.slug)
+    ).toEqual(['build-london']);
+    expect(filterEventList(events, emptyEventFilters(), 'buildex tokyo', noFavourites)).toEqual([]);
+  });
+
+  it('matches a word that starts later in the name', () => {
+    expect(
+      filterEventList(events, emptyEventFilters(), 'tokyo', noFavourites).map((e) => e.slug)
+    ).toEqual(['plastics-tokyo']);
+  });
+
+  it('ranks name matches above location-only matches', () => {
+    // All three sit in "Messe Berlin", so all three match "b". BuildEx starts
+    // with it (rank 0), Plastics Berlin has it on a later name word (rank 1),
+    // and Plastics Tokyo reaches it only through the venue (rank 2).
+    expect(
+      filterEventList(events, emptyEventFilters(), 'b', noFavourites).map((e) => e.slug)
+    ).toEqual(['build-london', 'plastics-berlin', 'plastics-tokyo']);
+  });
+
+  it('puts an exact name prefix ahead of a later-word name match', () => {
+    expect(
+      filterEventList(events, emptyEventFilters(), 'p', noFavourites).map((e) => e.slug)
+    ).toEqual(['plastics-berlin', 'plastics-tokyo']);
+  });
+
+  it('leaves catalog order alone when the box is empty', () => {
+    expect(filterEventList(events, emptyEventFilters(), '', noFavourites).map((e) => e.slug)).toEqual(
+      ['plastics-berlin', 'build-london', 'plastics-tokyo']
+    );
+  });
 });
 
 describe('computeEventFacets', () => {
@@ -237,12 +297,122 @@ describe('date presets', () => {
   });
 });
 
+describe('calendar filter (month + year)', () => {
+  // A show that runs across a year boundary, to pin the overlap rules.
+  const newYearShow = makeEvent({
+    slug: 'new-year-expo',
+    name: 'New Year Expo',
+    startDate: '2026-12-29',
+    endDate: '2027-01-03',
+    startMonth: '2026-12',
+    endMonth: '2027-01',
+  });
+  const nextJanuary = makeEvent({
+    slug: 'january-2027',
+    name: 'January Show',
+    startDate: '2027-01-20',
+    endDate: '2027-01-22',
+    startMonth: '2027-01',
+    endMonth: '2027-01',
+  });
+  const calendarEvents = [...events, newYearShow, nextJanuary];
+
+  it('bounds a month, including February in a leap year', () => {
+    expect(calendarRange(2026, 3)).toEqual({ from: '2026-03-01', to: '2026-03-31' });
+    expect(calendarRange(2028, 2)).toEqual({ from: '2028-02-01', to: '2028-02-29' });
+    expect(calendarRange(2026, null)).toEqual({ from: '2026-01-01', to: '2026-12-31' });
+  });
+
+  it('filters to one month of one year', () => {
+    expect(
+      filterEventList(calendarEvents, withFilters({ month: 1, year: 2027 }), '', noFavourites).map(
+        (event) => event.slug
+      )
+    ).toEqual(['new-year-expo', 'january-2027']);
+  });
+
+  it('treats a month without a year as that month in every year', () => {
+    expect(
+      filterEventList(calendarEvents, withFilters({ month: 3 }), '', noFavourites).map(
+        (event) => event.slug
+      )
+    ).toEqual(['plastics-berlin']);
+  });
+
+  it('treats a year without a month as the whole year', () => {
+    expect(
+      filterEventList(calendarEvents, withFilters({ year: 2027 }), '', noFavourites).map(
+        (event) => event.slug
+      )
+    ).toEqual(['new-year-expo', 'january-2027']);
+  });
+
+  it('narrows alongside the date range rather than replacing it', () => {
+    // September 2026 is inside the range, so the month is what excludes the
+    // other two events — proof the two dimensions are AND-ed.
+    expect(
+      filterEventList(
+        calendarEvents,
+        withFilters({ month: 9, dateFrom: '2026-01-01', dateTo: '2026-12-31' }),
+        '',
+        noFavourites
+      ).map((event) => event.slug)
+    ).toEqual(['build-london']);
+  });
+
+  it('ignores an out-of-range month or year from the URL', () => {
+    const parsed = parseEventQueryState('?month=13&year=99');
+    expect(parsed.filters.month).toBeNull();
+    expect(parsed.filters.year).toBeNull();
+  });
+
+  it('counts every month, and counts years under the chosen month', () => {
+    const facets = computeCalendarFacets(
+      calendarEvents,
+      withFilters({ month: 1 }),
+      '',
+      noFavourites
+    );
+
+    // Months are always twelve rows so the dropdown never reshuffles.
+    expect(facets.months).toHaveLength(12);
+    const byMonth = Object.fromEntries(facets.months.map((m) => [m.month, m.count]));
+    expect(byMonth[1]).toBe(2); // both January shows, counted once each
+    expect(byMonth[3]).toBe(1);
+    expect(byMonth[11]).toBe(0);
+
+    // With January picked, the year list answers "how many Januaries per year".
+    expect(facets.years).toEqual([{ year: 2027, count: 2 }]);
+  });
+
+  it('counts months within the chosen year', () => {
+    const facets = computeCalendarFacets(
+      calendarEvents,
+      withFilters({ year: 2026 }),
+      '',
+      noFavourites
+    );
+    const byMonth = Object.fromEntries(facets.months.map((m) => [m.month, m.count]));
+    expect(byMonth[12]).toBe(1); // the cross-year show, on its 2026 side only
+    expect(byMonth[1]).toBe(0);
+  });
+
+  it('describes the selection for the rail and the chips', () => {
+    expect(formatCalendarSelection(1, 2026)).toBe('January 2026');
+    expect(formatCalendarSelection(1, null)).toBe('January');
+    expect(formatCalendarSelection(null, 2026)).toBe('2026');
+    expect(formatCalendarSelection(null, null)).toBe('');
+  });
+});
+
 describe('filter chips', () => {
   const filters = withFilters({
     regions: ['Europe'],
     countries: ['Germany'],
     dateFrom: '2026-01-01',
     dateTo: '2026-03-31',
+    month: 1,
+    year: 2026,
     favouritesOnly: true,
   });
 
@@ -253,6 +423,7 @@ describe('filter chips', () => {
       'Region: Europe',
       'Country: Germany',
       'Dates: 01 Jan 2026 – 31 Mar 2026',
+      'Month: January 2026',
       'Only: Liked events',
     ]);
   });
@@ -266,6 +437,11 @@ describe('filter chips', () => {
     expect(withoutDates.dateTo).toBeNull();
     // Everything else survives.
     expect(withoutDates.regions).toEqual(['Europe']);
+
+    const withoutCalendar = removeEventFilterChip(filters, '', 'calendar').filters;
+    expect(withoutCalendar.month).toBeNull();
+    expect(withoutCalendar.year).toBeNull();
+    expect(withoutCalendar.dateFrom).toBe('2026-01-01');
   });
 
   it('leaves state untouched for an unknown chip id', () => {

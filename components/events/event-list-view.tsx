@@ -8,13 +8,16 @@ import { EventsFilterSidebar } from '@/components/events/events-filter-sidebar';
 import { EventsResultsTable } from '@/components/events/events-results-table';
 import { buildEventFilterChips, removeEventFilterChip } from '@/lib/events/chips';
 import {
+    computeCalendarFacets,
     computeEventFacets,
     filterEventList,
     parseEventQueryState,
     serializeEventQueryState,
     type EventQueryState,
 } from '@/lib/events/filters';
+import { suggestEvents } from '@/lib/events/suggest';
 import { emptyEventFilters, type EventFilters } from '@/types/events';
+import type { SearchSuggestion } from '@/components/search/ai-search-panel';
 import { AssistantPanel } from '@/components/assistant/assistant-panel';
 import { useAssistantConversation } from '@/components/assistant/assistant-provider';
 import { eventsBinding } from '@/components/assistant/bindings/events';
@@ -106,6 +109,11 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
         [baseEvents, queryState, likedIds]
     );
 
+    const calendarFacets = useMemo(
+        () => computeCalendarFacets(baseEvents, queryState.filters, queryState.search, likedIds),
+        [baseEvents, queryState, likedIds]
+    );
+
     const pageCount = Math.max(1, Math.ceil(filteredEvents.length / PAGE_SIZE));
     const safePage = Math.min(page, pageCount);
     const pagedEvents = useMemo(
@@ -155,6 +163,31 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
         setPage(1);
     };
 
+    // Typeahead for the assistant composer. It runs the same matcher and the
+    // same ranking as the left rail, so "b" means one thing on this page.
+    const suggestEventRows = useCallback(
+        (query: string): SearchSuggestion[] =>
+            suggestEvents(baseEvents, query).map((event) => ({
+                id: event.slug,
+                label: event.name,
+                hint: [event.city, event.country].filter(Boolean).join(', '),
+            })),
+        [baseEvents]
+    );
+
+    // Picking a suggestion puts that event's name in the shared search state,
+    // which is what the results table reads — so the row lands in the table
+    // rather than being sent to the model as a question.
+    const selectSuggestion = useCallback(
+        (slug: string) => {
+            const event = baseEvents.find((candidate) => candidate.slug === slug);
+            if (!event) return;
+            setQueryState((prev) => ({ ...prev, search: event.name }));
+            setPage(1);
+        },
+        [baseEvents]
+    );
+
     const chips = buildEventFilterChips(queryState.filters, queryState.search);
 
     // The hero and the results share one slot. Anything narrowing the catalog —
@@ -187,7 +220,7 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                 </button>
             </motion.div>
 
-            <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[340px_1fr]">
+            <div className="grid grid-cols-1 items-start gap-5 xl:grid-cols-[300px_1fr]">
                 <motion.div
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -198,6 +231,7 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                         filters={queryState.filters}
                         search={queryState.search}
                         facets={facets}
+                        calendarFacets={calendarFacets}
                         resultCount={filteredEvents.length}
                         onFiltersChange={updateFilters}
                         onSearchChange={updateSearch}
@@ -233,6 +267,8 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                                         onToggleLike: toggleLike,
                                         onToggleTarget: toggleTarget,
                                     }}
+                                    suggest={suggestEventRows}
+                                    onSelectSuggestion={selectSuggestion}
                                     onGoBack={(entity, sourceFilters) => {
                                         // Spec 2b binds People and Events; a
                                         // back-jump to Companies arrives in 2c.
@@ -299,6 +335,8 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                                         onToggleLike: toggleLike,
                                         onToggleTarget: toggleTarget,
                                     }}
+                                    suggest={suggestEventRows}
+                                    onSelectSuggestion={selectSuggestion}
                                     onGoBack={(entity, sourceFilters) => {
                                         // Spec 2b binds People and Events; a
                                         // back-jump to Companies arrives in 2c.

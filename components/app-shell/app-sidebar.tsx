@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, PanelLeftClose, PanelLeft, Building, X } from "lucide-react";
-import { BrandLogo } from "@/components/brand-logo";
+import { BrandMark } from "@/components/brand-logo";
+import { BrandWordmark } from "@/components/brand-wordmark";
 import { navItems } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { WorkspaceSwitcher } from "./workspace-switcher";
@@ -60,17 +61,27 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
                 isCollapsed ? "opacity-0 pointer-events-none" : "opacity-100"
              )}
           >
-            <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-xl border border-slate-200 shadow-sm transition-all duration-300 group-hover:shadow-glow-sm group-hover:scale-105 dark:border-white/10">
-              <BrandLogo fill sizes="36px" className="object-contain p-0.5" priority />
+            {/* The emblem stands on its own: no plate, no border, no hover
+                transform. The bordered rounded square used to exist to contain
+                the full lockup, whose baked-in wordmark was unreadable at 36px
+                and made the whole thing read as a rectangle. BrandMark is the
+                emblem alone, so it needs no container to look like a logo. */}
+            <div className="relative h-9 w-9 shrink-0">
+              <BrandMark fill sizes="36px" className="object-contain" priority />
             </div>
 
-            {/* Company name sits to the right of the emblem — BrandLogo renders
+            {/* Company name sits to the right of the emblem — BrandMark renders
                 the mark only, so there is no duplicate wordmark. */}
+            {/* Brand blue, matching the wordmark in the logo artwork, rather
+                than the near-black/white the rest of the shell's text uses.
+                `brand` -> `brand-hover` on dark is the standard substitution
+                from globals.css: #005C9D is only 2.47:1 on the #0E1321
+                sidebar, #0086E6 restores it to 4.55:1. */}
             <div className="leading-tight overflow-hidden whitespace-nowrap">
-              <p className="text-sm font-bold tracking-wide text-slate-900 dark:text-white">
-                Prismconnex
+              <p className="text-sm font-bold tracking-wide text-brand dark:text-brand-hover">
+                <BrandWordmark />
               </p>
-              <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-slate-600 dark:text-slate-300">
+              <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-brand dark:text-brand-hover">
                 Global Solutions
               </p>
             </div>

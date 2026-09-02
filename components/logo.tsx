@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { BrandLogo } from "@/components/brand-logo";
+import { BrandWordmark } from "@/components/brand-wordmark";
 
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (
@@ -15,7 +16,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
       </div>
       {!compact ? (
         <div className="leading-tight">
-          <p className="text-sm font-bold tracking-wide text-foreground">Prismconnex</p>
+          <p className="text-sm font-bold tracking-wide text-foreground"><BrandWordmark /></p>
           <p className="text-[10px] text-muted-foreground">AI Trade Shows CRM</p>
         </div>
       ) : null}

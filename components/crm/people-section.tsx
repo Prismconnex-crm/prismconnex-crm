@@ -329,7 +329,7 @@ export function PeopleSection() {
           )}
         </div>
       ) : (
-        <div className="grid grid-cols-1 items-stretch gap-5 xl:grid-cols-[360px_1fr] 2xl:grid-cols-[390px_1fr]">
+        <div className="grid grid-cols-1 items-stretch gap-5 xl:grid-cols-[300px_1fr] 2xl:grid-cols-[320px_1fr]">
           {/* LEFT — hidden below lg, where it becomes the drawer below. Between
               lg and xl the grid is still one column, so it stacks above the
               chat exactly as the Companies rail does at those widths. */}
