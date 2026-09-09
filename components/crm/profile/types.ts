@@ -9,7 +9,16 @@
  */
 
 export type ProfileView = {
-    id: string;
+    /**
+     * The sequential profile number (1, 2, 3, ...). A number, not a string:
+     * ProfileService.toDTO narrows the database BIGINT before it is serialized,
+     * so it survives JSON intact.
+     *
+     * The Supabase Auth uuid is deliberately NOT mirrored here. The Profile page
+     * has no use for it — avatar uploads and every write are keyed by the
+     * server from the session cookie — so it stays off the wire.
+     */
+    id: number;
     firstName: string;
     middleName: string | null;
     lastName: string;

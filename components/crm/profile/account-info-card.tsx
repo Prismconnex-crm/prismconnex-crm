@@ -105,7 +105,12 @@ export function AccountInfoCard({
                     }
                 />
 
-                <ReadOnlyField label="User ID" value={profile.id} mono />
+                {/*
+                  * The sequential profile number, not the Supabase Auth uuid
+                  * this field used to show. It is the identifier a user can
+                  * actually read out to support.
+                  */}
+                <ReadOnlyField label="Profile ID" value={String(profile.id)} mono />
 
                 <ReadOnlyField
                     label="Workspace ID"

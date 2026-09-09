@@ -20,11 +20,16 @@ import { BadRequestError, NotFoundError } from "@/lib/http/errors";
  * schema change; deriving it means a column added to the model is a compile
  * error here until it is mapped, instead of silently missing from the DTO.
  */
-type ProfileRow = NonNullable<Awaited<ReturnType<typeof ProfileRepository.findById>>>;
+type ProfileRow = NonNullable<Awaited<ReturnType<typeof ProfileRepository.findByUserId>>>;
 
 function toDTO(row: ProfileRow): ProfileDTO {
     return {
-        id: row.id,
+        // Prisma maps the BIGINT identity to a JS BigInt, which JSON.stringify
+        // throws on ("Do not know how to serialize a BigInt"). Narrowing it
+        // here is what keeps every /api/profile route serializable — which is
+        // also why those routes must return this DTO and never a raw row.
+        id: Number(row.id),
+        userId: row.userId,
         firstName: row.firstName,
         middleName: row.middleName,
         lastName: row.lastName,
@@ -106,14 +111,16 @@ const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{
 
 export class ProfileService {
     /**
-     * profiles.id is a uuid column, so a non-uuid id must be rejected before it
-     * reaches Postgres — otherwise sessions minted by the legacy demo path
-     * (sub: "demo-user") produce an invalid-uuid cast error instead of a miss.
+     * profiles.user_id is a uuid column, so a non-uuid id must be rejected
+     * before it reaches Postgres — otherwise sessions minted by the legacy demo
+     * path (sub: "demo-user") produce an invalid-uuid cast error instead of a
+     * miss. The guard follows the uuid: it moved from `id` to `user_id` in
+     * migration 20260909120000, and the session still carries that same value.
      */
     static async getByUserId(userId: string): Promise<ProfileDTO | null> {
         if (!UUID_PATTERN.test(userId)) return null;
 
-        const row = await ProfileRepository.findById(userId);
+        const row = await ProfileRepository.findByUserId(userId);
         return row ? toDTO(row) : null;
     }
 
@@ -143,13 +150,13 @@ export class ProfileService {
     static async ensureProfile(user: SupabaseUser): Promise<ProfileDTO | null> {
         if (!UUID_PATTERN.test(user.id)) return null;
 
-        const existing = await ProfileRepository.findById(user.id);
+        const existing = await ProfileRepository.findByUserId(user.id);
         if (existing) return toDTO(existing);
 
         const derived = deriveNamesFromMetadata(user.user_metadata, user.email);
 
         const created = await ProfileRepository.createIfMissing({
-            id: user.id,
+            userId: user.id,
             firstName: derived.firstName,
             middleName: derived.middleName,
             lastName: derived.lastName,

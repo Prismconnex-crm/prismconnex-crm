@@ -4,11 +4,29 @@ import { isEmail, isIndianPhone } from "@/models/auth";
 /**
  * Profile of a Supabase Auth user (public.profiles).
  *
- * `id` is the Supabase Auth user id (auth.users.id). Passwords are not
- * represented here at any layer — they live only in Supabase Auth.
+ * Two identifiers, and they are not interchangeable:
+ *
+ *   `id`     — the sequential profile number (1, 2, 3, ...). Allocated by
+ *              Postgres from a BIGINT identity; the client never supplies it.
+ *              This is the one shown in the UI and safe to quote to support.
+ *   `userId` — the Supabase Auth user id (auth.users.id). The join key for
+ *              everything auth-related: RLS matches auth.uid() against it,
+ *              avatar object keys are prefixed with it, and every lookup in
+ *              ProfileRepository keys on it.
+ *
+ * Before migration 20260909120000_profile_numeric_id these were one uuid
+ * column named `id`; nothing outside this file should assume they still are.
+ *
+ * `id` is `number`, not `bigint`, on purpose: the Prisma row is a JS BigInt,
+ * which `JSON.stringify` throws on, so ProfileService.toDTO narrows it here at
+ * the boundary. Postgres would have to issue ~9e15 profiles to overflow it.
+ *
+ * Passwords are not represented here at any layer — they live only in
+ * Supabase Auth.
  */
 export const ProfileSchema = z.object({
-    id: z.uuid(),
+    id: z.number().int().positive(),
+    userId: z.uuid(),
     firstName: z.string().min(1),
     middleName: z.string().nullable(),
     lastName: z.string(),
@@ -64,9 +82,15 @@ export const ProfileSchema = z.object({
     updatedAt: z.date(),
 });
 
-/** Input for the OAuth fallback path in ProfileService.ensureProfile(). */
+/**
+ * Input for the OAuth fallback path in ProfileService.ensureProfile().
+ *
+ * Carries `userId` and no `id`: the profile number comes from the database
+ * identity, so there is nothing for a caller to pass and no way for one to
+ * choose it.
+ */
 export const UpsertProfileSchema = z.object({
-    id: z.uuid(),
+    userId: z.uuid(),
     firstName: z.string().min(1),
     middleName: z.string().nullable().optional(),
     lastName: z.string().default(""),

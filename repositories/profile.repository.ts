@@ -11,10 +11,18 @@ import { UpdateProfileDTO, UpsertProfileDTO } from "@/models/profile";
  *
  * Reads run as the `postgres` role via Prisma, which bypasses the table's RLS
  * policies. Those policies exist for direct browser access with the anon key.
+ *
+ * EVERY method here keys on `userId` — the Supabase Auth uuid — and not on the
+ * numeric `id` that migration 20260909120000_profile_numeric_id introduced.
+ * That is deliberate: the auth uuid is the only identifier the request path
+ * actually holds (it comes from the verified session cookie), and keying on it
+ * is what keeps "a user can only touch their own row" true by construction.
+ * The numeric id is an output — a stable, human-quotable profile number — not
+ * a lookup key, so no method takes one.
  */
 export class ProfileRepository {
-    static async findById(id: string) {
-        return prisma.profile.findUnique({ where: { id } });
+    static async findByUserId(userId: string) {
+        return prisma.profile.findUnique({ where: { userId } });
     }
 
     static async findByEmail(email: string) {
@@ -36,9 +44,11 @@ export class ProfileRepository {
         if (digits.length < 10) return null;
         const last10 = digits.slice(-10);
 
-        const rows = await prisma.$queryRaw<{ id: string }[]>(
+        // Selects user_id, not id: the caller is the sign-in path, which needs
+        // the auth uuid. (Before 20260909120000 these were the same column.)
+        const rows = await prisma.$queryRaw<{ user_id: string }[]>(
             Prisma.sql`
-                SELECT id
+                SELECT user_id
                   FROM public.profiles
                  WHERE phone IS NOT NULL
                    AND right(regexp_replace(phone, '\D', '', 'g'), 10) = ${last10}
@@ -49,7 +59,7 @@ export class ProfileRepository {
         // Ambiguous match: refuse rather than sign the wrong person in.
         if (rows.length !== 1) return null;
 
-        return this.findById(rows[0].id);
+        return this.findByUserId(rows[0].user_id);
     }
 
     /**
@@ -58,13 +68,17 @@ export class ProfileRepository {
      * which is what "create a profile if one doesn't already exist" requires.
      */
     static async createIfMissing(data: UpsertProfileDTO) {
-        const existing = await this.findById(data.id);
+        const existing = await this.findByUserId(data.userId);
         if (existing) return existing;
 
         try {
             return await prisma.profile.create({
                 data: {
-                    id: data.id,
+                    // `id` is deliberately absent: the column is an identity,
+                    // so Postgres allocates the next profile number. Passing
+                    // one here would be the frontend generating the id, which
+                    // this design rules out.
+                    userId: data.userId,
                     firstName: data.firstName,
                     middleName: data.middleName ?? null,
                     lastName: data.lastName,
@@ -75,7 +89,7 @@ export class ProfileRepository {
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError) {
                 // P2002 — unique violation: the trigger won a concurrent race.
-                if (error.code === "P2002") return this.findById(data.id);
+                if (error.code === "P2002") return this.findByUserId(data.userId);
 
                 // P2003 — foreign key violation: no auth.users row with this id.
                 // Happens when Supabase returns an obfuscated user for a signup
@@ -87,9 +101,9 @@ export class ProfileRepository {
         }
     }
 
-    static async update(id: string, data: UpdateProfileDTO) {
+    static async update(userId: string, data: UpdateProfileDTO) {
         return prisma.profile.update({
-            where: { id },
+            where: { userId },
             data: {
                 ...(data.firstName !== undefined ? { firstName: data.firstName } : {}),
                 ...(data.middleName !== undefined ? { middleName: data.middleName } : {}),
@@ -106,12 +120,13 @@ export class ProfileRepository {
     // no path can blank a field belonging to a different section.
     //
     // `Prisma.ProfileUpdateInput` is not used as the parameter type on purpose:
-    // that would let a caller pass arbitrary columns (including `id`) straight
-    // through from a request body.
+    // that would let a caller pass arbitrary columns straight through from a
+    // request body — including `userId`, which is the one column that must
+    // never move: reassigning it hands the row to a different auth user.
 
     /** Personal information. Note: `email` is NOT written here — see the service. */
     static async updatePersonalInfo(
-        id: string,
+        userId: string,
         data: {
             firstName: string;
             middleName: string | null;
@@ -126,11 +141,11 @@ export class ProfileRepository {
             postalCode: string | null;
         }
     ) {
-        return prisma.profile.update({ where: { id }, data });
+        return prisma.profile.update({ where: { userId }, data });
     }
 
     static async updateProfessionalInfo(
-        id: string,
+        userId: string,
         data: {
             employeeId: string | null;
             department: string | null;
@@ -145,11 +160,11 @@ export class ProfileRepository {
             linkedinUrl: string | null;
         }
     ) {
-        return prisma.profile.update({ where: { id }, data });
+        return prisma.profile.update({ where: { userId }, data });
     }
 
     static async updatePreferences(
-        id: string,
+        userId: string,
         data: {
             language: string;
             timeZone: string;
@@ -158,11 +173,11 @@ export class ProfileRepository {
             theme: string;
         }
     ) {
-        return prisma.profile.update({ where: { id }, data });
+        return prisma.profile.update({ where: { userId }, data });
     }
 
     static async updateNotifications(
-        id: string,
+        userId: string,
         data: {
             notifyEmail: boolean;
             notifySms: boolean;
@@ -174,11 +189,11 @@ export class ProfileRepository {
             notifySystem: boolean;
         }
     ) {
-        return prisma.profile.update({ where: { id }, data });
+        return prisma.profile.update({ where: { userId }, data });
     }
 
-    static async setAvatarUrl(id: string, avatarUrl: string | null) {
-        return prisma.profile.update({ where: { id }, data: { avatarUrl } });
+    static async setAvatarUrl(userId: string, avatarUrl: string | null) {
+        return prisma.profile.update({ where: { userId }, data: { avatarUrl } });
     }
 
     /**
@@ -189,10 +204,10 @@ export class ProfileRepository {
      * user cannot log in. A legacy session whose `sub` is not a uuid, or a
      * profile row that does not exist yet, both land here.
      */
-    static async touchLastLogin(id: string) {
+    static async touchLastLogin(userId: string) {
         try {
             await prisma.profile.update({
-                where: { id },
+                where: { userId },
                 data: { lastLoginAt: new Date() },
             });
         } catch {
@@ -201,12 +216,12 @@ export class ProfileRepository {
     }
 
     static async setAccountStatus(
-        id: string,
+        userId: string,
         status: "active" | "inactive" | "deleted",
         stamps: { deactivatedAt?: Date | null; deletedAt?: Date | null } = {}
     ) {
         return prisma.profile.update({
-            where: { id },
+            where: { userId },
             data: {
                 accountStatus: status,
                 ...(stamps.deactivatedAt !== undefined
@@ -225,9 +240,9 @@ export class ProfileRepository {
      * because it is NOT NULL and still mirrors auth.users, first/last because
      * they are NOT NULL — but everything discretionary goes.
      */
-    static async scrubPersonalData(id: string) {
+    static async scrubPersonalData(userId: string) {
         return prisma.profile.update({
-            where: { id },
+            where: { userId },
             data: {
                 avatarUrl: null,
                 phone: null,
