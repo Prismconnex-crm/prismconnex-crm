@@ -961,11 +961,16 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Verify"
+        "submit": "Verify",
+        "resend": "Resend Verification Code"
       },
       "errors": {
-        "verify": "Failed to verify"
-      }
+        "verify": "Failed to verify",
+        "resend": "Failed to resend the verification code"
+      },
+      "resendSent": "A new verification code is on its way.",
+      "expiresIn": "Code expires in {seconds}s",
+      "expired": "Verification code has expired."
     },
     "forgotPassword": {
       "title": "Forgot password?",

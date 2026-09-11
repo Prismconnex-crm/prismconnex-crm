@@ -204,6 +204,28 @@ export async function verifySignUpOtp(email: string, token: string) {
     });
 }
 
+/**
+ * Re-sends the signup confirmation email — POST /auth/v1/resend, the wire
+ * equivalent of `supabase.auth.resend({ type: 'signup', email })`.
+ *
+ * Nothing is returned: GoTrue answers 200 with an empty body whether or not the
+ * address belongs to an unconfirmed user, which is deliberate on their side —
+ * a different answer per case would be an account-existence oracle.
+ *
+ * Supabase applies its own per-project email rate limit on top of ours and
+ * answers 429 when it is hit; request() surfaces that as an ApiError with
+ * statusCode 429 so the caller can show it verbatim.
+ */
+export async function resendSignUpOtp(email: string) {
+    authDebug("POST /resend -> supabase", { email: maskEmail(email), type: "signup" });
+
+    await request<unknown>("/resend", { method: "POST", body: { type: "signup", email } });
+
+    authDebug("supabase accepted the resend request (HTTP 200)", {
+        note: "200 means queued for delivery, not that SMTP succeeded",
+    });
+}
+
 /** Sends the password-recovery email. */
 export async function sendRecoveryEmail(email: string, redirectTo?: string) {
     const query = redirectTo ? `?redirect_to=${encodeURIComponent(redirectTo)}` : "";

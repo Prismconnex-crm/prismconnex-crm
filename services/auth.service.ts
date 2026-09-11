@@ -78,6 +78,19 @@ export class AuthService {
     }
 
     /**
+     * Re-sends the signup confirmation email for an address that has not been
+     * confirmed yet. Same email, new OTP — this is not a second signup.
+     *
+     * Returns nothing, and throws only on a transport/rate-limit failure: an
+     * unknown or already-confirmed address is a silent no-op at Supabase, and
+     * the route keeps it that way so the resend button cannot be used to probe
+     * which addresses have accounts.
+     */
+    static async resendVerification(email: string): Promise<void> {
+        await gotrue.resendSignUpOtp(email);
+    }
+
+    /**
      * Verifies credentials against Supabase Auth and loads the profile.
      *
      * `identifier` may be an email address or an Indian mobile number; the

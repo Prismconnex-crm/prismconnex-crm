@@ -964,11 +964,16 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Bestaetigen"
+        "submit": "Bestaetigen",
+        "resend": "Bestaetigungscode erneut senden"
       },
       "errors": {
-        "verify": "Bestaetigung fehlgeschlagen"
-      }
+        "verify": "Bestaetigung fehlgeschlagen",
+        "resend": "Bestaetigungscode konnte nicht erneut gesendet werden"
+      },
+      "resendSent": "Ein neuer Bestaetigungscode ist unterwegs.",
+      "expiresIn": "Code laeuft ab in {seconds}s",
+      "expired": "Der Bestaetigungscode ist abgelaufen."
     },
     "forgotPassword": {
       "title": "Passwort vergessen?",

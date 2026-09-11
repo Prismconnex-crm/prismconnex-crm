@@ -964,11 +964,16 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Verifier"
+        "submit": "Verifier",
+        "resend": "Renvoyer le code de verification"
       },
       "errors": {
-        "verify": "Verification impossible"
-      }
+        "verify": "Verification impossible",
+        "resend": "Impossible de renvoyer le code de verification"
+      },
+      "resendSent": "Un nouveau code de verification est en route.",
+      "expiresIn": "Le code expire dans {seconds}s",
+      "expired": "Le code de verification a expire."
     },
     "forgotPassword": {
       "title": "Mot de passe oublie ?",

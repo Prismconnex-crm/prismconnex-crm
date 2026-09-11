@@ -964,11 +964,16 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Verificar"
+        "submit": "Verificar",
+        "resend": "Reenviar codigo de verificacion"
       },
       "errors": {
-        "verify": "No se pudo verificar"
-      }
+        "verify": "No se pudo verificar",
+        "resend": "No se pudo reenviar el codigo de verificacion"
+      },
+      "resendSent": "Un nuevo codigo de verificacion esta en camino.",
+      "expiresIn": "El codigo caduca en {seconds}s",
+      "expired": "El codigo de verificacion ha caducado."
     },
     "forgotPassword": {
       "title": "Olvidaste tu contrasena?",

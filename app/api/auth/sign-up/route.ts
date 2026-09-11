@@ -3,6 +3,7 @@ import { z } from "zod";
 import { validateBody } from "@/lib/http/validate";
 import { AuthService } from "@/services/auth.service";
 import { jsonOk, jsonError } from "@/lib/http/response";
+import { recordCodeSent, verificationKey } from "@/lib/auth/verification-window";
 
 /**
  * Server-side contract, and the source of truth for validation. The client
@@ -30,6 +31,14 @@ export async function POST(req: NextRequest) {
         // Creates the Supabase Auth user (password stored only there); the
         // on_auth_user_created trigger creates the matching profiles row.
         const result = await AuthService.signUp(data);
+
+        // Signup is the first thing that mails a code, so the 90-second clock
+        // starts here rather than on the verify page. Without this the code
+        // would arrive already outside its window and /api/auth/verify would
+        // reject it, since an address with no record on file counts as expired.
+        if (result.emailConfirmationRequired) {
+            recordCodeSent(verificationKey(data.email));
+        }
 
         return jsonOk(
             {

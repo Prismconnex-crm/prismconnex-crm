@@ -961,11 +961,16 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "验证"
+        "submit": "验证",
+        "resend": "重新发送验证码"
       },
       "errors": {
-        "verify": "验证失败"
-      }
+        "verify": "验证失败",
+        "resend": "重新发送验证码失败"
+      },
+      "resendSent": "新的验证码已发送。",
+      "expiresIn": "验证码将在 {seconds} 秒后失效",
+      "expired": "验证码已失效。"
     },
     "forgotPassword": {
       "title": "忘记密码？",
