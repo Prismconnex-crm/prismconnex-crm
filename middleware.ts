@@ -9,7 +9,7 @@ import {
   normalizeLocale,
   stripLocaleFromPathname,
 } from "@/lib/locale";
-import { resolveAuthRedirect, shouldForceSignIn } from "@/lib/auth/routing";
+import { hasExpiredSessionFlag, resolveAuthRedirect, shouldForceSignIn } from "@/lib/auth/routing";
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -24,6 +24,11 @@ export function middleware(request: NextRequest) {
   const session = request.cookies.get("pcx_session")?.value;
   const onboarded = request.cookies.get("pcx_onboarded")?.value === "true";
   const forceSignIn = shouldForceSignIn(request.nextUrl.searchParams);
+  // Set by the server guards under /app and /onboarding when they reject the
+  // cookie this middleware only checked for presence.
+  const sessionRejected =
+    hasExpiredSessionFlag(request.nextUrl.searchParams) &&
+    pathnameWithoutLocale.startsWith("/auth/sign-in");
 
   if (localeFromPath && localeSegment !== localeFromPath && isLocalizedRoute(pathname)) {
     const redirectUrl = request.nextUrl.clone();
@@ -68,6 +73,20 @@ export function middleware(request: NextRequest) {
 
   response.cookies.set("pc_locale", locale, { path: "/", maxAge: 60 * 60 * 24 * 180 });
   response.cookies.set("pcx_locale", locale, { path: "/", maxAge: 60 * 60 * 24 * 180 });
+
+  // Expire the rejected session here, where the sign-in form is about to
+  // render. Without this the dead cookie survives, and every later /app visit
+  // pays the same double redirect before landing back on this page.
+  //
+  // The names are literals rather than AUTH_COOKIE_NAMES because
+  // lib/auth/session.ts pulls in next/headers, which does not belong in the
+  // edge middleware bundle. Set-to-empty with maxAge 0 rather than delete(),
+  // matching clearAuthCookies(): the browser must overwrite a cookie that may
+  // have been issued with different attributes.
+  if (sessionRejected) {
+    response.cookies.set("pcx_session", "", { path: "/", maxAge: 0 });
+    response.cookies.set("pcx_onboarded", "", { path: "/", maxAge: 0 });
+  }
 
   return response;
 }

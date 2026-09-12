@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getSessionPayload } from "@/lib/auth/session";
+import { EXPIRED_SESSION_SIGN_IN_HREF } from "@/lib/auth/routing";
 
 /**
  * Server-side guard for /onboarding.
@@ -11,12 +12,16 @@ import { getSessionPayload } from "@/lib/auth/session";
  *
  * A layout is the smallest place to add the check without converting the page
  * to a server component.
+ *
+ * The sessionExpired target matches app/(app)/app/layout.tsx: a bare
+ * /auth/sign-in would be bounced back here by middleware while the dead cookie
+ * is still set, which is an infinite redirect rather than a sign-in page.
  */
 export default async function OnboardingLayout({ children }: { children: React.ReactNode }) {
   const session = await getSessionPayload();
 
   if (!session) {
-    redirect("/auth/sign-in");
+    redirect(EXPIRED_SESSION_SIGN_IN_HREF);
   }
 
   return <>{children}</>;
