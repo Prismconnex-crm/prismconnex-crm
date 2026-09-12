@@ -8,7 +8,14 @@ import type { EntityAdapter, FilterChip } from '../types';
 
 const PAGE_SIZE = 10;
 
-const CARRY_OVER_KEYS: Record<string, keyof CompanySearchFilters> = {
+/**
+ * Only the scalar text filters can be carried over from another entity's
+ * question; `keywords` (a list) and `sort` are not values a foreign filter
+ * name can supply.
+ */
+type CompanyTextFilterKey = 'search' | 'category' | 'employeeRange' | 'region' | 'country' | 'city';
+
+const CARRY_OVER_KEYS: Record<string, CompanyTextFilterKey> = {
   country: 'country',
   countries: 'country',
   location: 'region',
@@ -101,12 +108,13 @@ export function createCompaniesAdapter(
     },
 
     chips(filters): FilterChip[] {
-      const labels: Array<[keyof CompanySearchFilters, string]> = [
+      const labels: Array<[CompanyTextFilterKey, string]> = [
         ['search', 'Name'],
         ['category', 'Industry'],
         ['employeeRange', 'Headcount'],
         ['region', 'Region'],
         ['country', 'Country'],
+        ['city', 'City'],
       ];
       return labels
         .filter(([key]) => Boolean(filters[key]))

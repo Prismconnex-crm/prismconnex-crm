@@ -5,115 +5,88 @@ import {
     ArrowUp,
     Sparkles,
     Building2,
-    UserSearch,
     CalendarSearch,
-    TrendingUp,
     Bookmark,
-    Repeat2,
-    Layers,
+    BookmarkCheck,
     Clock,
-    ChevronDown,
+    Trash2,
 } from "lucide-react";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
+import {
+    relativeTime,
+    useQueryStore,
+    type SavedQuery,
+} from "@/components/search/query-store";
+import { buildHandoffUrl, classifyAskDomain, type SearchDomain } from "@/lib/search/cross-intent";
 import { cn } from "@/lib/utils";
 
-// ── Mock searches ────────────────────────────────────────────────────────────
-// UI only for now — nothing here is wired to a backend.
-type SearchCard = {
-    id: string;
-    time: string;
-    type: string;
-    icon: React.ElementType;
-    query: string;
-    chips: string[];
-};
-
-const RECENT_SEARCHES: SearchCard[] = [
-    {
-        id: "r1",
-        time: "12 min ago",
-        type: "Company discovery",
-        icon: Building2,
-        query: "Robotics manufacturers in Germany with 50–200 staff exhibiting next quarter",
-        chips: ["Germany", "Robotics", "50–200 staff", "Exhibiting", "Verified domain", "Has website"],
-    },
-    {
-        id: "r2",
-        time: "1 hour ago",
-        type: "Contact lookup",
-        icon: UserSearch,
-        query: "Heads of procurement at exhibitors from Berlin Tech Expo 2026",
-        chips: ["Berlin Tech Expo", "Procurement", "Decision maker", "Email found"],
-    },
-    {
-        id: "r3",
-        time: "Yesterday",
-        type: "Event scouting",
-        icon: CalendarSearch,
-        query: "Medtech shows across Europe between May and September with booths still open",
-        chips: ["Europe", "Medtech", "May–Sep", "Booths open"],
-    },
-    {
-        id: "r4",
-        time: "2 days ago",
-        type: "Pipeline question",
-        icon: TrendingUp,
-        query: "Deals sitting in Negotiation longer than 21 days above $50K",
-        chips: ["Stalled 21d+", "Above $50K", "Negotiation"],
-    },
-];
-
-const SAVED_SEARCHES: SearchCard[] = [
-    {
-        id: "s1",
-        time: "Pinned",
-        type: "Territory list",
-        icon: Layers,
-        query: "Automation suppliers across DACH added to the catalog this month",
-        chips: ["DACH", "Automation", "Added this month", "Supplier"],
-    },
-    {
-        id: "s2",
-        time: "Pinned",
-        type: "Warm re-entry",
-        icon: Repeat2,
-        query: "Companies that replied last season but never booked a meeting",
-        chips: ["Replied", "No meeting", "Last season"],
-    },
-    {
-        id: "s3",
-        time: "Pinned",
-        type: "Show shortlist",
-        icon: Bookmark,
-        query: "Trade shows where my top 20 accounts exhibit in the same week",
-        chips: ["Top 20 accounts", "Same week", "Overlap"],
-    },
-];
+/**
+ * The Dashboard's "Ask anything" page.
+ *
+ * It owns no dataset, so it never answers a question — it decides which page
+ * does and hands the sentence over. The decision is deterministic
+ * (lib/search/cross-intent, the same signal scorer the Companies and Events
+ * boxes use), which means Enter to a rendered result list involves zero
+ * network calls from here: classify, push, done. The destination page reads
+ * `?ask=` on mount and runs its own existing flow, so the rail, the chips and
+ * the results are that page's native behaviour, not a copy of it.
+ */
 
 const TABS = [
-    { key: "recent", label: "Recent Searches", data: RECENT_SEARCHES },
-    { key: "saved", label: "Saved Searches", data: SAVED_SEARCHES },
+    { key: "recent", label: "Recent Searches" },
+    { key: "saved", label: "Saved Searches" },
 ] as const;
 
 type TabKey = (typeof TABS)[number]["key"];
 
-const VISIBLE_CHIPS = 3;
+/** What the Dashboard stores alongside a question: where it sent it. */
+type AskPayload = { intent: SearchDomain };
+
+const DOMAIN_META: Record<SearchDomain, { label: string; icon: React.ElementType }> = {
+    companies: { label: "Company discovery", icon: Building2 },
+    events: { label: "Event scouting", icon: CalendarSearch },
+};
+
+/** Falls back to a re-classify for an entry written before `payload` existed. */
+function intentOf(entry: SavedQuery): SearchDomain {
+    const payload = entry.payload as AskPayload | undefined;
+    if (payload?.intent === "companies" || payload?.intent === "events") return payload.intent;
+    return classifyAskDomain(entry.query).domain;
+}
 
 // Glass surface shared by the prompt box and every card.
 const GLASS =
     "border border-white/60 bg-white/70 shadow-[0_1px_2px_rgba(15,23,42,0.04)] backdrop-blur-xl dark:border-white/10 dark:bg-[#111B2E]/70";
 
-function SearchCardItem({ card, animate, delay }: { card: SearchCard; animate: boolean; delay: number }) {
-    const [expanded, setExpanded] = useState(false);
-    const Icon = card.icon;
-    const hidden = card.chips.length - VISIBLE_CHIPS;
-    const shown = expanded ? card.chips : card.chips.slice(0, VISIBLE_CHIPS);
+const ICON_BUTTON =
+    "flex size-8 shrink-0 items-center justify-center rounded-[9px] border border-slate-200 bg-white text-slate-500 transition-all hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 motion-reduce:transform-none dark:border-[#22304A] dark:bg-[#16233A] dark:text-slate-400";
+
+function SearchCardItem({
+    entry,
+    animate,
+    delay,
+    onView,
+    onDelete,
+    onToggleSaved,
+}: {
+    entry: SavedQuery;
+    animate: boolean;
+    delay: number;
+    onView: (entry: SavedQuery) => void;
+    onDelete: (id: string) => void;
+    onToggleSaved: (id: string) => void;
+}) {
+    const intent = intentOf(entry);
+    const meta = DOMAIN_META[intent];
+    const Icon = meta.icon;
 
     return (
         <motion.li
             {...(animate
-                ? { initial: { opacity: 0, y: 12 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.4, delay } }
+                ? { initial: { opacity: 0, y: 12 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, scale: 0.97 }, transition: { duration: 0.4, delay } }
                 : { initial: false as const, animate: { opacity: 1, y: 0 } })}
+            layout
             className={cn(
                 GLASS,
                 "group relative overflow-hidden rounded-[14px] p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-indigo-500/40 hover:shadow-[0_18px_40px_-26px_rgba(99,102,241,0.8)] motion-reduce:transform-none dark:hover:border-indigo-400/40"
@@ -127,78 +100,116 @@ function SearchCardItem({ card, animate, delay }: { card: SearchCard; animate: b
 
             <div className="flex items-start justify-between gap-3">
                 <div className="flex min-w-0 items-center gap-2.5">
+                    <button
+                        type="button"
+                        onClick={() => onDelete(entry.id)}
+                        aria-label={`Delete search: ${entry.query}`}
+                        title="Delete"
+                        className={cn(ICON_BUTTON, "hover:border-rose-500/40 hover:text-rose-600 dark:hover:border-rose-400/40 dark:hover:text-rose-300")}
+                    >
+                        <Trash2 className="size-4" aria-hidden="true" />
+                    </button>
+
                     <span className="flex size-8 shrink-0 items-center justify-center rounded-[9px] bg-indigo-500/10 text-indigo-600 ring-1 ring-inset ring-indigo-500/20 dark:bg-indigo-400/10 dark:text-indigo-300 dark:ring-indigo-400/20">
                         <Icon className="size-4" aria-hidden="true" />
                     </span>
                     <div className="min-w-0">
                         <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">
                             <Clock className="size-3" aria-hidden="true" />
-                            {card.time}
+                            {relativeTime(entry.createdAt)}
                         </p>
-                        <p className="truncate text-[13px] font-bold text-slate-900 dark:text-white">{card.type}</p>
+                        <p className="truncate text-[13px] font-bold text-slate-900 dark:text-white">{meta.label}</p>
                     </div>
                 </div>
 
-                <button
-                    type="button"
-                    className="shrink-0 rounded-[9px] border border-slate-200 bg-white px-3 py-1.5 text-[12px] font-bold text-slate-700 transition-all hover:-translate-y-0.5 hover:border-indigo-500/40 hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 motion-reduce:transform-none dark:border-[#22304A] dark:bg-[#16233A] dark:text-slate-200 dark:hover:border-indigo-400/40 dark:hover:text-indigo-300"
-                >
-                    View
-                </button>
+                <div className="flex shrink-0 items-center gap-2">
+                    <button
+                        type="button"
+                        onClick={() => onToggleSaved(entry.id)}
+                        aria-pressed={entry.saved}
+                        aria-label={entry.saved ? "Remove from saved searches" : "Save this search"}
+                        title={entry.saved ? "Saved" : "Save"}
+                        className={cn(
+                            ICON_BUTTON,
+                            "hover:border-indigo-500/40 hover:text-indigo-600 dark:hover:border-indigo-400/40 dark:hover:text-indigo-300",
+                            entry.saved && "border-indigo-500/40 text-indigo-600 dark:border-indigo-400/40 dark:text-indigo-300"
+                        )}
+                    >
+                        {entry.saved ? (
+                            <BookmarkCheck className="size-4" aria-hidden="true" />
+                        ) : (
+                            <Bookmark className="size-4" aria-hidden="true" />
+                        )}
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={() => onView(entry)}
+                        className="shrink-0 rounded-[9px] border border-slate-200 bg-white px-3 py-1.5 text-[12px] font-bold text-slate-700 transition-all hover:-translate-y-0.5 hover:border-indigo-500/40 hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 motion-reduce:transform-none dark:border-[#22304A] dark:bg-[#16233A] dark:text-slate-200 dark:hover:border-indigo-400/40 dark:hover:text-indigo-300"
+                    >
+                        View
+                    </button>
+                </div>
             </div>
 
             <div className="mt-3.5">
                 <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-600 dark:text-slate-300">Query</p>
-                <p className="mt-1 text-[13.5px] font-medium leading-snug text-slate-900 dark:text-white">{card.query}</p>
+                <p className="mt-1 text-[13.5px] font-medium leading-snug text-slate-900 dark:text-white">{entry.query}</p>
             </div>
 
             <div className="mt-3 flex flex-wrap items-center gap-1.5">
-                <AnimatePresence initial={false}>
-                    {shown.map((chip) => (
-                        <motion.span
-                            key={chip}
-                            initial={animate ? { opacity: 0, scale: 0.92 } : false}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={animate ? { opacity: 0, scale: 0.92 } : undefined}
-                            transition={{ duration: 0.18 }}
-                            className="rounded-full border border-slate-200 bg-white/80 px-2.5 py-1 text-[11px] font-semibold text-slate-700 dark:border-[#22304A] dark:bg-[#16233A]/80 dark:text-slate-300"
-                        >
-                            {chip}
-                        </motion.span>
-                    ))}
-                </AnimatePresence>
-
-                {hidden > 0 && (
-                    <button
-                        type="button"
-                        onClick={() => setExpanded((v) => !v)}
-                        aria-expanded={expanded}
-                        className="inline-flex items-center gap-0.5 rounded-md px-1.5 py-1 text-[11px] font-bold text-indigo-600 transition-colors hover:bg-indigo-500/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 dark:text-indigo-300"
-                    >
-                        {expanded ? "Show less" : `Show more (${hidden})`}
-                        <ChevronDown
-                            className={cn("size-3 transition-transform motion-reduce:transition-none", expanded && "rotate-180")}
-                            aria-hidden="true"
-                        />
-                    </button>
-                )}
+                {/* The Dashboard never parses the sentence — that is the
+                    destination page's job — so the only thing it can honestly
+                    label a search with is where it sent it. */}
+                <span className="rounded-full border border-slate-200 bg-white/80 px-2.5 py-1 text-[11px] font-semibold text-slate-700 dark:border-[#22304A] dark:bg-[#16233A]/80 dark:text-slate-300">
+                    {intent === "companies" ? "Companies" : "Events"}
+                </span>
             </div>
         </motion.li>
     );
 }
 
 export function OpportunitiesSection() {
+    const router = useRouter();
     const reduceMotion = useReducedMotion();
     const animate = !reduceMotion;
     const [tab, setTab] = useState<TabKey>("recent");
     const [prompt, setPrompt] = useState("");
+    const { recent, saved, record, remove, toggleSaved } = useQueryStore("dashboard_ask");
 
     const rise = (delay: number): MotionProps =>
         reduceMotion
             ? { initial: false, animate: { opacity: 1, y: 0 } }
             : { initial: { opacity: 0, y: 14 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.45, delay, ease: "easeOut" } };
 
-    const active = TABS.find((t) => t.key === tab) ?? TABS[0];
+    /**
+     * Classify and go. Recording first means the entry is in localStorage
+     * before the navigation starts, so it is already there when the user comes
+     * back — the destination page records its own parsed entry separately,
+     * under its own kind.
+     */
+    const send = useCallback(
+        (text: string) => {
+            const question = text.trim();
+            if (!question) return;
+
+            const { domain } = classifyAskDomain(question);
+            record({ query: question, chips: [], payload: { intent: domain } satisfies AskPayload });
+            setPrompt("");
+            router.push(buildHandoffUrl(domain, question, "dashboard"));
+        },
+        [record, router]
+    );
+
+    /** "View" replays the question through the same handoff, not a cached page. */
+    const view = useCallback(
+        (entry: SavedQuery) => {
+            router.push(buildHandoffUrl(intentOf(entry), entry.query, "dashboard"));
+        },
+        [router]
+    );
+
+    const entries = tab === "recent" ? recent : saved;
 
     return (
         <div className="relative mx-auto flex w-full max-w-[1100px] flex-col gap-8 pb-14">
@@ -243,6 +254,13 @@ export function OpportunitiesSection() {
                         <textarea
                             value={prompt}
                             onChange={(event) => setPrompt(event.target.value)}
+                            onKeyDown={(event) => {
+                                // Enter sends; Shift+Enter keeps the newline, which a
+                                // three-row box has to allow.
+                                if (event.key !== "Enter" || event.shiftKey) return;
+                                event.preventDefault();
+                                send(prompt);
+                            }}
                             rows={3}
                             aria-label="Describe what you are looking for"
                             placeholder="Try: packaging suppliers in Northern Italy attending a show before June, with a named operations contact…"
@@ -251,8 +269,10 @@ export function OpportunitiesSection() {
 
                         <button
                             type="button"
+                            onClick={() => send(prompt)}
+                            disabled={!prompt.trim()}
                             aria-label="Send prompt"
-                            className="group/send mt-1 flex size-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-[0_10px_24px_-12px_rgba(124,58,237,0.95)] transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_30px_-12px_rgba(124,58,237,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 motion-reduce:transform-none dark:focus-visible:ring-offset-[#0B1220]"
+                            className="group/send mt-1 flex size-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-[0_10px_24px_-12px_rgba(124,58,237,0.95)] transition-all hover:-translate-y-0.5 hover:shadow-[0_14px_30px_-12px_rgba(124,58,237,1)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0 motion-reduce:transform-none dark:focus-visible:ring-offset-[#0B1220]"
                         >
                             <ArrowUp className="size-4 transition-transform group-hover/send:-translate-y-0.5 motion-reduce:transition-none" aria-hidden="true" />
                         </button>
@@ -265,6 +285,7 @@ export function OpportunitiesSection() {
                 <div role="tablist" aria-label="Search history" className="flex items-center gap-1 border-b border-slate-200 dark:border-[#22304A]">
                     {TABS.map((item) => {
                         const selected = item.key === tab;
+                        const count = item.key === "recent" ? recent.length : saved.length;
                         return (
                             <button
                                 key={item.key}
@@ -280,6 +301,9 @@ export function OpportunitiesSection() {
                                 )}
                             >
                                 {item.label}
+                                {count > 0 ? (
+                                    <span className="ml-1.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">{count}</span>
+                                ) : null}
                                 {selected && (
                                     <motion.span
                                         layoutId="ask-tab-underline"
@@ -292,11 +316,34 @@ export function OpportunitiesSection() {
                     })}
                 </div>
 
-                <ul className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
-                    {active.data.map((card, index) => (
-                        <SearchCardItem key={card.id} card={card} animate={animate} delay={0.05 + index * 0.06} />
-                    ))}
-                </ul>
+                {entries.length === 0 ? (
+                    <div className={cn(GLASS, "rounded-[14px] px-5 py-8 text-center")}>
+                        <p className="text-[13.5px] font-semibold text-slate-900 dark:text-white">
+                            {tab === "recent" ? "No searches yet" : "Nothing saved yet"}
+                        </p>
+                        <p className="mt-1 text-[12.5px] font-medium text-slate-600 dark:text-slate-400">
+                            {tab === "recent"
+                                ? "Ask a question above — it lands here, and on the page that answered it."
+                                : "Bookmark a recent search to pin it here."}
+                        </p>
+                    </div>
+                ) : (
+                    <ul className="grid grid-cols-1 gap-3.5 md:grid-cols-2">
+                        <AnimatePresence initial={false}>
+                            {entries.map((entry, index) => (
+                                <SearchCardItem
+                                    key={entry.id}
+                                    entry={entry}
+                                    animate={animate}
+                                    delay={0.05 + index * 0.06}
+                                    onView={view}
+                                    onDelete={remove}
+                                    onToggleSaved={toggleSaved}
+                                />
+                            ))}
+                        </AnimatePresence>
+                    </ul>
+                )}
             </motion.div>
         </div>
     );

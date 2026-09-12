@@ -64,7 +64,14 @@ export function buildEventFilterChips(filters: EventFilters, search = ''): Event
 
   const calendar = formatCalendarSelection(filters.month ?? null, filters.year ?? null);
   if (calendar) {
-    chips.push({ id: CALENDAR_CHIP_ID, label: 'Month', value: calendar });
+    // The calendar picker holds a month, a year, or both, so the label has to
+    // follow what is actually set — a year-only selection labelled "Month"
+    // reads as a mistake ("Month: 2027").
+    chips.push({
+      id: CALENDAR_CHIP_ID,
+      label: filters.month ? 'Month' : 'Year',
+      value: calendar,
+    });
   }
 
   if (filters.favouritesOnly) {

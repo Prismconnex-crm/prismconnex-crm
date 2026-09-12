@@ -19,28 +19,20 @@ CREATE TABLE "DiscoveryCompany" (
     "phone" TEXT,
     "highlights" TEXT,
     "insights" TEXT,
-
     CONSTRAINT "DiscoveryCompany_pkey" PRIMARY KEY ("rowCursor")
 );
-
 -- CreateIndex
 CREATE UNIQUE INDEX "DiscoveryCompany_id_key" ON "DiscoveryCompany"("id");
-
 -- CreateIndex
 CREATE INDEX "idx_discovery_category" ON "DiscoveryCompany"("category");
-
 -- CreateIndex
 CREATE INDEX "idx_discovery_employee" ON "DiscoveryCompany"("employeeRange");
-
 -- CreateIndex
 CREATE INDEX "idx_discovery_region" ON "DiscoveryCompany"("region");
-
 -- CreateIndex
 CREATE INDEX "idx_discovery_filters" ON "DiscoveryCompany"("category", "employeeRange", "region");
-
 -- CreateIndex
 CREATE INDEX "idx_discovery_headquarters" ON "DiscoveryCompany"("headquarters");
-
 -- CreateIndex
 -- Case-insensitive prefix search (Postgres equivalent of the SQLite
 -- COLLATE NOCASE name-prefix trick app/api/companies/route.ts relies on).

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Calendar } from 'lucide-react';
 import { findShowEvents } from '@/lib/find-shows/catalog';
@@ -18,9 +18,7 @@ import {
 import { suggestEvents } from '@/lib/events/suggest';
 import { emptyEventFilters, type EventFilters } from '@/types/events';
 import type { SearchSuggestion } from '@/components/search/ai-search-panel';
-import { AssistantPanel } from '@/components/assistant/assistant-panel';
-import { useAssistantConversation } from '@/components/assistant/assistant-provider';
-import { eventsBinding } from '@/components/assistant/bindings/events';
+import { EventsAiSearch } from '@/components/events/events-ai-search';
 
 const PAGE_SIZE = 25;
 /** How many rows the answering model is allowed to see. */
@@ -121,27 +119,18 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
         [filteredEvents, safePage]
     );
 
-    const applyQueryState = useCallback((next: EventQueryState) => {
+    /**
+     * The question behind the current results. Null means the left rail is
+     * driving; the assistant panel reads it to keep its answer in step when a
+     * chip is removed underneath it.
+     */
+    const [askQuestion, setAskQuestion] = useState<string | null>(null);
+
+    const applyAskQuery = useCallback((next: EventQueryState, question: string | null) => {
         setQueryState(next);
+        setAskQuestion(question);
         setPage(1);
     }, []);
-
-    // A handoff carries filters the RAIL must show, not just the panel. Keyed by
-    // the question so a second handoff for the same target still applies.
-    const { state: conversation } = useAssistantConversation();
-    const appliedHandoffRef = useRef<string | null>(null);
-
-    useEffect(() => {
-        const handoff = conversation.pendingHandoff;
-        if (!handoff || handoff.to !== 'events' || !handoff.presetFilters) return;
-        const key = `${handoff.to}:${handoff.message}`;
-        if (appliedHandoffRef.current === key) return;
-        appliedHandoffRef.current = key;
-        setQueryState((prev) =>
-            eventsBinding.applyFilters(prev, handoff.presetFilters as Partial<EventQueryState>)
-        );
-        setPage(1);
-    }, [conversation.pendingHandoff]);
 
     const updateFilters = (filters: EventFilters) => {
         setQueryState((prev) => ({ ...prev, filters }));
@@ -194,7 +183,10 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
     // a typed question or a single filter — means the rows are what the user
     // came for, so the pitch collapses to a one-line bar. Target Events is a
     // curated list rather than a search, so it skips the hero entirely.
-    const isSearchActive = mode === 'target' || chips.length > 0;
+    // A question with every chip removed still has an answer and rows worth
+    // showing, so it keeps the compact layout rather than snapping back to the
+    // pitch — the hero is the empty state only.
+    const isSearchActive = mode === 'target' || chips.length > 0 || askQuestion !== null;
 
     return (
         <div className="mx-auto w-full max-w-[1600px] space-y-5 pb-8">
@@ -258,29 +250,17 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                                 // and the page keeps its single scrollbar.
                                 className="flex flex-col overflow-y-auto rounded-[16px] border border-slate-200 bg-white shadow-sm dark:border-[#22304A] dark:bg-[#111B2E] xl:sticky xl:top-4 xl:max-h-[calc(100vh-2rem)]"
                             >
-                                <AssistantPanel
-                                    currentPage="events"
-                                    activeFilters={queryState as unknown as Record<string, unknown>}
-                                    rowContext={{
-                                        likedIds,
-                                        targetIds,
-                                        onToggleLike: toggleLike,
-                                        onToggleTarget: toggleTarget,
-                                    }}
+                                <EventsAiSearch
+                                    variant="compact"
+                                    state={queryState}
+                                    question={askQuestion}
+                                    favouriteSlugs={likedIds}
+                                    onApply={applyAskQuery}
+                                    onRemoveChip={removeChip}
+                                    onClearAll={clearAll}
+                                    onClearQuery={() => setAskQuestion(null)}
                                     suggest={suggestEventRows}
                                     onSelectSuggestion={selectSuggestion}
-                                    onGoBack={(entity, sourceFilters) => {
-                                        // Spec 2b binds People and Events; a
-                                        // back-jump to Companies arrives in 2c.
-                                        if (entity === 'events' && sourceFilters) {
-                                            applyQueryState(
-                                                eventsBinding.applyFilters(
-                                                    queryState,
-                                                    sourceFilters as Partial<EventQueryState>
-                                                )
-                                            );
-                                        }
-                                    }}
                                 />
 
                                 <div className="flex shrink-0 items-center justify-between gap-3 border-b border-slate-200 px-4 py-3 dark:border-[#22304A]">
@@ -326,29 +306,17 @@ export function EventListView({ mode = 'all' }: { mode?: 'all' | 'target' }) {
                                 exit={{ opacity: 0 }}
                                 transition={{ duration: 0.2 }}
                             >
-                                <AssistantPanel
-                                    currentPage="events"
-                                    activeFilters={queryState as unknown as Record<string, unknown>}
-                                    rowContext={{
-                                        likedIds,
-                                        targetIds,
-                                        onToggleLike: toggleLike,
-                                        onToggleTarget: toggleTarget,
-                                    }}
+                                <EventsAiSearch
+                                    variant="hero"
+                                    state={queryState}
+                                    question={askQuestion}
+                                    favouriteSlugs={likedIds}
+                                    onApply={applyAskQuery}
+                                    onRemoveChip={removeChip}
+                                    onClearAll={clearAll}
+                                    onClearQuery={() => setAskQuestion(null)}
                                     suggest={suggestEventRows}
                                     onSelectSuggestion={selectSuggestion}
-                                    onGoBack={(entity, sourceFilters) => {
-                                        // Spec 2b binds People and Events; a
-                                        // back-jump to Companies arrives in 2c.
-                                        if (entity === 'events' && sourceFilters) {
-                                            applyQueryState(
-                                                eventsBinding.applyFilters(
-                                                    queryState,
-                                                    sourceFilters as Partial<EventQueryState>
-                                                )
-                                            );
-                                        }
-                                    }}
                                 />
                             </motion.div>
                         )}

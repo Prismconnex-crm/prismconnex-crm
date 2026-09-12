@@ -26,7 +26,8 @@ import {
   X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { EnrichedLeadsFinderPanel } from "@/components/crm/enriched-leads-finder-panel";
+import { CompaniesAiSearch } from "@/components/companies/companies-ai-search";
+import { FilterChips } from "@/components/search/filter-chips";
 import { EventCatalogPanel } from "@/components/crm/event-catalog-panel";
 import type { EventFilters, EventResult } from "@/models/event-query";
 import {
@@ -35,7 +36,15 @@ import {
   COMPANY_EMPLOYEE_RANGES,
   COMPANY_LOCATION_REGIONS,
 } from "@/lib/company-classification";
-import { parseLeadQuery } from "@/lib/lead-query";
+import {
+  COMPANY_CITIES,
+  COMPANY_LIMIT_OPTIONS,
+  buildCompanyFilterChips,
+  emptyCompanyQuery,
+  removeCompanyChip,
+  type CompanyQueryState,
+  type CompanySort,
+} from "@/lib/companies/nl-query";
 
 type EventSearchState = {
   query: string;
@@ -370,6 +379,7 @@ const FILTER_OPTIONS: { key: string; label: string }[] = [
   // are the four discovery regions, not cities.
   { key: "location", label: "Region" },
   { key: "country", label: "Country" },
+  { key: "city", label: "City" },
   { key: "keywords", label: "Keywords" },
   { key: "employee-headcount", label: "Employee Headcount" },
   { key: "industry", label: "Industry" },
@@ -406,7 +416,8 @@ function CompanyTable({
   onPageSizeChange: (size: number) => void;
 }) {
   const [showPageSizeDropdown, setShowPageSizeDropdown] = useState(false);
-  const pageSizeOptions = [30, 50, 100];
+  // Matches what the assistant will accept from "list 500 companies in IT".
+  const pageSizeOptions = COMPANY_LIMIT_OPTIONS;
   const rangeStart = (page - 1) * pageSize + 1;
   const rangeEnd = companies.length > 0 ? rangeStart + companies.length - 1 : 0;
   const canGoPrev = page > 1;
@@ -549,7 +560,7 @@ export function CompaniesSection() {
 
   const [totalCompanies, setTotalCompanies] = useState<number | null>(null);
   const [tablePage, setTablePage] = useState(1);
-  const [tablePageSize, setTablePageSize] = useState(30);
+  const [tablePageSize, setTablePageSize] = useState(25);
   const [pageCursors, setPageCursors] = useState<(string | null)[]>([null]);
   const [nextCursor, setNextCursor] = useState<string | null>(null);
   const [hasNextPage, setHasNextPage] = useState(false);
@@ -642,14 +653,52 @@ export function CompaniesSection() {
   const [askUnavailable, setAskUnavailable] = useState(false);
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [categorySearch, setCategorySearch] = useState("");
+  const [citySearch, setCitySearch] = useState("");
+  const [keywordDraft, setKeywordDraft] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedEmployeeRange, setSelectedEmployeeRange] = useState<string | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  const [keywords, setKeywords] = useState<string[]>([]);
+  const [companySort, setCompanySort] = useState<CompanySort>("relevance");
+  // The question behind the current results. Null means the rail is driving.
+  const [askQuestion, setAskQuestion] = useState<string | null>(null);
   const [filterOrder, setFilterOrder] = useState<string[]>([]);
   const debouncedCompanySearch = useDebouncedValue(companySearch.trim(), 300);
   const isSearchPending = companySearch.trim() !== debouncedCompanySearch;
   const currentCursor = pageCursors[tablePage - 1] ?? null;
+
+  /**
+   * The rail's state as one object. This is the single description of "what is
+   * being searched": the list request, the assistant's answer, the chips and a
+   * saved history entry are all built from it, so they cannot drift apart.
+   * Built from the debounced search text so typing doesn't re-ask per keystroke.
+   */
+  const queryState: CompanyQueryState = useMemo(
+    () => ({
+      search: debouncedCompanySearch || null,
+      category: selectedCategory,
+      region: selectedLocation,
+      country: selectedCountry,
+      city: selectedCity,
+      employeeRange: selectedEmployeeRange,
+      keywords,
+      limit: tablePageSize,
+      sort: companySort,
+    }),
+    [
+      debouncedCompanySearch,
+      selectedCategory,
+      selectedLocation,
+      selectedCountry,
+      selectedCity,
+      selectedEmployeeRange,
+      keywords,
+      tablePageSize,
+      companySort,
+    ]
+  );
 
   const resetCompanyPagination = useCallback(() => {
     setTablePage(1);
@@ -667,12 +716,14 @@ export function CompaniesSection() {
   const clearFilterByKey = useCallback(
     (key: string) => {
       const orderKey =
-        key === "employee-headcount" ? "employeeRange" : key === "category" ? "category" : key;
+        key === "employee-headcount" ? "employeeRange" : key === "location" ? "location" : key;
 
       if (key === "category") setSelectedCategory(null);
       else if (key === "employee-headcount") setSelectedEmployeeRange(null);
       else if (key === "location") setSelectedLocation(null);
       else if (key === "country") setSelectedCountry(null);
+      else if (key === "city") setSelectedCity(null);
+      else if (key === "keywords") setKeywords([]);
       else return;
 
       setFilterOrder((prev) => prev.filter((entry) => entry !== orderKey));
@@ -682,6 +733,57 @@ export function CompaniesSection() {
     },
     [resetCompanyPagination]
   );
+
+  /**
+   * Writes a whole search state into the rail. The assistant's parse, a
+   * restored history entry and a chip removal all land here, so every one of
+   * them shows up in the left rail exactly as if it had been clicked there.
+   */
+  const applyCompanyQuery = useCallback(
+    (next: CompanyQueryState, question: string | null) => {
+      setMainTab("companies");
+      setIsDetailView(false);
+      setSelectedCompanyId(null);
+      setEventSearch(null);
+
+      setCompanySearch(next.search ?? "");
+      setSelectedCategory(next.category);
+      setSelectedLocation(next.region);
+      setSelectedCountry(next.country);
+      setSelectedCity(next.city);
+      setSelectedEmployeeRange(next.employeeRange);
+      setKeywords(next.keywords);
+      setCompanySort(next.sort);
+      setTablePageSize(next.limit);
+      setAskQuestion(question);
+
+      // "Clear" walks this back-to-front, so the order has to match the order
+      // the filters were actually applied in.
+      const order: string[] = [];
+      if (next.category) order.push("category");
+      if (next.employeeRange) order.push("employeeRange");
+      if (next.region) order.push("location");
+      if (next.country) order.push("country");
+      if (next.city) order.push("city");
+      if (next.keywords.length > 0) order.push("keywords");
+      setFilterOrder(order);
+
+      resetCompanyPagination();
+    },
+    [resetCompanyPagination]
+  );
+
+  /** One chip's ✕, in the panel. Drops that dimension and re-runs everything. */
+  const handleRemoveChip = useCallback(
+    (chipId: string) => {
+      applyCompanyQuery(removeCompanyChip(queryState, chipId), askQuestion);
+    },
+    [applyCompanyQuery, askQuestion, queryState]
+  );
+
+  const clearAllCompanyFilters = useCallback(() => {
+    applyCompanyQuery({ ...emptyCompanyQuery(), limit: tablePageSize }, null);
+  }, [applyCompanyQuery, tablePageSize]);
 
   // Global topbar search: apply ?q= from the URL on mount, and react live to
   // searches submitted from the topbar while this section is already rendered.
@@ -704,33 +806,6 @@ export function CompaniesSection() {
     };
     window.addEventListener("pcx:company-search", onGlobalSearch);
     return () => window.removeEventListener("pcx:company-search", onGlobalSearch);
-  }, [resetCompanyPagination]);
-
-  // "Find your enrich Leads" prompt: translate the free-text query into the
-  // same filters the left rail uses, so the applied changes stay visible there.
-  const handleLeadQuery = useCallback((raw: string) => {
-    const parsed = parseLeadQuery(raw);
-    const matchedAnyFilter =
-      parsed.category || parsed.country || parsed.region || parsed.employeeRange || parsed.limit;
-
-    setMainTab("companies");
-    setIsDetailView(false);
-    setSelectedCompanyId(null);
-
-    const order: string[] = [];
-    if (parsed.category) { setSelectedCategory(parsed.category); order.push("category"); }
-    if (parsed.employeeRange) { setSelectedEmployeeRange(parsed.employeeRange); order.push("employeeRange"); }
-    if (parsed.region) { setSelectedLocation(parsed.region); order.push("location"); }
-    if (parsed.country) { setSelectedCountry(parsed.country); order.push("country"); }
-    if (order.length) {
-      setFilterOrder((prev) => [...prev.filter((f) => !order.includes(f)), ...order]);
-    }
-    if (parsed.limit) setTablePageSize(Math.min(100, Math.max(1, parsed.limit)));
-
-    // Nothing recognized — treat the text as a company-name search instead.
-    if (!matchedAnyFilter) setCompanySearch(raw);
-
-    resetCompanyPagination();
   }, [resetCompanyPagination]);
 
   const handleNextCompanyPage = useCallback(() => {
@@ -763,6 +838,9 @@ export function CompaniesSection() {
     if (selectedEmployeeRange) params.set('employeeRange', selectedEmployeeRange);
     if (selectedLocation) params.set('location', selectedLocation);
     if (selectedCountry) params.set('country', selectedCountry);
+    if (selectedCity) params.set('city', selectedCity);
+    if (keywords.length > 0) params.set('keywords', keywords.join(','));
+    if (companySort !== 'relevance') params.set('sort', companySort);
 
     // Instant paint on reload: serve the last response for this exact query from
     // sessionStorage (5 min TTL), then revalidate against the API in the background.
@@ -852,7 +930,7 @@ export function CompaniesSection() {
       cancelled = true;
       controller.abort();
     };
-  }, [debouncedCompanySearch, currentCursor, selectedCategory, selectedEmployeeRange, selectedLocation, selectedCountry, tablePage, tablePageSize]);
+  }, [debouncedCompanySearch, currentCursor, selectedCategory, selectedEmployeeRange, selectedLocation, selectedCountry, selectedCity, keywords, companySort, tablePage, tablePageSize]);
 
   const filteredCategories = useMemo(() => {
     const query = categorySearch.trim().toLowerCase();
@@ -862,6 +940,12 @@ export function CompaniesSection() {
 
     return COMPANY_CATEGORIES.filter((category) => category.includes(query));
   }, [categorySearch]);
+
+  const filteredCities = useMemo(() => {
+    const query = citySearch.trim().toLowerCase();
+    if (!query) return COMPANY_CITIES;
+    return COMPANY_CITIES.filter((city) => city.toLowerCase().includes(query));
+  }, [citySearch]);
 
   const filteredCompanies = companies;
   const isCompaniesBusy = isLoading || isSearchPending;
@@ -970,7 +1054,13 @@ export function CompaniesSection() {
   // Any live filter/search means the right panel shows matching companies;
   // with nothing active it shows the enriched-leads finder instead.
   const hasActiveCriteria = Boolean(
-    selectedCategory || selectedEmployeeRange || selectedLocation || selectedCountry || companySearch.trim()
+    selectedCategory ||
+      selectedEmployeeRange ||
+      selectedLocation ||
+      selectedCountry ||
+      selectedCity ||
+      keywords.length > 0 ||
+      companySearch.trim()
   );
 
   const activeCompany =
@@ -1235,90 +1325,23 @@ export function CompaniesSection() {
 
             <div className={cn("mt-4 flex flex-wrap items-center gap-2", eventSearch && "hidden")}>
               <button
-                onClick={() => {
-                  setSelectedCategory(null);
-                  setSelectedEmployeeRange(null);
-                  setSelectedLocation(null);
-                  setSelectedCountry(null);
-                  setSelectedCompanyId(null);
-                  setIsDetailView(false);
-                  setFilterOrder([]);
-                  resetCompanyPagination();
-                }}
+                onClick={clearAllCompanyFilters}
                 className={cn(
                   "rounded-full border px-3 py-1 text-[11px] font-semibold transition-colors",
-                  !selectedCategory && !selectedEmployeeRange && !selectedLocation && !selectedCountry
+                  !hasActiveCriteria
                     ? "border-slate-900 bg-slate-900 text-white dark:border-white dark:bg-white dark:text-[#0B1220]"
                     : "border-slate-200 bg-white text-slate-600 hover:border-indigo-300 hover:text-slate-900 dark:border-[#22304A] dark:bg-[#111B2E] dark:text-slate-300 dark:hover:text-white"
                 )}
               >
                 All
               </button>
-              {selectedCategory ? (
-                <span className="rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-[11px] font-semibold text-indigo-700 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300">
-                  {formatCategoryLabel(selectedCategory)}
-                </span>
-              ) : null}
-              {selectedEmployeeRange ? (
-                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold text-slate-700 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300">
-                  {selectedEmployeeRange}
-                </span>
-              ) : null}
-              {selectedLocation ? (
-                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold text-slate-700 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300">
-                  {selectedLocation}
-                </span>
-              ) : null}
-              {selectedCountry ? (
-                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-[11px] font-semibold text-slate-700 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300">
-                  {selectedCountry}
-                </span>
-              ) : null}
-              {(selectedCategory || selectedEmployeeRange || selectedLocation || selectedCountry) ? (
-                <button
-                  onClick={() => {
-                    const newOrder = [...filterOrder];
-                    let cleared = false;
-                    while (newOrder.length > 0 && !cleared) {
-                      const last = newOrder.pop()!;
-                      if (last === 'country' && selectedCountry) {
-                        setSelectedCountry(null);
-                        cleared = true;
-                      } else if (last === 'location' && selectedLocation) {
-                        setSelectedLocation(null);
-                        cleared = true;
-                      } else if (last === 'employeeRange' && selectedEmployeeRange) {
-                        setSelectedEmployeeRange(null);
-                        cleared = true;
-                      } else if (last === 'category' && selectedCategory) {
-                        setSelectedCategory(null);
-                        cleared = true;
-                      }
-                    }
-                    if (!cleared) {
-                      if (selectedCountry) {
-                        setSelectedCountry(null);
-                      } else if (selectedLocation) {
-                        setSelectedLocation(null);
-                      } else if (selectedEmployeeRange) {
-                        setSelectedEmployeeRange(null);
-                      } else if (selectedCategory) {
-                        setSelectedCategory(null);
-                      }
-                    }
-                    setFilterOrder(newOrder);
-                    setSelectedCompanyId(null);
-                    setIsDetailView(false);
-                    resetCompanyPagination();
-                  }}
-                  className="rounded-full border border-slate-900 bg-slate-900 px-3 py-1 text-[11px] font-semibold text-white transition-colors hover:bg-slate-800 dark:border-white dark:bg-white dark:text-[#0B1220] dark:hover:bg-slate-100"
-                >
-                  <span className="flex items-center gap-1">
-                    <X className="size-3" />
-                    Clear
-                  </span>
-                </button>
-              ) : null}
+              {/* One chip per active filter, each with its own removal.
+                  Built from queryState so the rail, the assistant panel and the
+                  request all show the same filters. */}
+              <FilterChips
+                chips={buildCompanyFilterChips(queryState)}
+                onRemove={(chip) => handleRemoveChip(chip.id)}
+              />
             </div>
 
             <div className={cn("mt-4 flex-1 space-y-1.5", eventSearch && "hidden")}>
@@ -1333,7 +1356,11 @@ export function CompaniesSection() {
                         ? selectedLocation
                         : option.key === "country" && selectedCountry
                           ? selectedCountry
-                          : null;
+                          : option.key === "city" && selectedCity
+                            ? selectedCity
+                            : option.key === "keywords" && keywords.length > 0
+                              ? keywords.join(", ")
+                              : null;
 
                 return (
                   <div
@@ -1505,6 +1532,92 @@ export function CompaniesSection() {
                                   </button>
                                 ))}
                               </div>
+                            ) : option.key === "city" ? (
+                              <>
+                                <div className="relative">
+                                  <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
+                                  <input
+                                    value={citySearch}
+                                    onChange={(event) => setCitySearch(event.target.value)}
+                                    placeholder="Search city..."
+                                    className="h-9 w-full rounded-[9px] border border-slate-200 bg-slate-50 pl-9 pr-3 text-[12px] text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
+                                  />
+                                </div>
+                                <div className="mt-2 max-h-52 space-y-1 overflow-y-auto">
+                                  {filteredCities.map((cityName) => (
+                                    <button
+                                      key={cityName}
+                                      type="button"
+                                      onClick={() => {
+                                        setSelectedCity(cityName);
+                                        setOpenFilter(null);
+                                        setSelectedCompanyId(null);
+                                        setIsDetailView(false);
+                                        resetCompanyPagination();
+                                        setFilterOrder((prev) => [...prev.filter((f) => f !== 'city'), 'city']);
+                                      }}
+                                      className="flex w-full items-center justify-between rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
+                                    >
+                                      <span>{cityName}</span>
+                                      {selectedCity === cityName ? (
+                                        <Check className="size-3.5 text-indigo-500" />
+                                      ) : null}
+                                    </button>
+                                  ))}
+                                </div>
+                              </>
+                            ) : option.key === "keywords" ? (
+                              <div className="space-y-2">
+                                {/* Free text, not a picker: keywords are matched
+                                    against company names and tags, so there is no
+                                    fixed vocabulary to choose from. */}
+                                <input
+                                  value={keywordDraft}
+                                  onChange={(event) => setKeywordDraft(event.target.value)}
+                                  onKeyDown={(event) => {
+                                    if (event.key !== "Enter") return;
+                                    event.preventDefault();
+                                    const value = keywordDraft.trim();
+                                    if (value.length < 2 || keywords.length >= 4) return;
+                                    if (keywords.some((k) => k.toLowerCase() === value.toLowerCase())) return;
+                                    setKeywords((prev) => [...prev, value]);
+                                    setKeywordDraft("");
+                                    setSelectedCompanyId(null);
+                                    setIsDetailView(false);
+                                    resetCompanyPagination();
+                                    setFilterOrder((prev) => [...prev.filter((f) => f !== 'keywords'), 'keywords']);
+                                  }}
+                                  placeholder="Add a keyword, press Enter"
+                                  className="h-9 w-full rounded-[9px] border border-slate-200 bg-slate-50 px-3 text-[12px] text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
+                                />
+                                {keywords.length > 0 ? (
+                                  <div className="flex flex-wrap gap-1.5">
+                                    {keywords.map((keyword) => (
+                                      <span
+                                        key={keyword}
+                                        className="inline-flex items-center gap-1 rounded-full bg-indigo-50 py-0.5 pl-2 pr-1 text-[11px] font-semibold text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300"
+                                      >
+                                        {keyword}
+                                        <button
+                                          type="button"
+                                          aria-label={`Remove keyword ${keyword}`}
+                                          onClick={() => {
+                                            setKeywords((prev) => prev.filter((k) => k !== keyword));
+                                            resetCompanyPagination();
+                                          }}
+                                          className="flex size-3.5 items-center justify-center rounded-full text-indigo-500 transition-colors hover:bg-indigo-500 hover:text-white"
+                                        >
+                                          <X className="size-2.5" strokeWidth={3} />
+                                        </button>
+                                      </span>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <p className="px-1 text-[11px] text-slate-400 dark:text-slate-500">
+                                    Matched against company names and tags. Up to 4.
+                                  </p>
+                                )}
+                              </div>
                             ) : (
                               <p className="px-3 py-3 text-center text-[12px] text-slate-400 dark:text-slate-500">
                                 Coming soon — this filter unlocks with a connected data source.
@@ -1548,26 +1661,50 @@ export function CompaniesSection() {
                 }}
               />
             </div>
-          ) : !isDetailView && !hasActiveCriteria ? (
-            <EnrichedLeadsFinderPanel onQuery={handleLeadQuery} />
-          ) : !isDetailView ? (
-            <CompanyTable
-              companies={filteredCompanies}
-              page={tablePage}
-              pageSize={tablePageSize}
-              total={totalCompanies}
-              hasNextPage={hasNextPage}
-              onNextPage={handleNextCompanyPage}
-              onPreviousPage={handlePreviousCompanyPage}
-              onPageSizeChange={(s) => {
-                setTablePageSize(s);
-                resetCompanyPagination();
-              }}
-              onSelect={(id) => {
-                setSelectedCompanyId(id);
-                setIsDetailView(true);
-              }}
+          ) : !isDetailView && !hasActiveCriteria && !askQuestion ? (
+            /* The hero is the empty state only. A question with every filter
+               removed still has an answer and rows to show, so it keeps the
+               compact layout rather than throwing the search away. */
+            <CompaniesAiSearch
+              variant="hero"
+              state={queryState}
+              question={askQuestion}
+              onApply={applyCompanyQuery}
+              onRemoveChip={handleRemoveChip}
             />
+          ) : !isDetailView ? (
+            /* Question, chips and answer stay pinned above the rows they
+               produced, so the search that is running is always visible. */
+            <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[14px] border border-slate-200 bg-white shadow-sm dark:border-[#22304A] dark:bg-[#111B2E]">
+              <CompaniesAiSearch
+                variant="compact"
+                state={queryState}
+                question={askQuestion}
+                onApply={applyCompanyQuery}
+                onRemoveChip={handleRemoveChip}
+                onClearAll={clearAllCompanyFilters}
+                onClearQuery={() => setAskQuestion(null)}
+              />
+              <div className="min-h-0 flex-1 overflow-y-auto p-3">
+                <CompanyTable
+                  companies={filteredCompanies}
+                  page={tablePage}
+                  pageSize={tablePageSize}
+                  total={totalCompanies}
+                  hasNextPage={hasNextPage}
+                  onNextPage={handleNextCompanyPage}
+                  onPreviousPage={handlePreviousCompanyPage}
+                  onPageSizeChange={(s) => {
+                    setTablePageSize(s);
+                    resetCompanyPagination();
+                  }}
+                  onSelect={(id) => {
+                    setSelectedCompanyId(id);
+                    setIsDetailView(true);
+                  }}
+                />
+              </div>
+            </div>
           ) : isDetailView && activeCompany ? (
             <div className="flex flex-1 flex-col space-y-2.5 overflow-y-auto pb-4 pr-1">
               <div className="rounded-[10px] border border-slate-200 bg-white p-3.5 shadow-sm dark:border-[#22304A] dark:bg-[#111B2E]">

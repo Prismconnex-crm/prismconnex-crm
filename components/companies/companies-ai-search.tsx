@@ -2,23 +2,23 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Loader2, Sparkles, TriangleAlert } from "lucide-react";
-import { AiSearchPanel, CompactSearchBar, type SearchSuggestion } from "@/components/search/ai-search-panel";
+import { AiSearchPanel, CompactSearchBar } from "@/components/search/ai-search-panel";
 import { FilterChips } from "@/components/search/filter-chips";
 import { useQueryStore, type SavedQuery } from "@/components/search/query-store";
 import { useAskHandoff } from "@/components/search/use-ask-handoff";
-import { buildEventFilterChips } from "@/lib/events/chips";
-import type { EventQueryState } from "@/lib/events/filters";
-import { emptyEventFilters } from "@/types/events";
+import {
+  buildCompanyFilterChips,
+  emptyCompanyQuery,
+  type CompanyQueryState,
+} from "@/lib/companies/nl-query";
 
-const PLACEHOLDER = "e.g., Packaging expos in Asia-Pacific next spring";
-
-/** What "View" stores, and what a restore reads back. */
-export type StoredEventQuery = EventQueryState;
+const PLACEHOLDER = "e.g., Give 30 fintech companies in India with 200-500 employees";
 
 type AskResponse = {
-  parsedQuery: EventQueryState & { limit: number; sort: string };
+  parsedQuery: CompanyQueryState;
   answer: string;
   totalCount: number;
+  totalCountCapped: boolean;
 };
 
 /**
@@ -27,77 +27,69 @@ type AskResponse = {
  * answer is now stale". Without it, applying a parse would immediately
  * re-request the answer it just produced.
  */
-function signature(state: EventQueryState): string {
-  const { filters, search } = state;
+function signature(state: CompanyQueryState) {
   return JSON.stringify([
-    search,
-    filters.regions,
-    filters.countries,
-    filters.cities,
-    filters.categories,
-    filters.organizers,
-    filters.keywords,
-    filters.dateFrom,
-    filters.dateTo,
-    filters.month,
-    filters.year,
-    filters.favouritesOnly,
+    state.search,
+    state.category,
+    state.region,
+    state.country,
+    state.city,
+    state.employeeRange,
+    state.keywords,
+    state.limit,
+    state.sort,
   ]);
 }
 
 /**
- * The Events Explorer's "Find anything" panel.
+ * The Companies "Find anything" panel.
  *
- * Deterministic end to end: POST /api/events/ask parses the sentence with
- * dictionaries built from the catalog and answers from it directly — no model
- * call, no API key, no per-keystroke cost. The parse is handed up via
- * `onApply` and becomes the page's `EventQueryState`, which is what the left
- * rail renders from; that is what makes a removed chip and a rail click the
- * same code path, and lets Recent/Saved restore a search exactly.
+ * Deterministic end to end: POST /api/companies/ask with `mode: "structured"`
+ * parses the sentence with dictionaries and answers straight from the
+ * discovery dataset, so there is no model call, no API key and no per-keystroke
+ * cost. The parse is handed up via `onApply` and becomes the left rail's
+ * state — which is what makes a removed chip and a rail click the same code
+ * path, and lets Recent/Saved restore a search exactly.
  */
-export function EventsAiSearch({
+export function CompaniesAiSearch({
   variant = "hero",
   state,
   question,
-  favouriteSlugs,
   onApply,
   onRemoveChip,
   onClearAll,
   onClearQuery,
-  suggest,
-  onSelectSuggestion,
 }: {
   /** `hero` is the empty state; `compact` is one pinned line above the results. */
   variant?: "hero" | "compact";
-  state: EventQueryState;
+  state: CompanyQueryState;
   /** The question behind the current results; seeds the compact input. */
   question: string | null;
-  /** Liked slugs, so the server can honour `favouritesOnly` (it lives in localStorage). */
-  favouriteSlugs: ReadonlySet<string>;
-  onApply: (next: StoredEventQuery, question: string | null) => void;
+  onApply: (next: CompanyQueryState, question: string | null) => void;
   onRemoveChip: (chipId: string) => void;
+  /** Full reset — question and filters — which collapses back to the hero. */
   onClearAll?: () => void;
+  /** Drops just the question, leaving the filters alone. */
   onClearQuery?: () => void;
-  suggest?: (query: string) => SearchSuggestion[];
-  onSelectSuggestion?: (id: string) => void;
 }) {
   const [isAsking, setIsAsking] = useState(false);
   const [failure, setFailure] = useState<string | null>(null);
   const [answer, setAnswer] = useState<string | null>(null);
   const [draft, setDraft] = useState(question ?? "");
-  const { record } = useQueryStore("event_query");
+  const { record } = useQueryStore("lead_query");
 
-  /** The state the answer on screen was computed for. */
+  // The state the answer on screen was computed for.
   const answered = useRef<string | null>(null);
   /**
-   * Identifies the newest in-flight request. A per-effect `cancelled` flag is
-   * not enough: applying a parse re-renders with a new state object, so the
-   * refresh effect tears down and re-runs while its own request is still open,
-   * and its `finally` would be skipped — leaving the spinner stuck on.
+   * Identifies the newest in-flight request. A plain per-effect `cancelled`
+   * flag is not enough here: applying a parse re-renders with a new state
+   * object, so the refresh effect below tears down and re-runs while its own
+   * request is still open. With `cancelled` that request's `finally` was
+   * skipped and the busy spinner never cleared.
    */
   const requestId = useRef(0);
 
-  const chips = buildEventFilterChips(state.filters, state.search);
+  const chips = buildCompanyFilterChips(state);
 
   // A restored history entry changes the question without going through the
   // input, so the compact box tracks it.
@@ -106,20 +98,16 @@ export function EventsAiSearch({
   }, [question]);
 
   const ask = useCallback(
-    async (prompt: string, filters?: EventQueryState): Promise<AskResponse> => {
-      const response = await fetch("/api/events/ask", {
+    async (prompt: string, filters?: CompanyQueryState): Promise<AskResponse | null> => {
+      const response = await fetch("/api/companies/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          q: prompt,
-          ...(filters ? { filters: filters.filters, search: filters.search } : {}),
-          favouriteSlugs: Array.from(favouriteSlugs),
-        }),
+        body: JSON.stringify({ q: prompt, mode: "structured", filters }),
       });
       if (!response.ok) throw new Error(`Request failed (${response.status})`);
       return (await response.json()) as AskResponse;
     },
-    [favouriteSlugs]
+    []
   );
 
   const runQuery = useCallback(
@@ -129,25 +117,21 @@ export function EventsAiSearch({
       setFailure(null);
       try {
         const result = await ask(prompt);
-        if (requestId.current !== id) return;
+        if (!result || requestId.current !== id) return;
 
-        const next: StoredEventQuery = {
-          filters: result.parsedQuery.filters,
-          search: result.parsedQuery.search,
-        };
-        answered.current = signature(next);
+        answered.current = signature(result.parsedQuery);
         setAnswer(result.answer);
-        onApply(next, prompt);
+        onApply(result.parsedQuery, prompt);
 
         record({
           query: prompt,
-          chips: buildEventFilterChips(next.filters, next.search).map((chip) => ({
+          chips: buildCompanyFilterChips(result.parsedQuery).map((chip) => ({
             label: chip.label,
             value: chip.value,
           })),
           // The parse, not the rows: "View" restores the search and re-runs it
-          // against the live catalog rather than replaying a stale page.
-          payload: next,
+          // against live data rather than replaying a stale page.
+          payload: result.parsedQuery,
         });
       } catch {
         if (requestId.current !== id) return;
@@ -162,12 +146,12 @@ export function EventsAiSearch({
   );
 
   /**
-   * Cross-page routing. A company question typed here is handed to the
-   * Companies page instead of being answered badly against the trade-show
-   * catalog; a question arriving from Companies runs `runQuery` directly,
-   * which skips classification and so cannot bounce back.
+   * Cross-page routing. A trade-show question typed here is handed to the
+   * Events Explorer instead of being answered badly against the company
+   * dataset; a question arriving from Events runs `runQuery` directly, which
+   * skips classification and so cannot bounce back.
    */
-  const handOff = useAskHandoff("events", runQuery);
+  const handOff = useAskHandoff("companies", runQuery);
 
   const submit = useCallback(
     (prompt: string) => {
@@ -197,7 +181,7 @@ export function EventsAiSearch({
     setIsAsking(true);
     ask(question, state)
       .then((result) => {
-        if (requestId.current !== id) return;
+        if (requestId.current !== id || !result) return;
         setAnswer(result.answer);
         setFailure(null);
       })
@@ -211,14 +195,12 @@ export function EventsAiSearch({
 
   const restore = useCallback(
     (entry: SavedQuery) => {
-      const payload = entry.payload as Partial<StoredEventQuery> | undefined;
-      if (!payload?.filters) return;
+      const payload = entry.payload as Partial<CompanyQueryState> | undefined;
+      if (!payload) return;
+      const next = { ...emptyCompanyQuery(), ...payload };
       answered.current = null;
       setFailure(null);
-      onApply(
-        { filters: { ...emptyEventFilters(), ...payload.filters }, search: payload.search ?? "" },
-        entry.query
-      );
+      onApply(next, entry.query);
     },
     [onApply]
   );
@@ -237,7 +219,7 @@ export function EventsAiSearch({
         {isAsking ? (
           <span className="flex items-center gap-2 text-[13px] font-medium text-slate-500 dark:text-slate-400">
             <Loader2 className="size-3.5 animate-spin" />
-            Searching the trade-show catalog…
+            Searching the discovery dataset…
           </span>
         ) : (
           <p className="text-[13px] font-medium leading-relaxed text-slate-800 dark:text-slate-100">
@@ -254,13 +236,13 @@ export function EventsAiSearch({
           className="sticky top-0 z-20 shrink-0"
           value={draft}
           placeholder={PLACEHOLDER}
-          kind="event_query"
-          kindLabel="Event query"
+          kind="lead_query"
+          kindLabel="Company query"
           isBusy={isAsking}
           onChange={(next) => {
             setDraft(next);
             // Emptying the box drops the question behind the results; the hero
-            // comes back on its own once nothing is filtering the catalog.
+            // comes back on its own once nothing is filtering the list.
             if (!next.trim()) onClearQuery?.();
           }}
           onSubmit={submit}
@@ -271,15 +253,13 @@ export function EventsAiSearch({
             onClearAll?.();
           }}
           onSelectQuery={restore}
-          suggest={suggest}
-          onSelectSuggestion={onSelectSuggestion}
         />
 
         <div className="sticky top-14 z-10 shrink-0 border-b border-slate-200 bg-white/95 px-4 py-2.5 backdrop-blur-xl dark:border-[#22304A] dark:bg-[#111B2E]/95">
           <FilterChips
             chips={chips}
             onRemove={(chip) => onRemoveChip(chip.id)}
-            emptyLabel="No filters applied — showing the whole catalog."
+            emptyLabel="No filters applied — showing the whole dataset."
           />
         </div>
 
@@ -296,23 +276,21 @@ export function EventsAiSearch({
   return (
     <AiSearchPanel
       title="Find anything"
-      subtitle="Describe the trade shows you're looking for and we'll build the search — the filters on the left will update to match."
+      subtitle="Describe the companies you're looking for and we'll build the search — the filters on the left will update to match."
       placeholder={PLACEHOLDER}
-      kind="event_query"
-      kindLabel="Event query"
+      kind="lead_query"
+      kindLabel="Company query"
       isBusy={isAsking}
       onSubmit={submit}
       onSelectQuery={restore}
       note={failureNote}
-      suggest={suggest}
-      onSelectSuggestion={onSelectSuggestion}
     >
       <div className="space-y-3">
         {answerNote}
         <FilterChips
           chips={chips}
           onRemove={(chip) => onRemoveChip(chip.id)}
-          emptyLabel="No filters applied — showing the whole catalog."
+          emptyLabel="No filters applied — showing the whole dataset."
         />
       </div>
     </AiSearchPanel>

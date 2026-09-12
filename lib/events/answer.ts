@@ -25,6 +25,17 @@ function topValues(values: string[], limit: number): string[] {
     .map((entry) => entry.value);
 }
 
+const MONTH_SHORT = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
+/** "2026-08-14" -> "August 2026". */
+function monthYear(iso: string): string {
+  const [year, month] = iso.split('-');
+  return `${MONTH_SHORT[Number(month) - 1] ?? month} ${year}`;
+}
+
 function listPhrase(items: string[]): string {
   if (items.length === 0) return '';
   if (items.length === 1) return items[0];
@@ -42,17 +53,26 @@ export function buildEventAnswer(input: {
   state: EventQueryState;
   matches: readonly FindShowEvent[];
   total: number;
+  /**
+   * The catalog's own date span, as ISO bounds. Supplied by the caller so this
+   * module stays free of the 10 MB seed import; without it the message falls
+   * back to the vaguer wording.
+   */
+  coverage?: { from: string; to: string } | null;
 }): string {
-  const { state, matches, total } = input;
+  const { state, matches, total, coverage } = input;
   const filters = state.filters;
 
   if (total === 0) {
-    const anyDate = Boolean(filters.dateFrom || filters.dateTo);
+    const anyDate = Boolean(filters.dateFrom || filters.dateTo || filters.month || filters.year);
     if (anyDate) {
+      // Naming the real window beats "a few years out": the usual cause of an
+      // empty date search is asking outside the range entirely, and a reader
+      // cannot correct for that without being told what the range is.
+      const span = coverage ? ` The catalog covers ${monthYear(coverage.from)} to ${monthYear(coverage.to)}.` : '';
       return (
-        'No trade shows match in that period. The catalog runs a few years out, ' +
-        'so a narrow date window is the usual cause — try widening it, or drop ' +
-        'the dates and filter by place instead.'
+        `No trade shows match in that period.${span} Try widening the dates, ` +
+        'or drop them and filter by place instead.'
       );
     }
     const anyList = EVENT_FILTER_LIST_KEYS.some((key) => filters[key].length > 0);

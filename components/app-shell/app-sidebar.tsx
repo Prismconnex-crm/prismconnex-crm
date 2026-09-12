@@ -72,16 +72,17 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
 
             {/* Company name sits to the right of the emblem — BrandMark renders
                 the mark only, so there is no duplicate wordmark. */}
-            {/* Brand blue, matching the wordmark in the logo artwork, rather
-                than the near-black/white the rest of the shell's text uses.
-                `brand` -> `brand-hover` on dark is the standard substitution
-                from globals.css: #005C9D is only 2.47:1 on the #0E1321
-                sidebar, #0086E6 restores it to 4.55:1. */}
+            {/* Brand blue on light, matching the wordmark in the logo
+                artwork. On dark the name is set in white instead: #005C9D is
+                only 2.47:1 on the #0E1321 sidebar, and while the usual
+                `brand` -> `brand-hover` substitution lifts that to 4.55:1,
+                white reads at 15.8:1 and is what the brand asks for here. The
+                emblem inside BrandWordmark keeps its own per-theme treatment. */}
             <div className="leading-tight overflow-hidden whitespace-nowrap">
-              <p className="text-sm font-bold tracking-wide text-brand dark:text-brand-hover">
+              <p className="text-sm font-bold tracking-wide text-brand dark:text-white">
                 <BrandWordmark />
               </p>
-              <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-brand dark:text-brand-hover">
+              <p className="text-[9px] font-semibold uppercase tracking-[0.15em] text-brand dark:text-white">
                 Global Solutions
               </p>
             </div>
@@ -164,7 +165,25 @@ export function AppSidebar({ open, onClose }: { open?: boolean; onClose?: () => 
                         animate={{ opacity: 1, width: "auto" }}
                         exit={{ opacity: 0, width: 0 }}
                         transition={{ duration: 0.2 }}
-                        className="whitespace-nowrap overflow-hidden"
+                        /* Dark mode only: the label is lit white with a soft
+                           halo, so the rail reads as backlit glass rather than
+                           grey-on-black. Set here on the label rather than on
+                           the Link so the icon keeps its own treatment and the
+                           light theme is untouched — with no dark: colour of
+                           its own in light mode, the span still inherits the
+                           Link's slate/indigo.
+
+                           Only `text-shadow` transitions. `transition-all`
+                           would race framer-motion's inline width/opacity
+                           animation on this same element and make the label
+                           stutter as the rail collapses. */
+                        className={cn(
+                          "whitespace-nowrap overflow-hidden",
+                          "dark:text-white dark:[transition:text-shadow_200ms_ease]",
+                          isActive
+                            ? "dark:[text-shadow:0_0_14px_rgba(129,140,248,0.80)]"
+                            : "dark:[text-shadow:0_0_10px_rgba(191,214,255,0.35)] dark:group-hover:[text-shadow:0_0_16px_rgba(191,214,255,0.70)]"
+                        )}
                       >
                         {item.label}
                       </motion.span>

@@ -1,5 +1,13 @@
+import {
+  MAX_COMPANY_LIMIT,
+  expandEmployeeRange,
+  type CompanySort,
+} from '@/lib/companies/nl-query';
+
 export const DEFAULT_LIMIT = 30;
-export const MAX_LIMIT = 100;
+// The assistant answers "list 500 companies in IT" by asking for one page of
+// 500, so the ceiling is the panel's largest page size, not the rail's.
+export const MAX_LIMIT = MAX_COMPANY_LIMIT;
 
 // Only select columns we actually need for the list view (faster I/O).
 // rowCursor is bigint in Postgres; cast to int so JSON serialization works
@@ -52,6 +60,11 @@ export type CompanySearchFilters = {
   employeeRange: string | null;
   region: string | null;
   country: string | null;
+  /** First comma-segment of `headquarters`, e.g. "Bengaluru". */
+  city?: string | null;
+  /** AND-ed free-text terms matched against name and tags. */
+  keywords?: string[];
+  sort?: CompanySort;
 };
 
 /** Injectable so tests can run with no database. */
@@ -151,27 +164,25 @@ const COUNTRY_REGION: Record<string, string> = {
   Australia: 'Asia-Pacific',
 };
 
-// The dataset mixes coarse and fine-grained headcount bands; expand the coarse
-// ones so e.g. "51-200" also matches rows stored as "51-100"/"101-200".
-const EMPLOYEE_RANGE_EXPANSION: Record<string, string[]> = {
-  '51-200': ['51-200', '51-100', '101-200'],
-  '1001-5000': ['1001-5000', '1001-2000', '2001-5000'],
-  '1001+': ['1001+', '1001-2000', '2001-5000', '1001-5000', '5001-10000', '10001+'],
-};
+// `headquarters` is "City, [State,] Country", so the city is the first
+// comma-segment. Matched by equality against the same expression the
+// idx_discovery_city index is built on — a leading-wildcard LIKE could never
+// use an index.
+const CITY_EXPR = `trim(split_part(headquarters, ',', 1))`;
 
-export function buildCompanyQuery(
+/**
+ * Builds the WHERE clause shared by the list query and the count query.
+ *
+ * `p` is the caller's own placeholder allocator, so both queries can be built
+ * from the same filters without their parameter numbering colliding.
+ */
+function buildCompanyWhere(
   filters: CompanySearchFilters,
-  limit: number,
-  cursor: number
-): { sql: string; params: SqlParam[] } {
-  const { search, category, employeeRange, region, country } = filters;
+  p: (value: SqlParam) => string
+): string[] {
+  const { search, category, employeeRange, region, country, city } = filters;
+  const keywords = filters.keywords ?? [];
   const where: string[] = [];
-  const params: SqlParam[] = [];
-  // Postgres positional placeholders: push the value, use the returned $n.
-  const p = (value: SqlParam) => {
-    params.push(value);
-    return `$${params.length}`;
-  };
 
   /**
    * The dataset stores a category in two spellings: the bulk rows are
@@ -183,10 +194,9 @@ export function buildCompanyQuery(
    *
    * IN (...) over the spelling variants rather than lower(category) = $1:
    * an expression comparison cannot use idx_discovery_cat_region_cursor, and
-   * a sequential scan over 36.5M rows is not an option here.
+   * a sequential scan over the whole table is not an option here.
    */
-  const applyCategoryFilter = () => {
-    if (!category) return;
+  if (category) {
     const lower = category.toLowerCase();
     const titleCase = lower.replace(
       /(^|[\s&/,-]+)([a-z])/g,
@@ -194,23 +204,36 @@ export function buildCompanyQuery(
     );
     const variants = Array.from(new Set([category, lower, titleCase]));
     where.push(`category IN (${variants.map((value) => p(value)).join(',')})`);
-  };
+  }
 
-  const applyEmployeeFilter = () => {
-    if (!employeeRange) return;
-    const values = EMPLOYEE_RANGE_EXPANSION[employeeRange] ?? [employeeRange];
-    where.push(`"employeeRange" IN (${values.map((v) => p(v)).join(',')})`);
-  };
+  // A band the rail picked ("51-200") and one the assistant read out of a
+  // question ("200-500") expand the same way — into the stored buckets the
+  // request fully covers.
+  if (employeeRange) {
+    const values = expandEmployeeRange(employeeRange);
+    where.push(`"employeeRange" IN (${values.map((value) => p(value)).join(',')})`);
+  }
 
-  const applyCountryFilter = () => {
-    if (!country) return;
+  if (region) where.push(`region = ${p(region)}`);
+
+  if (country) {
     const names = COUNTRY_ALIASES[country] ?? [country];
-    where.push(`${COUNTRY_EXPR} IN (${names.map((n) => p(n)).join(',')})`);
+    where.push(`${COUNTRY_EXPR} IN (${names.map((name) => p(name)).join(',')})`);
     const inferredRegion = COUNTRY_REGION[country];
     if (inferredRegion && !region) {
       where.push(`region = ${p(inferredRegion)}`);
     }
-  };
+  }
+
+  if (city) where.push(`${CITY_EXPR} = ${p(city)}`);
+
+  // Keywords are AND-ed (every term must appear) but OR-ed across the two
+  // columns. Deliberately not `description`: it has no trigram index, and
+  // including it turns each keyword into a sequential scan.
+  for (const keyword of keywords) {
+    const pattern = `%${keyword.replace(/[%_\\]/g, (char) => `\\${char}`)}%`;
+    where.push(`(name ILIKE ${p(pattern)} OR tags ILIKE ${p(pattern)})`);
+  }
 
   // ── Search mode: case-insensitive prefix search via the lower(name) index ──
   // idx_discovery_name_lower_pattern is a text_pattern_ops index, which only
@@ -222,43 +245,98 @@ export function buildCompanyQuery(
     const upperBound =
       lower.slice(0, -1) + String.fromCharCode(lower.charCodeAt(lower.length - 1) + 1);
     where.push(`lower(name) ~>=~ ${p(lower)} AND lower(name) ~<~ ${p(upperBound)}`);
-
-    applyCategoryFilter();
-    applyEmployeeFilter();
-    if (region) where.push(`region = ${p(region)}`);
-    applyCountryFilter();
-
-    return {
-      sql: `
-        SELECT ${LIST_COLUMNS}
-        FROM "DiscoveryCompany"
-        WHERE ${where.join(' AND ')}
-        ORDER BY lower(name) USING ~<~
-        LIMIT ${p(limit + 1)}
-      `,
-      params,
-    };
   }
 
-  // ── Browse mode: use rowCursor for instant pagination ──
-  // rowCursor DESC shows newest companies first (Indian MNCs were inserted
-  // last = highest cursors; rowCursor mirrors the original SQLite rowid).
-  applyCategoryFilter();
-  applyEmployeeFilter();
-  if (region) where.push(`region = ${p(region)}`);
-  applyCountryFilter();
+  return where;
+}
 
-  if (cursor > 0) where.push(`"rowCursor" < ${p(cursor)}`);
+/**
+ * Page ordering, and whether it can be paged by cursor.
+ *
+ * Only the default order (rowCursor DESC — newest first, since the Indian MNC
+ * import went in last) is stable enough for a cursor. `top` and `name`
+ * re-order the whole result set, so those page by OFFSET. Name ordering uses
+ * the same pattern operator as the prefix filter so it stays served by
+ * idx_discovery_name_lower_pattern.
+ */
+export function companyOrderBy(filters: CompanySearchFilters): {
+  clause: string;
+  supportsCursor: boolean;
+} {
+  const sort = filters.sort ?? 'relevance';
+  if (sort === 'name' || (sort === 'relevance' && filters.search)) {
+    return { clause: 'ORDER BY lower(name) USING ~<~', supportsCursor: false };
+  }
+  if (sort === 'top') {
+    return {
+      clause: 'ORDER BY "engagementScore" DESC NULLS LAST, "DiscoveryCompany"."rowCursor" DESC',
+      supportsCursor: false,
+    };
+  }
+  return { clause: 'ORDER BY "DiscoveryCompany"."rowCursor" DESC', supportsCursor: true };
+}
+
+export function buildCompanyQuery(
+  filters: CompanySearchFilters,
+  limit: number,
+  cursor: number,
+  offset = 0
+): { sql: string; params: SqlParam[] } {
+  const params: SqlParam[] = [];
+  // Postgres positional placeholders: push the value, use the returned $n.
+  const p = (value: SqlParam) => {
+    params.push(value);
+    return `$${params.length}`;
+  };
+
+  const where = buildCompanyWhere(filters, p);
+  const { clause, supportsCursor } = companyOrderBy(filters);
+
+  if (supportsCursor && cursor > 0) where.push(`"rowCursor" < ${p(cursor)}`);
 
   const whereClause = where.length > 0 ? where.join(' AND ') : '1 = 1';
+  const offsetClause = !supportsCursor && offset > 0 ? ` OFFSET ${p(offset)}` : '';
 
   return {
     sql: `
       SELECT ${LIST_COLUMNS}
       FROM "DiscoveryCompany"
       WHERE ${whereClause}
-      ORDER BY "DiscoveryCompany"."rowCursor" DESC
-      LIMIT ${p(limit + 1)}
+      ${clause}
+      LIMIT ${p(limit + 1)}${offsetClause}
+    `,
+    params,
+  };
+}
+
+/** Above this the count stops early and is reported as "N+". */
+export const COUNT_CEILING = 5000;
+
+export function buildCompanyCountQuery(
+  filters: CompanySearchFilters,
+  ceiling = COUNT_CEILING
+): { sql: string; params: SqlParam[] } {
+  const params: SqlParam[] = [];
+  const p = (value: SqlParam) => {
+    params.push(value);
+    return `$${params.length}`;
+  };
+
+  const where = buildCompanyWhere(filters, p);
+  const whereClause = where.length > 0 ? where.join(' AND ') : '1 = 1';
+
+  // Bounded, not exact: an unrestricted COUNT(*) walks every matching row,
+  // which is seconds on a broad filter. Stopping at the ceiling keeps the
+  // answer inside a page load; the caller renders a capped figure as "N+".
+  return {
+    sql: `
+      SELECT count(*)::int AS count
+      FROM (
+        SELECT 1
+        FROM "DiscoveryCompany"
+        WHERE ${whereClause}
+        LIMIT ${p(ceiling + 1)}
+      ) AS bounded
     `,
     params,
   };
@@ -267,12 +345,15 @@ export function buildCompanyQuery(
 /**
  * `total` and `totalPages` are deliberately null: counting the discovery
  * dataset per request is too slow, so the UI pages by cursor instead. Callers
- * must render an absent count rather than reporting zero.
+ * must render an absent count rather than reporting zero — `countCompanies`
+ * is the (bounded) way to get a figure.
  */
 export async function searchCompanies(input: {
   filters: CompanySearchFilters;
   limit: number;
   cursor: number;
+  /** Row offset, used only by the sorts that cannot page by cursor. */
+  offset?: number;
   rowSource?: CompanyRowSource;
 }): Promise<{
   companies: FormattedCompany[];
@@ -281,7 +362,12 @@ export async function searchCompanies(input: {
   total: null;
   totalPages: null;
 }> {
-  const { sql, params } = buildCompanyQuery(input.filters, input.limit, input.cursor);
+  const { sql, params } = buildCompanyQuery(
+    input.filters,
+    input.limit,
+    input.cursor,
+    input.offset ?? 0
+  );
   const rows = await (input.rowSource ?? defaultRowSource)(sql, params);
 
   // One row is over-fetched purely to detect a next page.
@@ -296,4 +382,28 @@ export async function searchCompanies(input: {
     total: null,
     totalPages: null,
   };
+}
+
+/**
+ * Bounded match count. `capped` means the real total is higher than `count` —
+ * present it as "N+", never as an exact figure.
+ */
+export async function countCompanies(input: {
+  filters: CompanySearchFilters;
+  ceiling?: number;
+  /** Injectable so tests can run with no database. */
+  countSource?: (sql: string, params: SqlParam[]) => Promise<Array<{ count: number }>>;
+}): Promise<{ count: number; capped: boolean }> {
+  const ceiling = input.ceiling ?? COUNT_CEILING;
+  const { sql, params } = buildCompanyCountQuery(input.filters, ceiling);
+  const source =
+    input.countSource ??
+    (async (query: string, values: SqlParam[]) => {
+      const { prisma } = await import('@/lib/db/prisma');
+      return prisma.$queryRawUnsafe<Array<{ count: number }>>(query, ...values);
+    });
+
+  const rows = await source(sql, params);
+  const raw = Number(rows[0]?.count ?? 0);
+  return raw > ceiling ? { count: ceiling, capped: true } : { count: raw, capped: false };
 }

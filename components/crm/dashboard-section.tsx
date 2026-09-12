@@ -1070,7 +1070,7 @@ export function DashboardSection() {
                             {/* Empty until mounted so SSR and client agree */}
                             <span suppressHydrationWarning>
                                 {now
-                                    ? now.toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" })
+                                    ? now.toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long", year: "numeric" })
                                     : " "}
                             </span>
                         </div>

@@ -196,7 +196,7 @@ export function EventsFilterSidebar({
                     }
                     className="h-9 w-full rounded-[9px] border border-slate-200 bg-slate-50 px-2 text-[12px] font-medium text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
                   >
-                    <option value="">Any month</option>
+                    <option value="">Select</option>
                     {calendarFacets.months.map((option) => (
                       <option key={option.month} value={option.month} disabled={option.count === 0}>
                         {option.label} ({option.count.toLocaleString()})
@@ -218,7 +218,7 @@ export function EventsFilterSidebar({
                     }
                     className="h-9 w-full rounded-[9px] border border-slate-200 bg-slate-50 px-2 text-[12px] font-medium text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
                   >
-                    <option value="">Any year</option>
+                    <option value="">Select</option>
                     {calendarFacets.years.map((option) => (
                       <option key={option.year} value={option.year}>
                         {option.year} ({option.count.toLocaleString()})

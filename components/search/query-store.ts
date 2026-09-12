@@ -9,7 +9,16 @@ import { useCallback, useEffect, useState } from "react";
  * stay common.
  */
 
-export type SavedQueryKind = "lead_query" | "event_query" | "people_query";
+export type SavedQueryKind =
+  | "lead_query"
+  | "event_query"
+  | "people_query"
+  /**
+   * The Dashboard "Ask anything" box. Its entries are the question plus the
+   * page it was routed to (carried in `payload`), not a filter state — the
+   * Dashboard owns no data of its own, so there is nothing else to snapshot.
+   */
+  | "dashboard_ask";
 
 export type SavedQueryChip = { label: string; value: string };
 
