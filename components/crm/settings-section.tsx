@@ -106,11 +106,11 @@ export function SettingsSection({ sub }: { sub?: string }) {
             );
         }
 
-        // Success is stated here and again on the login page: this card is
-        // still on screen for the moment the redirect takes.
+        // Success is stated here: this card is still on screen for the
+        // moment the redirect takes.
         setSignOutAllDone(true);
-        // ?signedOut=1 makes the login page show the confirmation banner.
-        router.replace("/login?signedOut=1");
+        // Sign-out lands on the public homepage, not the login page.
+        router.replace("/en-US");
         // Drops the cached RSC payload for /app so a back-navigation cannot
         // render the authenticated shell from cache.
         router.refresh();

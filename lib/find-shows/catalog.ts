@@ -1,4 +1,5 @@
 import findShowsSeed from '../../data/find-shows-seed.json';
+import { getCountryIsoCode } from './country-flags';
 import type {
   FindShowEvent,
   FindShowFilterOption,
@@ -169,44 +170,6 @@ const africaMiddleEastSet = new Set([
   'uganda', 'zambia', 'zimbabwe'
 ]);
 
-export const countryFlags: Record<string, string> = {
-  'United Kingdom': '🇬🇧',
-  'Germany': '🇩🇪',
-  'United States': '🇺🇸',
-  'China': '🇨🇳',
-  'France': '🇫🇷',
-  'Italy': '🇮🇹',
-  'United Arab Emirates': '🇦🇪',
-  'India': '🇮🇳',
-  'Spain': '🇪🇸',
-  'Turkey': '🇹🇷',
-  'Japan': '🇯🇵',
-  'Netherlands': '🇳🇱',
-  'Brazil': '🇧🇷',
-  'South Korea': '🇰🇷',
-  'Thailand': '🇹🇭',
-  'Singapore': '🇸🇬',
-  'Canada': '🇨🇦',
-  'Australia': '🇦🇺',
-  'Poland': '🇵🇱',
-  'Saudi Arabia': '🇸🇦',
-  'Mexico': '🇲🇽',
-  'Colombia': '🇨🇴',
-  'Peru': '🇵🇪',
-  'Argentina': '🇦🇷',
-  'Chile': '🇨🇱',
-  'Bolivia': '🇧🇴',
-  'Panama': '🇵🇦',
-  'Cuba': '🇨🇺',
-  'Ecuador': '🇪🇨',
-  'Bahamas': '🇧🇸',
-  'Dominican Republic': '🇩🇴',
-  'Guatemala': '🇬🇹',
-  'Costa Rica': '🇨🇷',
-  'El Salvador': '🇸🇻',
-  'Puerto Rico': '🇵🇷',
-  'Jamaica': '🇯🇲',
-};
 
 function getRegionForCountry(countryInfo: string): Exclude<FindShowsRegion, 'All Regions'> {
   const norm = countryInfo.toLowerCase();
@@ -564,7 +527,14 @@ export const findShowStats = {
   usaEvents: findShowEvents.filter((event) => event.country === 'United States').length,
 };
 
-export type CountryStat = { country: string; count: number; flag: string };
+export type CountryStat = {
+  country: string;
+  count: number;
+  /** ISO 3166-1 alpha-2 code, or null when the country has none ("Unknown",
+   *  Kosovo). The UI turns this into a flag image, or a globe icon when null;
+   *  it deliberately does not carry an emoji, which Windows cannot draw. */
+  isoCode: string | null;
+};
 export const countryStatsByRegion: Record<FindShowsRegion, CountryStat[]> = {
   'All Regions': [],
   'Americas': [],
@@ -584,7 +554,7 @@ findShowCountries.forEach(country => {
         countryStatsByRegion[region].push({
             country,
             count: counts[country],
-            flag: countryFlags[country] || '🌐'
+            isoCode: getCountryIsoCode(country),
         });
     }
 });

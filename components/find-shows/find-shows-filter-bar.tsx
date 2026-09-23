@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { Check, ChevronDown, Filter, X, Globe2 } from 'lucide-react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Check, ChevronDown, Filter, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -14,13 +14,66 @@ import {
 import { Drawer } from '@/components/ui/drawer';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
+import { CountryFlag } from '@/components/find-shows/country-flag';
 import { findShowsRegions, countryStatsByRegion } from '@/lib/find-shows/catalog';
+import {
+  createMegaMenuController,
+  type MegaMenuController,
+} from '@/lib/find-shows/mega-menu-hover';
 import type {
   FindShowFilterOption,
   FindShowFilters,
   FindShowsCategory,
   FindShowsRegion,
 } from '@/types/find-shows';
+
+/**
+ * Shared open/close state for every hover panel in the bar. The controller
+ * holds the timing rules (see lib/find-shows/mega-menu-hover.ts); this hook
+ * only mirrors its current menu into React state.
+ */
+function useMegaMenu(): MegaMenuController & { openId: string | null } {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const controller = useMemo(() => createMegaMenuController({ onChange: setOpenId }), []);
+
+  useEffect(() => controller.dispose, [controller]);
+
+  return { ...controller, openId };
+}
+
+/** Hover handlers every panel and its pill share. */
+function useHoverHandlers(menu: MegaMenuController, id: string) {
+  // Touch and pen input have no hover state — opening on "mouseenter" there
+  // would fire on tap and fight the click handler, so it stays pointer-fine
+  // only, exactly as the previous implementation did.
+  const isHoverPointer = () =>
+    typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches;
+
+  const onMouseEnter = useCallback(() => {
+    if (isHoverPointer()) {
+      menu.openNow(id, 'hover');
+    }
+  }, [menu, id]);
+
+  const onMouseLeave = useCallback(() => {
+    if (isHoverPointer()) {
+      menu.scheduleClose();
+    }
+  }, [menu]);
+
+  // Re-entering the panel itself must never re-open a different menu, so the
+  // panel cancels the pending close rather than calling openNow.
+  const panelHandlers = {
+    onMouseEnter: () => menu.cancelScheduledClose(),
+    onMouseLeave,
+  };
+
+  return { onMouseEnter, onMouseLeave, panelHandlers };
+}
+
+/** Open/close transition shared by both panels (see tailwind.config.ts). */
+const megaMenuPanelMotionClass =
+  'data-[state=open]:animate-mega-menu-in data-[state=closed]:animate-mega-menu-out motion-reduce:animate-none';
 
 function FilterCombobox({
   options,
@@ -94,30 +147,67 @@ function FilterCombobox({
   );
 }
 
+/**
+ * Continent illustrations for the All Regions panel, one per region. The
+ * previous globe icon was identical for all four, so it carried no
+ * information; these are keyed by region name and live in
+ * public/assets/regions/.
+ */
+const regionMapIcons: Record<Exclude<FindShowsRegion, 'All Regions'>, string> = {
+  Americas: '/assets/regions/americas.svg',
+  Europe: '/assets/regions/europe.svg',
+  'Africa & Middle East': '/assets/regions/africa-middle-east.svg',
+  'Asia-Pacific': '/assets/regions/asia-pacific.svg',
+};
+
+/** One region tile in the All Regions panel. */
+function RegionCard({
+  region,
+  count,
+  onSelect,
+}: {
+  region: Exclude<FindShowsRegion, 'All Regions'>;
+  count: number;
+  onSelect: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className="group flex flex-col items-center justify-center gap-2 rounded-2xl border border-slate-200/60 bg-slate-50/80 p-5 transition-all hover:-translate-y-1 hover:border-indigo-300 hover:bg-white hover:shadow-xl"
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element -- a static SVG
+          gains nothing from the image optimizer. */}
+      <img
+        src={regionMapIcons[region]}
+        alt=""
+        width={52}
+        height={52}
+        className="size-[52px] opacity-90 transition-transform group-hover:scale-110"
+      />
+      <span className="text-sm font-black tracking-tight text-slate-900">{region}</span>
+      <span className="rounded-full bg-slate-200/80 px-2.5 py-1 text-[11px] font-bold text-slate-700">
+        {count} shows
+      </span>
+    </button>
+  );
+}
+
 function RegionMegaMenuPopover({
   region,
   filters,
   onFiltersChange,
+  menu,
 }: {
   region: FindShowsRegion;
   filters: FindShowFilters;
   onFiltersChange: (nextFilters: FindShowFilters) => void;
+  menu: MegaMenuController & { openId: string | null };
 }) {
-  const [open, setOpen] = useState(false);
+  const menuId = `region:${region}`;
+  const open = menu.openId === menuId;
   const isActive = filters.region === region;
-
-  // Hover logic for desktop
-  const handleMouseEnter = () => {
-    if (window.matchMedia('(pointer: fine)').matches) {
-      setOpen(true);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (window.matchMedia('(pointer: fine)').matches) {
-      setOpen(false);
-    }
-  };
+  const { onMouseEnter, onMouseLeave, panelHandlers } = useHoverHandlers(menu, menuId);
 
   let label: string = region;
   if (isActive && filters.country) {
@@ -125,8 +215,11 @@ function RegionMegaMenuPopover({
   }
 
   return (
-    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Popover open={open} onOpenChange={setOpen}>
+    <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <Popover
+        open={open}
+        onOpenChange={(nextOpen) => (nextOpen ? menu.openNow(menuId) : menu.closeNow())}
+      >
         <PopoverTrigger asChild>
           <button
             type="button"
@@ -135,7 +228,6 @@ function RegionMegaMenuPopover({
               if (region !== 'All Regions' && filters.region !== region) {
                 onFiltersChange({ ...filters, region, country: '' });
               }
-              setOpen(!open);
             }}
             className={cn(
               'group inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200',
@@ -151,7 +243,20 @@ function RegionMegaMenuPopover({
         <PopoverContent
           align="start"
           sideOffset={12}
-          className="z-[100] w-[95vw] max-w-[1000px] shrink-0 rounded-[28px] border border-white/40 bg-white/95 p-6 shadow-[0_40px_100px_rgba(0,0,0,0.12)] backdrop-blur-3xl outline-none dark:border-white/20 dark:bg-white/90 dark:shadow-[0_40px_200px_rgba(0,0,0,0.5)]"
+          {...panelHandlers}
+          // A hover-opened panel must not pull focus (the cursor is elsewhere
+          // and focusing would scroll the page); a click or keyboard open
+          // keeps Radix's default focus move so the menu stays operable.
+          onOpenAutoFocus={(event) => {
+            if (menu.getOpenSource() === 'hover') {
+              event.preventDefault();
+            }
+          }}
+          onEscapeKeyDown={() => menu.closeNow()}
+          className={cn(
+            'z-[100] w-[95vw] max-w-[1000px] shrink-0 rounded-[28px] border border-white/40 bg-white/95 p-6 shadow-[0_40px_100px_rgba(0,0,0,0.12)] backdrop-blur-3xl outline-none dark:border-white/20 dark:bg-white/90 dark:shadow-[0_40px_200px_rgba(0,0,0,0.5)]',
+            megaMenuPanelMotionClass
+          )}
         >
         {region === 'All Regions' ? (
            <div>
@@ -161,7 +266,7 @@ function RegionMegaMenuPopover({
                  type="button"
                  onClick={() => {
                    onFiltersChange({ ...filters, region: 'All Regions', country: '' });
-                   setOpen(false);
+                   menu.closeNow();
                  }}
                  className="text-sm font-bold text-slate-500 transition-colors hover:text-slate-900"
                >
@@ -169,23 +274,26 @@ function RegionMegaMenuPopover({
                </button>
              </div>
              <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-                {findShowsRegions.filter(r => r !== 'All Regions').map(subRegion => {
-                   const count = countryStatsByRegion[subRegion]?.reduce((acc, curr) => acc + curr.count, 0) || 0;
-                   return (
-                     <button
-                       key={subRegion}
-                       onClick={() => {
-                         onFiltersChange({ ...filters, region: subRegion, country: '' });
-                         setOpen(false);
-                       }}
-                       className="group flex flex-col items-center justify-center gap-2 rounded-2xl border border-slate-200/60 bg-slate-50/80 p-5 transition-all hover:-translate-y-1 hover:border-indigo-300 hover:bg-white hover:shadow-xl"
-                     >
-                       <Globe2 className="size-8 text-indigo-500 opacity-90 transition-transform group-hover:scale-110" />
-                       <span className="text-sm font-black tracking-tight text-slate-900">{subRegion}</span>
-                       <span className="rounded-full bg-slate-200/80 px-2.5 py-1 text-[11px] font-bold text-slate-700">{count} shows</span>
-                     </button>
-                   );
-                })}
+                {findShowsRegions
+                  .filter((subRegion): subRegion is Exclude<FindShowsRegion, 'All Regions'> =>
+                    subRegion !== 'All Regions'
+                  )
+                  .map((subRegion) => (
+                    <RegionCard
+                      key={subRegion}
+                      region={subRegion}
+                      count={
+                        countryStatsByRegion[subRegion]?.reduce(
+                          (acc, curr) => acc + curr.count,
+                          0
+                        ) || 0
+                      }
+                      onSelect={() => {
+                        onFiltersChange({ ...filters, region: subRegion, country: '' });
+                        menu.closeNow();
+                      }}
+                    />
+                  ))}
              </div>
            </div>
         ) : (
@@ -198,7 +306,7 @@ function RegionMegaMenuPopover({
                  type="button"
                  onClick={() => {
                    onFiltersChange({ ...filters, region, country: '' });
-                   setOpen(false);
+                   menu.closeNow();
                  }}
                  className="rounded-full bg-indigo-100 px-4 py-1.5 text-sm font-bold text-indigo-700 transition-all hover:bg-indigo-600 hover:text-white hover:shadow-md"
                >
@@ -214,14 +322,14 @@ function RegionMegaMenuPopover({
                         key={stat.country}
                         onClick={() => {
                           onFiltersChange({ ...filters, region, country: stat.country });
-                          setOpen(false);
+                          menu.closeNow();
                         }}
                         className={cn(
                           "flex w-full items-center gap-2.5 rounded-xl border border-transparent p-2 text-left transition-all hover:bg-slate-100",
                           isCountryActive && "border-indigo-500/30 bg-indigo-50/80 shadow-sm"
                         )}
                       >
-                        <span className="text-[22px] font-black text-slate-950 drop-shadow-sm opacity-90">{stat.flag}</span>
+                        <CountryFlag country={stat.country} />
                         <div className="flex flex-col overflow-hidden">
                           <span className={cn(
                             "truncate text-[13px] font-extrabold leading-tight transition-colors",
@@ -262,24 +370,21 @@ function FilterFields({
   onClear: () => void;
 }) {
   const [allCategoriesOption, ...categoryOptions] = categories;
-  const [categoryOpen, setCategoryOpen] = useState(false);
+  // One controller for the whole bar: hovering another pill swaps panels at
+  // once instead of leaving the previous one open for its grace period.
+  const menu = useMegaMenu();
+  const categoryMenuId = 'category';
+  const categoryOpen = menu.openId === categoryMenuId;
+  const {
+    onMouseEnter: handleCategoryMouseEnter,
+    onMouseLeave: handleCategoryMouseLeave,
+    panelHandlers: categoryPanelHandlers,
+  } = useHoverHandlers(menu, categoryMenuId);
 
   const selectedCategoryOption =
     filters.category === (allCategoriesOption?.value ?? 'All Categories')
       ? allCategoriesOption
       : categoryOptions.find((o) => o.value === filters.category) ?? allCategoriesOption;
-
-  const handleCategoryMouseEnter = () => {
-    if (window.matchMedia('(pointer: fine)').matches) {
-      setCategoryOpen(true);
-    }
-  };
-
-  const handleCategoryMouseLeave = () => {
-    if (window.matchMedia('(pointer: fine)').matches) {
-      setCategoryOpen(false);
-    }
-  };
 
   return (
     <div>
@@ -298,6 +403,7 @@ function FilterFields({
             region={region}
             filters={filters}
             onFiltersChange={onFiltersChange}
+            menu={menu}
           />
         ))}
 
@@ -306,11 +412,15 @@ function FilterFields({
 
         {/* All Categories – pill-style popover trigger */}
         <div onMouseEnter={handleCategoryMouseEnter} onMouseLeave={handleCategoryMouseLeave}>
-          <Popover open={categoryOpen} onOpenChange={setCategoryOpen}>
+          <Popover
+            open={categoryOpen}
+            onOpenChange={(nextOpen) =>
+              nextOpen ? menu.openNow(categoryMenuId) : menu.closeNow()
+            }
+          >
             <PopoverTrigger asChild>
               <button
                 type="button"
-                onClick={() => setCategoryOpen(!categoryOpen)}
                 aria-label="Filter shows by category"
                 className={cn(
                   'inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200',
@@ -323,7 +433,20 @@ function FilterFields({
                 <ChevronDown className="size-3.5 shrink-0 opacity-60 transition-transform data-[state=open]:rotate-180" />
               </button>
             </PopoverTrigger>
-            <PopoverContent align="start" className="z-[100] w-[280px] overflow-hidden p-0 rounded-2xl border border-white/40 bg-white/95 shadow-[0_40px_100px_rgba(0,0,0,0.12)] backdrop-blur-3xl outline-none dark:border-white/20 dark:bg-white/90 dark:shadow-[0_40px_200px_rgba(0,0,0,0.5)]">
+            <PopoverContent
+              align="start"
+              {...categoryPanelHandlers}
+              onOpenAutoFocus={(event) => {
+                if (menu.getOpenSource() === 'hover') {
+                  event.preventDefault();
+                }
+              }}
+              onEscapeKeyDown={() => menu.closeNow()}
+              className={cn(
+                'z-[100] w-[280px] overflow-hidden rounded-2xl border border-white/40 bg-white/95 p-0 shadow-[0_40px_100px_rgba(0,0,0,0.12)] backdrop-blur-3xl outline-none dark:border-white/20 dark:bg-white/90 dark:shadow-[0_40px_200px_rgba(0,0,0,0.5)]',
+                megaMenuPanelMotionClass
+              )}
+            >
             <Command className="bg-transparent dark:bg-transparent">
               <CommandInput placeholder="Search category..." aria-label="Search category..." className="text-slate-950 placeholder:text-slate-500 border-none focus:ring-0" />
               <CommandList>
@@ -341,7 +464,7 @@ function FilterFields({
                         ...filters,
                         category: (allCategoriesOption?.value ?? 'All Categories') as FindShowsCategory,
                       });
-                      setCategoryOpen(false);
+                      menu.closeNow();
                     }}
                   >
                     <span className="flex-1">{allCategoriesOption?.label ?? 'All Categories'}</span>
@@ -359,7 +482,7 @@ function FilterFields({
                           ...filters,
                           category: option.value as FindShowsCategory,
                         });
-                        setCategoryOpen(false);
+                        menu.closeNow();
                       }}
                     >
                       <span className="flex-1 drop-shadow-sm">{option.label}</span>

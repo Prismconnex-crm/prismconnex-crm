@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Map of Asia-Pacific">
+  <defs>
+    <linearGradient id="apacLand" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6366F1"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="#EEF2FF"/>
+  <g fill="url(#apacLand)">
+    <!-- The Asian mainland, from Central Asia across to the Pacific coast -->
+    <path d="M6 21 L14 12 L26 9 L38 10 L47 15 L50 21 L44 25 L36 26 L30 24 L22 24 L14 24 L9 23 Z"/>
+    <!-- The Indian subcontinent, with Sri Lanka -->
+    <path d="M21 24 L30 25 L27 35 L24 39 L21 31 Z"/>
+    <circle cx="27" cy="41" r="1.2"/>
+    <!-- Indochina -->
+    <path d="M32 28 L37 29 L36 35 L32 33 Z"/>
+    <!-- Korea and the Japanese arc -->
+    <path d="M45 22 L48 21 L48 26 L45 26 Z"/>
+    <path d="M51 20 L54 24 L55 29 L52 29 L50 25 Z"/>
+    <!-- Indonesia and the Philippines -->
+    <path d="M31 39 L39 40 L38 43 L31 42 Z"/>
+    <path d="M41 36 L46 35 L46 39 L41 40 Z"/>
+    <circle cx="45" cy="30" r="1.5"/>
+    <!-- Australia -->
+    <path d="M37 46 L49 45 L54 50 L49 57 L40 56 L35 51 Z"/>
+    <!-- New Zealand -->
+    <path d="M56 54 L58 56 L57 60 L55 58 Z"/>
+  </g>
+</svg>

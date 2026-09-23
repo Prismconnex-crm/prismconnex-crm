@@ -8,7 +8,7 @@ import {
 } from '@/lib/find-shows/catalog';
 
 export const metadata: Metadata = {
-  title: 'Find Trade Shows | Prism Connex',
+  title: 'Find Trade Shows | Prismconnex',
   description:
     'Browse worldwide trade shows, filter by category or month, and view live Eventseye media with resilient fallbacks.',
 };

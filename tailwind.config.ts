@@ -135,6 +135,17 @@ const config: Config = {
           from: { opacity: "0", transform: "translate(-50%, -50%) scale(0.95)" },
           to: { opacity: "1", transform: "translate(-50%, -50%) scale(1)" },
         },
+        // Mega-menu panels. Radix keeps a closing popover mounted until its
+        // animation ends, so the -out half actually plays instead of the panel
+        // blinking away.
+        "mega-menu-in": {
+          from: { opacity: "0", transform: "translateY(-8px) scale(0.98)" },
+          to: { opacity: "1", transform: "translateY(0) scale(1)" },
+        },
+        "mega-menu-out": {
+          from: { opacity: "1", transform: "translateY(0) scale(1)" },
+          to: { opacity: "0", transform: "translateY(-6px) scale(0.98)" },
+        },
       },
       animation: {
         "fade-in-up": "fade-in-up 0.5s ease-out forwards",
@@ -145,6 +156,8 @@ const config: Config = {
         "slide-in-right": "slide-in-right 0.4s ease-out forwards",
         "scale-in": "scale-in 0.3s ease-out forwards",
         "dialog-in": "dialog-in 0.3s ease-out forwards",
+        "mega-menu-in": "mega-menu-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards",
+        "mega-menu-out": "mega-menu-out 0.16s ease-in forwards",
       },
     },
   },

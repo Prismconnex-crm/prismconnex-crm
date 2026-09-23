@@ -1,12 +1,13 @@
 'use client';
 
-import { useDeferredValue, useEffect, useState } from 'react';
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLocale } from 'next-intl';
-import { BadgeCheck, Globe2, ImageIcon } from 'lucide-react';
+import { BadgeCheck, Globe2 } from 'lucide-react';
 import { FindShowsHero } from '@/components/find-shows/find-shows-hero';
 import { FindShowsFilterBar } from '@/components/find-shows/find-shows-filter-bar';
 import { FindShowGrid } from '@/components/find-shows/find-show-grid';
+import { searchFindShowEvents } from '@/lib/find-shows/search-events';
 import { localizePathname } from '@/lib/locale';
 import type { Locale } from '@/types';
 import type {
@@ -52,6 +53,7 @@ export function FindShowsPage({
   };
 }) {
   const locale = useLocale() as Locale;
+  const resultsRef = useRef<HTMLElement>(null);
   const [filters, setFilters] = useState(initialFilters);
   const [visibleCount, setVisibleCount] = useState(12);
   const [likedEventSlugs, setLikedEventSlugs] = useState<string[]>([]);
@@ -99,39 +101,27 @@ export function FindShowsPage({
     filters.endMonth,
   ]);
 
-  const filteredEvents = events.filter((event) => {
-    if (deferredQuery.trim() && !event.searchText.includes(deferredQuery.trim().toLowerCase())) {
-      return false;
-    }
+  // deferredQuery keeps typing responsive across the ~11k event catalog: the
+  // input updates on every keystroke while the grid re-filters and re-ranks at
+  // React's pace.
+  const { region, country, category, startMonth, endMonth } = filters;
+  const filteredEvents = useMemo(
+    () =>
+      searchFindShowEvents(events, {
+        query: deferredQuery,
+        region,
+        country,
+        category,
+        startMonth,
+        endMonth,
+      }),
+    [events, deferredQuery, region, country, category, startMonth, endMonth]
+  );
 
-    if (filters.region !== 'All Regions' && event.region !== filters.region) {
-      return false;
-    }
-
-    if (filters.country && event.country !== filters.country) {
-      return false;
-    }
-
-    if (filters.country && event.country !== filters.country) {
-      return false;
-    }
-
-    if (filters.category !== 'All Categories' && !event.categories.includes(filters.category)) {
-      return false;
-    }
-
-    if (filters.startMonth && event.startMonth < filters.startMonth) {
-      return false;
-    }
-
-    if (filters.endMonth && event.startMonth > filters.endMonth) {
-      return false;
-    }
-
-    return true;
-  });
-
-  const visibleEvents = filteredEvents.slice(0, visibleCount);
+  const visibleEvents = useMemo(
+    () => filteredEvents.slice(0, visibleCount),
+    [filteredEvents, visibleCount]
+  );
 
   useEffect(() => {
     const pendingSlugs = visibleEvents.map((event) => event.slug).filter((slug) => !assets[slug]);
@@ -185,11 +175,17 @@ export function FindShowsPage({
 
   return (
     <div className="relative min-h-screen">
+      {/* Results already track the input live, so the search button and Enter
+          run the same filter and just bring the grid back into view. */}
       <FindShowsHero
         searchQuery={filters.query}
         onSearchQueryChange={(value) =>
           setFilters((currentFilters) => ({ ...currentFilters, query: value }))
         }
+        onSearchSubmit={() => {
+          setVisibleCount(12);
+          resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }}
         stats={heroStats}
       />
 
@@ -201,7 +197,7 @@ export function FindShowsPage({
         onClear={() => setFilters(initialFilters)}
       />
 
-      <section className="px-5 py-8 md:px-8 md:py-10">
+      <section ref={resultsRef} className="scroll-mt-[132px] px-5 py-8 md:px-8 md:py-10">
         <div className="mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
@@ -227,16 +223,13 @@ export function FindShowsPage({
                 <BadgeCheck className="size-3.5 text-emerald-500" />
                 {stats.totalEvents}+ total events
               </span>
-              <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/85 px-3 py-2 text-xs font-semibold text-slate-600 dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-slate-300">
-                <ImageIcon className="size-3.5 text-cyan-500" />
-                Eventseye media + fallbacks
-              </span>
             </div>
           </motion.div>
 
           <FindShowGrid
             events={visibleEvents}
             assets={assets}
+            searchQuery={deferredQuery}
             getDetailHref={(slug) => localizePathname(`/find-shows/${slug}`, locale)}
             visibleCount={displayedEventCount}
             totalCount={filteredEvents.length}

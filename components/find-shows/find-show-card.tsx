@@ -7,16 +7,20 @@ import { TRADE_SHOW_TICKET_SIGN_IN_HREF } from '@/lib/auth/routing';
 import { cn } from '@/lib/utils';
 import { getFindShowAvatarUrl, getFindShowGradient } from '@/lib/find-shows/presentation';
 import { marketingCardInteractiveClass } from '@/components/landing/marketing-card-hover';
+import { HighlightText } from '@/components/find-shows/highlight-text';
 import type { FindShowAsset, FindShowEvent } from '@/types/find-shows';
 
 export function FindShowCard({
   event,
   asset,
   detailHref,
+  searchQuery = '',
 }: {
   event: FindShowEvent;
   asset?: FindShowAsset;
   detailHref: string;
+  /** Active free-text query; matching text is marked in the name and location. */
+  searchQuery?: string;
 }) {
   const gradient = getFindShowGradient(`${event.slug}-${event.primaryCategory}`);
   const logoUrl = asset?.logoUrl ?? (asset?.bannerUrl ? asset.bannerUrl : getFindShowAvatarUrl(event.name));
@@ -44,7 +48,7 @@ export function FindShowCard({
         {/* Left Side: Text Details */}
         <div className="flex min-w-0 flex-1 flex-col">
           <h3 className="line-clamp-2 text-sm font-bold leading-tight text-slate-950 dark:text-white sm:text-base">
-            {event.name}
+            <HighlightText text={event.name} query={searchQuery} />
           </h3>
           
           <div className="mt-2.5 space-y-2">
@@ -55,7 +59,8 @@ export function FindShowCard({
             <div className="flex items-center gap-2 text-[12px] font-medium text-slate-500 dark:text-slate-400">
               <MapPin className="size-3.5 shrink-0 text-slate-400" />
               <span className="truncate">
-                {event.city}, {event.country}
+                <HighlightText text={event.city} query={searchQuery} />,{' '}
+                <HighlightText text={event.country} query={searchQuery} />
               </span>
             </div>
           </div>

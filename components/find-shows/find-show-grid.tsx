@@ -9,6 +9,7 @@ import type { FindShowAsset, FindShowEvent } from '@/types/find-shows';
 export function FindShowGrid({
   events,
   assets,
+  searchQuery,
   getDetailHref,
   visibleCount,
   totalCount,
@@ -17,6 +18,8 @@ export function FindShowGrid({
 }: {
   events: FindShowEvent[];
   assets: Record<string, FindShowAsset>;
+  /** Active free-text query, highlighted inside each card. */
+  searchQuery: string;
   getDetailHref: (slug: string) => string;
   visibleCount: number;
   totalCount: number;
@@ -45,6 +48,7 @@ export function FindShowGrid({
                 <FindShowCard
                   event={event}
                   asset={assets[event.slug]}
+                  searchQuery={searchQuery}
                   detailHref={getDetailHref(event.slug)}
                 />
               </motion.div>
@@ -57,7 +61,7 @@ export function FindShowGrid({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            <FindShowsEmptyState onClear={onClearFilters} />
+            <FindShowsEmptyState searchQuery={searchQuery} onClear={onClearFilters} />
           </motion.div>
         )}
       </AnimatePresence>

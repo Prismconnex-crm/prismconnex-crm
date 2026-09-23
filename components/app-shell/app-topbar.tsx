@@ -124,8 +124,8 @@ export function AppTopbar({
       throw new Error("We could not sign you out just now. Please try again.");
     }
 
-    // ?signedOut=1 makes the login page show the confirmation banner.
-    router.replace("/login?signedOut=1");
+    // Sign-out lands on the public homepage, not the login page.
+    router.replace("/en-US");
     // Drops the cached RSC payload for /app so a back-navigation cannot
     // render the authenticated shell from cache.
     router.refresh();
