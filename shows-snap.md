@@ -1,0 +1,102 @@
+- generic [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - banner [ref=f4e3]:
+      - navigation [ref=f4e5]:
+        - link "Prismconnex Global Solutions Prismconnex Global Solutions" [ref=f4e6] [cursor=pointer]:
+          - /url: /en-US
+          - img "Prismconnex Global Solutions" [ref=f4e8]
+          - generic [ref=f4e9]:
+            - generic [ref=f4e11]
+            - generic [ref=f4e15]: Global Solutions
+        - generic [ref=f4e16]:
+          - link [ref=f4e17] [cursor=pointer]:
+            - /url: /en-US/product
+          - link [ref=f4e21] [cursor=pointer]:
+            - /url: /en-US/pricing
+          - link [ref=f4e25] [cursor=pointer]:
+            - /url: /en-US/security
+          - link [ref=f4e29] [cursor=pointer]:
+            - /url: /en-US/find-shows
+        - generic [ref=f4e34]:
+          - button "Search pages" [ref=f4e35] [cursor=pointer]
+          - button "Change language" [ref=f4e40] [cursor=pointer]:
+            - generic [ref=f4e41]
+          - button "Toggle theme" [ref=f4e60] [cursor=pointer]
+          - link "Sign In Sign In" [ref=f4e68] [cursor=pointer]:
+            - /url: /auth/sign-in
+            - generic [ref=f4e69]: Sign In
+            - generic [ref=f4e70]: Sign In
+          - link "Start Free Trial" [ref=f4e71] [cursor=pointer]:
+            - /url: /auth/sign-in
+    - main [ref=f4e77]:
+      - generic [ref=f4e78]:
+        - generic [ref=f4e80]:
+          - generic [ref=f4e81]:
+            - generic [ref=f4e82]: Worldwide trade show catalog
+            - heading "Discover Trade Shows Shaping the Future of Industries Worldwide" [level=1] [ref=f4e86]
+            - paragraph [ref=f4e90]: Explore verified exhibitions across the globe, compare categories, plan your calendar, and focus on the shows that matter most for Prism Connex users.
+          - textbox "Search trade shows by name, industry, or city" [active] [ref=f4e97]:
+            - /placeholder: Search by event name, industry, or city...
+            - text: electronics
+          - generic [ref=f4e98]:
+            - generic [ref=f4e99]
+            - generic [ref=f4e102]
+            - generic [ref=f4e105]
+            - generic [ref=f4e108]
+        - generic [ref=f4e114]:
+          - generic [ref=f4e115]:
+            - paragraph [ref=f4e116]: Region
+            - generic [ref=f4e117]: 0 active
+          - generic [ref=f4e118]:
+            - button "All Regions" [ref=f4e120] [cursor=pointer]
+            - button "Americas" [ref=f4e125] [cursor=pointer]
+            - button "Europe" [ref=f4e130] [cursor=pointer]
+            - button "Africa & Middle East" [ref=f4e135] [cursor=pointer]
+            - button "Asia-Pacific" [ref=f4e140] [cursor=pointer]
+            - button "Filter shows by category" [ref=f4e146] [cursor=pointer]
+        - generic:
+          - complementary:
+            - generic
+            - generic
+        - generic [ref=f4e151]:
+          - generic [ref=f4e152]:
+            - generic [ref=f4e153]
+            - generic [ref=f4e156]
+          - generic [ref=f4e550]:
+            - article [ref=f4e552]
+            - article [ref=f4e579]
+            - article [ref=f4e606]
+            - article [ref=f4e633]
+            - article [ref=f4e660]
+            - article [ref=f4e687]
+            - article [ref=f4e714]
+            - article [ref=f4e741]
+            - article [ref=f4e768]
+            - article [ref=f4e795]
+            - article [ref=f4e822]
+            - article [ref=f4e849]
+          - button "Load More" [ref=f4e498] [cursor=pointer]
+    - contentinfo [ref=f4e499]:
+      - generic [ref=f4e503]:
+        - generic [ref=f4e504]:
+          - generic [ref=f4e505]:
+            - link "Prismconnex Prismconnex" [ref=f4e506] [cursor=pointer]:
+              - /url: /en-US
+            - paragraph [ref=f4e509]: The AI-native CRM built for trade show professionals. From event discovery to post-show ROI, all in one platform.
+            - generic [ref=f4e510]
+          - generic [ref=f4e514]:
+            - heading "Product" [level=4] [ref=f4e515]
+            - list [ref=f4e516]
+          - generic [ref=f4e523]:
+            - heading "Company" [level=4] [ref=f4e524]
+            - list [ref=f4e525]
+          - generic [ref=f4e534]:
+            - heading "Legal" [level=4] [ref=f4e535]
+            - list [ref=f4e536]
+        - generic [ref=f4e543]:
+          - paragraph [ref=f4e544]: � 2026 Prismconnex. All rights reserved.
+          - paragraph [ref=f4e545]:
+            - text: Built with
+            - generic [ref=f4e546]: "?"
+            - text: for trade show professionals worldwide.
+  - alert [ref=f4e549]

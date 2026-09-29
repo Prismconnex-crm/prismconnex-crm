@@ -26,7 +26,7 @@ export const eventFiltersSchema = z.object({
   regions: z.array(z.enum(ALLOWED_REGIONS as [string, ...string[]])).max(4),
   countries: stringList,
   cities: stringList,
-  categories: z.array(z.enum(ALLOWED_CATEGORIES as [string, ...string[]])).max(13),
+  categories: z.array(z.enum(ALLOWED_CATEGORIES as [string, ...string[]])).max(ALLOWED_CATEGORIES.length),
   organizers: stringList,
   keywords: stringList,
   dateFrom: isoDate.nullable(),

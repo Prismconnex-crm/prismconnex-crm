@@ -10,6 +10,7 @@ function event(overrides: Partial<FindShowEvent> = {}): FindShowEvent {
     dates: '24 - 27 Mar 2026',
     city: 'Munich',
     country: 'Germany',
+    countryCode: 'DE',
     region: 'Europe',
     venue: 'Messe München',
     organizer: 'Messe München GmbH',
@@ -17,8 +18,8 @@ function event(overrides: Partial<FindShowEvent> = {}): FindShowEvent {
     website: 'http://analytica.de',
     email: '',
     rawCategories: ['Laboratory'],
-    categories: ['Medical & Healthcare'],
-    primaryCategory: 'Medical & Healthcare',
+    categories: ['Medical'],
+    primaryCategory: 'Medical',
     startDate: '2026-03-24',
     endDate: '2026-03-27',
     startMonth: '2026-03',
@@ -83,13 +84,13 @@ describe('buildEventAnswer', () => {
       question: 'x',
       state: state(),
       matches: [
-        event({ primaryCategory: 'Medical & Healthcare' }),
-        event({ slug: 's2', primaryCategory: 'Medical & Healthcare' }),
+        event({ primaryCategory: 'Medical' }),
+        event({ slug: 's2', primaryCategory: 'Medical' }),
         event({ slug: 's3', primaryCategory: 'Packaging' }),
       ],
       total: 3,
     });
-    expect(text).toContain('Medical & Healthcare');
+    expect(text).toContain('Medical');
   });
 
   it('explains an empty result instead of reporting zero rows', () => {

@@ -68,10 +68,15 @@ describe('find shows catalog', () => {
 
     // The seed's "?" venue placeholder is rendered, never shown raw.
     expect(opalExhibition?.venue).toBe('Venue to be announced');
-    expect(opalExhibition?.categories).toContain('Textiles & Fashion');
+    expect(opalExhibition?.categories).toContain('Fashion');
 
     // Keyword mapping from the show name and description.
-    expect(blackHat?.categories).toContain('Security & Safety');
+    // A computer-security conference is Cybersecurity (and so IT and
+    // Technology), not the physical Security category.
+    expect(blackHat?.categories).toEqual(
+      expect.arrayContaining(['Cybersecurity', 'Information Technology', 'Technology'])
+    );
+    expect(blackHat?.categories).not.toContain('Security');
     expect(blackHat?.country).toBe('United States');
     expect(blackHat?.region).toBe('Americas');
   });

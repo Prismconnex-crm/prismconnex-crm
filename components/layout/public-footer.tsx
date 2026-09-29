@@ -56,9 +56,10 @@ export function PublicFooter() {
               <div className="flex size-8 items-center justify-center overflow-hidden rounded-lg shadow-sm dark:shadow-md">
                 <BrandLogo
                   alt="Prismconnex"
-                  width={28}
+                  // 32×28 matches the artwork's 800×705 ratio; a square box made
+                  // the browser widen it and Next warned about a modified width.
+                  width={32}
                   height={28}
-                  style={{ width: "auto", height: "auto" }}
                   className="object-contain"
                 />
               </div>

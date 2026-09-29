@@ -1,5 +1,13 @@
 import findShowsSeed from '../../data/find-shows-seed.json';
-import { getCountryIsoCode } from './country-flags';
+import {
+  inferEventCountry,
+  resolveSeedCountry,
+  UNKNOWN_COUNTRY,
+  type CountryInference,
+  type FindShowRegionName,
+  type ResolvedCountry,
+} from './country-resolution';
+import { classifyFindShowEvent, FIND_SHOW_CATEGORIES } from './categories';
 import type {
   FindShowEvent,
   FindShowFilterOption,
@@ -50,78 +58,6 @@ const monthLabels = [
   'Dec',
 ];
 
-const categoryRules: Array<{
-  category: Exclude<FindShowsCategory, 'All Categories'>;
-  keywords: string[];
-}> = [
-  { category: 'Plastics & Rubber', keywords: ['plastic', 'rubber', 'composite'] },
-  {
-    category: 'Manufacturing & Engineering',
-    keywords: [
-      'metal',
-      'mould',
-      'die',
-      'machine',
-      'welding',
-      'engineering',
-      'subcontracting',
-      'industrial',
-      'tool',
-      'process equipment',
-    ],
-  },
-  {
-    category: 'Medical & Healthcare',
-    keywords: ['medical', 'veterinary', 'pharmaceutical', 'surgery', 'health', 'nursing'],
-  },
-  {
-    category: 'Food & Beverage',
-    keywords: ['food', 'catering', 'hospitality', 'wine', 'beer', 'coffee', 'tea', 'chocolate'],
-  },
-  {
-    category: 'Technology & Electronics',
-    keywords: [
-      'computer',
-      'internet',
-      'telecommunications',
-      'artificial intelligence',
-      'data computing',
-      'multimedia',
-      'big data',
-      'software',
-      'knowledge based systems',
-    ],
-  },
-  {
-    category: 'Construction & Building',
-    keywords: [
-      'building',
-      'construction',
-      'kitchen',
-      'bathroom',
-      'home show',
-      'renovation',
-      'furniture',
-      'lighting',
-    ],
-  },
-  {
-    category: 'Energy & Environment',
-    keywords: ['environment', 'energy', 'oil', 'gas', 'shipping', 'marine', 'spatial information'],
-  },
-  { category: 'Automotive', keywords: ['motorcycle', 'bike', 'automobile'] },
-  { category: 'Packaging', keywords: ['packaging'] },
-  {
-    category: 'Textiles & Fashion',
-    keywords: ['fashion', 'clothing', 'textile', 'apparel', 'leather'],
-  },
-  {
-    category: 'Agriculture',
-    keywords: ['agriculture', 'horticulture', 'arboriculture', 'livestock', 'poultry'],
-  },
-  { category: 'Security & Safety', keywords: ['security', 'risk management', 'safety'] },
-];
-
 function normalizeMonthToken(token: string) {
   return token.toLowerCase().replace(/\./g, '');
 }
@@ -142,69 +78,23 @@ function sanitizeDateText(rawDates: string) {
   return rawDates.replace(/\s*\(\?\)\s*$/i, '').trim();
 }
 
-const americasSet = new Set([
-  'united states', 'usa', 'u.s.a', 'canada', 'brazil', 'mexico', 'colombia',
-  'peru', 'argentina', 'chile', 'bolivia', 'panama', 'cuba', 'ecuador',
-  'bahamas', 'dominican republic', 'guatemala', 'costa rica', 'el salvador',
-  'salvador', 'puerto rico', 'jamaica'
-]);
-
-const asiaPacificSet = new Set([
-  'china', 'india', 'japan', 'australia', 'south korea', 'korea south',
-  'korea, south', 'thailand', 'singapore', 'indonesia', 'malaysia', 
-  'philippines', 'vietnam', 'taiwan', 'hong kong', 'hong-kong', 'pakistan', 
-  'bangladesh', 'new zealand', 'new-zealand', 'sri lanka', 'sri-lanka', 
-  'kazakhstan', 'uzbekistan', 'iran', 'kyrgyzstan', 'macao', 'maldives', 
-  'mauritius', 'mongolia', 'myanmar', 'burma', 'nepal', 'turkmenistan', 
-  'bhutan', 'cambodia', 'fiji', 'papua new guinea', 'papua-new-guinea'
-]);
-
-const africaMiddleEastSet = new Set([
-  'united arab emirates', 'uae', 'turkey', 'saudi arabia', 'algeria', 
-  'angola', 'bahrain', 'botswana', 'burkina faso', 'cameroon', 
-  'congo-kinshasa', 'egypt', 'ethiopia', 'ghana', 'iraq', 'israel', 
-  'ivory coast', 'jordan', 'kenya', 'kuwait', 'lebanon', 'libya', 
-  'madagascar', 'mali', 'morocco', 'mozambique', 'namibia', 'nigeria', 
-  'oman', 'qatar', 'rwanda', 'senegal', 'seychelles', 'south africa', 
-  'south-africa', 'south sudan', 'syria', 'tanzania', 'togo', 'tunisia', 
-  'uganda', 'zambia', 'zimbabwe'
-]);
-
-
-function getRegionForCountry(countryInfo: string): Exclude<FindShowsRegion, 'All Regions'> {
-  const norm = countryInfo.toLowerCase();
-  if (americasSet.has(norm)) return 'Americas';
-  if (asiaPacificSet.has(norm)) return 'Asia-Pacific';
-  if (africaMiddleEastSet.has(norm)) return 'Africa & Middle East';
-  return 'Europe';
-}
-
-function splitLocation(rawLocation: string) {
+/**
+ * "City (Country)" → city plus canonical country/ISO/region. A seed location
+ * with no "(Country)" part yields null, and the caller infers the country
+ * from the rest of the record instead.
+ */
+function splitLocation(rawLocation: string): ({ city: string } & ResolvedCountry) | null {
   const lastParenIndex = rawLocation.lastIndexOf('(');
   if (lastParenIndex === -1) {
-    return { city: rawLocation.trim(), country: 'Unknown', region: 'Europe' as const };
+    return null;
   }
 
   const city = rawLocation.substring(0, lastParenIndex).trim().replace(/\s*\([^)]*\)$/, '').trim();
-  let countryInfo = rawLocation.substring(lastParenIndex + 1, rawLocation.length - 1).trim();
-  const lowerInfo = countryInfo.toLowerCase();
-
-  let country = countryInfo;
-  if (lowerInfo.includes('united kingdom') || lowerInfo.startsWith('uk')) {
-    country = 'United Kingdom';
-  } else if (lowerInfo.includes('germany')) {
-    country = 'Germany';
-  } else if (lowerInfo.includes('united states') || lowerInfo === 'usa' || lowerInfo === 'u.s.a') {
-    country = 'United States';
-  } else if (lowerInfo.includes('korea, south') || lowerInfo === 'korea south') {
-    country = 'South Korea';
-  } else if (lowerInfo === 'uae') {
-    country = 'United Arab Emirates';
-  } else if (lowerInfo === 'salvador') {
-    country = 'El Salvador';
-  }
-
-  return { city, country, region: getRegionForCountry(country) };
+  const countryInfo = rawLocation.substring(lastParenIndex + 1, rawLocation.length - 1).trim();
+  const resolved = resolveSeedCountry(countryInfo);
+  // An unmapped country string keeps its own spelling rather than becoming
+  // "Unknown": the seed did name a country, the table just lacks it.
+  return resolved.countryCode ? { city, ...resolved } : { city, ...resolved, country: countryInfo };
 }
 
   function parseDates(rawDates: string, durationDays = 0) {
@@ -347,18 +237,6 @@ function slugify(value: string) {
     .replace(/^-+|-+$/g, '');
 }
 
-function mapRawCategory(rawCategory: string): Exclude<FindShowsCategory, 'All Categories'> {
-  const normalized = rawCategory.toLowerCase();
-
-  for (const rule of categoryRules) {
-    if (rule.keywords.some((keyword) => normalized.includes(keyword))) {
-      return rule.category;
-    }
-  }
-
-  return 'General';
-}
-
 function normalizeVenue(venue: string) {
   const normalizedVenue = venue.trim();
   return !normalizedVenue || normalizedVenue === '?' ? 'Venue to be announced' : normalizedVenue;
@@ -368,17 +246,36 @@ function extractEventseyeId(value: string | null | undefined) {
   return value?.match(/-(\d+)-\d+\.html$/i)?.[1] ?? null;
 }
 
-function uniqueCategories<T extends string>(categories: T[]) {
-  return categories.filter((category, index) => categories.indexOf(category) === index);
+export type RecordLocation = { city: string } & CountryInference;
+
+/**
+ * City, country and continent for one seed record, with where the country
+ * came from. The seed's own "City (Country)" wins; a record without one
+ * (every such record also has no city or venue) has its country inferred from
+ * venue, name, description, website and organizer, or stays Unknown.
+ */
+export function resolveRecordLocation(record: FindShowSeedRecord): RecordLocation {
+  const parsed = splitLocation(record.city);
+  if (!parsed) return { city: record.city.trim(), ...inferEventCountry(record) };
+  return parsed.countryCode
+    ? { ...parsed, source: 'seed-location', confidence: 'high', evidence: `seed location "${record.city.trim()}"` }
+    : {
+        ...parsed,
+        source: 'seed-location',
+        confidence: 'low',
+        evidence: `seed location "${record.city.trim()}" names a country missing from COUNTRIES_BY_ISO`,
+      };
 }
 
 function toEvent(record: FindShowSeedRecord): FindShowEvent {
-  const location = splitLocation(record.city);
+  const location = resolveRecordLocation(record);
   // "3 days" from the listing lets a numeric start date resolve its end date.
   const durationDays = Number((record.duration ?? '').match(/(\d+)/)?.[1] ?? 0);
   const parsedDates = parseDates(record.dates, durationDays);
-  const mappedCategories = uniqueCategories(record.categories.map(mapRawCategory));
-  const primaryCategory = mappedCategories[0] ?? 'General';
+  // The seed's own `categories` are legacy combined buckets from a substring
+  // match (see lib/find-shows/categories.ts); they are kept as rawCategories
+  // for provenance only. The real tags are re-derived here.
+  const categories = classifyFindShowEvent(record.name, record.description ?? '');
   const seedAsset = {
     eventseyeUrl: record.eventseyeUrl ?? null,
     bannerUrl: record.bannerUrl ?? null,
@@ -391,15 +288,18 @@ function toEvent(record: FindShowSeedRecord): FindShowEvent {
     dates: record.dates,
     city: location.city,
     country: location.country,
-    region: location.region,
+    countryCode: location.countryCode,
+    // Only a seed country missing from COUNTRIES_BY_ISO lacks a region (none
+    // today); it keeps the old default rather than falling outside every continent.
+    region: location.region ?? 'Europe',
     venue: normalizeVenue(record.venue),
     organizer: record.organizer,
     frequency: record.frequency,
     website: record.website,
     email: record.email,
     rawCategories: record.categories,
-    categories: mappedCategories,
-    primaryCategory,
+    categories,
+    primaryCategory: categories[0],
     startDate: parsedDates.startDate,
     endDate: parsedDates.endDate,
     startMonth: parsedDates.startMonth,
@@ -412,8 +312,7 @@ function toEvent(record: FindShowSeedRecord): FindShowEvent {
       normalizeVenue(record.venue),
       record.organizer,
       record.description ?? '',
-      ...record.categories,
-      ...mappedCategories,
+      ...categories,
     ]
       .join(' ')
       .toLowerCase(),
@@ -433,22 +332,15 @@ export const findShowsRegions: FindShowsRegion[] = [
   'Asia-Pacific',
 ];
 
+/**
+ * "All Categories" (the reset option) first, then every category A-Z. Sorted
+ * here as well as written sorted in categories.ts, so a category added out of
+ * order can never break the dropdown's ordering.
+ */
 export const findShowsCategories: FindShowsCategory[] = [
   'All Categories',
-  'Manufacturing & Engineering',
-  'Plastics & Rubber',
-  'Medical & Healthcare',
-  'Food & Beverage',
-  'Technology & Electronics',
-  'Construction & Building',
-  'Energy & Environment',
-  'Automotive',
-  'Packaging',
-  'Textiles & Fashion',
-  'Agriculture',
-  'Security & Safety',
-  'General',
-];
+  ...[...FIND_SHOW_CATEGORIES].sort((left, right) => left.localeCompare(right, 'en')),
+]
 
 export const findShowCategoryOptions: FindShowFilterOption<FindShowsCategory>[] =
   findShowsCategories.map((category) => ({
@@ -460,11 +352,18 @@ const mappedFindShowEvents = (findShowsSeed as FindShowSeedRecord[])
   .map(toEvent)
   .sort((left, right) => left.startDate.localeCompare(right.startDate));
 
-export const findShowEvents = mappedFindShowEvents.map((event, index, events) => {
-  const baseSlug = event.slug;
-  const firstIndex = events.findIndex((candidate) => candidate.slug === baseSlug);
+// First index of each slug, so de-duplication is one pass rather than a
+// findIndex over all ~11k events for every event (~200 ms on module load, which
+// client components pay too since they import this catalog).
+const firstIndexBySlug = new Map<string, number>();
+mappedFindShowEvents.forEach((event, index) => {
+  if (!firstIndexBySlug.has(event.slug)) firstIndexBySlug.set(event.slug, index);
+});
 
-  if (firstIndex === index) {
+export const findShowEvents = mappedFindShowEvents.map((event, index) => {
+  const baseSlug = event.slug;
+
+  if (firstIndexBySlug.get(baseSlug) === index) {
     return event;
   }
 
@@ -530,11 +429,21 @@ export const findShowStats = {
 export type CountryStat = {
   country: string;
   count: number;
-  /** ISO 3166-1 alpha-2 code, or null when the country has none ("Unknown",
-   *  Kosovo). The UI turns this into a flag image, or a globe icon when null;
+  /** ISO 3166-1 alpha-2 code, or null when the country has none ("Unknown").
+   *  The UI turns this into a flag image, or a globe icon when null;
    *  it deliberately does not carry an emoji, which Windows cannot draw. */
   isoCode: string | null;
 };
+
+/**
+ * Each continent's dropdown: only countries whose events carry that region,
+ * sorted A–Z. Built from the events themselves, so a country can only appear
+ * under the region its events are filtered by. Events with no provable
+ * country are listed as their continent's "Unknown" entry (Europe → Unknown),
+ * kept last because it is not a country. Every continent keeps its Unknown
+ * entry even at zero events, so resolving the last unknown event never makes
+ * the option disappear.
+ */
 export const countryStatsByRegion: Record<FindShowsRegion, CountryStat[]> = {
   'All Regions': [],
   'Americas': [],
@@ -543,24 +452,31 @@ export const countryStatsByRegion: Record<FindShowsRegion, CountryStat[]> = {
   'Asia-Pacific': [],
 };
 
-const counts: Record<string, number> = {};
-findShowEvents.forEach(event => {
-    counts[event.country] = (counts[event.country] || 0) + 1;
+const statsByRegionAndCountry = new Map<FindShowRegionName, Map<string, CountryStat>>(
+  findShowsRegions
+    .filter((region): region is FindShowRegionName => region !== 'All Regions')
+    .map((region) => [
+      region,
+      new Map([[UNKNOWN_COUNTRY, { country: UNKNOWN_COUNTRY, count: 0, isoCode: null }]]),
+    ])
+);
+findShowEvents.forEach((event) => {
+  const byCountry = statsByRegionAndCountry.get(event.region) ?? new Map<string, CountryStat>();
+  statsByRegionAndCountry.set(event.region, byCountry);
+  const stat = byCountry.get(event.country);
+  if (stat) {
+    stat.count += 1;
+  } else {
+    byCountry.set(event.country, { country: event.country, count: 1, isoCode: event.countryCode });
+  }
 });
 
-findShowCountries.forEach(country => {
-    const region = getRegionForCountry(country);
-    if (region && countryStatsByRegion[region]) {
-        countryStatsByRegion[region].push({
-            country,
-            count: counts[country],
-            isoCode: getCountryIsoCode(country),
-        });
+statsByRegionAndCountry.forEach((byCountry, region) => {
+  countryStatsByRegion[region] = Array.from(byCountry.values()).sort((a, b) => {
+    if (a.country === UNKNOWN_COUNTRY || b.country === UNKNOWN_COUNTRY) {
+      return Number(a.country === UNKNOWN_COUNTRY) - Number(b.country === UNKNOWN_COUNTRY);
     }
-});
-
-// Sort countries within regions by event count descending
-Object.keys(countryStatsByRegion).forEach(key => {
-    countryStatsByRegion[key as FindShowsRegion].sort((a, b) => b.count - a.count);
+    return a.country.localeCompare(b.country, 'en', { sensitivity: 'base' });
+  });
 });
 

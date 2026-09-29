@@ -56,13 +56,16 @@ export default async function FindShowDetailRoute({
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
               <div className="flex items-end gap-4">
                 <div className="relative size-16 shrink-0 overflow-hidden rounded-full border border-white/25 bg-white shadow-lg">
-                  <Image
-                    src={logoUrl}
-                    alt={`${event.name} logo`}
-                    fill
-                    sizes="64px"
-                    className="object-cover"
-                  />
+                  {/* Inset 15% so a wide wordmark fits the circle unclipped. */}
+                  <div className="absolute inset-[15%]">
+                    <Image
+                      src={logoUrl}
+                      alt={`${event.name} logo`}
+                      fill
+                      sizes="64px"
+                      className="object-contain"
+                    />
+                  </div>
                 </div>
                 <div>
                   <h1 className="text-3xl font-black tracking-tight text-white md:text-4xl">

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 import { Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
@@ -61,13 +60,14 @@ function CountUpStat({ value, suffix, label }: StatItem) {
   return (
     <div
       ref={ref}
-      className="glass-card rounded-2xl px-4 py-4 text-center shadow-[0_18px_40px_rgba(15,23,42,0.08)]"
+      className="glass-card rounded-2xl px-3 py-4 text-center shadow-[0_18px_40px_rgba(15,23,42,0.08)] sm:px-4"
     >
-      <p className="text-2xl font-black tracking-tight text-slate-900 dark:text-white md:text-3xl">
-        {displayValue}
+      {/* tabular-nums keeps the tile from jittering while the number counts up. */}
+      <p className="text-2xl font-black tabular-nums tracking-tight text-slate-900 dark:text-white md:text-3xl">
+        {displayValue.toLocaleString('en-US')}
         {suffix}
       </p>
-      <p className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+      <p className="mt-1 text-[11px] font-medium uppercase tracking-[0.14em] text-slate-500 sm:text-xs sm:tracking-[0.18em] dark:text-slate-400">
         {label}
       </p>
     </div>
@@ -96,12 +96,12 @@ export function FindShowsHero({
       </div>
 
       <div className="relative mx-auto max-w-7xl">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mx-auto max-w-4xl text-center"
-        >
+        {/* The hero is deliberately not wrapped in framer-motion entrance
+            animations: those server-render as inline opacity:0, so the heading,
+            search bar and stats stayed invisible until the (very large) page
+            finished hydrating — sometimes seconds, sometimes never on a slow or
+            failed hydration. Hero content must be visible from the first paint. */}
+        <div className="mx-auto max-w-4xl text-center">
           <h1 className="mt-6 text-4xl font-extrabold leading-[1.1] tracking-tight md:text-5xl lg:text-6xl">
             <span className="text-gradient-hero block">Discover Trade Shows</span>
             <span className="text-gradient-hero block mt-1 md:mt-2">Shaping the Future of</span>
@@ -111,14 +111,9 @@ export function FindShowsHero({
             Explore verified exhibitions across the globe, compare categories, plan your
             calendar, and focus on the shows that matter most for Prismconnex users.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.12 }}
-          className="mx-auto mt-8 max-w-3xl"
-        >
+        <div className="mx-auto mt-8 max-w-3xl">
           <div className="group relative overflow-hidden rounded-[28px] border border-slate-200/70 bg-white/88 p-2 shadow-[0_30px_70px_rgba(15,23,42,0.12)] backdrop-blur-xl transition-all duration-300 focus-within:border-indigo-400/70 focus-within:shadow-[0_30px_80px_rgba(79,70,229,0.18)] dark:border-white/[0.08] dark:bg-[#0f1729]/88 dark:shadow-[0_24px_70px_rgba(0,0,0,0.38)] dark:focus-within:border-indigo-400/40 dark:focus-within:shadow-[0_26px_80px_rgba(79,70,229,0.2)]">
             <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-focus-within:opacity-100">
               <div className="absolute inset-0 bg-[linear-gradient(120deg,rgba(99,102,241,0.08),transparent_42%,rgba(6,182,212,0.08))]" />
@@ -131,7 +126,7 @@ export function FindShowsHero({
               }}
               className="relative flex items-center gap-3 rounded-[22px] px-4 py-3 md:px-5"
             >
-              <Search className="size-5 shrink-0 text-slate-400 dark:text-slate-500" />
+              <Search aria-hidden="true" className="size-5 shrink-0 text-slate-400 dark:text-slate-500" />
               <Input
                 value={searchQuery}
                 onChange={(event) => onSearchQueryChange(event.target.value)}
@@ -158,14 +153,9 @@ export function FindShowsHero({
               </button>
             </form>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.2 }}
-          className="mx-auto mt-8 grid max-w-5xl gap-3 sm:grid-cols-2 xl:grid-cols-4"
-        >
+        <div className="mx-auto mt-8 grid max-w-5xl grid-cols-2 gap-3 lg:grid-cols-4">
           {stats.map((stat) => (
             <CountUpStat
               key={stat.label}
@@ -174,7 +164,7 @@ export function FindShowsHero({
               label={stat.label}
             />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

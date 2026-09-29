@@ -3,9 +3,11 @@
 // writes data/find-shows-seed.json.
 //
 // The calendar listing does not expose eventseye's own category tags (those live
-// on each detail page, which would mean ~11k extra requests), so categories are
-// derived by keyword-matching the event name + description. The keyword table
-// mirrors categoryRules in lib/find-shows/catalog.ts so both classify alike.
+// on each detail page, which would mean ~11k extra requests). The `categories`
+// written here are legacy combined buckets from a plain substring match and are
+// NOT what the app shows: lib/find-shows/categories.ts re-derives each event's
+// individual categories from name + description at load time, so changing the
+// taxonomy never requires rebuilding this seed.
 //
 // Usage: node scripts/build-find-shows-seed.mjs [--in FILE] [--out FILE]
 
@@ -20,7 +22,7 @@ const outArg = args.indexOf("--out");
 const IN = inArg !== -1 ? args[inArg + 1] : path.join(ROOT, "data", "eventseye-2026-2027.json");
 const OUT = outArg !== -1 ? args[outArg + 1] : path.join(ROOT, "data", "find-shows-seed.json");
 
-// Mirrors categoryRules in lib/find-shows/catalog.ts.
+// Legacy buckets only — see the header comment.
 const CATEGORY_RULES = [
   { category: "Plastics & Rubber", keywords: ["plastic", "rubber", "composite"] },
   { category: "Manufacturing & Engineering", keywords: ["metal", "mould", "machine tool", "industrial", "manufactur", "engineering", "welding", "automation", "robot"] },

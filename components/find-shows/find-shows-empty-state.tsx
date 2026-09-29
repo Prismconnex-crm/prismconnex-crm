@@ -17,7 +17,7 @@ export function FindShowsEmptyState({
         <SearchX className="size-7" />
       </div>
       <h3 className="mt-6 text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
-        {trimmedQuery ? 'No results found' : 'No trade shows found matching your filters'}
+        No events found
       </h3>
       <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-600 dark:text-slate-300">
         {trimmedQuery ? (

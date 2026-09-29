@@ -56,7 +56,7 @@ MVC-ish layering, only fully realized for Leads and Saved Companies so far:
 
 ## Find Shows
 
-Public trade-show discovery: `components/find-shows/*`, data from `data/find-shows-seed.json` via `lib/find-shows/catalog.ts`, exhibitor scraping/import via `scripts/import-eventseye-country.mjs` and `lib/find-shows/eventseye.ts`.
+Public trade-show discovery: `components/find-shows/*`, data from `data/find-shows-seed.json` via `lib/find-shows/catalog.ts`, exhibitor scraping/import via `scripts/import-eventseye-country.mjs` and `lib/find-shows/eventseye.ts`. Country, ISO code and continent come from `lib/find-shows/country-resolution.ts` (`COUNTRIES_BY_ISO` is the single country→continent table); seed records with no "(Country)" get a country inferred at load time from name → venue → description → website → organizer, plus a curated `EVENT_COUNTRY_OVERRIDES`. What stays "Unknown" still gets a continent (`inferUnknownContinent`: region words in name/description, then weak country hints, else the old Europe default) and is listed last in that continent's dropdown as "Unknown".
 
 ## Gotchas
 

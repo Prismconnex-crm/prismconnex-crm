@@ -281,8 +281,14 @@ export function EventDetailView({ event }: { event: FindShowEvent }) {
                                         {/* Editorial blurb from the source listing, when present. */}
                                         {event.description ? <p>{event.description}.</p> : null}
                                         <p>
-                                            {event.name} takes place {event.displayDate} in {event.city}
-                                            {event.country ? `, ${event.country}` : ''}
+                                            {event.name} takes place {event.displayDate}
+                                            {/* Location-less seed records have no city, and may be "Unknown". */}
+                                            {(() => {
+                                                const place = [event.city, event.country === 'Unknown' ? '' : event.country]
+                                                    .filter(Boolean)
+                                                    .join(', ');
+                                                return place ? ` in ${place}` : '';
+                                            })()}
                                             {event.venue && event.venue !== 'Venue to be announced' ? ` at ${event.venue}` : ''}.
                                             It is a {event.primaryCategory.toLowerCase()} event serving the {event.region} region
                                             {event.duration ? `, running over ${event.duration}` : ''}.

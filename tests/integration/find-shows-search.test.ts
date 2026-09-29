@@ -20,15 +20,16 @@ function makeEvent(overrides: Partial<FindShowEvent> = {}): FindShowEvent {
     dates: 'Nov. 16 - 19, 2026',
     city: 'Düsseldorf',
     country: 'Germany',
+    countryCode: 'DE',
     region: 'Europe',
     venue: 'Messe Düsseldorf',
     organizer: 'Messe Düsseldorf GmbH',
     frequency: 'annual',
     website: 'https://medica.de',
     email: 'info@medica.de',
-    rawCategories: ['Medical & Healthcare', 'Hospital Equipment'],
-    categories: ['Medical & Healthcare'],
-    primaryCategory: 'Medical & Healthcare',
+    rawCategories: ['Medical & Healthcare'],
+    categories: ['Medical', 'Healthcare'],
+    primaryCategory: 'Medical',
     startDate: '2026-11-16',
     endDate: '2026-11-19',
     startMonth: '2026-11',
@@ -53,8 +54,8 @@ const plastics = makeEvent({
   venue: 'Anaheim Convention Center',
   organizer: 'Informa Markets',
   rawCategories: ['Plastics & Rubber'],
-  categories: ['Plastics & Rubber'],
-  primaryCategory: 'Plastics & Rubber',
+  categories: ['Plastics'],
+  primaryCategory: 'Plastics',
   startDate: '2027-02-09',
   startMonth: '2027-02',
   description: 'Plastics engineering show.',
@@ -87,11 +88,18 @@ describe('find shows search — matching', () => {
   it('searches name, industry, city, country and category, case-insensitively', () => {
     expect(matchesSearchQuery(event, 'medica')).toBe(true); // name
     expect(matchesSearchQuery(event, 'MEDICA')).toBe(true);
-    expect(matchesSearchQuery(event, 'hospital equipment')).toBe(true); // industry
+    expect(matchesSearchQuery(event, 'medical')).toBe(true); // industry
     expect(matchesSearchQuery(event, 'dusseldorf')).toBe(true); // city, accent-insensitive
     expect(matchesSearchQuery(event, 'Düsseldorf')).toBe(true);
     expect(matchesSearchQuery(event, 'germany')).toBe(true); // country
     expect(matchesSearchQuery(event, 'healthcare')).toBe(true); // category
+  });
+
+  it("matches individual categories, never the seed's legacy combined labels", () => {
+    // PLASTEC is tagged Plastics only; "Rubber" survives just in the legacy
+    // "Plastics & Rubber" bucket, which must not pull it into rubber searches.
+    expect(matchesSearchQuery(plastics, 'plastics')).toBe(true);
+    expect(matchesSearchQuery(plastics, 'rubber')).toBe(false);
   });
 
   it('matches an empty or whitespace-only query against everything', () => {
@@ -108,9 +116,55 @@ describe('find shows search — matching', () => {
     expect(matchesSearchQuery(event, 'zzzz')).toBe(false);
   });
 
-  it('does not search the editorial description', () => {
-    expect(matchesSearchQuery(event, 'forum')).toBe(false);
-    expect(getSearchableValues(event)).not.toContain(event.description);
+  it('searches venue, organizer and the description too', () => {
+    expect(matchesSearchQuery(event, 'messe')).toBe(true); // venue/organizer
+    expect(matchesSearchQuery(event, 'gmbh')).toBe(true); // organizer
+    expect(matchesSearchQuery(event, 'forum')).toBe(true); // description
+    expect(getSearchableValues(event)).toContain(event.description);
+  });
+
+  it('matches the description on whole words only, so prose does not match everything', () => {
+    expect(matchesSearchQuery(event, 'medicine')).toBe(true);
+    expect(matchesSearchQuery(event, 'medicin')).toBe(false); // prefix of a description-only word
+    expect(matchesSearchQuery(event, 'orld')).toBe(false);
+  });
+
+  it('matches the title anywhere, but every other field only at word starts', () => {
+    const inLausanne = makeEvent({ name: 'ART FAIR', city: 'Lausanne', country: 'Switzerland', venue: 'Beaulieu' });
+    const titledLausanne = makeEvent({ name: 'ART3F LAUSANNE', city: 'Geneva', country: 'Switzerland' });
+    const reconstructionOrganizer = makeEvent({ name: 'BUILD EXPO', organizer: 'Reconstruction Group' });
+
+    expect(matchesSearchQuery(inLausanne, 'usa')).toBe(false); // city, mid-word
+    expect(matchesSearchQuery(reconstructionOrganizer, 'construction')).toBe(false); // organizer, mid-word
+    expect(matchesSearchQuery(titledLausanne, 'usa')).toBe(true); // title contains
+    // Partial = the start of a word outside the title.
+    expect(matchesSearchQuery(inLausanne, 'laus')).toBe(true);
+    expect(matchesSearchQuery(event, 'dussel')).toBe(true);
+  });
+
+  it('matches country aliases such as USA and UK', () => {
+    expect(matchesSearchQuery(plastics, 'usa')).toBe(true);
+    expect(matchesSearchQuery(plastics, 'united states')).toBe(true);
+    expect(matchesSearchQuery(makeEvent({ country: 'United Kingdom' }), 'uk')).toBe(true);
+    expect(matchesSearchQuery(event, 'usa')).toBe(false);
+  });
+
+  it('tolerates a typo when no catalog word starts with the token', () => {
+    const oslo = makeEvent({ name: 'GARDEN SHOW OSLO', city: 'Oslo', country: 'Norway' });
+    expect(matchesSearchQuery(oslo, 'norwy')).toBe(true); // dropped letter
+    expect(matchesSearchQuery(oslo, 'nrowey')).toBe(false); // two edits on a 6-letter word
+    expect(matchesSearchQuery(event, 'germnay')).toBe(true); // swapped letters
+    expect(matchesSearchQuery(event, 'medcial')).toBe(true);
+    // Short tokens are never fuzzed — too many false hits.
+    expect(matchesSearchQuery(oslo, 'olso')).toBe(true); // 4 letters: 1 edit allowed
+    expect(matchesSearchQuery(oslo, 'osl')).toBe(true); // prefix
+    expect(matchesSearchQuery(oslo, 'olo')).toBe(false);
+  });
+
+  it('ignores case, surrounding and repeated whitespace, and connectives', () => {
+    expect(matchesSearchQuery(event, '   MEDICAL    germany  ')).toBe(true);
+    expect(matchesSearchQuery(event, 'medical and germany')).toBe(true);
+    expect(tokenizeSearchQuery('food and beverage')).toEqual(['food', 'beverage']);
   });
 });
 
@@ -137,7 +191,7 @@ describe('find shows search — composition with the filter bar', () => {
       filterFindShowEvents(events, {
         ...baseFilters,
         query: 'germany',
-        category: 'Medical & Healthcare',
+        category: 'Medical',
       })
     ).toHaveLength(1);
 
@@ -145,9 +199,46 @@ describe('find shows search — composition with the filter bar', () => {
       filterFindShowEvents(events, {
         ...baseFilters,
         query: 'germany',
-        category: 'Plastics & Rubber',
+        category: 'Plastics',
       })
     ).toEqual([]);
+  });
+
+  it('narrows Europe + Construction + "norway" to European construction shows in Norway', () => {
+    const osloBuild = makeEvent({
+      slug: 'oslo-build', name: 'BYGG EXPO', city: 'Oslo', country: 'Norway',
+      categories: ['Construction'], primaryCategory: 'Construction',
+    });
+    const osloFood = makeEvent({
+      slug: 'oslo-food', name: 'MATMESSE', city: 'Oslo', country: 'Norway',
+      categories: ['Food'], primaryCategory: 'Food',
+    });
+    const stockholmBuild = makeEvent({
+      slug: 'stockholm-build', name: 'NORDBYGG', city: 'Stockholm', country: 'Sweden',
+      categories: ['Construction'], primaryCategory: 'Construction',
+    });
+    const norwayNamedInUs = makeEvent({
+      slug: 'norway-us', name: 'NORWAY DAYS', city: 'Seattle', country: 'United States',
+      region: 'Americas', categories: ['Construction'], primaryCategory: 'Construction',
+    });
+
+    expect(
+      searchFindShowEvents([osloBuild, osloFood, stockholmBuild, norwayNamedInUs], {
+        ...baseFilters,
+        query: '  NORWAY ',
+        region: 'Europe',
+        category: 'Construction',
+      }).map((event) => event.slug)
+    ).toEqual(['oslo-build']);
+  });
+
+  it('keeps every filter applied whatever the query — typing never widens results', () => {
+    const events = [makeEvent(), plastics];
+    const filters = { ...baseFilters, region: 'Americas' as const };
+    for (const query of ['', 'm', 'medica', 'germany', 'plastec', 'zzzz']) {
+      const results = filterFindShowEvents(events, { ...filters, query });
+      expect(results.every((event) => event.region === 'Americas')).toBe(true);
+    }
   });
 
   it('still honours the country and month filters', () => {
@@ -164,113 +255,132 @@ describe('find shows search — composition with the filter bar', () => {
 });
 
 describe('find shows search — relevance scoring', () => {
-  const cafeShowChina = makeEvent({
-    slug: 'cafe-show-china',
-    name: 'CAFE SHOW CHINA',
-    city: 'Beijing',
-    country: 'China',
-    region: 'Asia-Pacific',
-    rawCategories: ['Food & Beverage'],
-    categories: ['Food & Beverage'],
-    primaryCategory: 'Food & Beverage',
-  });
-  const chicagoCollective = makeEvent({
-    slug: 'chicago-collective',
-    name: "CHICAGO COLLECTIVE - MEN'S EDITION",
-    city: 'Chicago',
-    country: 'United States',
-    region: 'Americas',
-    rawCategories: ['Textiles & Fashion'],
-    categories: ['Textiles & Fashion'],
-    primaryCategory: 'Textiles & Fashion',
-  });
-  const inCanada = makeEvent({
-    slug: 'toronto-show',
-    name: 'TORONTO GIFT FAIR',
-    city: 'Toronto',
-    country: 'Canada',
-    region: 'Americas',
-  });
-  const inChicago = makeEvent({
-    slug: 'auto-show-chicago',
-    name: 'AUTO SHOW',
-    city: 'Chicago',
-    country: 'United States',
-    region: 'Americas',
-  });
-  const nameContains = makeEvent({
-    slug: 'techcon',
-    name: 'TECHCON',
-    city: 'Berlin',
-    country: 'Germany',
-  });
-  // "France" holds a 'c' without starting with one; neither its name nor its
-  // city may contain a 'c', or a higher tier would claim the event.
-  const countryContains = makeEvent({
-    slug: 'norden-expo',
-    name: 'NORDEN EXPO',
-    city: 'Paris',
-    country: 'France',
-  });
-  const cityContains = makeEvent({
-    slug: 'lancaster-fair',
-    name: 'NORDEN FAIR',
-    city: 'Lancaster',
-    country: 'United Kingdom',
+  const at = (slug: string, overrides: Partial<FindShowEvent>) =>
+    makeEvent({
+      slug,
+      city: 'Lyon',
+      country: 'France',
+      organizer: 'Show Org',
+      venue: 'Hall',
+      categories: ['General'],
+      description: '',
+      ...overrides,
+    });
+
+  it('scores the eight priorities exactly as specified', () => {
+    expect(scoreEventForQuery(at('a', { name: 'PACKAGING INNOVATIONS' }), 'p')).toBe(SEARCH_SCORE.titleStartsWith); // 1
+    expect(scoreEventForQuery(at('b', { name: 'CINE GEAR EXPO - ATLANTA' }), 'expo')).toBe(
+      SEARCH_SCORE.titleWordStartsWith
+    ); // 2
+    expect(scoreEventForQuery(at('c', { name: 'SHOP EXPO' }), 'p')).toBe(SEARCH_SCORE.titleContains); // 3
+    expect(scoreEventForQuery(at('d', { name: 'FAIR', organizer: 'Paris Events' }), 'paris')).toBe(
+      SEARCH_SCORE.organizerMatch
+    ); // 4
+    expect(scoreEventForQuery(at('e', { name: 'FAIR', city: 'Paris' }), 'paris')).toBe(SEARCH_SCORE.cityMatch); // 5
+    expect(scoreEventForQuery(at('f', { name: 'FAIR', country: 'Poland' }), 'poland')).toBe(
+      SEARCH_SCORE.countryMatch
+    ); // 6
+    expect(scoreEventForQuery(at('g', { name: 'FAIR', categories: ['Packaging'] }), 'packaging')).toBe(
+      SEARCH_SCORE.categoryMatch
+    ); // 7
+    expect(scoreEventForQuery(at('h', { name: 'FAIR', description: 'Held near Oslo' }), 'oslo')).toBe(
+      SEARCH_SCORE.descriptionMatch
+    ); // 8
+    expect(scoreEventForQuery(at('i', { name: 'FAIR' }), 'zzzz')).toBe(SEARCH_SCORE.noMatch);
   });
 
-  it('scores each tier exactly as specified', () => {
-    expect(scoreEventForQuery(cafeShowChina, 'c')).toBe(SEARCH_SCORE.nameStartsWith); // 100
-    expect(scoreEventForQuery(inCanada, 'c')).toBe(SEARCH_SCORE.countryStartsWith); // 90
-    expect(scoreEventForQuery(inChicago, 'c')).toBe(SEARCH_SCORE.cityStartsWith); // 80
-    expect(scoreEventForQuery(nameContains, 'c')).toBe(SEARCH_SCORE.nameIncludes); // 50
-    expect(scoreEventForQuery(countryContains, 'c')).toBe(SEARCH_SCORE.countryIncludes); // 40
-    expect(scoreEventForQuery(cityContains, 'c')).toBe(SEARCH_SCORE.cityIncludes); // 30
+  it('orders the tiers strictly: title start > title word > title substring > organizer > city > country > category > description', () => {
+    const events = [
+      at('description', { name: 'FAIR H', description: 'The China market' }),
+      at('category', { name: 'FAIR G', categories: ['China Trade' as never] }),
+      at('country', { name: 'FAIR F', country: 'China' }),
+      at('city', { name: 'FAIR E', city: 'China Town' }),
+      at('organizer', { name: 'FAIR D', organizer: 'China Council' }),
+      at('title-contains', { name: 'INDOCHINAEXPO' }),
+      at('title-word', { name: 'HI CHINA' }),
+      at('title-start', { name: 'CHINA GLASS' }),
+    ];
+
+    expect(rankFindShowEvents(events, 'china').map((e) => e.slug)).toEqual([
+      'title-start',
+      'title-word',
+      'title-contains',
+      'organizer',
+      'city',
+      'country',
+      'category',
+      'description',
+    ]);
+  });
+
+  it('matches the examples: "p", "digital" and "china"', () => {
+    const p = rankFindShowEvents(
+      [
+        at('in-poland', { name: 'FAIR', country: 'Poland' }),
+        at('shop', { name: 'SHOP EXPO' }),
+        at('photo', { name: 'THE PHOTO SHOW' }),
+        at('paperworld', { name: 'PAPERWORLD' }),
+        at('photonex', { name: 'PHOTONEX EUROPE' }),
+        at('packaging', { name: 'PACKAGING INNOVATIONS' }),
+      ],
+      'p'
+    ).map((e) => e.slug);
+    expect(p.slice(0, 3).sort()).toEqual(['packaging', 'paperworld', 'photonex']);
+    expect(p.slice(3)).toEqual(['photo', 'shop', 'in-poland']);
+
+    const digital = rankFindShowEvents(
+      [
+        at('elsewhere', { name: 'RETAIL SUMMIT', description: 'All things digital' }),
+        at('african', { name: 'DIGITAL AFRICAN SUMMIT' }),
+        at('signage', { name: 'DIGITAL SIGNAGE EXPERIENCE' }),
+      ],
+      'digital'
+    ).map((e) => e.slug);
+    expect(digital[2]).toBe('elsewhere');
+
+    expect(
+      rankFindShowEvents(
+        [
+          at('mentions', { name: 'FAIR', description: 'Buyers from China' }),
+          at('in-china', { name: 'FAIR', country: 'China' }),
+          at('hi-china', { name: 'HI CHINA' }),
+        ],
+        'china'
+      ).map((e) => e.slug)
+    ).toEqual(['hi-china', 'in-china', 'mentions']);
+  });
+
+  it('breaks ties by date ascending, then by name', () => {
+    const later = at('later', { name: 'PACK EXPO', startDate: '2027-05-01' });
+    const soonerB = at('sooner-b', { name: 'PAPER FAIR', startDate: '2026-09-01' });
+    const soonerA = at('sooner-a', { name: 'PACKAGING DAY', startDate: '2026-09-01' });
+
+    expect(rankFindShowEvents([later, soonerB, soonerA], 'p').map((e) => e.slug)).toEqual([
+      'sooner-a',
+      'sooner-b',
+      'later',
+    ]);
+  });
+
+  it('scores an alias as the country, and a typo as the word it corrects to', () => {
+    expect(scoreEventForQuery(at('us', { name: 'FAIR', country: 'United States' }), 'usa')).toBe(
+      SEARCH_SCORE.countryMatch
+    );
+    expect(scoreEventForQuery(at('chi', { name: 'FAIR', city: 'Chicago' }), 'chicgo')).toBe(SEARCH_SCORE.cityMatch);
   });
 
   it('scores case-insensitively', () => {
-    expect(scoreEventForQuery(cafeShowChina, 'CAFE')).toBe(SEARCH_SCORE.nameStartsWith);
-    expect(scoreEventForQuery(cafeShowChina, 'cafe')).toBe(SEARCH_SCORE.nameStartsWith);
+    expect(scoreEventForQuery(at('cafe', { name: 'CAFE SHOW' }), 'CAFE')).toBe(SEARCH_SCORE.titleStartsWith);
+    expect(scoreEventForQuery(at('cafe', { name: 'CAFE SHOW' }), 'cafe')).toBe(SEARCH_SCORE.titleStartsWith);
   });
 
-  it('ranks an industry/category-only match below every name, country or city match', () => {
-    const industryOnly = makeEvent({
-      slug: 'widget-fair',
-      name: 'WIDGET FAIR',
-      city: 'Osaka',
-      country: 'Japan',
-      rawCategories: ['Packaging'],
-      categories: ['Packaging'],
-      primaryCategory: 'Packaging',
-    });
+  it('scores a multi-word query as a phrase first, else on the average of its words', () => {
+    const chinaFood = at('china-food', { name: 'CHINA FOOD EXPO', country: 'China' });
+    expect(scoreEventForQuery(chinaFood, 'china food')).toBe(SEARCH_SCORE.titleStartsWith);
 
-    expect(scoreEventForQuery(industryOnly, 'packaging')).toBe(SEARCH_SCORE.otherFieldMatch);
-    expect(scoreEventForQuery(industryOnly, 'zzzz')).toBe(SEARCH_SCORE.noMatch);
-  });
-
-  it('puts every startsWith match ahead of partial matches, name-first', () => {
-    const ranked = rankFindShowEvents(
-      [cityContains, countryContains, nameContains, inChicago, inCanada, chicagoCollective, cafeShowChina],
-      'c'
-    );
-
-    expect(ranked.map((event) => event.slug)).toEqual([
-      'cafe-show-china', // 100 name startsWith
-      'chicago-collective', // 100 name startsWith, A-Z after CAFE
-      'toronto-show', // 90 country startsWith (Canada)
-      'auto-show-chicago', // 80 city startsWith (Chicago)
-      'techcon', // 50 name includes
-      'norden-expo', // 40 country includes (France)
-      'lancaster-fair', // 30 city includes (Lancaster)
-    ]);
-  });
-
-  it('breaks ties alphabetically by name', () => {
-    const ranked = rankFindShowEvents([chicagoCollective, cafeShowChina], 'c');
-    expect(ranked.map((event) => event.name)).toEqual([
-      'CAFE SHOW CHINA',
-      "CHICAGO COLLECTIVE - MEN'S EDITION",
-    ]);
+    const medicalInGermany = at('am-medical', { name: 'AM MEDICAL DAYS', country: 'Germany' });
+    // title word (90) + country (50) → 70
+    expect(scoreEventForQuery(medicalInGermany, 'medical germany')).toBe(70);
   });
 
   it('leaves the default date order alone when the query is empty', () => {
@@ -279,29 +389,21 @@ describe('find shows search — relevance scoring', () => {
     expect(rankFindShowEvents(events, '   ')).toBe(events);
   });
 
-  it('scores a multi-word query on its best term as well as the whole string', () => {
-    const chinaFood = makeEvent({ slug: 'china-food', name: 'CHINA FOOD EXPO', country: 'China' });
-    expect(scoreEventForQuery(chinaFood, 'china food')).toBe(SEARCH_SCORE.nameStartsWith);
-  });
-
   it('ranks only what the Region and Category filters kept', () => {
-    const events = [cafeShowChina, chicagoCollective, inCanada, inChicago];
+    const cafeChina = at('cafe-china', { name: 'CAFE SHOW CHINA', country: 'China', region: 'Asia-Pacific', categories: ['Beverage'] });
+    const chicago = at('chicago', { name: 'CHICAGO COLLECTIVE', country: 'United States', region: 'Americas', categories: ['Fashion'] });
+    const toronto = at('toronto', { name: 'TORONTO GIFT FAIR', country: 'Canada', region: 'Americas' });
 
-    // Region wins over relevance: the 100-score CAFE SHOW CHINA is in
-    // Asia-Pacific, so an Americas search must not rank it back in.
     expect(
-      searchFindShowEvents(events, { ...baseFilters, query: 'c', region: 'Americas' }).map(
+      searchFindShowEvents([cafeChina, chicago, toronto], { ...baseFilters, query: 'c', region: 'Americas' }).map(
         (event) => event.slug
       )
-    ).toEqual(['chicago-collective', 'toronto-show', 'auto-show-chicago']);
-
+    ).toEqual(['chicago', 'toronto']);
     expect(
-      searchFindShowEvents(events, {
-        ...baseFilters,
-        query: 'c',
-        category: 'Food & Beverage',
-      }).map((event) => event.slug)
-    ).toEqual(['cafe-show-china']);
+      searchFindShowEvents([cafeChina, chicago, toronto], { ...baseFilters, query: 'c', category: 'Beverage' }).map(
+        (event) => event.slug
+      )
+    ).toEqual(['cafe-china']);
   });
 });
 
@@ -326,6 +428,21 @@ describe('find shows search — highlighting', () => {
       { text: ' ', match: false },
       { text: 'Automo', match: true },
       { text: 'tive', match: false },
+    ]);
+  });
+
+  it('highlights at word starts, anywhere in titles, and the word a typo stands for', () => {
+    expect(highlightSegments('Lausanne', 'usa')).toEqual([{ text: 'Lausanne', match: false }]);
+    expect(highlightSegments('SHOP EXPO', 'p', { anywhere: true })).toEqual([
+      { text: 'SHO', match: false },
+      { text: 'P', match: true },
+      { text: ' EX', match: false },
+      { text: 'P', match: true },
+      { text: 'O', match: false },
+    ]);
+    expect(highlightSegments('Oslo, Norway', 'norwy')).toEqual([
+      { text: 'Oslo, ', match: false },
+      { text: 'Norway', match: true },
     ]);
   });
 

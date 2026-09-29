@@ -16,6 +16,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { cn } from '@/lib/utils';
 import { CountryFlag } from '@/components/find-shows/country-flag';
 import { findShowsRegions, countryStatsByRegion } from '@/lib/find-shows/catalog';
+import { matchesCategorySearch } from '@/lib/find-shows/categories';
 import {
   createMegaMenuController,
   type MegaMenuController,
@@ -381,6 +382,21 @@ function FilterFields({
     panelHandlers: categoryPanelHandlers,
   } = useHoverHandlers(menu, categoryMenuId);
 
+  // Filtered here rather than by cmdk: its fuzzy subsequence match lets "it"
+  // hit Agriculture and Security, and its score sort would break the A-Z order.
+  const [categoryQuery, setCategoryQuery] = useState('');
+  const visibleCategoryOptions = categoryOptions.filter((option) =>
+    matchesCategorySearch(option.label, categoryQuery)
+  );
+  const showAllCategoriesOption = matchesCategorySearch(
+    allCategoriesOption?.label ?? 'All Categories',
+    categoryQuery
+  );
+  // A reopened dropdown starts from the full list, not the last search.
+  useEffect(() => {
+    if (!categoryOpen) setCategoryQuery('');
+  }, [categoryOpen]);
+
   const selectedCategoryOption =
     filters.category === (allCategoriesOption?.value ?? 'All Categories')
       ? allCategoriesOption
@@ -447,32 +463,40 @@ function FilterFields({
                 megaMenuPanelMotionClass
               )}
             >
-            <Command className="bg-transparent dark:bg-transparent">
-              <CommandInput placeholder="Search category..." aria-label="Search category..." className="text-slate-950 placeholder:text-slate-500 border-none focus:ring-0" />
+            <Command shouldFilter={false} className="bg-transparent dark:bg-transparent">
+              <CommandInput
+                value={categoryQuery}
+                onValueChange={setCategoryQuery}
+                placeholder="Search category..."
+                aria-label="Search category..."
+                className="text-slate-950 placeholder:text-slate-500 border-none focus:ring-0"
+              />
               <CommandList>
                 <CommandEmpty className="py-6 text-center text-sm font-semibold text-slate-500">No matching category</CommandEmpty>
                 <CommandGroup>
-                  <CommandItem
-                    value={
-                      [allCategoriesOption?.label, allCategoriesOption?.value]
-                        .filter(Boolean)
-                        .join(' ') || 'All Categories'
-                    }
-                    className="cursor-pointer font-bold text-slate-700 aria-selected:bg-slate-100 aria-selected:text-slate-950 hover:bg-slate-100 hover:text-slate-950 data-[selected=true]:bg-slate-100 data-[selected=true]:text-slate-950"
-                    onSelect={() => {
-                      onFiltersChange({
-                        ...filters,
-                        category: (allCategoriesOption?.value ?? 'All Categories') as FindShowsCategory,
-                      });
-                      menu.closeNow();
-                    }}
-                  >
-                    <span className="flex-1">{allCategoriesOption?.label ?? 'All Categories'}</span>
-                    {filters.category === (allCategoriesOption?.value ?? 'All Categories') ? (
-                      <Check className="size-4 text-indigo-600" />
-                    ) : null}
-                  </CommandItem>
-                  {categoryOptions.map((option) => (
+                  {showAllCategoriesOption ? (
+                    <CommandItem
+                      value={
+                        [allCategoriesOption?.label, allCategoriesOption?.value]
+                          .filter(Boolean)
+                          .join(' ') || 'All Categories'
+                      }
+                      className="cursor-pointer font-bold text-slate-700 aria-selected:bg-slate-100 aria-selected:text-slate-950 hover:bg-slate-100 hover:text-slate-950 data-[selected=true]:bg-slate-100 data-[selected=true]:text-slate-950"
+                      onSelect={() => {
+                        onFiltersChange({
+                          ...filters,
+                          category: (allCategoriesOption?.value ?? 'All Categories') as FindShowsCategory,
+                        });
+                        menu.closeNow();
+                      }}
+                    >
+                      <span className="flex-1">{allCategoriesOption?.label ?? 'All Categories'}</span>
+                      {filters.category === (allCategoriesOption?.value ?? 'All Categories') ? (
+                        <Check className="size-4 text-indigo-600" />
+                      ) : null}
+                    </CommandItem>
+                  ) : null}
+                  {visibleCategoryOptions.map((option) => (
                     <CommandItem
                       key={`${option.label}-${option.value}`}
                       value={[option.label, option.value].filter(Boolean).join(' ')}

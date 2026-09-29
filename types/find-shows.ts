@@ -1,3 +1,5 @@
+import type { FindShowCategoryName } from '@/lib/find-shows/categories';
+
 export type FindShowsRegion =
   | 'All Regions'
   | 'Americas'
@@ -5,21 +7,8 @@ export type FindShowsRegion =
   | 'Africa & Middle East'
   | 'Asia-Pacific';
 
-export type FindShowsCategory =
-  | 'All Categories'
-  | 'Manufacturing & Engineering'
-  | 'Plastics & Rubber'
-  | 'Medical & Healthcare'
-  | 'Food & Beverage'
-  | 'Technology & Electronics'
-  | 'Construction & Building'
-  | 'Energy & Environment'
-  | 'Automotive'
-  | 'Packaging'
-  | 'Textiles & Fashion'
-  | 'Agriculture'
-  | 'Security & Safety'
-  | 'General';
+/** The taxonomy lives in lib/find-shows/categories.ts; this adds the reset option. */
+export type FindShowsCategory = 'All Categories' | FindShowCategoryName;
 
 export type FindShowFilterOption<T extends string = string> = {
   label: string;
@@ -58,6 +47,7 @@ export type FindShowSeedRecord = {
   city: string;
   venue: string;
   organizer: string;
+  /** Legacy combined buckets; the catalog re-derives real categories from name + description. */
   categories: string[];
   frequency: string;
   website: string;
@@ -78,14 +68,20 @@ export type FindShowEvent = {
   name: string;
   dates: string;
   city: string;
+  /** Canonical country name, or "Unknown" when no evidence places the event. */
   country: string;
+  /** ISO 3166-1 alpha-2 (XK for Kosovo); null for "Unknown". */
+  countryCode: string | null;
+  /** Continent. An "Unknown"-country event still has one, from region-level evidence. */
   region: Exclude<FindShowsRegion, 'All Regions'>;
   venue: string;
   organizer: string;
   frequency: string;
   website: string;
   email: string;
+  /** Legacy combined buckets stored in the seed; provenance only, never filtered or searched. */
   rawCategories: string[];
+  /** Every category the event belongs to, primary first (lib/find-shows/categories.ts). */
   categories: Exclude<FindShowsCategory, 'All Categories'>[];
   primaryCategory: Exclude<FindShowsCategory, 'All Categories'>;
   startDate: string;
