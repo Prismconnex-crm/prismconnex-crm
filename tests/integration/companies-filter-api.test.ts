@@ -51,8 +51,12 @@ describe("companies filter API", () => {
     const [sql, ...params] = mocks.queryRawUnsafe.mock.calls[0];
 
     expect(response.status).toBe(200);
+    // Still null: the count is a second round trip and only the numbered
+    // paginator asks for it (?withTotal=1), which this request does not.
     expect(body.total).toBeNull();
-    expect(body.pagination).toBe("cursor");
+    // Offset, not cursor. The paginator jumps to an arbitrary page, which a
+    // cursor cannot express, so a request that names no cursor walks by offset.
+    expect(body.pagination).toBe("offset");
     expect(body.hasNextPage).toBe(false);
     expect(body.companies[0].name).toBe("APAC Software Co");
     // Category is matched over its spelling variants, not by a single equality:
@@ -79,8 +83,13 @@ describe("companies filter API", () => {
     const [sql, ...params] = mocks.queryRawUnsafe.mock.calls[0];
 
     expect(response.status).toBe(200);
-    expect(normalizeSql(sql)).toContain("WHERE lower(name) ~>=~ $1 AND lower(name) ~<~ $2");
-    expect(normalizeSql(sql)).toContain("ORDER BY lower(name) USING ~<~");
+    // One prefix range, against the name with its spaces removed, so the term
+    // matches regardless of spacing on either side. Filter and ORDER BY use
+    // the same expression so a single index scan serves both.
+    expect(normalizeSql(sql)).toContain(
+      "WHERE replace(lower(name), ' ', '') ~>=~ $1 AND replace(lower(name), ' ', '') ~<~ $2"
+    );
+    expect(normalizeSql(sql)).toContain("ORDER BY replace(lower(name), ' ', '') USING ~<~");
     expect(params).toEqual(["apac", "apad", 6]);
   });
 
@@ -91,9 +100,37 @@ describe("companies filter API", () => {
     const [sql, ...params] = mocks.queryRawUnsafe.mock.calls[0];
 
     expect(response.status).toBe(200);
-    expect(normalizeSql(sql)).toContain("WHERE lower(name) ~>=~ $1 AND lower(name) ~<~ $2");
-    // Both sides of the comparison must be lowercase to use the lower(name)
+    expect(normalizeSql(sql)).toContain(
+      "replace(lower(name), ' ', '') ~>=~ $1 AND replace(lower(name), ' ', '') ~<~ $2"
+    );
+    // Both sides of the comparison must be lowercase to use the
     // text_pattern_ops index; the bound is the term with its last char bumped.
     expect(params).toEqual(["google", "googlf", 6]);
+  });
+
+  it("finds a spaced name from a query typed without spaces", async () => {
+    const request = new Request("http://localhost/api/companies?search=canvaeducation&limit=5");
+
+    const response = await GET(request);
+    const [sql, ...params] = mocks.queryRawUnsafe.mock.calls[0];
+
+    expect(response.status).toBe(200);
+    // "Canva Education" holds a space the query does not, so only the
+    // squashed expression can reach it.
+    expect(normalizeSql(sql)).toContain(
+      "replace(lower(name), ' ', '') ~>=~ $1 AND replace(lower(name), ' ', '') ~<~ $2"
+    );
+    expect(params).toEqual(["canvaeducation", "canvaeducatioo", 6]);
+  });
+
+  it("squashes whitespace out of the query so a spaced term matches a closed-up name", async () => {
+    const request = new Request("http://localhost/api/companies?search=4%20matrix&limit=5");
+
+    const response = await GET(request);
+    const [, ...params] = mocks.queryRawUnsafe.mock.calls[0];
+
+    // Whitespace is stripped from the term before it is bound, which is what
+    // lets it reach the closed-up "4Matrix".
+    expect(params).toEqual(["4matrix", "4matriy", 6]);
   });
 });

@@ -2,18 +2,20 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowUpDown, ChevronLeft, ChevronRight, ExternalLink, Globe2, MapPin, Search, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Exhibitor } from "@/types/exhibitors";
-import { ExhibitorContactModal } from "./exhibitor-contact-modal";
 
 /**
  * BETT-only exhibitor browser: a card grid instead of the shared vertical list.
  * Server-paginated through /api/exhibitors (page/pageSize/q/sort), with page and
  * pageSize mirrored into the URL so a refresh restores the same view.
  *
- * Every card is an external anchor — clicking one opens the exhibitor's own site
- * in a new tab and never navigates inside the CRM.
+ * Clicking a card navigates to the Companies page filtered to that exhibitor.
+ * The two links inside a card — the domain and the "View detail" pill — still
+ * open the exhibitor's own site in a new tab, and stop the click from reaching
+ * the card underneath.
  */
 
 /** Last-resort target when an exhibitor published no site and no directory page. */
@@ -94,8 +96,22 @@ export function BettExhibitorGrid({ eventSlug, expected }: { eventSlug: string; 
     setReady(true);
   }, []);
 
-  // The exhibitor whose contact card is open; null closes the modal.
-  const [selected, setSelected] = useState<Exhibitor | null>(null);
+  const router = useRouter();
+
+  /**
+   * Clicking a card leaves for the Companies page with the exhibitor's name as
+   * the search, instead of opening a contact card in place. The exhibitors were
+   * imported into DiscoveryCompany, so the company record is the fuller view of
+   * the same organisation — `?q=` is the param the Companies section already
+   * reads on mount, so no other wiring is needed.
+   */
+  const openInCompanies = useCallback(
+    (exhibitor: Exhibitor) => {
+      router.push(`/app/companies?q=${encodeURIComponent(exhibitor.name)}`);
+    },
+    [router]
+  );
+
   const [data, setData] = useState<ExhibitorPage | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -288,7 +304,7 @@ export function BettExhibitorGrid({ eventSlug, expected }: { eventSlug: string; 
         ) : (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
             {items.map((ex) => (
-              <ExhibitorCard key={ex.id} exhibitor={ex} onSelect={setSelected} />
+              <ExhibitorCard key={ex.id} exhibitor={ex} onSelect={openInCompanies} />
             ))}
           </div>
         )}
@@ -339,7 +355,6 @@ export function BettExhibitorGrid({ eventSlug, expected }: { eventSlug: string; 
         </div>
       ) : null}
 
-      <ExhibitorContactModal exhibitor={selected} onClose={() => setSelected(null)} />
     </div>
   );
 }
@@ -361,7 +376,7 @@ function PagerButton({
 
 /**
  * One exhibitor tile. The whole card is a single external anchor, so a click
- * anywhere on it — including the "Visit website" row — leaves the CRM page
+ * anywhere on it — including the "View detail" row — leaves the CRM page
  * untouched and opens the exhibitor's site in a new tab.
  */
 function ExhibitorCard({
@@ -376,10 +391,10 @@ function ExhibitorCard({
   const domain = prettyDomain(exhibitor.website);
 
   return (
-    // Was an <a> straight to the exhibitor's site. The card now opens the
-    // contact modal instead, and the website moved to the pill at the bottom,
-    // which is a real link and stops the click from bubbling. Same classes and
-    // markup as before, so the grid is visually unchanged.
+    // Was an <a> straight to the exhibitor's site. The card now navigates to
+    // that company on the Companies page, and the website moved to the pill at
+    // the bottom, which is a real link and stops the click from bubbling. Same
+    // classes and markup as before, so the grid is visually unchanged.
     <div
       role="button"
       tabIndex={0}
@@ -390,7 +405,7 @@ function ExhibitorCard({
           onSelect(exhibitor);
         }
       }}
-      title={`View ${exhibitor.name} contact details`}
+      title={`View ${exhibitor.name} on the Companies page`}
       className="cursor-pointer group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white/70 p-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/70 hover:shadow-[0_18px_45px_-18px_rgba(79,70,229,0.55)] dark:border-[#22304A] dark:bg-[#111B2E]/70 dark:hover:border-indigo-400/50 dark:hover:shadow-[0_18px_45px_-18px_rgba(99,102,241,0.65)]"
     >
       {/* Neon sheen, only on hover */}
@@ -435,10 +450,22 @@ function ExhibitorCard({
       {/* Website */}
       <div className="mt-auto pt-3">
         {domain ? (
-          <p className="flex items-center gap-1.5 truncate text-[11px] font-bold text-slate-500 dark:text-slate-400">
+          // The domain is its own link to the official site. `domain` is
+          // derived from exhibitor.website, so it is non-null exactly when
+          // that URL exists — no fallback to the show directory here, unlike
+          // exhibitorHref. stopPropagation keeps the card's onSelect from
+          // firing underneath, so the click opens the site and nothing else.
+          <a
+            href={exhibitor.website!}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(event) => event.stopPropagation()}
+            title={`Open ${exhibitor.name} official website`}
+            className="flex items-center gap-1.5 truncate text-[11px] font-bold text-slate-500 transition-colors hover:text-indigo-600 hover:underline dark:text-slate-400 dark:hover:text-indigo-300"
+          >
             <Globe2 className="size-3 shrink-0 text-indigo-400" />
             <span className="truncate">{domain}</span>
-          </p>
+          </a>
         ) : (
           <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500">No official site published</p>
         )}
@@ -454,7 +481,7 @@ function ExhibitorCard({
           }
           className="mt-2 flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white/60 py-1.5 text-[11px] font-black text-indigo-600 transition-all group-hover:border-indigo-400/60 group-hover:bg-indigo-50 dark:border-[#22304A] dark:bg-[#0B1220]/60 dark:text-indigo-300 dark:group-hover:border-indigo-400/40 dark:group-hover:bg-indigo-500/10"
         >
-          {exhibitor.website ? "Visit website" : "Open show directory"}
+          {exhibitor.website ? "View detail" : "Open show directory"}
           <ExternalLink className="size-3" />
         </a>
       </div>

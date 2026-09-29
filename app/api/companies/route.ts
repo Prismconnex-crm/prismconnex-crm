@@ -1,5 +1,11 @@
 import { NextResponse } from 'next/server';
-import { cleanParam, companyOrderBy, parseLimit, searchCompanies } from '@/lib/companies/search';
+import {
+  cleanParam,
+  companyOrderBy,
+  countCompanies,
+  parseLimit,
+  searchCompanies,
+} from '@/lib/companies/search';
 import { splitKeywords, type CompanySort } from '@/lib/companies/nl-query';
 
 export const dynamic = 'force-dynamic';
@@ -24,6 +30,7 @@ export async function GET(request: Request) {
 
     const filters = {
       search: cleanParam(searchParams.get('search')),
+      companyName: cleanParam(searchParams.get('companyName')),
       category: cleanParam(searchParams.get('category')),
       employeeRange: cleanParam(searchParams.get('employeeRange')),
       region: cleanParam(searchParams.get('location')),
@@ -33,20 +40,42 @@ export async function GET(request: Request) {
       sort: parseSort(searchParams.get('sort')),
     };
 
-    // A re-ordered result set has no stable cursor, so those pages walk by
-    // offset instead. Cursor pagination stays the default path.
+    /**
+     * Cursor only when the caller actually supplies one.
+     *
+     * The numbered paginator jumps straight to page N, which a cursor cannot
+     * express — cursors only walk forward from where you already are. So a
+     * request that names a page is served by OFFSET, and the cursor path is
+     * kept for callers that hand one back.
+     */
     const { supportsCursor } = companyOrderBy(filters);
+    const useCursor = supportsCursor && cursor > 0;
 
-    const result = await searchCompanies({
-      filters,
-      limit,
-      cursor,
-      offset: supportsCursor ? 0 : (page - 1) * limit,
-    });
+    /**
+     * The count is opt-in. Only the numbered paginator needs a page count, and
+     * it is a second round trip — callers that just want rows (the assistant,
+     * the saved-company lookups) should not pay for it. Requested in parallel
+     * so it costs the slower of the two, not their sum.
+     */
+    const withTotal = searchParams.get('withTotal') === '1';
+
+    const [result, total] = await Promise.all([
+      searchCompanies({
+        filters,
+        limit,
+        cursor: useCursor ? cursor : 0,
+        offset: useCursor ? 0 : (page - 1) * limit,
+      }),
+      withTotal ? countCompanies({ filters }) : Promise.resolve(null),
+    ]);
 
     return NextResponse.json({
       ...result,
-      pagination: supportsCursor ? 'cursor' : 'offset',
+      // Stays null unless asked for — see the note on searchCompanies about
+      // never reporting an absent count as zero.
+      total: total ? total.count : null,
+      totalCapped: total ? total.capped : false,
+      pagination: useCursor ? 'cursor' : 'offset',
       page,
       limit,
     });

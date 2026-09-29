@@ -21,6 +21,7 @@ import {
   Phone,
   Search,
   Sparkles,
+  Tag,
   Trash2,
   Users,
   X,
@@ -39,9 +40,11 @@ import {
 import {
   COMPANY_CITIES,
   COMPANY_LIMIT_OPTIONS,
+  DEFAULT_COMPANY_LIMIT,
   buildCompanyFilterChips,
   emptyCompanyQuery,
   removeCompanyChip,
+  stripNameSuffix,
   type CompanyQueryState,
   type CompanySort,
 } from "@/lib/companies/nl-query";
@@ -374,6 +377,7 @@ function useDebouncedValue<T>(value: T, delayMs: number) {
 // awaiting data sources.
 const FILTER_OPTIONS: { key: string; label: string }[] = [
   { key: "ai-lookalikes", label: "AI Lookalikes" },
+  { key: "company-name", label: "Company Name" },
   { key: "category", label: "Category" },
   // Keyed "location" for the API query param, but labelled Region: its options
   // are the four discovery regions, not cities.
@@ -394,34 +398,80 @@ const FILTER_OPTIONS: { key: string; label: string }[] = [
   { key: "key-executives-events", label: "Key Executives Events" },
 ];
 
+/**
+ * Page numbers around the current one, with gaps marked by `null`.
+ *
+ * `pageCount` is derived from a BOUNDED count, so `capped` means the real last
+ * page is unknown: the run then ends in a gap and no final number is printed,
+ * rather than asserting a last page that may not be the last.
+ */
+function buildPageRun(page: number, pageCount: number, capped: boolean): (number | null)[] {
+  const WINDOW = 5;
+
+  if (!capped && pageCount <= WINDOW + 2) {
+    return Array.from({ length: pageCount }, (_, index) => index + 1);
+  }
+
+  // Keep the active page inside the window as it advances.
+  let start = Math.max(1, page - Math.floor(WINDOW / 2));
+  const maxStart = capped ? start : Math.max(1, pageCount - WINDOW + 1);
+  start = Math.min(start, maxStart);
+  const run: (number | null)[] = [];
+  for (let value = start; value < start + WINDOW; value += 1) {
+    if (!capped && value > pageCount) break;
+    run.push(value);
+  }
+
+  if (start > 1) run.unshift(1, null);
+
+  const last = run[run.length - 1];
+  if (capped) {
+    run.push(null);
+  } else if (typeof last === "number" && last < pageCount) {
+    run.push(null, pageCount);
+  }
+
+  return run;
+}
+
 function CompanyTable({
   companies,
   onSelect,
   page,
   pageSize,
+  pageCount,
   total,
+  totalCapped,
+  filtersActive,
   hasNextPage,
   onNextPage,
   onPreviousPage,
+  onGoToPage,
   onPageSizeChange,
 }: {
   companies: Company[];
   onSelect: (id: string) => void;
   page: number;
   pageSize: number;
+  pageCount: number;
   total: number | null;
+  /** True when `total` is a lower bound rather than an exact figure. */
+  totalCapped: boolean;
+  /** The per-page selector only appears while the rail is filtering. */
+  filtersActive: boolean;
   hasNextPage: boolean;
   onNextPage: () => void;
   onPreviousPage: () => void;
+  onGoToPage: (page: number) => void;
   onPageSizeChange: (size: number) => void;
 }) {
   const [showPageSizeDropdown, setShowPageSizeDropdown] = useState(false);
-  // Matches what the assistant will accept from "list 500 companies in IT".
   const pageSizeOptions = COMPANY_LIMIT_OPTIONS;
   const rangeStart = (page - 1) * pageSize + 1;
   const rangeEnd = companies.length > 0 ? rangeStart + companies.length - 1 : 0;
   const canGoPrev = page > 1;
   const canGoNext = hasNextPage;
+  const pageRun = buildPageRun(page, pageCount, totalCapped);
 
   return (
     <motion.div
@@ -436,7 +486,7 @@ function CompanyTable({
             <tr className="text-slate-500 dark:text-slate-400">
               <th className="whitespace-nowrap px-4 py-3 text-[11px] font-bold uppercase tracking-wider" style={{width: '60px'}}>Logo</th>
               <th className="whitespace-nowrap px-4 py-3 text-[11px] font-bold uppercase tracking-wider" style={{minWidth: '180px'}}>Company Name</th>
-              <th className="whitespace-nowrap px-4 py-3 text-[11px] font-bold uppercase tracking-wider" style={{width: '140px'}}>Established Year</th>
+              <th className="whitespace-nowrap px-4 py-3 text-[11px] font-bold uppercase tracking-wider" style={{width: '180px'}}>Category</th>
               <th className="whitespace-nowrap px-4 py-3 text-[11px] font-bold uppercase tracking-wider" style={{width: '140px'}}>Employee Range</th>
               <th className="whitespace-nowrap px-4 py-3 text-[11px] font-bold uppercase tracking-wider" style={{minWidth: '150px'}}>Headquarters</th>
             </tr>
@@ -460,8 +510,25 @@ function CompanyTable({
                 <td className="px-4 py-3 font-semibold text-slate-900 dark:text-white" style={{minWidth: '180px'}}>
                   {company.name}
                 </td>
-                <td className="px-4 py-3 text-slate-600 dark:text-slate-300" style={{width: '140px'}}>
-                  {company.founded}
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-300" style={{width: '180px'}}>
+                  {/* Rendered through formatCategoryLabel: the dataset stores
+                      three of its 102 categories in two spellings at once
+                      ("computer software"/"Computer Software"), which read as
+                      two industries if shown raw. Display only — the rail still
+                      filters on the stored value. */}
+                  {company.category ? (
+                    <span
+                      title={formatCategoryLabel(company.category)}
+                      className="inline-flex max-w-full items-center gap-1 truncate rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] font-medium text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-300"
+                    >
+                      <Tag className="size-3 shrink-0" />
+                      <span className="truncate">{formatCategoryLabel(company.category)}</span>
+                    </span>
+                  ) : (
+                    <span className="text-[12px] italic text-slate-400 dark:text-slate-500">
+                      Uncategorised
+                    </span>
+                  )}
                 </td>
                 <td className="px-4 py-3 text-slate-600 dark:text-slate-300" style={{width: '140px'}}>
                   <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300">
@@ -479,72 +546,121 @@ function CompanyTable({
       </div>
 
       {/* Pagination Footer */}
-      <div className="flex items-center justify-between border-t border-slate-200 bg-slate-50/50 px-4 py-2.5 dark:border-[#22304A] dark:bg-[#0B1220]">
-        {/* Left Arrow */}
+      <div className="relative flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-slate-200 bg-slate-50/70 px-4 py-2.5 backdrop-blur-xl dark:border-[#22304A] dark:bg-[#0B1220]/80">
+        {/* Neon hairline along the top edge. */}
+        <div className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent" />
+
         <button
+          type="button"
           disabled={!canGoPrev}
           onClick={onPreviousPage}
+          aria-label="Previous page"
           className={cn(
-            "inline-flex size-8 items-center justify-center rounded-md border transition-colors",
+            "group relative inline-flex size-9 items-center justify-center rounded-[10px] border backdrop-blur-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60 focus-visible:ring-offset-1 focus-visible:ring-offset-white dark:focus-visible:ring-offset-[#0B1220]",
             canGoPrev
-              ? "border-slate-200 bg-white text-slate-700 hover:bg-slate-100 dark:border-[#22304A] dark:bg-[#111B2E] dark:text-slate-200 dark:hover:bg-[#16233A] cursor-pointer"
-              : "border-transparent text-slate-300 dark:text-slate-600 cursor-not-allowed"
+              ? "border-slate-200 bg-white/80 text-slate-700 hover:-translate-y-px hover:border-indigo-300 hover:text-indigo-600 hover:shadow-[0_4px_14px_-4px_rgba(99,102,241,0.45)] dark:border-[#22304A] dark:bg-[#111B2E]/80 dark:text-slate-200 dark:hover:border-indigo-400/50 dark:hover:text-indigo-300"
+              : "cursor-not-allowed border-transparent text-slate-300 dark:text-slate-600"
           )}
         >
           <ChevronLeft className="size-4" />
         </button>
 
-        {/* Page Selector Dropdown */}
-        <div className="flex items-center gap-3">
-          <div className="relative">
-            <button
-              onClick={() => setShowPageSizeDropdown(!showPageSizeDropdown)}
-              className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-100 dark:border-[#22304A] dark:bg-[#111B2E] dark:text-slate-200 dark:hover:bg-[#16233A]"
-            >
-              {pageSize} per page
-              <ChevronDown className="size-3" />
-            </button>
-            {showPageSizeDropdown && (
-              <div className="absolute bottom-full left-0 z-50 mb-1 w-24 rounded-md border border-slate-200 bg-white py-1 shadow-lg dark:border-[#22304A] dark:bg-[#111B2E]">
-                {pageSizeOptions.map((size) => (
-                  <button
-                    key={size}
-                    onClick={() => {
-                      onPageSizeChange(size);
-                      setShowPageSizeDropdown(false);
-                    }}
-                    className={cn(
-                      "block w-full px-3 py-1.5 text-left text-[12px] transition-colors hover:bg-slate-100 dark:hover:bg-[#16233A]",
-                      pageSize === size
-                        ? "font-semibold text-indigo-600 dark:text-indigo-400"
-                        : "text-slate-700 dark:text-slate-300"
-                    )}
-                  >
-                    {size} per page
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+        {/* Numbered pages */}
+        <nav aria-label="Pagination" className="flex min-w-0 flex-1 items-center justify-center gap-1">
+          {pageRun.map((entry, index) =>
+            entry === null ? (
+              <span
+                key={`gap-${index}`}
+                aria-hidden
+                className="px-1 text-[12px] font-semibold text-slate-400 dark:text-slate-600"
+              >
+                &hellip;
+              </span>
+            ) : (
+              <button
+                key={entry}
+                type="button"
+                onClick={() => onGoToPage(entry)}
+                aria-label={`Page ${entry}`}
+                aria-current={entry === page ? "page" : undefined}
+                className={cn(
+                  "relative inline-flex h-9 min-w-[2.25rem] items-center justify-center rounded-[10px] px-2.5 text-[12px] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60",
+                  entry === page
+                    ? "bg-gradient-to-br from-indigo-500 to-fuchsia-500 text-white shadow-[0_0_18px_-2px_rgba(99,102,241,0.75)]"
+                    : "border border-slate-200 bg-white/70 text-slate-600 hover:-translate-y-px hover:border-indigo-300 hover:text-indigo-600 dark:border-[#22304A] dark:bg-[#111B2E]/70 dark:text-slate-300 dark:hover:border-indigo-400/50 dark:hover:text-indigo-300"
+                )}
+              >
+                {entry}
+              </button>
+            )
+          )}
+        </nav>
 
-          {/* Right Arrow */}
+        <div className="flex items-center gap-3">
+          {/* Per page — only while the rail is filtering. */}
+          {filtersActive ? (
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setShowPageSizeDropdown(!showPageSizeDropdown)}
+                aria-expanded={showPageSizeDropdown}
+                aria-haspopup="listbox"
+                className="inline-flex h-9 items-center gap-1 rounded-[10px] border border-slate-200 bg-white/80 px-2.5 text-[12px] font-medium text-slate-700 backdrop-blur-xl transition-all hover:border-indigo-300 hover:text-indigo-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60 dark:border-[#22304A] dark:bg-[#111B2E]/80 dark:text-slate-200 dark:hover:border-indigo-400/50"
+              >
+                {pageSize} per page
+                <ChevronDown className={cn("size-3 transition-transform", showPageSizeDropdown && "rotate-180")} />
+              </button>
+              {showPageSizeDropdown ? (
+                <div
+                  role="listbox"
+                  className="absolute bottom-full right-0 z-50 mb-1.5 w-28 overflow-hidden rounded-[10px] border border-slate-200 bg-white/95 py-1 shadow-xl shadow-indigo-500/10 backdrop-blur-xl dark:border-[#22304A] dark:bg-[#111B2E]/95"
+                >
+                  {pageSizeOptions.map((size) => (
+                    <button
+                      key={size}
+                      type="button"
+                      role="option"
+                      aria-selected={pageSize === size}
+                      onClick={() => {
+                        onPageSizeChange(size);
+                        setShowPageSizeDropdown(false);
+                      }}
+                      className={cn(
+                        "block w-full px-3 py-1.5 text-left text-[12px] transition-colors hover:bg-slate-100 dark:hover:bg-[#16233A]",
+                        pageSize === size
+                          ? "font-semibold text-indigo-600 dark:text-indigo-400"
+                          : "text-slate-700 dark:text-slate-300"
+                      )}
+                    >
+                      {size} per page
+                    </button>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+
           <button
+            type="button"
             disabled={!canGoNext}
             onClick={onNextPage}
+            aria-label="Next page"
             className={cn(
-              "inline-flex size-8 items-center justify-center rounded-md border transition-colors",
+              "group relative inline-flex size-9 items-center justify-center rounded-[10px] border backdrop-blur-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/60 focus-visible:ring-offset-1 focus-visible:ring-offset-white dark:focus-visible:ring-offset-[#0B1220]",
               canGoNext
-                ? "border-slate-200 bg-white text-slate-700 hover:bg-slate-100 dark:border-[#22304A] dark:bg-[#111B2E] dark:text-slate-200 dark:hover:bg-[#16233A] cursor-pointer"
-                : "border-transparent text-slate-300 dark:text-slate-600 cursor-not-allowed"
+                ? "border-slate-200 bg-white/80 text-slate-700 hover:-translate-y-px hover:border-indigo-300 hover:text-indigo-600 hover:shadow-[0_4px_14px_-4px_rgba(99,102,241,0.45)] dark:border-[#22304A] dark:bg-[#111B2E]/80 dark:text-slate-200 dark:hover:border-indigo-400/50 dark:hover:text-indigo-300"
+                : "cursor-not-allowed border-transparent text-slate-300 dark:text-slate-600"
             )}
           >
             <ChevronRight className="size-4" />
           </button>
 
-          {/* Range Label */}
-          <span className="text-[12px] text-slate-500 dark:text-slate-400">
-            Page {page} - {companies.length > 0 ? `${rangeStart} - ${rangeEnd}` : "0"}
-            {typeof total === "number" ? ` of ${formatCompactNumber(total)}` : ""}
+          {/* A capped total is a lower bound, so it reads "12,000+". */}
+          <span className="hidden text-[12px] text-slate-500 sm:inline dark:text-slate-400">
+            {companies.length > 0 ? `${rangeStart} - ${rangeEnd}` : "0"}
+            {typeof total === "number"
+              ? ` of ${formatCompactNumber(total)}${totalCapped ? "+" : ""}`
+              : ""}
           </span>
         </div>
       </div>
@@ -559,6 +675,9 @@ export function CompaniesSection() {
   const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(null);
 
   const [totalCompanies, setTotalCompanies] = useState<number | null>(null);
+  // The count is bounded server-side, so `capped` means "at least this many" —
+  // the paginator must not print a last-page number it cannot vouch for.
+  const [totalCapped, setTotalCapped] = useState(false);
   const [tablePage, setTablePage] = useState(1);
   const [tablePageSize, setTablePageSize] = useState(25);
   const [pageCursors, setPageCursors] = useState<(string | null)[]>([null]);
@@ -653,8 +772,15 @@ export function CompaniesSection() {
   const [askUnavailable, setAskUnavailable] = useState(false);
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [categorySearch, setCategorySearch] = useState("");
+  const [countrySearch, setCountrySearch] = useState("");
   const [citySearch, setCitySearch] = useState("");
   const [keywordDraft, setKeywordDraft] = useState("");
+  // Raw catalog name (suffix included) so it matches exactly one row; the chip
+  // and the list render it stripped.
+  const [selectedCompanyName, setSelectedCompanyName] = useState<string | null>(null);
+  const [companyNameSearch, setCompanyNameSearch] = useState("");
+  const [companyNameOptions, setCompanyNameOptions] = useState<string[]>([]);
+  const [isLoadingNames, setIsLoadingNames] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedEmployeeRange, setSelectedEmployeeRange] = useState<string | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
@@ -678,6 +804,7 @@ export function CompaniesSection() {
   const queryState: CompanyQueryState = useMemo(
     () => ({
       search: debouncedCompanySearch || null,
+      companyName: selectedCompanyName,
       category: selectedCategory,
       region: selectedLocation,
       country: selectedCountry,
@@ -689,6 +816,7 @@ export function CompaniesSection() {
     }),
     [
       debouncedCompanySearch,
+      selectedCompanyName,
       selectedCategory,
       selectedLocation,
       selectedCountry,
@@ -718,7 +846,8 @@ export function CompaniesSection() {
       const orderKey =
         key === "employee-headcount" ? "employeeRange" : key === "location" ? "location" : key;
 
-      if (key === "category") setSelectedCategory(null);
+      if (key === "company-name") setSelectedCompanyName(null);
+      else if (key === "category") setSelectedCategory(null);
       else if (key === "employee-headcount") setSelectedEmployeeRange(null);
       else if (key === "location") setSelectedLocation(null);
       else if (key === "country") setSelectedCountry(null);
@@ -747,6 +876,7 @@ export function CompaniesSection() {
       setEventSearch(null);
 
       setCompanySearch(next.search ?? "");
+      setSelectedCompanyName(next.companyName);
       setSelectedCategory(next.category);
       setSelectedLocation(next.region);
       setSelectedCountry(next.country);
@@ -760,6 +890,7 @@ export function CompaniesSection() {
       // "Clear" walks this back-to-front, so the order has to match the order
       // the filters were actually applied in.
       const order: string[] = [];
+      if (next.companyName) order.push("company-name");
       if (next.category) order.push("category");
       if (next.employeeRange) order.push("employeeRange");
       if (next.region) order.push("location");
@@ -808,22 +939,33 @@ export function CompaniesSection() {
     return () => window.removeEventListener("pcx:company-search", onGlobalSearch);
   }, [resetCompanyPagination]);
 
-  const handleNextCompanyPage = useCallback(() => {
-    if (!nextCursor) {
-      return;
-    }
+  const pageCount = useMemo(() => {
+    if (typeof totalCompanies !== "number" || totalCompanies <= 0) return 1;
+    return Math.max(1, Math.ceil(totalCompanies / tablePageSize));
+  }, [totalCompanies, tablePageSize]);
 
-    setPageCursors((prev) => {
-      const next = prev.slice(0, tablePage);
-      next[tablePage] = nextCursor;
-      return next;
-    });
-    setTablePage((page) => page + 1);
-  }, [nextCursor, tablePage]);
+  const goToPage = useCallback(
+    (next: number) => {
+      // The ceiling is only trustworthy when the count is exact; a capped count
+      // means there are more pages than it can name, so Next stays open.
+      const ceiling = totalCapped ? Number.POSITIVE_INFINITY : pageCount;
+      const target = Math.min(Math.max(1, next), ceiling);
+      if (target === tablePage) return;
+      setTablePage(target);
+      setSelectedCompanyId(null);
+      setIsDetailView(false);
+    },
+    [pageCount, tablePage, totalCapped]
+  );
+
+  const handleNextCompanyPage = useCallback(() => {
+    if (!hasNextPage) return;
+    goToPage(tablePage + 1);
+  }, [goToPage, hasNextPage, tablePage]);
 
   const handlePreviousCompanyPage = useCallback(() => {
-    setTablePage((page) => Math.max(1, page - 1));
-  }, []);
+    goToPage(tablePage - 1);
+  }, [goToPage, tablePage]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -832,8 +974,12 @@ export function CompaniesSection() {
     const params = new URLSearchParams();
     params.set('page', String(tablePage));
     params.set('limit', String(tablePageSize));
-    if (currentCursor) params.set('cursor', currentCursor);
+    // The paginator renders page numbers, so it needs the (bounded) count.
+    params.set('withTotal', '1');
+    // No cursor: the numbered paginator jumps to arbitrary pages, which only
+    // OFFSET can express. `page` above is what the route reads.
     if (debouncedCompanySearch) params.set('search', debouncedCompanySearch);
+    if (selectedCompanyName) params.set('companyName', selectedCompanyName);
     if (selectedCategory) params.set('category', selectedCategory);
     if (selectedEmployeeRange) params.set('employeeRange', selectedEmployeeRange);
     if (selectedLocation) params.set('location', selectedLocation);
@@ -853,6 +999,7 @@ export function CompaniesSection() {
         if (Date.now() - cached.ts < 5 * 60 * 1000 && Array.isArray(cached.companies)) {
           setCompanies(cached.companies);
           setTotalCompanies(cached.total ?? null);
+          setTotalCapped(Boolean(cached.totalCapped));
           setNextCursor(cached.nextCursor ?? null);
           setHasNextPage(Boolean(cached.hasNextPage));
           setLoadError(null);
@@ -885,6 +1032,7 @@ export function CompaniesSection() {
         if (cancelled) return;
         setCompanies(Array.isArray(data.companies) ? data.companies : []);
         setTotalCompanies(typeof data.total === "number" ? data.total : null);
+        setTotalCapped(Boolean(data.totalCapped));
         setNextCursor(typeof data.nextCursor === "string" ? data.nextCursor : null);
         setHasNextPage(Boolean(data.hasNextPage));
         setLoadError(null);
@@ -916,6 +1064,7 @@ export function CompaniesSection() {
         if (!cancelled && !paintedFromCache) {
           setCompanies([]);
           setTotalCompanies(null);
+          setTotalCapped(false);
           setNextCursor(null);
           setHasNextPage(false);
           setLoadError("Unable to load companies. Please refresh the page.");
@@ -930,7 +1079,7 @@ export function CompaniesSection() {
       cancelled = true;
       controller.abort();
     };
-  }, [debouncedCompanySearch, currentCursor, selectedCategory, selectedEmployeeRange, selectedLocation, selectedCountry, selectedCity, keywords, companySort, tablePage, tablePageSize]);
+  }, [debouncedCompanySearch, selectedCompanyName, currentCursor, selectedCategory, selectedEmployeeRange, selectedLocation, selectedCountry, selectedCity, keywords, companySort, tablePage, tablePageSize]);
 
   const filteredCategories = useMemo(() => {
     const query = categorySearch.trim().toLowerCase();
@@ -940,6 +1089,63 @@ export function CompaniesSection() {
 
     return COMPANY_CATEGORIES.filter((category) => category.includes(query));
   }, [categorySearch]);
+
+  const filteredCountries = useMemo(() => {
+    const query = countrySearch.trim().toLowerCase();
+    if (!query) return COMPANY_COUNTRIES;
+    return COMPANY_COUNTRIES.filter((country) => country.toLowerCase().includes(query));
+  }, [countrySearch]);
+
+  /**
+   * Company names for the picker.
+   *
+   * Not "all names": the catalog holds 257,245 of them and every one is
+   * distinct, so a full list is ~9.5 MB per load. The picker asks for the
+   * first page A-Z and re-asks as the user types — the prefix search is an
+   * index scan, so it answers in milliseconds and the list still behaves like
+   * the whole catalog. Only opening the section triggers a fetch.
+   */
+  useEffect(() => {
+    if (openFilter !== "company-name") return;
+    const controller = new AbortController();
+    const query = companyNameSearch.trim();
+
+    // Debounced so a fast typist fires one request, not one per keystroke.
+    const timer = setTimeout(() => {
+      setIsLoadingNames(true);
+      const params = new URLSearchParams({ limit: "500" });
+      if (query) params.set("q", query);
+      fetch(`/api/companies/names?${params.toString()}`, { signal: controller.signal })
+        .then((response) => (response.ok ? response.json() : { names: [] }))
+        .then((data: { names?: string[] }) => {
+          setCompanyNameOptions(Array.isArray(data.names) ? data.names : []);
+          setIsLoadingNames(false);
+        })
+        .catch((error) => {
+          if ((error as Error).name === "AbortError") return;
+          setCompanyNameOptions([]);
+          setIsLoadingNames(false);
+        });
+    }, query ? 200 : 0);
+
+    return () => {
+      controller.abort();
+      clearTimeout(timer);
+    };
+  }, [openFilter, companyNameSearch]);
+
+  /**
+   * Display rows: the suffix stripped for reading, the raw value kept for
+   * filtering, and the badge letter taken from what the user actually sees.
+   */
+  const companyNameRows = useMemo(
+    () =>
+      companyNameOptions.map((raw) => {
+        const label = stripNameSuffix(raw);
+        return { raw, label, letter: (label.charAt(0) || "?").toUpperCase() };
+      }),
+    [companyNameOptions]
+  );
 
   const filteredCities = useMemo(() => {
     const query = citySearch.trim().toLowerCase();
@@ -1054,7 +1260,8 @@ export function CompaniesSection() {
   // Any live filter/search means the right panel shows matching companies;
   // with nothing active it shows the enriched-leads finder instead.
   const hasActiveCriteria = Boolean(
-    selectedCategory ||
+    selectedCompanyName ||
+      selectedCategory ||
       selectedEmployeeRange ||
       selectedLocation ||
       selectedCountry ||
@@ -1062,6 +1269,48 @@ export function CompaniesSection() {
       keywords.length > 0 ||
       companySearch.trim()
   );
+
+  /**
+   * page + pageSize live in the address bar so a refresh lands where the user
+   * was. history.replaceState rather than router.replace: this only needs the
+   * URL to be shareable, and a push would re-run the RSC payload on every
+   * page click. Reading is deferred to an effect so the server's first paint
+   * and the client's agree (a hydration mismatch otherwise).
+   */
+  const [isPaginationHydrated, setIsPaginationHydrated] = useState(false);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const urlPage = Number.parseInt(params.get("page") ?? "", 10);
+    const urlSize = Number.parseInt(params.get("pageSize") ?? "", 10);
+    if (Number.isFinite(urlPage) && urlPage > 1) setTablePage(urlPage);
+    if (COMPANY_LIMIT_OPTIONS.includes(urlSize as (typeof COMPANY_LIMIT_OPTIONS)[number])) {
+      setTablePageSize(urlSize);
+    }
+    setIsPaginationHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isPaginationHydrated) return;
+    const params = new URLSearchParams(window.location.search);
+    if (tablePage > 1) params.set("page", String(tablePage));
+    else params.delete("page");
+    if (tablePageSize !== DEFAULT_COMPANY_LIMIT) params.set("pageSize", String(tablePageSize));
+    else params.delete("pageSize");
+    const query = params.toString();
+    window.history.replaceState(null, "", `${window.location.pathname}${query ? `?${query}` : ""}`);
+  }, [tablePage, tablePageSize, isPaginationHydrated]);
+
+  /**
+   * The per-page selector only exists while a filter is applied, so an
+   * unfiltered catalog must not stay stuck on a size the user can no longer
+   * see or change.
+   */
+  useEffect(() => {
+    if (!hasActiveCriteria && tablePageSize !== DEFAULT_COMPANY_LIMIT) {
+      setTablePageSize(DEFAULT_COMPANY_LIMIT);
+    }
+  }, [hasActiveCriteria, tablePageSize]);
 
   const activeCompany =
     filteredCompanies.find((company) => company.id === selectedCompanyId) ??
@@ -1348,7 +1597,9 @@ export function CompaniesSection() {
               {FILTER_OPTIONS.map((option) => {
                 const isOpen = openFilter === option.key;
                 const activeValue =
-                  option.key === "category" && selectedCategory
+                  option.key === "company-name" && selectedCompanyName
+                    ? stripNameSuffix(selectedCompanyName)
+                    : option.key === "category" && selectedCategory
                     ? formatCategoryLabel(selectedCategory)
                     : option.key === "employee-headcount" && selectedEmployeeRange
                       ? selectedEmployeeRange
@@ -1429,7 +1680,70 @@ export function CompaniesSection() {
                           className="overflow-hidden"
                         >
                           <div className="border-t border-slate-200 p-2 dark:border-[#22304A]">
-                            {option.key === "category" ? (
+                            {option.key === "company-name" ? (
+                              <>
+                                <div className="relative">
+                                  <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
+                                  <input
+                                    value={companyNameSearch}
+                                    onChange={(event) => setCompanyNameSearch(event.target.value)}
+                                    placeholder="Search company name..."
+                                    className="h-9 w-full rounded-[9px] border border-slate-200 bg-slate-50 pl-9 pr-3 text-[12px] text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
+                                  />
+                                </div>
+                                <div className="mt-2 max-h-60 space-y-1 overflow-y-auto">
+                                  {isLoadingNames ? (
+                                    <p className="flex items-center justify-center gap-2 px-3 py-4 text-[12px] text-slate-400 dark:text-slate-500">
+                                      <Sparkles className="size-3.5 animate-pulse text-indigo-500" />
+                                      Loading companies...
+                                    </p>
+                                  ) : companyNameRows.length === 0 ? (
+                                    <p className="px-3 py-4 text-center text-[12px] text-slate-400 dark:text-slate-500">
+                                      {companyNameSearch.trim()
+                                        ? "No company matches that name."
+                                        : "No companies available."}
+                                    </p>
+                                  ) : (
+                                    companyNameRows.map((row) => (
+                                      <button
+                                        key={row.raw}
+                                        type="button"
+                                        title={row.label}
+                                        onClick={() => {
+                                          setSelectedCompanyName(row.raw);
+                                          setOpenFilter(null);
+                                          setSelectedCompanyId(null);
+                                          setIsDetailView(false);
+                                          resetCompanyPagination();
+                                          setFilterOrder((prev) => [...prev.filter((f) => f !== 'company-name'), 'company-name']);
+                                        }}
+                                        className="flex w-full items-center justify-between gap-2 rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
+                                      >
+                                        <span className="min-w-0 flex-1 truncate">{row.label}</span>
+                                        <span className="flex shrink-0 items-center gap-1.5">
+                                          {selectedCompanyName === row.raw ? (
+                                            <Check className="size-3.5 text-indigo-500" />
+                                          ) : null}
+                                          {/* First-letter badge, right-aligned — the A-Z
+                                              marker for a list that is sorted A-Z. */}
+                                          <span className="flex size-5 items-center justify-center rounded-[6px] bg-gradient-to-br from-indigo-500/10 to-fuchsia-500/10 text-[10px] font-bold text-indigo-600 ring-1 ring-inset ring-indigo-500/20 dark:from-indigo-400/15 dark:to-fuchsia-400/15 dark:text-indigo-300">
+                                            {row.letter}
+                                          </span>
+                                        </span>
+                                      </button>
+                                    ))
+                                  )}
+                                </div>
+                                {/* The list is one page of a much larger catalog, so
+                                    say so rather than implying it is exhaustive. */}
+                                {!isLoadingNames && companyNameRows.length >= 500 ? (
+                                  <p className="mt-2 px-3 text-[10px] text-slate-400 dark:text-slate-500">
+                                    Showing the first 500 A-Z. Type to search the full catalog.
+                                  </p>
+                                ) : null}
+                              </>
+                            ) : option.key === "category" ? (
+
                               <>
                                 <div className="relative">
                                   <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
@@ -1510,28 +1824,39 @@ export function CompaniesSection() {
                                 ))}
                               </div>
                             ) : option.key === "country" ? (
-                              <div className="max-h-52 space-y-1 overflow-y-auto">
-                                {COMPANY_COUNTRIES.map((countryName) => (
-                                  <button
-                                    key={countryName}
-                                    type="button"
-                                    onClick={() => {
-                                      setSelectedCountry(countryName);
-                                      setOpenFilter(null);
-                                      setSelectedCompanyId(null);
-                                      setIsDetailView(false);
-                                      resetCompanyPagination();
-                                      setFilterOrder((prev) => [...prev.filter((f) => f !== 'country'), 'country']);
-                                    }}
-                                    className="flex w-full items-center justify-between rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
-                                  >
-                                    <span>{countryName}</span>
-                                    {selectedCountry === countryName ? (
-                                      <Check className="size-3.5 text-indigo-500" />
-                                    ) : null}
-                                  </button>
-                                ))}
-                              </div>
+                              <>
+                                <div className="relative">
+                                  <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
+                                  <input
+                                    value={countrySearch}
+                                    onChange={(event) => setCountrySearch(event.target.value)}
+                                    placeholder="Search country..."
+                                    className="h-9 w-full rounded-[9px] border border-slate-200 bg-slate-50 pl-9 pr-3 text-[12px] text-slate-900 outline-none focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-white"
+                                  />
+                                </div>
+                                <div className="mt-2 max-h-52 space-y-1 overflow-y-auto">
+                                  {filteredCountries.map((countryName) => (
+                                    <button
+                                      key={countryName}
+                                      type="button"
+                                      onClick={() => {
+                                        setSelectedCountry(countryName);
+                                        setOpenFilter(null);
+                                        setSelectedCompanyId(null);
+                                        setIsDetailView(false);
+                                        resetCompanyPagination();
+                                        setFilterOrder((prev) => [...prev.filter((f) => f !== 'country'), 'country']);
+                                      }}
+                                      className="flex w-full items-center justify-between rounded-[9px] px-3 py-2 text-left text-[12px] font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-[#16233A]"
+                                    >
+                                      <span>{countryName}</span>
+                                      {selectedCountry === countryName ? (
+                                        <Check className="size-3.5 text-indigo-500" />
+                                      ) : null}
+                                    </button>
+                                  ))}
+                                </div>
+                              </>
                             ) : option.key === "city" ? (
                               <>
                                 <div className="relative">
@@ -1690,10 +2015,14 @@ export function CompaniesSection() {
                   companies={filteredCompanies}
                   page={tablePage}
                   pageSize={tablePageSize}
+                  pageCount={pageCount}
                   total={totalCompanies}
+                  totalCapped={totalCapped}
+                  filtersActive={hasActiveCriteria}
                   hasNextPage={hasNextPage}
                   onNextPage={handleNextCompanyPage}
                   onPreviousPage={handlePreviousCompanyPage}
+                  onGoToPage={goToPage}
                   onPageSizeChange={(s) => {
                     setTablePageSize(s);
                     resetCompanyPagination();

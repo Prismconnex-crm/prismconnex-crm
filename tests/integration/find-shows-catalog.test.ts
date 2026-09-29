@@ -105,4 +105,5 @@ describe('find shows catalog', () => {
       fetchSpy.mockRestore();
     }
   });
+
 });
