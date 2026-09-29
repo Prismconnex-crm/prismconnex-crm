@@ -14,6 +14,35 @@ import { z } from 'zod';
 type Translator = (key: string) => string;
 
 /**
+ * How long a signup verification code stays valid, in seconds.
+ *
+ * Lives here because both sides need it and neither may own it: the countdown on
+ * /auth/verify reads it, and so does the server-side gate in
+ * repositories/signup-otp.repository.ts. A copy in the component would let the
+ * timer disagree with the window actually enforced.
+ *
+ * This is NOT Supabase's "Email OTP Expiration" setting, which is global and
+ * shared with password recovery — see the repository for why the signup deadline
+ * is enforced by the application instead.
+ */
+export const SIGNUP_OTP_TTL_SECONDS = 90;
+
+/**
+ * Minimum gap between two "Resend Verification Code" requests, in seconds.
+ *
+ * 60s matches GoTrue's own per-address `SMTP_MAX_FREQUENCY` default, so this
+ * refuses the request before Supabase would — with a message that says how long
+ * to wait, rather than the raw "email rate limit exceeded" that reads like a
+ * fault in the app.
+ *
+ * Deliberately shorter than SIGNUP_OTP_TTL_SECONDS: resend is offered once the
+ * code expires at 90s, by which point the cooldown has always elapsed, so it
+ * never blocks the legitimate path. It exists to stop /api/auth/resend being
+ * hammered directly, which the disabled button alone cannot prevent.
+ */
+export const RESEND_COOLDOWN_SECONDS = 60;
+
+/**
  * Indian mobile numbers: 10 digits starting 6-9, optionally prefixed with
  * +91 / 91 / 0 and an optional space or hyphen separator.
  */

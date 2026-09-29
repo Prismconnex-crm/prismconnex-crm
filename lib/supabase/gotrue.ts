@@ -5,7 +5,7 @@ import {
     InternalServerError,
     UnauthorizedError,
 } from "@/lib/http/errors";
-import { authDebug, maskEmail, maskToken } from "@/lib/auth/auth-debug";
+import { authDebug, authDebugError, maskEmail, maskToken } from "@/lib/auth/auth-debug";
 
 /**
  * Thin wrapper over the Supabase Auth (GoTrue) REST API.
@@ -146,6 +146,16 @@ async function request<T>(
         // generic 400, and say what to do about it — the raw GoTrue text
         // ("email rate limit exceeded") reads like an application bug.
         if (res.status === 429) {
+            // GoTrue uses the same 429 for a per-address cooldown ("you can only
+            // request this after 56 seconds") — that one is not the project-wide
+            // quota, so pass its wait time through instead of blaming the quota.
+            const wait = /after (\d+) seconds?/i.exec(message);
+            if (wait) {
+                throw new ApiError(
+                    `Please wait ${wait[1]} seconds before requesting another email for this address.`,
+                    429
+                );
+            }
             throw new ApiError(
                 "Too many emails have been sent from this Supabase project. " +
                     "The built-in email service allows only a few per hour — wait and retry, " +
@@ -174,18 +184,102 @@ async function request<T>(
  * with confirmation enabled the caller must send the user to /auth/verify.
  */
 export async function signUp(email: string, password: string, data: SignUpMetadata) {
-    const result = await request<
+    authDebug("POST /signup -> supabase", { email: maskEmail(email) });
+
+    let result:
         // GoTrue returns the user object directly when there is no session,
         // and an AccessTokenResponse (user nested) when there is one.
-        (SupabaseUser & { access_token?: string }) | SupabaseSession
-    >("/signup", { method: "POST", body: { email, password, data } });
+        | (SupabaseUser & { access_token?: string; confirmation_sent_at?: string })
+        | SupabaseSession;
+
+    try {
+        result = await request<typeof result>("/signup", {
+            method: "POST",
+            body: { email, password, data },
+        });
+    } catch (error) {
+        // The error branch of the signup result, named as such. request()
+        // already logs the raw GoTrue body; this line is what makes "signup
+        // returned an error" distinguishable from "signup never ran" when
+        // reading the console top to bottom.
+        authDebugError("POST /signup", error);
+        throw error;
+    }
+
+    // The whole signup result in one line — data / user / session / error —
+    // because the usual question ("did Supabase take it?") is answered by the
+    // combination, not by any one field.
+    //
+    // Nothing here is a credential. GoTrue never echoes the password, and the
+    // access and refresh tokens are reported as present/absent rather than
+    // printed; maskToken() is used anywhere a token itself must be recognisable.
+    const asSession = result as Partial<SupabaseSession>;
+    const asUser = result as Partial<SupabaseUser & { confirmation_sent_at?: string }>;
+
+    authDebug("signup result", {
+        data: result ? Object.keys(result).sort() : null,
+        user: asSession.user?.id ?? asUser.id ?? null,
+        session: asSession.access_token ? "<present>" : null,
+        error: null,
+    });
 
     if (result && "access_token" in result && result.access_token) {
         const session = result as SupabaseSession;
+
+        // No confirmation email was sent, and none was needed: the project has
+        // "Confirm email" switched off (mailer_autoconfirm), so GoTrue signed
+        // the user straight in.
+        authDebug("supabase returned a session — email confirmation is DISABLED", {
+            userId: session.user?.id,
+            note: "no verification email is sent in this mode",
+        });
+
         return { user: session.user, session };
     }
 
-    return { user: result as SupabaseUser, session: null };
+    const user = result as SupabaseUser & { confirmation_sent_at?: string };
+
+    // The single most useful line when "no email arrived" is being diagnosed.
+    //
+    // `confirmation_sent_at` means GoTrue *handed the message to its mailer*
+    // and nothing more — it is set even when the built-in SMTP then refuses to
+    // deliver because the address is not a project team member. So a populated
+    // value here plus an empty inbox localises the fault to SMTP/delivery
+    // rather than to this call, which is otherwise indistinguishable from the
+    // outside. See docs/SUPABASE_EMAIL_OTP.md.
+    authDebug("supabase accepted the signup; confirmation email queued", {
+        userId: user.id,
+        emailConfirmedAt: user.email_confirmed_at ?? null,
+        confirmationSentAt: user.confirmation_sent_at ?? null,
+        note: "confirmation_sent_at only means 'queued to the mailer', not 'delivered'",
+    });
+
+    return { user, session: null };
+}
+
+/**
+ * Re-sends the signup confirmation email, issuing a FRESH OTP.
+ *
+ * `type: "signup"` is what keeps this on the signup template and leaves the
+ * recovery flow untouched — GoTrue's /resend also serves `email_change` and
+ * `sms`, and passing the wrong one here would send the user a recovery mail.
+ *
+ * Note that GoTrue updates auth.users.confirmation_sent_at as part of this,
+ * which is exactly what restarts the 90-second window enforced in
+ * AuthService.verify — the new deadline is derived from Supabase's own
+ * timestamp rather than from anything this app stores.
+ */
+export async function resendSignUpOtp(email: string) {
+    authDebug("POST /resend (type=signup) -> supabase", { email: maskEmail(email) });
+
+    await request<unknown>("/resend", {
+        method: "POST",
+        body: { type: "signup", email },
+    });
+
+    authDebug("supabase queued a new confirmation email", {
+        note: "a fresh OTP was generated; the previous one is now invalid",
+    });
 }
 
 /** Verifies a password against Supabase Auth. */

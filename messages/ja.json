@@ -964,10 +964,18 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "確認する"
+        "submit": "確認する",
+        "resend": "確認コードを再送信"
       },
       "errors": {
-        "verify": "確認に失敗しました"
+        "verify": "確認に失敗しました",
+        "resend": "確認コードの再送信に失敗しました",
+        "emailRequired": "最初にメールアドレスを入力してください。"
+      },
+      "expired": "確認コードの有効期限が切れました。",
+      "expiresIn": "{seconds}秒後に期限切れ",
+      "notices": {
+        "resent": "新しい確認コードをメールに送信しました。"
       }
     },
     "forgotPassword": {

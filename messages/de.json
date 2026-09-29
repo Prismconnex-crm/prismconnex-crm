@@ -964,10 +964,18 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Bestaetigen"
+        "submit": "Bestaetigen",
+        "resend": "Bestätigungscode erneut senden"
       },
       "errors": {
-        "verify": "Bestaetigung fehlgeschlagen"
+        "verify": "Bestaetigung fehlgeschlagen",
+        "resend": "Bestätigungscode konnte nicht erneut gesendet werden",
+        "emailRequired": "Geben Sie zuerst Ihre E-Mail-Adresse ein."
+      },
+      "expired": "Der Bestätigungscode ist abgelaufen.",
+      "expiresIn": "Läuft in {seconds}s ab",
+      "notices": {
+        "resent": "Ein neuer Bestätigungscode wurde an Ihre E-Mail gesendet."
       }
     },
     "forgotPassword": {

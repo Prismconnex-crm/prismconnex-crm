@@ -1,0 +1,70 @@
+<!--
+  Supabase → Authentication → Emails → "Confirm signup"
+
+  Paste this into the dashboard. It is not read from the repo at runtime —
+  Supabase stores the template in project config — but it is kept here for the
+  same reason supabase/sql/ is: so the thing that was applied by hand is
+  reviewable, and a second environment can be brought up to match.
+
+  Two deliberate choices:
+
+  {{ .Token }} and no {{ .ConfirmationURL }}. The app verifies a typed code
+  (POST /api/auth/verify → GoTrue /verify, type "signup"); there is no
+  /auth/confirm handler for signup, so a confirmation link would lead nowhere.
+  Worse, corporate mail scanners prefetch links and spend the single-use token
+  before the user ever clicks, which presents as "the code was already used".
+
+  No images, no tracking pixel, no external CSS. A short text-only message with
+  no links is what keeps this out of the spam folder — which is where the
+  stock template landed.
+
+  90 seconds must match SIGNUP_OTP_TTL_SECONDS in models/auth.ts. Supabase's own
+  "Email OTP Expiration" is longer and project-wide (it is shared with password
+  recovery); the 90s deadline is enforced by AuthService.verify, so this number
+  is a promise this app keeps, not one Supabase keeps. Change both together.
+-->
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+       style="background:#F6F8FB;padding:32px 16px;">
+  <tr>
+    <td align="center">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+             style="max-width:480px;background:#FFFFFF;border:1px solid #E3E8F0;border-radius:12px;">
+        <tr>
+          <td style="padding:32px 32px 8px 32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+
+            <p style="margin:0 0 24px 0;font-size:15px;font-weight:600;color:#0F172A;letter-spacing:0.2px;">
+              PrismConnex
+            </p>
+
+            <h1 style="margin:0 0 12px 0;font-size:20px;font-weight:600;color:#0F172A;">
+              Confirm your email
+            </h1>
+
+            <p style="margin:0 0 24px 0;font-size:14px;line-height:22px;color:#475569;">
+              Enter this code on the verification page to finish creating your account.
+            </p>
+
+            <p style="margin:0 0 24px 0;padding:16px;background:#F1F5F9;border-radius:8px;
+                      font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;
+                      font-size:32px;font-weight:700;letter-spacing:8px;color:#0F172A;text-align:center;">
+              {{ .Token }}
+            </p>
+
+            <p style="margin:0 0 24px 0;font-size:14px;line-height:22px;color:#475569;">
+              The code expires in <strong style="color:#0F172A;">90 seconds</strong>.
+              If it runs out, use <strong style="color:#0F172A;">Resend code</strong> on the
+              verification page to get a new one.
+            </p>
+
+            <p style="margin:0;padding-top:24px;border-top:1px solid #E3E8F0;
+                      font-size:13px;line-height:20px;color:#64748B;">
+              Didn't sign up for PrismConnex? Ignore this email — no account is created
+              until the code is entered.
+            </p>
+
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>

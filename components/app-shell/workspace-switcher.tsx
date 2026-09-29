@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { signOutAndRedirect } from "@/lib/auth/sign-out-client";
 
 interface WorkspaceSwitcherProps {
     isOpen: boolean;
@@ -28,6 +29,32 @@ interface WorkspaceSwitcherProps {
 }
 
 export function WorkspaceSwitcher({ isOpen, onClose }: WorkspaceSwitcherProps) {
+    // The rest of this panel is still mock — workspace rows, Billing, Audit Log
+    // and the others do nothing yet. Log Out is the exception: it used to be an
+    // inert button too, which meant the app had a visible "Log Out" that left
+    // the session alive. It now runs exactly what the topbar's Sign Out runs,
+    // same scope ("local" — this device), same destination.
+    const [signingOut, setSigningOut] = useState(false);
+    const [signOutError, setSignOutError] = useState<string | null>(null);
+
+    // This panel has no banner to put a failure in, so the item's own label
+    // carries it: silently doing nothing is what was wrong with the button in
+    // the first place.
+    const onLogOutClick = async () => {
+        if (signingOut) return;
+        setSigningOut(true);
+        setSignOutError(null);
+
+        try {
+            await signOutAndRedirect("local");
+        } catch (cause) {
+            setSignOutError(
+                cause instanceof Error && cause.message ? cause.message : "Sign out failed — retry"
+            );
+            setSigningOut(false);
+        }
+    };
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -170,7 +197,13 @@ export function WorkspaceSwitcher({ isOpen, onClose }: WorkspaceSwitcherProps) {
                                     <MenuItem icon={User} label="My Profile" />
                                     <MenuItem icon={HelpCircle} label="Documentation" />
                                     <MenuItem icon={Zap} label="What's New" />
-                                    <MenuItem icon={LogOut} label="Log Out" color="text-red-400" />
+                                    <MenuItem
+                                        icon={LogOut}
+                                        label={signOutError ?? "Log Out"}
+                                        color="text-red-400"
+                                        disabled={signingOut}
+                                        onClick={onLogOutClick}
+                                    />
                                 </div>
                             </div>
 
@@ -203,9 +236,14 @@ export function WorkspaceSwitcher({ isOpen, onClose }: WorkspaceSwitcherProps) {
     );
 }
 
-function MenuItem({ icon: Icon, label, color = "text-[#9CA3AF]" }: { icon: any, label: string, color?: string }) {
+function MenuItem({ icon: Icon, label, color = "text-[#9CA3AF]", onClick, disabled }: { icon: any, label: string, color?: string, onClick?: () => void, disabled?: boolean }) {
     return (
-        <button className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-white/[0.04] text-[12px] font-medium transition-all group">
+        <button
+            type="button"
+            onClick={onClick}
+            disabled={disabled}
+            className="w-full flex items-center gap-2.5 px-3 py-1.5 rounded-lg hover:bg-white/[0.04] text-[12px] font-medium transition-all group text-left"
+        >
             <Icon className={cn("size-3.5", color === "text-[#9CA3AF]" ? "opacity-50 group-hover:opacity-100" : color)} />
             <span className={cn(color === "text-[#9CA3AF]" ? "text-[#9CA3AF] group-hover:text-white" : color)}>{label}</span>
         </button>

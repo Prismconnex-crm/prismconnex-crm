@@ -74,6 +74,18 @@ export function middleware(request: NextRequest) {
   response.cookies.set("pc_locale", locale, { path: "/", maxAge: 60 * 60 * 24 * 180 });
   response.cookies.set("pcx_locale", locale, { path: "/", maxAge: 60 * 60 * 24 * 180 });
 
+  // Authenticated pages must never be replayable from the browser's cache: the
+  // guards above and in app/(app)/app/layout.tsx only run when the browser
+  // actually asks the server, and Back/Forward will happily repaint a cached
+  // document without asking. no-store also makes Chrome evict the page from the
+  // back/forward cache as soon as a cookie changes, which is precisely what
+  // sign-out does — so Back after a sign-out re-requests the page, middleware
+  // sees no session, and the user lands on the sign-in form instead of a stale
+  // dashboard.
+  if (pathnameWithoutLocale.startsWith("/app") || pathnameWithoutLocale.startsWith("/onboarding")) {
+    response.headers.set("Cache-Control", "no-store, must-revalidate");
+  }
+
   // Expire the rejected session here, where the sign-in form is about to
   // render. Without this the dead cookie survives, and every later /app visit
   // pays the same double redirect before landing back on this page.

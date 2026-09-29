@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils";
 import { UserAvatar } from "./user-avatar";
 import { AvatarViewer } from "./avatar-viewer";
 import type { SignOutScope } from "./sign-out-dialog";
+import { signOutAndRedirect } from "@/lib/auth/sign-out-client";
 import { AVATAR_CHANGED_EVENT, type AvatarChangedDetail } from "@/lib/profile-events";
 import type { AppShellUser } from "./app-shell";
 
@@ -111,24 +112,13 @@ export function AppTopbar({
    * cookies, so redirecting would have claimed a sign-out that did not happen.
    * The cookies are httpOnly and cannot be cleared from here, so the client has
    * no way to end the session on its own.
+   *
+   * The request, the destination and that error contract all live in
+   * signOutAndRedirect now, so this menu, Settings and the workspace switcher
+   * cannot drift apart again.
    */
   const handleSignOut = async (scope: SignOutScope) => {
-    const res = await fetch("/api/auth/sign-out", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ scope }),
-    });
-
-    if (!res.ok) {
-      console.error("[sign-out] failed", res.status);
-      throw new Error("We could not sign you out just now. Please try again.");
-    }
-
-    // Sign-out lands on the public homepage, not the login page.
-    router.replace("/en-US");
-    // Drops the cached RSC payload for /app so a back-navigation cannot
-    // render the authenticated shell from cache.
-    router.refresh();
+    await signOutAndRedirect(scope);
   };
 
   /**

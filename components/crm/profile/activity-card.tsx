@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Activity, ChevronRight, Clock, History } from "lucide-react";
+import { Activity, ChevronRight, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
     EmptyState,
@@ -133,65 +133,6 @@ export function ActivityCard({
                                 icon={Clock}
                                 title="No workspace yet"
                                 description="CRM totals appear once you belong to a workspace."
-                            />
-                        )}
-                    </div>
-
-                    {/* ── Audit trail ── */}
-                    <div>
-                        <h3 className="mb-2 text-[11px] font-bold uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                            Recent Changes
-                        </h3>
-
-                        {activity.recent.length ? (
-                            <ul className="divide-y divide-slate-200 rounded-lg border border-slate-200 dark:divide-white/[0.06] dark:border-white/[0.06]">
-                                {activity.recent.map((entry) => (
-                                    <li
-                                        key={entry.id}
-                                        className="flex flex-wrap items-center justify-between gap-2 px-3 py-2"
-                                    >
-                                        <div className="flex min-w-0 items-center gap-2">
-                                            <History
-                                                className="size-3.5 shrink-0 text-slate-400"
-                                                aria-hidden="true"
-                                            />
-                                            <p className="truncate text-[12px] text-slate-700 dark:text-slate-300">
-                                                <span className="font-semibold">
-                                                    {entry.action}
-                                                </span>{" "}
-                                                <span className="text-slate-500 dark:text-slate-400">
-                                                    {entry.entity}
-                                                </span>
-                                                {entry.byCurrentUser ? (
-                                                    <span className="ml-1.5 rounded-full bg-brand/10 px-1.5 py-0.5 text-[9px] font-bold uppercase text-brand dark:bg-brand-hover/10 dark:text-brand-hover">
-                                                        You
-                                                    </span>
-                                                ) : null}
-                                            </p>
-                                        </div>
-                                        <time
-                                            dateTime={entry.createdAt}
-                                            className="shrink-0 text-[11px] text-slate-500 dark:text-slate-400"
-                                        >
-                                            {formatDateTime(entry.createdAt)}
-                                        </time>
-                                    </li>
-                                ))}
-                            </ul>
-                        ) : activity.recentUnavailable ? (
-                            // Distinct from "empty" on purpose: an empty list
-                            // says nothing has happened, which would be a
-                            // false statement when the read itself failed.
-                            <EmptyState
-                                icon={History}
-                                title="Audit trail unavailable"
-                                description="The audit log table is missing columns this view needs. Applying the pending database migration restores it; everything else on this page is unaffected."
-                            />
-                        ) : (
-                            <EmptyState
-                                icon={History}
-                                title="Nothing recorded yet"
-                                description="Changes to leads, deals and companies in your workspace will be listed here."
                             />
                         )}
                     </div>

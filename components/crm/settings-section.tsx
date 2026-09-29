@@ -14,15 +14,14 @@ import {
     Moon,
     Sun,
     Monitor,
-    Check,
     CheckCircle2,
     RotateCcw,
     ShieldCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Switch } from "@/components/ui/switch";
 import { SignOutDialog } from "@/components/app-shell/sign-out-dialog";
+import { signOutAndRedirect } from "@/lib/auth/sign-out-client";
 import { NotificationSettingsPanel } from "./settings/notification-settings-panel";
 
 /**
@@ -49,14 +48,6 @@ function panelFrom(sub: string | undefined): Panel {
     return PANELS.includes(sub as Panel) ? (sub as Panel) : "theme";
 }
 
-const accentColors = [
-    { name: "Indigo", color: "bg-indigo-600" },
-    { name: "Emerald", color: "bg-emerald-500" },
-    { name: "Amber", color: "bg-amber-500" },
-    { name: "Rose", color: "bg-rose-500" },
-    { name: "Slate", color: "bg-slate-500" },
-];
-
 export function SettingsSection({ sub }: { sub?: string }) {
     const router = useRouter();
     // The URL is the source of truth for which panel is open (/app/settings ->
@@ -64,16 +55,8 @@ export function SettingsSection({ sub }: { sub?: string }) {
     // Forward move between them and a panel can be linked to directly.
     const panel = panelFrom(sub);
     const [selectedTheme, setSelectedTheme] = useState("dark");
-    const [selectedAccent, setSelectedAccent] = useState("Indigo");
     const [saving, setSaving] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
-
-    const [uiPrefs, setUiPrefs] = useState({
-        compactSidebar: false,
-        showConfidence: true,
-        reduceMotion: false,
-        highContrast: false,
-    });
 
     // "Sign out from all devices" — the one real, irreversible action on this
     // page, so it is confirmed in a modal and reports its own outcome instead
@@ -93,27 +76,14 @@ export function SettingsSection({ sub }: { sub?: string }) {
      * a sign-out that did not happen.
      */
     const handleSignOutEverywhere = async () => {
-        const res = await fetch("/api/auth/sign-out", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ scope: "global" }),
-        });
-
-        if (!res.ok) {
-            console.error("[sign-out] global sign-out failed", res.status);
-            throw new Error(
-                "We could not sign you out from all devices. Please try again."
-            );
-        }
-
-        // Success is stated here: this card is still on screen for the
-        // moment the redirect takes.
+        // Flipped before the redirect, not after: signOutAndRedirect replaces
+        // the document, and this card is still on screen for the moment that
+        // takes. Success is stated again on the sign-in page.
+        //
+        // The request and the destination live in signOutAndRedirect, shared
+        // with the topbar's Sign Out and the workspace switcher's Log Out.
+        await signOutAndRedirect("global");
         setSignOutAllDone(true);
-        // Sign-out lands on the public homepage, not the login page.
-        router.replace("/en-US");
-        // Drops the cached RSC payload for /app so a back-navigation cannot
-        // render the authenticated shell from cache.
-        router.refresh();
     };
 
     const handleSave = () => {
@@ -226,64 +196,6 @@ export function SettingsSection({ sub }: { sub?: string }) {
                                     </div>
                                     <p className="text-[9.5px] font-medium dark:text-white text-slate-200 text-center">Dark</p>
                                 </div>
-                            </div>
-                        </div>
-
-                        {/* Accent Color Card */}
-                        <div className="dark:bg-white/[0.02] bg-white/70 backdrop-blur-xl border dark:border-white/[0.06] border-slate-200 rounded-xl p-3 space-y-3">
-                            <h3 className="text-[12px] font-bold dark:text-white text-slate-900">Accent Color</h3>
-                            <div className="flex flex-wrap gap-2.5">
-                                {accentColors.map((color) => (
-                                    <button
-                                        key={color.name}
-                                        onClick={() => setSelectedAccent(color.name)}
-                                        className="flex flex-col items-center gap-1.5 group"
-                                    >
-                                        <div className={cn(
-                                            "size-7 rounded-lg flex items-center justify-center transition-all duration-300 relative",
-                                            color.color,
-                                            selectedAccent === color.name ? "ring-2 ring-indigo-500/40 ring-offset-1 dark:ring-offset-[#0E1321] scale-105" : "opacity-80 hover:opacity-100 hover:scale-110"
-                                        )}>
-                                            {selectedAccent === color.name && <Check className="size-3.5 text-white drop-shadow-md" />}
-                                        </div>
-                                        <span className={cn(
-                                            "text-[9px] font-medium transition-colors",
-                                            selectedAccent === color.name ? "dark:text-white text-slate-900" : "dark:text-slate-400 text-slate-600"
-                                        )}>{color.name}</span>
-                                    </button>
-                                ))}
-                            </div>
-                            <p className="text-[9.5px] text-slate-600 dark:text-slate-400">Accent color affects buttons and highlights.</p>
-                        </div>
-
-                        {/* UI Preferences Card */}
-                        <div className="dark:bg-white/[0.02] bg-white/70 backdrop-blur-xl border dark:border-white/[0.06] border-slate-200 rounded-xl p-3 space-y-3">
-                            <h3 className="text-[12px] font-bold dark:text-white text-slate-900">UI Preferences</h3>
-                            <div className="space-y-2">
-                                {[
-                                    { id: "compactSidebar", label: "Compact sidebar" },
-                                    { id: "showConfidence", label: "Show confidence badges" },
-                                    { id: "reduceMotion", label: "Reduce motion" },
-                                    { id: "highContrast", label: "High contrast mode" },
-                                ].map((pref) => (
-                                    <div key={pref.id} className="flex items-center justify-between group py-0.5">
-                                        <div className="flex items-center gap-2">
-                                            <div className="scale-[0.65] origin-left">
-                                                <Switch 
-                                                    checked={uiPrefs[pref.id as keyof typeof uiPrefs]} 
-                                                    onCheckedChange={(val) => setUiPrefs(prev => ({ ...prev, [pref.id]: val }))}
-                                                />
-                                            </div>
-                                            <span className="text-[10px] dark:text-slate-300 text-slate-700 group-hover:dark:text-white group-hover:text-slate-900 transition-colors -ml-2.5">{pref.label}</span>
-                                        </div>
-                                        <span className={cn(
-                                            "text-[8.5px] font-bold tracking-widest uppercase opacity-60 transition-opacity",
-                                            uiPrefs[pref.id as keyof typeof uiPrefs] ? "text-indigo-600 dark:text-indigo-400" : "dark:text-slate-400 text-slate-500"
-                                        )}>
-                                            — {uiPrefs[pref.id as keyof typeof uiPrefs] ? "On" : "Off"}
-                                        </span>
-                                    </div>
-                                ))}
                             </div>
                         </div>
 

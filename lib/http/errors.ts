@@ -38,6 +38,25 @@ export class NotFoundError extends ApiError {
     }
 }
 
+/**
+ * The signup OTP was issued too long ago to still be accepted.
+ *
+ * Distinct from BadRequestError because the verify page keys off
+ * `error.code === "OtpExpiredError"` to swap the form for the "Resend
+ * Verification Code" button. GoTrue cannot make this distinction for us: it
+ * answers 403 `otp_expired` for a *wrong* code just as it does for a stale one
+ * (verified against the live project), so "expired" has to be decided before
+ * the code is handed over — see AuthService.verify.
+ *
+ * 410 Gone rather than 400: the code was valid and no longer is.
+ */
+export class OtpExpiredError extends ApiError {
+    constructor(message = 'Verification code has expired.') {
+        super(message, 410);
+        this.name = 'OtpExpiredError';
+    }
+}
+
 export class InternalServerError extends ApiError {
     constructor(message = 'Internal Server Error', details?: unknown) {
         super(message, 500, details);

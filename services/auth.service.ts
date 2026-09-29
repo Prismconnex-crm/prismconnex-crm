@@ -1,7 +1,14 @@
 import * as gotrue from "@/lib/supabase/gotrue";
 import type { OAuthProviderKey, SupabaseSession } from "@/lib/supabase/gotrue";
 import { ProfileService } from "@/services/profile.service";
-import { BadRequestError, UnauthorizedError } from "@/lib/http/errors";
+import { SignUpOtpRepository } from "@/repositories/signup-otp.repository";
+import {
+    ApiError,
+    BadRequestError,
+    OtpExpiredError,
+    UnauthorizedError,
+} from "@/lib/http/errors";
+import { authDebug, maskEmail } from "@/lib/auth/auth-debug";
 import type { ProfileDTO } from "@/models/profile";
 
 /**
@@ -70,11 +77,87 @@ export class AuthService {
         };
     }
 
-    /** Confirms a signup with the emailed OTP, then loads the profile. */
+    /**
+     * Confirms a signup with the emailed OTP, then loads the profile.
+     *
+     * Enforces the 90-second lifetime BEFORE the code reaches Supabase. Two
+     * reasons it has to happen on this side:
+     *
+     *  1. The project-wide "Email OTP Expiration" setting is shared with
+     *     password recovery, so it cannot be lowered to 90s without expiring
+     *     reset links too (see SignUpOtpRepository).
+     *  2. GoTrue answers 403 `otp_expired` for a *wrong* code exactly as it does
+     *     for a stale one — verified against the live project — so it cannot
+     *     tell the user which of the two happened. Checking the issue time here
+     *     is what separates "expired, here's a resend button" from "that code is
+     *     wrong, try again".
+     *
+     * This is a server-side gate: the countdown on the verify page is cosmetic,
+     * and a client that hides or ignores it still cannot spend a stale code.
+     */
     static async verify(email: string, code: string): Promise<AuthResult> {
-        const session = await gotrue.verifySignUpOtp(email, code);
-        const profile = await ProfileService.ensureProfileForSession(session.user);
-        return { session, profile };
+        const sentAt = await SignUpOtpRepository.findConfirmationSentAt(email);
+        const remaining = SignUpOtpRepository.secondsRemaining(sentAt);
+
+        // `remaining === null` means no issue time could be read; fall through
+        // and let Supabase judge the code rather than refuse a valid one.
+        if (remaining === 0) {
+            authDebug("rejected an expired signup OTP", {
+                email: maskEmail(email),
+                confirmationSentAt: sentAt?.toISOString() ?? null,
+                ttlSeconds: SignUpOtpRepository.ttlSeconds,
+            });
+            throw new OtpExpiredError();
+        }
+
+        try {
+            const session = await gotrue.verifySignUpOtp(email, code);
+            const profile = await ProfileService.ensureProfileForSession(session.user);
+            return { session, profile };
+        } catch (error) {
+            // Inside the window, so GoTrue's `otp_expired` means the digits were
+            // wrong, not that time ran out. Re-word it: the stock message
+            // ("Token has expired or is invalid") would send the user chasing a
+            // resend when the real fix is to retype the code.
+            if (error instanceof ApiError && /expired or is invalid/i.test(error.message)) {
+                throw new BadRequestError("Incorrect verification code. Please check and try again.");
+            }
+            throw error;
+        }
+    }
+
+    /**
+     * Sends a fresh signup OTP and reports the new deadline.
+     *
+     * The returned `expiresInSeconds` comes from the repository's TTL rather
+     * than from a constant in the route or the component, so the countdown the
+     * user sees and the window the server enforces cannot drift apart.
+     */
+    static async resendSignUpOtp(email: string) {
+        // Throttle before spending a message. Supabase enforces its own
+        // per-address frequency too, but its 429 does not distinguish that from
+        // the project-wide quota — refusing here yields an exact wait time and
+        // leaves the scarce quota for sends that will actually go out.
+        const sentAt = await SignUpOtpRepository.findConfirmationSentAt(email);
+        const cooldown = SignUpOtpRepository.cooldownRemaining(sentAt);
+
+        if (cooldown > 0) {
+            authDebug("resend refused, still in cooldown", {
+                email: maskEmail(email),
+                secondsRemaining: cooldown,
+            });
+            throw new ApiError(
+                `Please wait ${cooldown} seconds before requesting another code.`,
+                429,
+            );
+        }
+
+        await gotrue.resendSignUpOtp(email);
+
+        return {
+            expiresInSeconds: SignUpOtpRepository.ttlSeconds,
+            cooldownSeconds: SignUpOtpRepository.cooldownSeconds,
+        };
     }
 
     /**

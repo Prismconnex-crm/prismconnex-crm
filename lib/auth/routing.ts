@@ -18,6 +18,26 @@ export const SESSION_EXPIRED_QUERY_PARAM = "sessionExpired";
 export const SESSION_EXPIRED_QUERY_VALUE = "1";
 export const EXPIRED_SESSION_SIGN_IN_HREF = `/auth/sign-in?${SESSION_EXPIRED_QUERY_PARAM}=${SESSION_EXPIRED_QUERY_VALUE}`;
 
+/**
+ * Where every sign-out lands, and the flag that makes the form show the
+ * "You have been signed out successfully" banner.
+ *
+ * Deliberately the REAL route rather than the `/login` alias the sign-out used
+ * to target. `/login` is not a route at all — it exists only as a `redirects()`
+ * entry in next.config.mjs — so the logout destination depended on a config
+ * hop, and an unmatched `/login` falls through to the `app/[locale]` catch-all
+ * where the locale machinery (`/`, `/en`, `/en-US`) takes over. Pointing
+ * straight at /auth/sign-in keeps the locale layer out of the sign-out path
+ * entirely. The alias stays in next.config.mjs for hand-typed URLs.
+ *
+ * NOT locale-prefixed on purpose: /auth/* is absent from `localizedBaseRoutes`
+ * in lib/locale.ts, so middleware never rewrites it and `/en-US/auth/sign-in`
+ * would 404.
+ */
+export const SIGNED_OUT_QUERY_PARAM = "signedOut";
+export const SIGNED_OUT_QUERY_VALUE = "1";
+export const SIGNED_OUT_SIGN_IN_HREF = `/auth/sign-in?${SIGNED_OUT_QUERY_PARAM}=${SIGNED_OUT_QUERY_VALUE}`;
+
 export function hasExpiredSessionFlag(searchParams: URLSearchParams) {
   return searchParams.get(SESSION_EXPIRED_QUERY_PARAM) === SESSION_EXPIRED_QUERY_VALUE;
 }

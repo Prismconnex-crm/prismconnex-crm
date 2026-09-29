@@ -964,10 +964,18 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Verifier"
+        "submit": "Verifier",
+        "resend": "Renvoyer le code de vérification"
       },
       "errors": {
-        "verify": "Verification impossible"
+        "verify": "Verification impossible",
+        "resend": "Échec du renvoi du code de vérification",
+        "emailRequired": "Saisissez d'abord votre adresse e-mail."
+      },
+      "expired": "Le code de vérification a expiré.",
+      "expiresIn": "Expire dans {seconds}s",
+      "notices": {
+        "resent": "Un nouveau code de vérification a été envoyé à votre adresse e-mail."
       }
     },
     "forgotPassword": {
