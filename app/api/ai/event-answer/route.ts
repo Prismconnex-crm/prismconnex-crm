@@ -1,3 +1,4 @@
+import { requireSessionUser } from '@/lib/auth/require-session';
 import { validateBody } from '@/lib/http/validate';
 import { jsonError, jsonOk } from '@/lib/http/response';
 import { eventAnswerRequestSchema } from '@/models/ai-event-query';
@@ -16,6 +17,8 @@ export const dynamic = 'force-dynamic';
  */
 export async function POST(request: Request) {
   try {
+    // Signed-in only: every request can spend an Anthropic call.
+    await requireSessionUser();
     const body = validateBody(eventAnswerRequestSchema, await request.json());
 
     if (!isConfigured()) {

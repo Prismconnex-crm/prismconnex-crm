@@ -1,4 +1,11 @@
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+// These routes now require a signed-in user; the auth gate itself is covered
+// in paid-routes-auth.test.ts.
+vi.mock('@/lib/auth/session', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/lib/auth/session')>()),
+  getSessionPayload: async () => ({ sub: 'test-user', email: 'test@example.com' }),
+}));
 import { POST } from '@/app/api/assistant/chat/route';
 import { resetAssistantRateLimiter } from '@/lib/assistant/rate-limit';
 import { adapterFor, resetAdapters, setAdapterForTests } from '@/lib/assistant/registry';

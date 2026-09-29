@@ -6,8 +6,24 @@ export type SessionPayload = {
   workspaceId: string;
 };
 
+/**
+ * The pcx_session signing key. The dev fallback is public (it is in this file),
+ * so a production deploy without AUTH_SECRET would let anyone mint a session
+ * for any user — fail loudly instead.
+ */
+function sessionSecret() {
+  const secret = process.env.AUTH_SECRET;
+  if (!secret) {
+    if ((process.env.NODE_ENV as string) === "production") {
+      throw new Error("AUTH_SECRET must be set in production to sign or verify sessions.");
+    }
+    return new TextEncoder().encode("prismconnex-dev-secret");
+  }
+  return new TextEncoder().encode(secret);
+}
+
 export async function signLocalSession(payload: SessionPayload) {
-  const secret = new TextEncoder().encode(process.env.AUTH_SECRET || "prismconnex-dev-secret");
+  const secret = sessionSecret();
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -16,7 +32,7 @@ export async function signLocalSession(payload: SessionPayload) {
 }
 
 export async function verifyLocalSession(token: string) {
-  const secret = new TextEncoder().encode(process.env.AUTH_SECRET || "prismconnex-dev-secret");
+  const secret = sessionSecret();
   const { payload } = await jwtVerify(token, secret);
   return payload as unknown as SessionPayload;
 }

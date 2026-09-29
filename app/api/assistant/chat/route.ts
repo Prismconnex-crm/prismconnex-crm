@@ -1,5 +1,6 @@
 import { BadRequestError } from '@/lib/http/errors';
 import { jsonError } from '@/lib/http/response';
+import { requireSessionUser } from '@/lib/auth/require-session';
 import { consumeRateLimit } from '@/lib/assistant/rate-limit';
 import { createAssistantErrorStream, createAssistantStream } from '@/lib/assistant/stream';
 import { ASSISTANT_ENTITIES, type AssistantEntity } from '@/lib/assistant/types';
@@ -12,8 +13,13 @@ import { ASSISTANT_ENTITIES, type AssistantEntity } from '@/lib/assistant/types'
  * Not tenant-scoped, matching /api/companies — these are shared discovery
  * datasets, not workspace data.
  *
- * An assistant problem is never an HTTP error: a rate-limit refusal is still
- * delivered AS A STREAM EVENT so the client has exactly one code path.
+ * Requires a signed-in user because every question can cost a model call, and
+ * the rate limit is keyed on that user: X-Forwarded-For is client-controlled,
+ * so keying on it let a caller mint a fresh bucket per request.
+ *
+ * Apart from a 401, an assistant problem is never an HTTP error: a rate-limit
+ * refusal is still delivered AS A STREAM EVENT so the client has exactly one
+ * code path.
  */
 
 const NDJSON_HEADERS = {
@@ -35,14 +41,10 @@ function isEntity(value: unknown): value is AssistantEntity {
   return typeof value === 'string' && ASSISTANT_ENTITIES.includes(value as AssistantEntity);
 }
 
-function clientKey(request: Request): string {
-  const forwarded = request.headers.get('x-forwarded-for');
-  if (forwarded) return forwarded.split(',')[0].trim();
-  return request.headers.get('x-real-ip') ?? 'unknown';
-}
 
 export async function POST(request: Request) {
   try {
+    const user = await requireSessionUser();
     const body = (await request.json().catch(() => ({}))) as ChatBody;
 
     const message = typeof body.message === 'string' ? body.message.trim() : '';
@@ -73,7 +75,7 @@ export async function POST(request: Request) {
         ? (body.presetFilters as Record<string, unknown>)
         : undefined;
 
-    const limit = consumeRateLimit(clientKey(request));
+    const limit = consumeRateLimit(`user:${user.userId}`);
     if (!limit.allowed) {
       return new Response(
         createAssistantErrorStream(

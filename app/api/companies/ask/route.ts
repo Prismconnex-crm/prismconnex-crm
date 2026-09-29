@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { z } from 'zod';
+import { requireSessionUser } from '@/lib/auth/require-session';
 import { ApiError } from '@/lib/http/errors';
 import { jsonError, jsonOk } from '@/lib/http/response';
 import { validateBody } from '@/lib/http/validate';
@@ -102,6 +103,8 @@ export async function POST(request: NextRequest) {
   let query = '';
 
   try {
+    // Signed-in only: the non-structured path spends an Anthropic call.
+    await requireSessionUser();
     const body = await request.json();
 
     if (body?.mode === 'structured') {

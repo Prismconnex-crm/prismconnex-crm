@@ -14,6 +14,13 @@ vi.mock('@/services/event-query.service', async (importOriginal) => {
   };
 });
 
+// These routes now require a signed-in user; the auth gate itself is covered
+// in paid-routes-auth.test.ts.
+vi.mock('@/lib/auth/session', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@/lib/auth/session')>()),
+  getSessionPayload: async () => ({ sub: 'test-user', email: 'test@example.com' }),
+}));
+
 // Safe as static imports: vitest hoists `vi.mock` above them.
 import { POST } from '@/app/api/companies/ask/route';
 import { InternalServerError } from '@/lib/http/errors';

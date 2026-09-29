@@ -1,5 +1,6 @@
 /**
- * In-memory per-IP token bucket. Process-local by design — no dependency.
+ * In-memory per-user token bucket (keyed by the caller, see
+ * app/api/assistant/chat/route.ts). Process-local by design — no dependency.
  *
  * One bucket for the whole assistant. It was deliberately kept separate from
  * the old lib/people/chat-stream.ts bucket so the two endpoints could not

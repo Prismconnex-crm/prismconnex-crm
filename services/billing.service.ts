@@ -159,6 +159,21 @@ export class BillingService {
     }
 
     /**
+     * Credits left in the current period, floored at 0. The cheap half of
+     * getUsage(), for call sites that must refuse a metered operation up front.
+     */
+    static async getRemainingCredits(workspaceId: string): Promise<number> {
+        const credit = await this.ensureCredit(workspaceId);
+        const grouped = await BillingRepository.sumUsageByKind(
+            workspaceId,
+            credit.periodStart,
+            credit.periodEnd
+        );
+        const used = grouped.reduce((total, row) => total + (row._sum.amount ?? 0), 0);
+        return Math.max(credit.allowance - used, 0);
+    }
+
+    /**
      * Records one metered operation.
      *
      * Metering must never fail the work it measures: the caller invokes this

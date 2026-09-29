@@ -55,6 +55,16 @@ function mapProfile(profile: Record<string, any>): Employee {
 
 export async function GET(request: Request) {
   try {
+    // Workspace members only: stored contacts are personal data, and the
+    // fallback lookup spends paid ContactOut credits billed to a workspace.
+    const tenant = await resolveTenant();
+    if (!tenant) {
+      return NextResponse.json(
+        { configured: true, employees: [], error: "Sign in to a workspace to look up employees." },
+        { status: 401 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const company = searchParams.get("company")?.trim();
     const domain = searchParams.get("domain")?.trim();
@@ -99,6 +109,20 @@ export async function GET(request: Request) {
         message:
           "ContactOut API key not configured. Set CONTACTOUT_API_KEY in .env to load employee details.",
       });
+    }
+
+    // Refuse before spending: ContactOut bills the call whether or not the
+    // ledger write afterwards succeeds.
+    const remaining = await BillingService.getRemainingCredits(tenant.workspaceId);
+    if (remaining < 1) {
+      return NextResponse.json(
+        {
+          configured: true,
+          employees: [],
+          error: "No credits left this period. Upgrade your plan or wait for the next period to look up more employees.",
+        },
+        { status: 402 }
+      );
     }
 
     // Prefer domain (unambiguous) and fall back to the company name.
@@ -161,8 +185,7 @@ export async function GET(request: Request) {
     // errored would trade a working feature for a bookkeeping row.
     void (async () => {
       try {
-        const tenant = await resolveTenant();
-        if (!tenant || employees.length === 0) return;
+        if (employees.length === 0) return;
 
         await BillingService.recordUsage({
           workspaceId: tenant.workspaceId,
