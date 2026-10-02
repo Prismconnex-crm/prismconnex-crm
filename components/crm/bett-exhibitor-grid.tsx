@@ -107,7 +107,17 @@ export function BettExhibitorGrid({ eventSlug, expected }: { eventSlug: string; 
    */
   const openInCompanies = useCallback(
     (exhibitor: Exhibitor) => {
-      router.push(`/app/companies?q=${encodeURIComponent(exhibitor.name)}`);
+      // The slug is for a readable, shareable URL; `exhibitorId` is what the
+      // profile actually loads by, so a renamed exhibitor keeps working.
+      const slug =
+        exhibitor.name
+          .toLowerCase()
+          .normalize("NFKD")
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "") || "exhibitor";
+      router.push(
+        `/app/companies/${slug}?source=bett&exhibitorId=${encodeURIComponent(exhibitor.id)}`
+      );
     },
     [router]
   );

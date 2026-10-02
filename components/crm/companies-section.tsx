@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useEffect, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import {
   Activity,
   BarChart3,
@@ -30,6 +31,8 @@ import { cn } from "@/lib/utils";
 import { CompaniesAiSearch } from "@/components/companies/companies-ai-search";
 import { FilterChips } from "@/components/search/filter-chips";
 import { EventCatalogPanel } from "@/components/crm/event-catalog-panel";
+import { BettExhibitorProfile } from "@/components/crm/bett-exhibitor-profile";
+import { isBettExhibitorCompany } from "@/lib/exhibitors/bett";
 import type { EventFilters, EventResult } from "@/models/event-query";
 import {
   COMPANY_CATEGORIES,
@@ -669,6 +672,20 @@ function CompanyTable({
 }
 
 export function CompaniesSection() {
+  const router = useRouter();
+  /**
+   * Set when the URL carries ?source=bett&exhibitorId=<id>, which is how a BETT
+   * exhibitor card links through. Null for every ordinary visit.
+   */
+  const [bettExhibitorId, setBettExhibitorId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setBettExhibitorId(
+      params.get("source") === "bett" ? params.get("exhibitorId")?.trim() || null : null
+    );
+  }, []);
+
   const [companies, setCompanies] = useState<Company[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -1322,6 +1339,71 @@ export function CompaniesSection() {
     (employee) => employee.companyId === activeCompany?.id
   );
 
+  /**
+   * Opening a company from the catalog.
+   *
+   * A row carrying the BETT import tag is the same organisation as an exhibitor
+   * record, and that record holds things the company row does not — named
+   * contact, job title, LinkedIn, stand. So those rows open the exhibitor
+   * profile, exactly as clicking the card on the Events page does, rather than
+   * the generic detail view that would show blank firmographics.
+   *
+   * The lookup is a round trip, so the generic view is the fallback whenever it
+   * fails or finds nothing — a click never does nothing.
+   */
+  const openCompany = useCallback(
+    async (id: string) => {
+      const company = companies.find((row) => row.id === id) ?? savedCompanies.find((row) => row.id === id);
+
+      if (company && isBettExhibitorCompany(company.tags)) {
+        try {
+          const params = new URLSearchParams();
+          if (company.domain) params.set("domain", company.domain);
+          params.set("name", company.name);
+          const response = await fetch(`/api/exhibitors/lookup?${params.toString()}`);
+          if (response.ok) {
+            const { exhibitorId } = (await response.json()) as { exhibitorId: string | null };
+            if (exhibitorId) {
+              const slug =
+                company.name
+                  .toLowerCase()
+                  .normalize("NFKD")
+                  .replace(/[^a-z0-9]+/g, "-")
+                  .replace(/^-+|-+$/g, "") || "exhibitor";
+              router.push(
+                `/app/companies/${slug}?source=bett&exhibitorId=${encodeURIComponent(exhibitorId)}`
+              );
+              return;
+            }
+          }
+        } catch {
+          // Fall through to the generic view below.
+        }
+      }
+
+      setSelectedCompanyId(id);
+      setIsDetailView(true);
+    },
+    [companies, savedCompanies, router]
+  );
+
+  // A BETT exhibitor card routes here as
+  // /app/companies/<slug>?source=bett&exhibitorId=<id>. That profile is its own
+  // view — the discovery rail and catalog table do not apply to a single
+  // exhibitor — so it replaces the section's body rather than rendering inside
+  // it. Read in an effect because the URL is client-only; seeding during render
+  // would differ from the server's first paint.
+  if (bettExhibitorId) {
+    return (
+      <div className="space-y-5 max-w-[1600px] mx-auto pb-10">
+        <BettExhibitorProfile
+          exhibitorId={bettExhibitorId}
+          onBack={() => router.push("/app/companies")}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-5 max-w-[1600px] mx-auto pb-10">
       <motion.div
@@ -1473,10 +1555,9 @@ export function CompaniesSection() {
                       <tr
                         key={company.id}
                         onClick={() => {
-                          setSelectedCompanyId(company.id);
                           setMainTab("companies");
-                          setIsDetailView(true);
                           setActiveTab("Overview");
+                          void openCompany(company.id);
                         }}
                         className="group cursor-pointer transition-colors hover:bg-slate-50 dark:hover:bg-[#16233A]"
                       >
@@ -2028,8 +2109,7 @@ export function CompaniesSection() {
                     resetCompanyPagination();
                   }}
                   onSelect={(id) => {
-                    setSelectedCompanyId(id);
-                    setIsDetailView(true);
+                    void openCompany(id);
                   }}
                 />
               </div>

@@ -22,6 +22,14 @@ const EVENT_NAME = 'BETT SHOW';
 const IMPORT_TAG = 'BETT SHOW 2027 Exhibitor';
 
 /**
+ * Category for every imported exhibitor. Already part of COMPANY_CATEGORIES,
+ * so the Category filter offers it without any vocabulary change — and 5.5k
+ * existing rows already use it, so these join a populated bucket rather than
+ * creating a one-off.
+ */
+const CATEGORY = 'trade show events';
+
+/**
  * Source spellings that would never match the Country picker. The picker list
  * (COMPANY_COUNTRIES, 195 entries) is the vocabulary the filter compares
  * against, so a row stored as "Türkiye" or "Netherlandss" is unreachable.
@@ -135,8 +143,14 @@ async function main() {
         // matches, since the city is genuinely unknown.
         headquarters: country,
         region,
-        // Neither category nor description exists on any source row.
-        category: null,
+        // The source carries no category of its own, so these rows take the
+        // one that describes how they were found: they are companies
+        // discovered through a trade show. Stored lower-case like every other
+        // category — the UI title-cases it for display, and the filter matches
+        // over spelling variants.
+        category: CATEGORY,
+        // No description exists on any source row; left null rather than
+        // invented.
         description: null,
         domain: domainFrom(ex.websiteUrl),
         website: ex.websiteUrl,
