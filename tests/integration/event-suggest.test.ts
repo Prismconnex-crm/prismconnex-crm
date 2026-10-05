@@ -25,6 +25,7 @@ function makeEvent(overrides: Partial<FindShowEvent> & { slug: string }): FindSh
     endMonth: '2026-03',
     displayDate: '01 - 03 Mar 2026',
     description: 'A sample trade show used by the suggestion tests.',
+    webDescription: '',
     seedCity: 'Berlin',
     monthYear: 'March 2026',
     duration: '3 days',

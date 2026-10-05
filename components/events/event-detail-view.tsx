@@ -272,6 +272,11 @@ export function EventDetailView({ event }: { event: FindShowEvent }) {
                         <div className="rounded-3xl border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#111B2E] overflow-hidden shadow-xl">
                             <EventHero event={event} />
                             <div className="p-8 space-y-8">
+                                {/* Executive Overview is the Overview tab's own
+                                    content. Location & Venue carries the venue
+                                    and organizer cards instead, so the two tabs
+                                    no longer show the same prose. */}
+                                {activeTab !== 'Location & Venue' ? (
                                 <div>
                                     <h3 className="mb-4 flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">
                                         <FileText className="size-5 text-indigo-500" />
@@ -280,6 +285,11 @@ export function EventDetailView({ event }: { event: FindShowEvent }) {
                                     <div className="space-y-4 text-[13px] font-medium leading-relaxed text-slate-700 dark:text-slate-300">
                                         {/* Editorial blurb from the source listing, when present. */}
                                         {event.description ? <p>{event.description}.</p> : null}
+                                        {/* Fuller description published on the show's own site, when
+                                            that site publishes one. First-party copy, fetched by
+                                            scripts/fetch-event-web-descriptions.mjs — never generated,
+                                            and skipped entirely rather than padded when absent. */}
+                                        {event.webDescription ? <p>{event.webDescription}</p> : null}
                                         <p>
                                             {event.name} takes place {event.displayDate}
                                             {/* Location-less seed records have no city, and may be "Unknown". */}
@@ -300,6 +310,15 @@ export function EventDetailView({ event }: { event: FindShowEvent }) {
                                         </p>
                                     </div>
                                 </div>
+                                ) : null}
+                                {/* Venue Details and Logistics belong to the
+                                    Location & Venue tab, not Overview — the
+                                    venue, address, site and contact are what
+                                    that tab is for, and Overview repeating them
+                                    left the two tabs showing the same thing.
+                                    One component serves every event, so this
+                                    applies across the whole catalog. */}
+                                {activeTab === 'Location & Venue' ? (
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="p-5 rounded-2xl border border-slate-100 dark:border-[#22304A] bg-slate-50/50 dark:bg-[#0B1220]/50">
                                         <h4 className="mb-4 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">Venue Details</h4>
@@ -309,13 +328,14 @@ export function EventDetailView({ event }: { event: FindShowEvent }) {
                                         </div>
                                     </div>
                                     <div className="p-5 rounded-2xl border border-slate-100 dark:border-[#22304A] bg-slate-50/50 dark:bg-[#0B1220]/50">
-                                        <h4 className="mb-4 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">Logistics</h4>
+                                        <h4 className="mb-4 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">Organizer</h4>
                                         <div className="space-y-3">
                                             <div className="flex items-start gap-3"><Globe2 className="size-4 text-indigo-500 mt-0.5" />{event.website ? (<a href={event.website} target="_blank" rel="noopener noreferrer" className="text-[13px] font-bold text-indigo-500 hover:underline truncate">{event.website.replace(/^https?:\/\/(www\.)?/, '')}</a>) : (<span className="text-[13px] font-medium text-slate-700 dark:text-slate-300">Official website not published</span>)}</div>
                                             <div className="flex items-start gap-3"><Mail className="size-4 text-indigo-500 mt-0.5" />{event.email ? (<a href={`mailto:${event.email}`} title={`Contact email for ${event.name}`} className="text-[13px] font-bold text-indigo-500 hover:underline truncate">{event.email}</a>) : (<span className="text-[13px] font-medium text-slate-700 dark:text-slate-300">Contact email not published</span>)}</div>
                                         </div>
                                     </div>
                                 </div>
+                                ) : null}
                             </div>
                         </div>
                     </div>

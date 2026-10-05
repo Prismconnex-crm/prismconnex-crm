@@ -39,6 +39,7 @@ function makeEvent(overrides: Partial<FindShowEvent> & { slug: string }): FindSh
     // Added by the eventseye calendar import: the catalog now carries a
     // description, the seed's raw city, a Month-Year label and a duration.
     description: 'A sample trade show used by the filter tests.',
+    webDescription: '',
     seedCity: 'Berlin',
     monthYear: 'March 2026',
     duration: '3 days',

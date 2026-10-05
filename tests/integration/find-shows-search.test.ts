@@ -38,6 +38,7 @@ function makeEvent(overrides: Partial<FindShowEvent> = {}): FindShowEvent {
     searchText: '',
     seedAsset: { bannerUrl: null, logoUrl: null, eventseyeUrl: null },
     description: 'World forum for medicine.',
+    webDescription: '',
     seedCity: 'Düsseldorf (Germany)',
     monthYear: 'November 2026',
     duration: '4 days',

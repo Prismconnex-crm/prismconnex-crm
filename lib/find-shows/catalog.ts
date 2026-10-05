@@ -1,4 +1,5 @@
 import findShowsSeed from '../../data/find-shows-seed.json';
+import webDescriptions from '../../data/find-shows-web-descriptions.json';
 import {
   inferEventCountry,
   resolveSeedCountry,
@@ -227,6 +228,59 @@ function splitLocation(rawLocation: string): ({ city: string } & ResolvedCountry
   }
 }
 
+/**
+ * The description the show's own site publishes, keyed by bare domain in
+ * data/find-shows-web-descriptions.json (built by
+ * scripts/fetch-event-web-descriptions.mjs).
+ *
+ * Keyed by domain rather than by event because one organiser runs many shows
+ * from a single site — 11,629 events across 6,947 domains. A domain whose site
+ * published no description is stored as null, so a missing key and a known
+ * miss are distinguishable; both yield '' here.
+ */
+const WEB_DESCRIPTIONS = webDescriptions as Record<string, string | null>;
+
+function domainOfWebsite(website: string | null | undefined): string {
+  if (!website) return '';
+  return website
+    .trim()
+    .replace(/^https?:\/\//i, '')
+    .replace(/^www\./i, '')
+    .replace(/[/?#].*$/, '')
+    .toLowerCase();
+}
+
+/**
+ * Domains used by exactly one event in the seed.
+ *
+ * A site's description only describes THIS show when the organiser runs just
+ * the one from that domain. 6,033 of 11,629 events sit on a shared domain —
+ * studyrama.com alone serves 188 — and there the homepage description is about
+ * the organiser or their flagship show. Attaching it anyway produced results
+ * like the Cincinnati house show being described as "Columbus Building &
+ * Renovation Expo, January 8-10, at the Ohio Expo Center": fluent, specific
+ * and about a different event. Worse than showing nothing, so shared domains
+ * show nothing.
+ */
+const SINGLE_EVENT_DOMAINS: ReadonlySet<string> = (() => {
+  const counts = new Map<string, number>();
+  for (const record of findShowsSeed as FindShowSeedRecord[]) {
+    const domain = domainOfWebsite(record.website);
+    if (domain) counts.set(domain, (counts.get(domain) ?? 0) + 1);
+  }
+  const unique = new Set<string>();
+  counts.forEach((count, domain) => {
+    if (count === 1) unique.add(domain);
+  });
+  return unique;
+})();
+
+function webDescriptionFor(website: string | null | undefined): string {
+  const domain = domainOfWebsite(website);
+  if (!domain || !SINGLE_EVENT_DOMAINS.has(domain)) return '';
+  return WEB_DESCRIPTIONS[domain] ?? '';
+}
+
 function slugify(value: string) {
   return value
     .normalize('NFKD')
@@ -318,6 +372,7 @@ function toEvent(record: FindShowSeedRecord): FindShowEvent {
       .toLowerCase(),
     seedAsset,
     description: record.description ?? '',
+    webDescription: webDescriptionFor(record.website),
     seedCity: record.city,
     monthYear: record.monthYear ?? parsedDates.startMonth ?? '',
     duration: record.duration ?? '',

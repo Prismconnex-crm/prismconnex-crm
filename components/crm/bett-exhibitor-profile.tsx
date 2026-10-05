@@ -6,7 +6,7 @@ import {
   Building2,
   CalendarDays,
   ExternalLink,
-  Globe2,
+  Globe,
   Info,
   Loader2,
   Mail,
@@ -333,12 +333,10 @@ export function BettExhibitorProfile({
                 <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-indigo-700 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300">
                   {EVENT_LABEL} Exhibitor
                 </span>
-                {exhibitor.stand ? (
-                  <span className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-[9px] font-bold uppercase tracking-wide text-slate-600 dark:border-[#22304A] dark:bg-[#0B1220] dark:text-slate-300">
-                    <MapPin className="size-2.5" />
-                    Stand {exhibitor.stand}
-                  </span>
-                ) : null}
+                {/* The stand badge was dropped from the header: the stand is
+                    already a field on the Overview tab's exhibitor record and
+                    on the Events tab, so repeating it beside the name added
+                    nothing. */}
               </div>
 
               <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-slate-600 dark:text-slate-300">
@@ -349,31 +347,26 @@ export function BettExhibitorProfile({
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 font-semibold text-indigo-600 hover:underline dark:text-indigo-300"
                   >
-                    <Globe2 className="size-3.5" />
+                    <Globe className="size-3.5" />
                     {domain}
                     <ExternalLink className="size-3" />
                   </a>
                 ) : (
                   <span className="inline-flex items-center gap-1.5 text-slate-400 dark:text-slate-500">
-                    <Globe2 className="size-3.5" />
+                    <Globe className="size-3.5" />
                     {NOT_AVAILABLE}
                   </span>
                 )}
 
-                {exhibitor.email ? (
-                  <a
-                    href={`mailto:${exhibitor.email}`}
-                    className="inline-flex items-center gap-1.5 hover:text-indigo-600 dark:hover:text-indigo-300"
-                  >
-                    <Mail className="size-3.5 text-slate-400" />
-                    {exhibitor.email}
-                  </a>
-                ) : (
-                  <span className="inline-flex items-center gap-1.5 text-slate-400 dark:text-slate-500">
-                    <Mail className="size-3.5" />
-                    {NOT_AVAILABLE}
-                  </span>
-                )}
+                {/* The company LinkedIn sits where the email used to, rather
+                    than off on the right of the header. The address is still
+                    on the People tab beside the person it belongs to, which is
+                    where someone goes looking for a contact. */}
+                <LinkedInAction
+                  url={exhibitor.companyLinkedInUrl}
+                  label={`${exhibitor.name} on LinkedIn`}
+                  brand
+                />
 
                 {exhibitor.phone ? (
                   <a
@@ -393,9 +386,6 @@ export function BettExhibitorProfile({
             </div>
           </div>
 
-          <div className="flex shrink-0 items-center gap-2">
-            <LinkedInAction url={exhibitor.companyLinkedInUrl} label="Company LinkedIn" brand />
-          </div>
         </div>
       </div>
 

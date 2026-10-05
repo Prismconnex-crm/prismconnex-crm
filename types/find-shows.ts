@@ -93,6 +93,12 @@ export type FindShowEvent = {
   seedAsset: FindShowAsset;
   /** Editorial blurb shown in the event Overview tab. */
   description: string;
+  /**
+   * Fuller description published on the show's own website, keyed by domain in
+   * data/find-shows-web-descriptions.json. Empty when that site published no
+   * description tag — the Overview then shows the seed blurb alone.
+   */
+  webDescription: string;
   /** Unsplit seed city string ("London (UK - United Kingdom)") — the key into
    *  data/city-coordinates.json. */
   seedCity: string;

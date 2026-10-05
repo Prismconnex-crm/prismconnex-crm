@@ -57,6 +57,33 @@ function readNumberParam(params: URLSearchParams, key: string, fallback: number,
   return Math.min(max, Math.max(min, parsed));
 }
 
+/**
+ * The "24 / page" control. Rendered twice — once above the grid and once
+ * below — from one definition, so the pair always looks and behaves alike.
+ */
+function PageSizeSelect({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (size: number) => void;
+}) {
+  return (
+    <select
+      value={value}
+      onChange={(event) => onChange(Number(event.target.value))}
+      aria-label="Cards per page"
+      className="h-9 rounded-full border border-slate-200 bg-white/70 px-3 text-[12px] font-bold text-slate-600 outline-none backdrop-blur focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#111B2E]/70 dark:text-slate-400"
+    >
+      {PAGE_SIZE_OPTIONS.map((size) => (
+        <option key={size} value={size}>
+          {size} / page
+        </option>
+      ))}
+    </select>
+  );
+}
+
 /** Page buttons with ellipsis: 1 … 4 5 [6] 7 8 … 14 */
 function pageWindow(current: number, total: number): (number | "gap")[] {
   if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
@@ -121,6 +148,15 @@ export function BettExhibitorGrid({ eventSlug, expected }: { eventSlug: string; 
     },
     [router]
   );
+
+  /**
+   * Changing the page size resets to page 1 — page 7 of 24 does not exist once
+   * the size becomes 96. Shared by both copies of the control.
+   */
+  const changePageSize = useCallback((size: number) => {
+    setPageSize(size);
+    setPage(1);
+  }, []);
 
   const [data, setData] = useState<ExhibitorPage | null>(null);
   const [loading, setLoading] = useState(true);
@@ -262,21 +298,7 @@ export function BettExhibitorGrid({ eventSlug, expected }: { eventSlug: string; 
             <ArrowUpDown className="size-3.5" />
             Sort: {SORT_LABELS[sort]}
           </button>
-          <select
-            value={pageSize}
-            onChange={(e) => {
-              setPageSize(Number(e.target.value));
-              setPage(1);
-            }}
-            aria-label="Cards per page"
-            className="h-9 rounded-full border border-slate-200 bg-white/70 px-3 text-[12px] font-bold text-slate-600 outline-none backdrop-blur focus:border-indigo-500 dark:border-[#22304A] dark:bg-[#111B2E]/70 dark:text-slate-400"
-          >
-            {PAGE_SIZE_OPTIONS.map((size) => (
-              <option key={size} value={size}>
-                {size} / page
-              </option>
-            ))}
-          </select>
+          <PageSizeSelect value={pageSize} onChange={changePageSize} />
         </div>
       </div>
 
@@ -323,10 +345,19 @@ export function BettExhibitorGrid({ eventSlug, expected }: { eventSlug: string; 
       {/* ── Paginator ──────────────────────────────────────────────────── */}
       {!error && data && data.totalCount > 0 ? (
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-4 dark:border-[#22304A]">
-          <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
-            Showing {rangeStart.toLocaleString()}–{rangeEnd.toLocaleString()} of {data.totalCount.toLocaleString()}
-            {query ? " matching" : ""} exhibitors
-          </p>
+          {/* Page size repeated at the foot of the grid: after scrolling 24
+              cards the control at the top is off-screen, and changing it is
+              exactly what someone does once they reach the bottom. Same
+              component and same handler as the top one, so the two cannot
+              drift apart. The count sits to its right. */}
+          <div className="flex items-center gap-3">
+            <PageSizeSelect value={pageSize} onChange={changePageSize} />
+            <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400">
+              Showing {rangeStart.toLocaleString()}–{rangeEnd.toLocaleString()} of{" "}
+              {data.totalCount.toLocaleString()}
+              {query ? " matching" : ""} exhibitors
+            </p>
+          </div>
 
           <nav aria-label="Exhibitor pages" className="flex items-center gap-1.5">
             <PagerButton onClick={() => goTo(page - 1)} disabled={page <= 1} aria-label="Previous page">
