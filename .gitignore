@@ -13,6 +13,9 @@
 # testing
 /coverage
 
+# generated reports (npm run floor-plans:discover)
+/reports/
+
 # next.js
 /.next/
 /out/
