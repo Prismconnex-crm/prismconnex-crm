@@ -7,6 +7,7 @@ import {
 } from "@/lib/supabase/gotrue";
 import { PKCE_VERIFIER_COOKIE } from "@/lib/auth/session";
 import { authDebug } from "@/lib/auth/auth-debug";
+import { RETURN_TO_COOKIE, RETURN_TO_QUERY_PARAM, safeReturnTo } from "@/lib/auth/return-to";
 
 /**
  * Starts Google / Microsoft sign-in.
@@ -25,6 +26,12 @@ import { authDebug } from "@/lib/auth/auth-debug";
  */
 export async function GET(req: NextRequest, { params }: { params: { provider: string } }) {
     const signInUrl = new URL("/auth/sign-in", req.nextUrl.origin);
+
+    // Where the sign-in page was asked to return (an exhibitor's details, say): only a path on this site.
+    // Kept on the way back to the form if the provider cannot be used, and across the provider round-trip
+    // in an httpOnly cookie that the callback reads.
+    const returnTo = safeReturnTo(req.nextUrl.searchParams.get(RETURN_TO_QUERY_PARAM));
+    if (returnTo) signInUrl.searchParams.set(RETURN_TO_QUERY_PARAM, returnTo);
 
     if (!isSupabaseAuthConfigured()) {
         signInUrl.searchParams.set("error", "provider_unavailable");
@@ -77,6 +84,17 @@ export async function GET(req: NextRequest, { params }: { params: { provider: st
         path: "/",
         maxAge: 60 * 10,
     });
+    if (returnTo) {
+        response.cookies.set(RETURN_TO_COOKIE, returnTo, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            path: "/",
+            maxAge: 60 * 10,
+        });
+    } else {
+        response.cookies.delete(RETURN_TO_COOKIE);
+    }
 
     return response;
 }

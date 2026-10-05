@@ -15,7 +15,8 @@
     "benchmark:companies:before": "node scripts/benchmark-companies-before.js",
     "benchmark:companies:after": "node scripts/benchmark-companies-after.js",
     "import:find-shows:eventseye": "node scripts/import-eventseye-country.mjs",
-    "floor-plans:discover": "node scripts/floor-plans/run.mjs"
+    "floor-plans:discover": "node scripts/floor-plans/run.mjs",
+    "exhibitors:discover": "node scripts/exhibitors/run.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",

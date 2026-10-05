@@ -5,13 +5,19 @@ import { ArrowLeft, CalendarDays, MapPin, Users, Store, Building2, ExternalLink 
 import { getFindShowDetail, getFindShowRegisterUrl } from '@/lib/find-shows/eventseye';
 import { findShowEventsBySlug } from '@/lib/find-shows/catalog';
 import { getFindShowAvatarUrl, getFindShowGradient } from '@/lib/find-shows/presentation';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { EventTabs } from '@/components/find-shows/event-tabs';
 import { EventRegistrationDialog } from '@/components/find-shows/event-registration-dialog';
+import { ExhibitorsDirectoryPanel } from '@/components/find-shows/exhibitors-directory-panel';
+import { FloorPlanPanel } from '@/components/find-shows/floor-plan-panel';
+import { HowToReachPanel, NearbyHotelsPanel } from '@/components/find-shows/how-to-reach-panel';
 
 export default async function FindShowDetailRoute({
   params,
+  searchParams,
 }: {
   params: { eventSlug: string };
+  searchParams?: { tab?: string | string[] };
 }) {
   const event = findShowEventsBySlug[params.eventSlug];
 
@@ -76,23 +82,45 @@ export default async function FindShowDetailRoute({
             </div>
           </div>
 
-          <div className="grid gap-8 px-6 py-8 md:grid-cols-[1.2fr_0.8fr] md:px-8">
+          <div className="grid grid-cols-1 gap-8 px-6 py-8 md:grid-cols-[1.2fr_0.8fr] md:px-8">
             
-            {/* Left Column: Tabs Content */}
-            <div>
-              <Tabs defaultValue="about" className="w-full">
-                <TabsList className="mb-6 w-full justify-start rounded-full bg-slate-100 dark:bg-white/[0.04]">
+            {/* Left Column: Tabs Content. min-w-0 keeps the grid column at the
+                card's width so the tab row scrolls rather than widening it. */}
+            <div className="min-w-0">
+              {/* ?tab=exhibitors reopens the Exhibitors tab: how a visitor asked to sign in for an exhibitor's details returns to it. */}
+              <EventTabs initialTab={searchParams?.tab === 'exhibitors' ? 'exhibitors' : 'about'} className="w-full">
+                {/* Five tabs are wider than a phone: the row wraps onto a second line
+                    there, so every tab stays visible and nothing overflows the card. */}
+                <TabsList className="mb-6 h-auto w-full flex-wrap justify-start rounded-3xl bg-slate-100 dark:bg-white/[0.04]">
                   <TabsTrigger 
                     value="about" 
-                    className="rounded-full px-6 transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm dark:data-[state=active]:bg-[#1e293b]"
+                    className="whitespace-nowrap rounded-full px-3.5 transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm dark:data-[state=active]:bg-[#1e293b] sm:px-4"
                   >
                     About
                   </TabsTrigger>
                   <TabsTrigger 
                     value="exhibitors" 
-                    className="rounded-full px-6 transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm dark:data-[state=active]:bg-[#1e293b]"
+                    className="whitespace-nowrap rounded-full px-3.5 transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm dark:data-[state=active]:bg-[#1e293b] sm:px-4"
                   >
                     Exhibitors
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="floor-plan"
+                    className="whitespace-nowrap rounded-full px-3.5 transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm dark:data-[state=active]:bg-[#1e293b] sm:px-4"
+                  >
+                    Floor Plan
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="how-to-reach" 
+                    className="whitespace-nowrap rounded-full px-3.5 transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm dark:data-[state=active]:bg-[#1e293b] sm:px-4"
+                  >
+                    How to Reach
+                  </TabsTrigger>
+                  <TabsTrigger
+                    value="nearby-hotels"
+                    className="whitespace-nowrap rounded-full px-3.5 transition-all data-[state=active]:bg-white data-[state=active]:shadow-sm dark:data-[state=active]:bg-[#1e293b] sm:px-4"
+                  >
+                    Nearby Hotels
                   </TabsTrigger>
                 </TabsList>
                 
@@ -111,28 +139,21 @@ export default async function FindShowDetailRoute({
                 </TabsContent>
                 
                 <TabsContent value="exhibitors">
-                  <div className="rounded-3xl border border-slate-200/70 bg-slate-50/50 p-6 dark:border-white/[0.08] dark:bg-white/[0.02]">
-                    <div className="flex items-center gap-4">
-                      <div className="flex size-14 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-400">
-                        <Store className="size-7" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-slate-900 dark:text-white">
-                          Exhibiting Companies
-                        </p>
-                        <p className="mt-1 text-2xl font-black text-slate-900 dark:text-white">
-                          {detail.exhibitorCount ? detail.exhibitorCount.toLocaleString() : 'TBA'}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="mt-6 space-y-3 border-t border-slate-200/60 pt-5 dark:border-white/[0.08]">
-                      <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-                        Individual exhibitor lists are available closer to the event date to our premium members. Check back soon or register for the event directly to secure your attendance.
-                      </p>
-                    </div>
-                  </div>
+                  <ExhibitorsDirectoryPanel slug={event.slug} fallbackCount={detail.exhibitorCount} />
                 </TabsContent>
-              </Tabs>
+
+                <TabsContent value="floor-plan">
+                  <FloorPlanPanel slug={event.slug} eventName={event.name} editionDate={event.displayDate} />
+                </TabsContent>
+
+                <TabsContent value="how-to-reach">
+                  <HowToReachPanel slug={event.slug} />
+                </TabsContent>
+
+                <TabsContent value="nearby-hotels">
+                  <NearbyHotelsPanel slug={event.slug} />
+                </TabsContent>
+              </EventTabs>
             </div>
 
             {/* Right Column: Event Snapshot */}
