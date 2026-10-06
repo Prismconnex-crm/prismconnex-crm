@@ -280,7 +280,9 @@ function filterCompiled(
       return false;
     }
 
-    if (filters.startMonth && event.startMonth < filters.startMonth) {
+    // Month range (see lib/find-shows/date-range.ts): keep events whose dates
+    // overlap it, so a show running 28 Aug - 6 Sep appears for September too.
+    if (filters.startMonth && event.endMonth < filters.startMonth) {
       return false;
     }
 

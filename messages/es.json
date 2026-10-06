@@ -523,32 +523,6 @@
           "accent": "amber"
         }
       ],
-      "highlights": {
-        "title": "Funciones destacadas incluidas",
-        "description": "Disponibles en todos los planes. Algunas funciones requieren una suscripcion paga.",
-        "items": [
-          {
-            "text": "Modo Tickets y Viaje (experiencia del asistente)",
-            "accent": "rgba(34,211,238,",
-            "accentBorder": "rgba(6,182,212,"
-          },
-          {
-            "text": "Codigos promocionales (solo planes pagos)",
-            "accent": "rgba(99,102,241,",
-            "accentBorder": "rgba(79,70,229,"
-          },
-          {
-            "text": "Servicios cercanos (resultados del proveedor de mapas)",
-            "accent": "rgba(52,211,153,",
-            "accentBorder": "rgba(16,185,129,"
-          },
-          {
-            "text": "Idioma, zona horaria y moneda localizados",
-            "accent": "rgba(245,158,11,",
-            "accentBorder": "rgba(217,119,6,"
-          }
-        ]
-      },
       "addons": {
         "title": "Complementos",
         "description": "Amplia tu plan con capacidades adicionales.",

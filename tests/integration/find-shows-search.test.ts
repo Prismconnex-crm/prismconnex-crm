@@ -58,7 +58,11 @@ const plastics = makeEvent({
   categories: ['Plastics'],
   primaryCategory: 'Plastics',
   startDate: '2027-02-09',
+  // End with the start: the base fixture's November 2026 end would make this
+  // event end before it starts, which no catalog event does.
+  endDate: '2027-02-09',
   startMonth: '2027-02',
+  endMonth: '2027-02',
   description: 'Plastics engineering show.',
 });
 

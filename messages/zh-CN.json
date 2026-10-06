@@ -520,32 +520,6 @@
           "accent": "amber"
         }
       ],
-      "highlights": {
-        "title": "已包含的功能亮点",
-        "description": "各套餐均可用。部分功能需要付费订阅。",
-        "items": [
-          {
-            "text": "门票与出行模式（参会者体验）",
-            "accent": "rgba(34,211,238,",
-            "accentBorder": "rgba(6,182,212,"
-          },
-          {
-            "text": "优惠码（仅限付费套餐）",
-            "accent": "rgba(99,102,241,",
-            "accentBorder": "rgba(79,70,229,"
-          },
-          {
-            "text": "附近配套信息（依赖地图服务商结果）",
-            "accent": "rgba(52,211,153,",
-            "accentBorder": "rgba(16,185,129,"
-          },
-          {
-            "text": "本地化语言、时区和货币显示",
-            "accent": "rgba(245,158,11,",
-            "accentBorder": "rgba(217,119,6,"
-          }
-        ]
-      },
       "addons": {
         "title": "附加组件",
         "description": "为你的套餐扩展更多能力。",

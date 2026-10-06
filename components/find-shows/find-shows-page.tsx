@@ -7,6 +7,7 @@ import { BadgeCheck, Globe2 } from 'lucide-react';
 import { FindShowsHero } from '@/components/find-shows/find-shows-hero';
 import { FindShowsFilterBar } from '@/components/find-shows/find-shows-filter-bar';
 import { FindShowGrid } from '@/components/find-shows/find-show-grid';
+import { eventYears } from '@/lib/find-shows/date-range';
 import { searchFindShowEvents } from '@/lib/find-shows/search-events';
 import { localizePathname } from '@/lib/locale';
 import type { Locale } from '@/types';
@@ -162,7 +163,10 @@ export function FindShowsPage({
   const activeFilterCount =
     Number(filters.region !== 'All Regions') +
     Number(Boolean(filters.country)) +
-    Number(filters.category !== 'All Categories');
+    Number(filters.category !== 'All Categories') +
+    Number(Boolean(filters.startMonth || filters.endMonth));
+  // Year choices for the Date Range filter: the years the catalog's events run in.
+  const dateRangeYears = useMemo(() => eventYears(events), [events]);
 
   const displayedEventCount = Math.min(visibleCount, filteredEvents.length);
   // Locale-fixed on both server and client, so the formatted counts hydrate cleanly.
@@ -194,6 +198,7 @@ export function FindShowsPage({
 
       <FindShowsFilterBar
         categories={categories}
+        dateRangeYears={dateRangeYears}
         filters={filters}
         onFiltersChange={setFilters}
         activeFilterCount={activeFilterCount}

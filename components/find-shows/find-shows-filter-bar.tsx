@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Check, ChevronDown, Filter, X } from 'lucide-react';
+import { CalendarDays, Check, ChevronDown, Filter, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -17,6 +17,13 @@ import { cn } from '@/lib/utils';
 import { CountryFlag } from '@/components/find-shows/country-flag';
 import { findShowsRegions, countryStatsByRegion } from '@/lib/find-shows/catalog';
 import { matchesCategorySearch } from '@/lib/find-shows/categories';
+import {
+  dateRangeLabel,
+  draftFromFilters,
+  MONTH_NAMES,
+  validateDateRange,
+  type DateRangeDraft,
+} from '@/lib/find-shows/date-range';
 import {
   createMegaMenuController,
   type MegaMenuController,
@@ -357,14 +364,197 @@ function RegionMegaMenuPopover({
   );
 }
 
+/** Pill classes shared with the region and category pills. */
+const pillClass = (active: boolean) =>
+  cn(
+    'inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200',
+    active
+      ? 'border-indigo-500/60 bg-indigo-500/12 text-indigo-600 shadow-[0_8px_24px_rgba(79,70,229,0.12)] dark:border-indigo-400/40 dark:bg-indigo-400/10 dark:text-indigo-300'
+      : 'border-slate-200/70 bg-white/80 text-slate-600 hover:border-indigo-300/70 hover:text-slate-900 dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-slate-300 dark:hover:border-indigo-400/30 dark:hover:text-white'
+  );
+
+const selectClass =
+  'h-9 min-w-0 rounded-xl border border-slate-200 bg-white px-2.5 text-sm font-semibold text-slate-800 outline-none transition-colors focus:border-indigo-400 focus:ring-2 focus:ring-indigo-500/20';
+
+function MonthYearFields({
+  legend,
+  month,
+  year,
+  years,
+  onMonthChange,
+  onYearChange,
+}: {
+  legend: string;
+  month: number | null;
+  year: number | null;
+  years: number[];
+  onMonthChange: (month: number | null) => void;
+  onYearChange: (year: number | null) => void;
+}) {
+  const toNumber = (value: string) => (value ? Number(value) : null);
+  return (
+    <fieldset>
+      <legend className="mb-1.5 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">{legend}</legend>
+      <div className="grid grid-cols-[1fr_auto] gap-2">
+        <select
+          aria-label={`${legend} month`}
+          value={month ?? ''}
+          onChange={(event) => onMonthChange(toNumber(event.target.value))}
+          className={selectClass}
+        >
+          <option value="">Month</option>
+          {MONTH_NAMES.map((name, index) => (
+            <option key={name} value={index + 1}>
+              {name}
+            </option>
+          ))}
+        </select>
+        <select
+          aria-label={`${legend} year`}
+          value={year ?? ''}
+          onChange={(event) => onYearChange(toNumber(event.target.value))}
+          className={selectClass}
+        >
+          <option value="">Year</option>
+          {years.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </div>
+    </fieldset>
+  );
+}
+
+/**
+ * Date Range pill: From/To month and year, applied together. Opens on click
+ * only — hover-to-open would close the panel while a native month/year list
+ * is showing — but through the shared menu controller, so opening it closes
+ * any other open panel.
+ */
+function DateRangePopover({
+  filters,
+  onFiltersChange,
+  years,
+  menu,
+}: {
+  filters: FindShowFilters;
+  onFiltersChange: (nextFilters: FindShowFilters) => void;
+  years: number[];
+  menu: MegaMenuController & { openId: string | null };
+}) {
+  const menuId = 'date-range';
+  const open = menu.openId === menuId;
+  const active = Boolean(filters.startMonth && filters.endMonth);
+  const [draft, setDraft] = useState<DateRangeDraft>(() => draftFromFilters(filters.startMonth, filters.endMonth));
+  const [error, setError] = useState<string | null>(null);
+
+  // Each opening starts from the range currently applied, with no stale error.
+  useEffect(() => {
+    if (open) {
+      setDraft(draftFromFilters(filters.startMonth, filters.endMonth));
+      setError(null);
+    }
+  }, [open, filters.startMonth, filters.endMonth]);
+
+  const update = (patch: Partial<DateRangeDraft>) => {
+    setDraft((current) => ({ ...current, ...patch }));
+    setError(null);
+  };
+
+  const apply = () => {
+    const result = validateDateRange(draft);
+    if (!result.ok) {
+      setError(result.error);
+      return;
+    }
+    onFiltersChange({ ...filters, startMonth: result.startMonth, endMonth: result.endMonth });
+    menu.closeNow();
+  };
+
+  const clear = () => {
+    onFiltersChange({ ...filters, startMonth: '', endMonth: '' });
+    setDraft(draftFromFilters('', ''));
+    setError(null);
+    menu.closeNow();
+  };
+
+  return (
+    <Popover open={open} onOpenChange={(nextOpen) => (nextOpen ? menu.openNow(menuId) : menu.closeNow())}>
+      <PopoverTrigger asChild>
+        <button type="button" aria-label="Filter shows by date range" className={cn('group', pillClass(active))}>
+          <CalendarDays className="size-3.5 shrink-0 opacity-70" />
+          <span className="max-w-[180px] truncate sm:max-w-none">
+            {dateRangeLabel(filters.startMonth, filters.endMonth)}
+          </span>
+          <ChevronDown className="size-3.5 shrink-0 opacity-60 transition-transform group-data-[state=open]:rotate-180" />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent
+        align="start"
+        sideOffset={12}
+        onEscapeKeyDown={() => menu.closeNow()}
+        className={cn(
+          'z-[100] w-[300px] max-w-[calc(100vw-2rem)] rounded-2xl border border-white/40 bg-white/95 p-4 shadow-[0_40px_100px_rgba(0,0,0,0.12)] backdrop-blur-3xl outline-none dark:border-white/20 dark:bg-white/90 dark:shadow-[0_40px_200px_rgba(0,0,0,0.5)]',
+          megaMenuPanelMotionClass
+        )}
+      >
+        <p className="text-sm font-black uppercase tracking-[0.14em] text-slate-950">Date Range</p>
+        <div className="mt-3 space-y-3">
+          <MonthYearFields
+            legend="From"
+            month={draft.fromMonth}
+            year={draft.fromYear}
+            years={years}
+            onMonthChange={(fromMonth) => update({ fromMonth })}
+            onYearChange={(fromYear) => update({ fromYear })}
+          />
+          <MonthYearFields
+            legend="To"
+            month={draft.toMonth}
+            year={draft.toYear}
+            years={years}
+            onMonthChange={(toMonth) => update({ toMonth })}
+            onYearChange={(toYear) => update({ toYear })}
+          />
+        </div>
+        {error ? (
+          <p role="alert" className="mt-3 rounded-xl bg-red-50 px-3 py-2 text-xs font-semibold text-red-600">
+            {error}
+          </p>
+        ) : null}
+        <div className="mt-4 flex justify-end gap-2">
+          <button
+            type="button"
+            onClick={clear}
+            className="rounded-full border border-slate-200 px-4 py-1.5 text-sm font-bold text-slate-600 transition-colors hover:border-slate-300 hover:text-slate-900"
+          >
+            Clear
+          </button>
+          <button
+            type="button"
+            onClick={apply}
+            className="rounded-full bg-indigo-600 px-4 py-1.5 text-sm font-bold text-white transition-colors hover:bg-indigo-700"
+          >
+            Apply
+          </button>
+        </div>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 function FilterFields({
   categories,
+  dateRangeYears,
   filters,
   onFiltersChange,
   activeFilterCount,
   onClear,
 }: {
   categories: FindShowFilterOption<FindShowsCategory>[];
+  dateRangeYears: number[];
   filters: FindShowFilters;
   onFiltersChange: (nextFilters: FindShowFilters) => void;
   activeFilterCount: number;
@@ -425,6 +615,8 @@ function FilterFields({
 
         {/* Separator dot */}
         <span className="mx-1 size-1 shrink-0 rounded-full bg-slate-300 dark:bg-slate-600" />
+
+        <DateRangePopover filters={filters} onFiltersChange={onFiltersChange} years={dateRangeYears} menu={menu} />
 
         {/* All Categories – pill-style popover trigger */}
         <div onMouseEnter={handleCategoryMouseEnter} onMouseLeave={handleCategoryMouseLeave}>
@@ -540,12 +732,15 @@ function FilterFields({
 
 export function FindShowsFilterBar({
   categories,
+  dateRangeYears,
   filters,
   onFiltersChange,
   activeFilterCount,
   onClear,
 }: {
   categories: FindShowFilterOption<FindShowsCategory>[];
+  /** Year choices for the Date Range filter. */
+  dateRangeYears: number[];
   filters: FindShowFilters;
   onFiltersChange: (nextFilters: FindShowFilters) => void;
   activeFilterCount: number;
@@ -574,6 +769,7 @@ export function FindShowsFilterBar({
           <div className="hidden md:block">
             <FilterFields
               categories={categories}
+              dateRangeYears={dateRangeYears}
               filters={filters}
               onFiltersChange={onFiltersChange}
               activeFilterCount={activeFilterCount}
@@ -590,6 +786,7 @@ export function FindShowsFilterBar({
       >
         <FilterFields
           categories={categories}
+          dateRangeYears={dateRangeYears}
           filters={filters}
           onFiltersChange={onFiltersChange}
           activeFilterCount={activeFilterCount}

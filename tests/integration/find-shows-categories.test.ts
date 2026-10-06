@@ -214,7 +214,8 @@ describe('find shows categories — catalog filtering', () => {
       expect(event.categories).toContain('Information Technology');
       expect(event.region).toBe('Europe');
       expect(event.country).toBe('Germany');
-      expect(event.startMonth >= '2026-09' && event.startMonth <= '2027-12').toBe(true);
+      // Dates overlap the range (a show starting in August and ending in September counts).
+      expect(event.endMonth >= '2026-09' && event.startMonth <= '2027-12').toBe(true);
     }
 
     // Narrowing by a second filter never adds events.

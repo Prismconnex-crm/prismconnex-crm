@@ -523,32 +523,6 @@
           "accent": "amber"
         }
       ],
-      "highlights": {
-        "title": "Fonctionnalites incluses",
-        "description": "Disponibles sur tous les plans. Certaines fonctions necessitent un abonnement payant.",
-        "items": [
-          {
-            "text": "Mode billets et voyage (experience participant)",
-            "accent": "rgba(34,211,238,",
-            "accentBorder": "rgba(6,182,212,"
-          },
-          {
-            "text": "Codes promo (plans payants uniquement)",
-            "accent": "rgba(99,102,241,",
-            "accentBorder": "rgba(79,70,229,"
-          },
-          {
-            "text": "Services a proximite (resultats du fournisseur de cartes)",
-            "accent": "rgba(52,211,153,",
-            "accentBorder": "rgba(16,185,129,"
-          },
-          {
-            "text": "Langue, fuseau horaire et devise localises",
-            "accent": "rgba(245,158,11,",
-            "accentBorder": "rgba(217,119,6,"
-          }
-        ]
-      },
       "addons": {
         "title": "Add-ons",
         "description": "Etendez votre plan avec des capacites supplementaires.",

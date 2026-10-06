@@ -523,32 +523,6 @@
           "accent": "amber"
         }
       ],
-      "highlights": {
-        "title": "Enthaltene Highlights",
-        "description": "In allen Plaenen verfuegbar. Einige Funktionen erfordern ein kostenpflichtiges Abo.",
-        "items": [
-          {
-            "text": "Ticket- und Reisemodus (Teilnehmererlebnis)",
-            "accent": "rgba(34,211,238,",
-            "accentBorder": "rgba(6,182,212,"
-          },
-          {
-            "text": "Promo-Codes (nur kostenpflichtige Plaene)",
-            "accent": "rgba(99,102,241,",
-            "accentBorder": "rgba(79,70,229,"
-          },
-          {
-            "text": "Nahegelegene Services (Ergebnisse vom Kartenanbieter)",
-            "accent": "rgba(52,211,153,",
-            "accentBorder": "rgba(16,185,129,"
-          },
-          {
-            "text": "Lokalisierte Sprache, Zeitzone und Waehrung",
-            "accent": "rgba(245,158,11,",
-            "accentBorder": "rgba(217,119,6,"
-          }
-        ]
-      },
       "addons": {
         "title": "Add-ons",
         "description": "Erweitern Sie Ihren Plan mit zusaetzlichen Funktionen.",

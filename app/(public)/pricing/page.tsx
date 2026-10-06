@@ -7,7 +7,6 @@ import { ArrowRight, CheckCircle2, ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { FeatureHighlightsRow } from "@/components/landing/feature-highlights-row";
 import { AddonsCardStack } from "@/components/landing/addons-card-stack";
 import {
   getMarketingCardHoverStyle,
@@ -136,7 +135,6 @@ export default function PricingPage() {
         ))}
       </motion.div>
 
-      <FeatureHighlightsRow />
       <AddonsCardStack />
 
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }} className="mt-14">
