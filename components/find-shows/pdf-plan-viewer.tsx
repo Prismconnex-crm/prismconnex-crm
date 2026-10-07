@@ -27,7 +27,13 @@ let pdfjsPromise: Promise<PdfJs> | null = null;
 /** pdf.js, loaded once per page view. The legacy build is transpiled for older mobile browsers. */
 function loadPdfJs() {
   pdfjsPromise ??= import('pdfjs-dist/legacy/build/pdf.mjs').then((pdfjs) => {
-    pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/legacy/build/pdf.worker.min.mjs', import.meta.url).toString();
+    // Served from public/, copied there by scripts/copy-pdf-worker.mjs at build
+    // time. Resolving it with `new URL(..., import.meta.url)` instead made
+    // webpack emit the worker as an asset and Terser minify it as a classic
+    // script — but the worker is an ES module, so every production build failed
+    // with "'import.meta' cannot be used outside of module code". Dev never
+    // minifies, which is why it only broke on deploy.
+    pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
     return pdfjs;
   });
   return pdfjsPromise;
