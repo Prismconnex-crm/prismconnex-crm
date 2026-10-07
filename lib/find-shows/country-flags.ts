@@ -79,6 +79,8 @@ export const COUNTRY_ISO_CODES: Record<string, string> = {
   jordan: 'JO',
   kazakhstan: 'KZ',
   kenya: 'KE',
+  // User-assigned code, not ISO 3166-1, but the one flag CDNs and the EU use.
+  kosovo: 'XK',
   kuwait: 'KW',
   kyrgyzstan: 'KG',
   latvia: 'LV',
@@ -214,8 +216,7 @@ export function isoCodeToFlagEmoji(isoCode: string): string | null {
 
 /**
  * Flag emoji for a country name, or null when there is no ISO code to build
- * one from — "Unknown" from an unparsed venue, or a territory such as Kosovo
- * that has no ISO 3166-1 entry.
+ * one from — "Unknown" from an unparsed venue.
  *
  * NOTE: do not render this in the UI. Windows ships no country glyphs in
  * Segoe UI Emoji, so Chrome and Edge there draw 🇺🇸 as the letters "US".

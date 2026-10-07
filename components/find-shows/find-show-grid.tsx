@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { FindShowCard } from '@/components/find-shows/find-show-card';
 import { FindShowsEmptyState } from '@/components/find-shows/find-shows-empty-state';
@@ -10,6 +10,7 @@ export function FindShowGrid({
   events,
   assets,
   searchQuery,
+  resultsKey,
   getDetailHref,
   visibleCount,
   totalCount,
@@ -20,6 +21,12 @@ export function FindShowGrid({
   assets: Record<string, FindShowAsset>;
   /** Active free-text query, highlighted inside each card. */
   searchQuery: string;
+  /**
+   * Identifies the current result set (query + filters). The grid re-enters
+   * only when it changes, so Load More appends cards instead of remounting and
+   * re-animating the ones already on screen.
+   */
+  resultsKey: string;
   getDetailHref: (slug: string) => string;
   visibleCount: number;
   totalCount: number;
@@ -27,23 +34,26 @@ export function FindShowGrid({
   onClearFilters: () => void;
 }) {
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <AnimatePresence mode="wait">
         {events.length ? (
           <motion.div
-            key={events.map((event) => event.slug).join('|')}
+            key={resultsKey}
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}
             transition={{ duration: 0.25 }}
-            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5"
+            className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 xl:grid-cols-4"
           >
             {events.map((event, index) => (
               <motion.div
                 key={event.slug}
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.35, delay: index * 0.05 }}
+                // Stagger within each page of 12 so appended cards don't wait
+                // behind the ones already shown.
+                transition={{ duration: 0.3, delay: (index % 12) * 0.04 }}
+                className="h-full"
               >
                 <FindShowCard
                   event={event}
@@ -73,6 +83,6 @@ export function FindShowGrid({
           </Button>
         </div>
       ) : null}
-    </>
+    </MotionConfig>
   );
 }

@@ -56,6 +56,8 @@ export type SqlParam = string | number;
 
 export type CompanySearchFilters = {
   search: string | null;
+  /** Exact catalog name (raw, suffix included), from the rail's Company Name picker. */
+  companyName?: string | null;
   category: string | null;
   employeeRange: string | null;
   region: string | null;
@@ -78,10 +80,12 @@ export type CompanyRowSource = (sql: string, params: SqlParam[]) => Promise<Comp
  * during collection and fail the whole suite on a machine with no reachable
  * DATABASE_URL — even for tests that never touch companies.
  */
-const defaultRowSource: CompanyRowSource = async (sql, params) => {
+async function runQuery<T>(sql: string, params: SqlParam[]): Promise<T[]> {
   const { prisma } = await import('@/lib/db/prisma');
-  return prisma.$queryRawUnsafe<CompanyRow[]>(sql, ...params);
-};
+  return prisma.$queryRawUnsafe<T[]>(sql, ...params);
+}
+
+const defaultRowSource: CompanyRowSource = (sql, params) => runQuery<CompanyRow>(sql, params);
 
 export function splitList(value: string | null | undefined) {
   return value ? value.split(',').map((item) => item.trim()).filter(Boolean) : [];
@@ -171,6 +175,15 @@ const COUNTRY_REGION: Record<string, string> = {
 const CITY_EXPR = `trim(split_part(headquarters, ',', 1))`;
 
 /**
+ * The company name with its spaces removed, so a query typed without spaces
+ * can still find a name that has them ("canvaeducation" -> "Canva Education").
+ * Must stay character-identical to the expression in
+ * prisma/migrations/20260929120000_add_discovery_name_squashed_index — the
+ * planner only uses idx_discovery_name_squashed_pattern on an exact match.
+ */
+const SQUASHED_NAME_EXPR = `replace(lower(name), ' ', '')`;
+
+/**
  * Builds the WHERE clause shared by the list query and the count query.
  *
  * `p` is the caller's own placeholder allocator, so both queries can be built
@@ -181,8 +194,16 @@ function buildCompanyWhere(
   p: (value: SqlParam) => string
 ): string[] {
   const { search, category, employeeRange, region, country, city } = filters;
+  const companyName = filters.companyName ?? null;
   const keywords = filters.keywords ?? [];
   const where: string[] = [];
+
+  /**
+   * Exact company. Compared as lower(name) rather than name so the equality is
+   * served by idx_discovery_name_lower_pattern — text_pattern_ops covers `=`
+   * as well as the range operators, and there is no plain btree on name.
+   */
+  if (companyName) where.push(`lower(name) = ${p(companyName.toLowerCase())}`);
 
   /**
    * The dataset stores a category in two spellings: the bulk rows are
@@ -241,10 +262,27 @@ function buildCompanyWhere(
   // and unlike a parameterized LIKE it stays index-scannable with bound
   // parameters. ORDER BY must use the same operator ordering to stay sorted.
   if (search) {
-    const lower = search.toLowerCase();
-    const upperBound =
-      lower.slice(0, -1) + String.fromCharCode(lower.charCodeAt(lower.length - 1) + 1);
-    where.push(`lower(name) ~>=~ ${p(lower)} AND lower(name) ~<~ ${p(upperBound)}`);
+    // Search is space-insensitive in both directions: the term and the name
+    // both have their spaces removed before comparing, so "canvaeducation",
+    // "canva education" and "Canva Education" all meet in the middle, and
+    // "4 matrix" reaches "4Matrix".
+    //
+    // One range against the squashed expression, not a second range OR-ed
+    // against lower(name): the squashed form already matches everything the
+    // as-typed form would, and an OR across the two indexed expressions
+    // measured far worse. With ORDER BY on lower(name), the planner preferred
+    // walking idx_discovery_name_lower_pattern in order and filtering — 257,555
+    // rows discarded, 1.2 s for one hit. Matching the ORDER BY to this
+    // expression (see companyOrderBy) keeps filter and sort on the one index:
+    // 0.4-4 ms with no filter step, even for a single-letter prefix.
+    const squashed = search.trim().toLowerCase().replace(/\s+/g, '');
+    if (squashed) {
+      const upperBound =
+        squashed.slice(0, -1) + String.fromCharCode(squashed.charCodeAt(squashed.length - 1) + 1);
+      where.push(
+        `${SQUASHED_NAME_EXPR} ~>=~ ${p(squashed)} AND ${SQUASHED_NAME_EXPR} ~<~ ${p(upperBound)}`
+      );
+    }
   }
 
   return where;
@@ -264,7 +302,15 @@ export function companyOrderBy(filters: CompanySearchFilters): {
   supportsCursor: boolean;
 } {
   const sort = filters.sort ?? 'relevance';
-  if (sort === 'name' || (sort === 'relevance' && filters.search)) {
+  // A search orders by the same squashed expression it filters on, so one
+  // index scan does both. Ordering by lower(name) instead makes the planner
+  // walk that index in order and filter every row against the squashed range
+  // — a full pass over the table for a single match. Sort order is otherwise
+  // the same, since removing spaces only reorders names that differ by them.
+  if (sort === 'relevance' && filters.search) {
+    return { clause: `ORDER BY ${SQUASHED_NAME_EXPR} USING ~<~`, supportsCursor: false };
+  }
+  if (sort === 'name') {
     return { clause: 'ORDER BY lower(name) USING ~<~', supportsCursor: false };
   }
   if (sort === 'top') {
@@ -292,10 +338,16 @@ export function buildCompanyQuery(
   const where = buildCompanyWhere(filters, p);
   const { clause, supportsCursor } = companyOrderBy(filters);
 
-  if (supportsCursor && cursor > 0) where.push(`"rowCursor" < ${p(cursor)}`);
+  /**
+   * A cursor is only actually in play when the caller handed one over. Gating
+   * OFFSET on `!supportsCursor` instead meant a cursor-capable ordering
+   * silently dropped the offset, so every numbered page re-served page one.
+   */
+  const cursorApplied = supportsCursor && cursor > 0;
+  if (cursorApplied) where.push(`"rowCursor" < ${p(cursor)}`);
 
   const whereClause = where.length > 0 ? where.join(' AND ') : '1 = 1';
-  const offsetClause = !supportsCursor && offset > 0 ? ` OFFSET ${p(offset)}` : '';
+  const offsetClause = !cursorApplied && offset > 0 ? ` OFFSET ${p(offset)}` : '';
 
   return {
     sql: `
@@ -396,12 +448,12 @@ export async function countCompanies(input: {
 }): Promise<{ count: number; capped: boolean }> {
   const ceiling = input.ceiling ?? COUNT_CEILING;
   const { sql, params } = buildCompanyCountQuery(input.filters, ceiling);
-  const source =
-    input.countSource ??
-    (async (query: string, values: SqlParam[]) => {
-      const { prisma } = await import('@/lib/db/prisma');
-      return prisma.$queryRawUnsafe<Array<{ count: number }>>(query, ...values);
-    });
+  // Goes through the same `runQuery` helper as the row fetch. A second inline
+  // `await import('@/lib/db/prisma')` here resolved to the real client while
+  // the row fetch resolved to the test double, so the suite silently opened a
+  // database connection — one import site keeps both on the same module.
+  const source = input.countSource ?? ((query: string, values: SqlParam[]) =>
+    runQuery<{ count: number }>(query, values));
 
   const rows = await source(sql, params);
   const raw = Number(rows[0]?.count ?? 0);

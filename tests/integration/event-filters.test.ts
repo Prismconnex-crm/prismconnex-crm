@@ -21,6 +21,7 @@ function makeEvent(overrides: Partial<FindShowEvent> & { slug: string }): FindSh
     dates: 'Mar 1 - 3, 2026',
     city: 'Berlin',
     country: 'Germany',
+    countryCode: 'DE',
     region: 'Europe',
     venue: 'Messe Berlin',
     organizer: 'Messe Frankfurt',
@@ -28,8 +29,8 @@ function makeEvent(overrides: Partial<FindShowEvent> & { slug: string }): FindSh
     website: 'https://example.com',
     email: 'info@example.com',
     rawCategories: ['plastics'],
-    categories: ['Plastics & Rubber'],
-    primaryCategory: 'Plastics & Rubber',
+    categories: ['Plastics'],
+    primaryCategory: 'Plastics',
     startDate: '2026-03-01',
     endDate: '2026-03-03',
     startMonth: '2026-03',
@@ -38,6 +39,7 @@ function makeEvent(overrides: Partial<FindShowEvent> & { slug: string }): FindSh
     // Added by the eventseye calendar import: the catalog now carries a
     // description, the seed's raw city, a Month-Year label and a duration.
     description: 'A sample trade show used by the filter tests.',
+    webDescription: '',
     seedCity: 'Berlin',
     monthYear: 'March 2026',
     duration: '3 days',
@@ -67,8 +69,8 @@ const events: FindShowEvent[] = [
     name: 'BuildEx London',
     city: 'London',
     country: 'United Kingdom',
-    categories: ['Construction & Building'],
-    primaryCategory: 'Construction & Building',
+    categories: ['Construction', 'Building'],
+    primaryCategory: 'Construction',
     organizer: 'Informa',
     startDate: '2026-09-10',
     endDate: '2026-09-12',
@@ -98,7 +100,7 @@ describe('event query URL state', () => {
         regions: ['Europe'],
         countries: ['Germany', 'United Kingdom'],
         cities: ['Berlin'],
-        categories: ['Plastics & Rubber'],
+        categories: ['Plastics'],
         organizers: ['Messe Frankfurt'],
         keywords: ['robotics'],
         dateFrom: '2026-01-01',
@@ -140,7 +142,7 @@ describe('filterEventList', () => {
 
     const narrowed = filterEventList(
       events,
-      withFilters({ regions: ['Europe'], categories: ['Plastics & Rubber'] }),
+      withFilters({ regions: ['Europe'], categories: ['Plastics'] }),
       '',
       noFavourites
     );

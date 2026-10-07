@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FilterChips } from "@/components/search/filter-chips";
-import { relativeTime, useQueryStore, type SavedQuery, type SavedQueryKind } from "@/components/search/query-store";
+import { absoluteTime, relativeTime, useQueryStore, type SavedQuery, type SavedQueryKind } from "@/components/search/query-store";
 
 const TABS = [
   { key: "recent", label: "Recent" },
@@ -190,6 +190,13 @@ function QueryCard({
           <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px]">
             <span className="font-medium text-slate-800 dark:text-slate-400">
               {relativeTime(entry.createdAt)}
+            </span>
+            <span className="text-slate-300 dark:text-slate-600">•</span>
+            {/* The exact date and time beside the relative label — "40 days
+                ago" says how long, not when. `title` carries nothing extra;
+                the value is already visible. */}
+            <span className="text-slate-500 dark:text-slate-500">
+              {absoluteTime(entry.createdAt)}
             </span>
             <span className="text-slate-300 dark:text-slate-600">•</span>
             <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2 py-0.5 font-semibold text-indigo-700 dark:border-indigo-500/25 dark:bg-indigo-500/10 dark:text-indigo-300">

@@ -24,6 +24,15 @@ export type CompanySort = "relevance" | "top" | "name";
 export type CompanyQueryState = {
   /** Company-name prefix search. */
   search: string | null;
+  /**
+   * One exact company, picked from the rail's Company Name list. Distinct from
+   * `search`: that is the free-text prefix box at the top of the rail, and the
+   * two must be removable independently.
+   *
+   * Holds the RAW catalog name (seeded numeric suffix included) so it matches
+   * exactly one row; the UI strips the suffix when it renders the chip.
+   */
+  companyName: string | null;
   category: string | null;
   region: string | null;
   country: string | null;
@@ -42,13 +51,20 @@ export type CompanyQueryState = {
 /** Chip shape shared with components/search/filter-chips (kept structural so this module stays server-safe). */
 export type CompanyQueryChip = { id: string; label: string; value: string };
 
-export const COMPANY_LIMIT_OPTIONS = [25, 50, 100, 200, 500] as const;
+/**
+ * Page sizes offered in the Companies footer picker. Deliberately stops at 100:
+ * 200 and 500 were removed from the menu. This is the picker's vocabulary only —
+ * MAX_COMPANY_LIMIT still governs what the API accepts, so a natural-language
+ * question like "top 500 companies" is unaffected.
+ */
+export const COMPANY_LIMIT_OPTIONS = [25, 50, 100] as const;
 export const DEFAULT_COMPANY_LIMIT = 25;
 export const MAX_COMPANY_LIMIT = 500;
 
 export function emptyCompanyQuery(): CompanyQueryState {
   return {
     search: null,
+    companyName: null,
     category: null,
     region: null,
     country: null,
@@ -525,6 +541,15 @@ export function parseCompanyQuery(raw: string): CompanyQueryState {
 
 // ── Chips & prose ───────────────────────────────────────────────────────────
 
+/**
+ * Drops the seeded numeric suffix, matching `formatCompany` in
+ * lib/companies/search.ts so a name reads the same in the rail, the chip and
+ * the table. The raw value is what actually gets filtered on.
+ */
+export function stripNameSuffix(name: string) {
+  return name.replace(/\s+\d+$/, "");
+}
+
 export function formatCategoryLabel(category: string) {
   return category.replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
@@ -533,6 +558,9 @@ export function formatCategoryLabel(category: string) {
 export function buildCompanyFilterChips(state: CompanyQueryState): CompanyQueryChip[] {
   const chips: CompanyQueryChip[] = [];
   if (state.search) chips.push({ id: "search", label: "Name", value: state.search });
+  if (state.companyName) {
+    chips.push({ id: "companyName", label: "Company", value: stripNameSuffix(state.companyName) });
+  }
   if (state.category) chips.push({ id: "category", label: "Category", value: formatCategoryLabel(state.category) });
   if (state.region) chips.push({ id: "region", label: "Region", value: state.region });
   if (state.country) chips.push({ id: "country", label: "Country", value: state.country });
@@ -556,6 +584,8 @@ export function removeCompanyChip(state: CompanyQueryState, chipId: string): Com
   switch (chipId) {
     case "search":
       return { ...state, search: null };
+    case "companyName":
+      return { ...state, companyName: null };
     case "category":
       return { ...state, category: null };
     case "region":
@@ -581,6 +611,7 @@ export function removeCompanyChip(state: CompanyQueryState, chipId: string): Com
 export function companyQueryToFilters(state: CompanyQueryState) {
   return {
     search: state.search,
+    companyName: state.companyName,
     category: state.category,
     employeeRange: state.employeeRange,
     region: state.region,
@@ -594,6 +625,7 @@ export function companyQueryToFilters(state: CompanyQueryState) {
 export function hasCompanyCriteria(state: CompanyQueryState) {
   return Boolean(
     state.search ||
+      state.companyName ||
       state.category ||
       state.region ||
       state.country ||

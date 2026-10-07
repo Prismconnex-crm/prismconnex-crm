@@ -42,7 +42,6 @@ describe('country flags', () => {
 
   it('returns null so the UI can fall back to the globe icon', () => {
     expect(getCountryFlag('Unknown')).toBeNull();
-    expect(getCountryFlag('Kosovo')).toBeNull(); // no ISO 3166-1 entry
     expect(getCountryFlag('')).toBeNull();
   });
 
@@ -62,23 +61,38 @@ describe('country flags', () => {
 
   it('has no image URL for a country with no ISO code, so the UI shows the globe', () => {
     expect(getCountryFlagImageUrl('Unknown')).toBeNull();
-    expect(getCountryFlagImageUrl('Kosovo')).toBeNull();
   });
 
-  it('gives every country in every region panel an image URL, bar the known two', () => {
+  it('maps Kosovo to its user-assigned XK code so it shows a flag, not the globe', () => {
+    expect(getCountryIsoCode('Kosovo')).toBe('XK');
+    expect(getCountryFlagImageUrl('Kosovo')).toBe('https://flagcdn.com/w40/xk.png');
+  });
+
+  it('gives every country in every region panel an image URL, bar Unknown', () => {
     const missing = Object.entries(countryStatsByRegion).flatMap(([region, stats]) =>
       stats.filter((stat) => !getCountryFlagImageUrl(stat.country)).map((stat) => `${region}/${stat.country}`)
     );
 
-    expect(missing.sort()).toEqual(['Europe/Kosovo', 'Europe/Unknown']);
+    // A continent may carry an "Unknown" bucket (globe icon); nothing else may lack a flag.
+    expect(missing.every((entry) => entry.endsWith('/Unknown'))).toBe(true);
   });
 
   it('flags every country in the live catalog except the known unmapped ones', () => {
     const unflagged = findShowCountries.filter((country) => !getCountryFlag(country));
 
-    // "Unknown" is what an unparsable seed location becomes; Kosovo has no
-    // ISO 3166-1 code. Anything else appearing here is a missing mapping.
-    expect(unflagged.sort()).toEqual(['Kosovo', 'Unknown']);
+    // "Unknown" is what an unparsable seed location becomes. Anything else
+    // appearing here is a missing mapping.
+    expect(unflagged).toEqual(['Unknown']);
+  });
+
+  it('lists every region’s countries A–Z, with Unknown kept last', () => {
+    for (const stats of Object.values(countryStatsByRegion)) {
+      const named = stats.map((stat) => stat.country).filter((country) => country !== 'Unknown');
+      expect(named).toEqual([...named].sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' })));
+      if (stats.some((stat) => stat.country === 'Unknown')) {
+        expect(stats[stats.length - 1].country).toBe('Unknown');
+      }
+    }
   });
 
   it('carries the ISO code — not an emoji — through to the region country lists', () => {

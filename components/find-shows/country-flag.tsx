@@ -11,7 +11,7 @@ import { getCountryFlagImageUrl, getCountryIsoCode } from '@/lib/find-shows/coun
  * Emoji flags are not an option here: Windows ships no country glyphs in Segoe
  * UI Emoji, so Chrome and Edge render 🇺🇸 as the bare letters "US". The image
  * is keyed by ISO 3166-1 alpha-2 code and falls back to the globe icon both
- * when the country has no code (an unparsed "Unknown" location, Kosovo) and
+ * when the country has no code (an unparsed "Unknown" location) and
  * when the image fails to load, so an offline or blocked CDN degrades to the
  * previous look instead of an empty slot.
  */

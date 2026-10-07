@@ -523,32 +523,6 @@
           "accent": "amber"
         }
       ],
-      "highlights": {
-        "title": "Destaques incluidos",
-        "description": "Disponiveis em todos os planos. Alguns recursos exigem assinatura paga.",
-        "items": [
-          {
-            "text": "Modo Tickets e Viagem (experiencia do participante)",
-            "accent": "rgba(34,211,238,",
-            "accentBorder": "rgba(6,182,212,"
-          },
-          {
-            "text": "Codigos promocionais (somente planos pagos)",
-            "accent": "rgba(99,102,241,",
-            "accentBorder": "rgba(79,70,229,"
-          },
-          {
-            "text": "Servicos proximos (resultados do provedor de mapas)",
-            "accent": "rgba(52,211,153,",
-            "accentBorder": "rgba(16,185,129,"
-          },
-          {
-            "text": "Idioma, fuso horario e moeda localizados",
-            "accent": "rgba(245,158,11,",
-            "accentBorder": "rgba(217,119,6,"
-          }
-        ]
-      },
       "addons": {
         "title": "Add-ons",
         "description": "Amplie seu plano com capacidades extras.",

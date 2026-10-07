@@ -15,6 +15,7 @@ import { GoogleIcon, MicrosoftIcon } from '@/components/auth/brand-icons';
 import { FormField, PasswordField } from '@/components/auth/form-field';
 import { createSignInSchema, toFieldErrors } from '@/models/auth';
 import { resolveOAuthErrorCode } from '@/lib/auth/oauth-errors';
+import { RETURN_TO_QUERY_PARAM, safeReturnTo } from '@/lib/auth/return-to';
 import { readJsonResponse, type ApiErrorBody } from '@/lib/http/read-json';
 import { localizePathname } from '@/lib/locale';
 import type { Locale } from '@/types';
@@ -51,6 +52,11 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
   const [mfaRequired, setMfaRequired] = useState(false);
   const [mfaCode, setMfaCode] = useState('');
 
+  // Where to go after signing in when a page sent the visitor here (an exhibitor's details): only a path on
+  // this site (lib/auth/return-to.ts). Without one, the dashboard, as before.
+  const [returnTo, setReturnTo] = useState<string | null>(null);
+  const afterSignIn = returnTo ?? '/app/dashboard';
+
   // Three redirects land here with a query flag: /api/auth/oauth/[provider]
   // when the hand-off cannot even be started (?error=provider_disabled
   // &provider=google), /auth/callback on a failed Google/Microsoft sign-in
@@ -64,6 +70,8 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
     // verified TOTP factor; the pending sign-in is already in an httpOnly
     // cookie and only the code is missing.
     if (params.get('mfa') === '1') setMfaRequired(true);
+
+    setReturnTo(safeReturnTo(params.get(RETURN_TO_QUERY_PARAM)));
 
     if (rawError) {
       // Every OAuth failure used to collapse into "Failed to sign in", which
@@ -136,7 +144,7 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
       // TO RE-ENABLE: restore the commented line below. `data.onboarded` is
       // supplied by the sign-in API and reflects real workspace membership;
       // routing an already-onboarded user to /onboarding creates a 2nd workspace.
-      router.push('/app/dashboard');
+      router.push(afterSignIn);
       // router.push(data.onboarded ? '/app/dashboard' : localizePathname('/onboarding', locale));
     } catch (err) {
       setError(err instanceof Error ? err.message : t('errors.signIn'));
@@ -172,7 +180,7 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
         throw new Error(data?.error?.message || t('errors.signIn'));
       }
 
-      router.push('/app/dashboard');
+      router.push(afterSignIn);
     } catch (err) {
       setError(err instanceof Error ? err.message : t('errors.signIn'));
     } finally {
@@ -184,7 +192,8 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
   // required: the route responds with a redirect to the provider's consent
   // screen, and it sets the httpOnly PKCE cookie the callback needs.
   const handleOAuthLogin = (provider: 'google' | 'microsoft') => {
-    window.location.href = `/api/auth/oauth/${provider}`;
+    // The return path rides along: the OAuth route keeps it for the callback (httpOnly cookie).
+    window.location.href = `/api/auth/oauth/${provider}${returnTo ? `?${RETURN_TO_QUERY_PARAM}=${encodeURIComponent(returnTo)}` : ''}`;
   };
 
   return (

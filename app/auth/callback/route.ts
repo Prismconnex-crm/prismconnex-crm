@@ -9,6 +9,7 @@ import {
 } from "@/lib/auth/session";
 import { resolveOnboardingState } from "@/lib/auth/tenant";
 import { authDebug } from "@/lib/auth/auth-debug";
+import { RETURN_TO_COOKIE, RETURN_TO_QUERY_PARAM, safeReturnTo } from "@/lib/auth/return-to";
 import * as gotrue from "@/lib/supabase/gotrue";
 import { AccountSecurityService } from "@/services/account-security.service";
 import { ProfileService } from "@/services/profile.service";
@@ -25,12 +26,21 @@ import { ProfileService } from "@/services/profile.service";
  * AuthService.completeOAuth additionally calls ensureProfile() as a fallback.
  * An existing profile is never overwritten.
  */
+/** The return path the OAuth start route kept (lib/auth/return-to.ts), re-validated. */
+function returnToOf(req: NextRequest) {
+    return safeReturnTo(req.cookies.get(RETURN_TO_COOKIE)?.value);
+}
+
 function failure(req: NextRequest, reason: string) {
     const url = new URL("/auth/sign-in", req.nextUrl.origin);
     url.searchParams.set("error", reason);
+    // Back on the form, a retry still returns where the visitor was going.
+    const returnTo = returnToOf(req);
+    if (returnTo) url.searchParams.set(RETURN_TO_QUERY_PARAM, returnTo);
 
     const response = NextResponse.redirect(url);
     response.cookies.delete(PKCE_VERIFIER_COOKIE);
+    response.cookies.delete(RETURN_TO_COOKIE);
     return response;
 }
 
@@ -91,9 +101,13 @@ export async function GET(req: NextRequest) {
 
             const mfaUrl = new URL("/auth/sign-in", req.nextUrl.origin);
             mfaUrl.searchParams.set("mfa", "1");
+            // The code step finishes on the sign-in form, which returns there itself.
+            const returnTo = returnToOf(req);
+            if (returnTo) mfaUrl.searchParams.set(RETURN_TO_QUERY_PARAM, returnTo);
 
             const pendingResponse = NextResponse.redirect(mfaUrl);
             pendingResponse.cookies.delete(PKCE_VERIFIER_COOKIE);
+            pendingResponse.cookies.delete(RETURN_TO_COOKIE);
 
             return applyPendingMfaCookie(pendingResponse, {
                 factorId: verifiedFactor.id,
@@ -119,7 +133,8 @@ export async function GET(req: NextRequest) {
 
         // A returning user goes straight to the app; a first-time OAuth user
         // still needs a workspace, so send them through onboarding.
-        const destination = onboarded ? "/app/dashboard" : "/onboarding";
+        // A page that sent the visitor to sign in (an exhibitor's details) gets them back — once onboarded.
+        const destination = onboarded ? returnToOf(req) ?? "/app/dashboard" : "/onboarding";
 
         const response = NextResponse.redirect(new URL(destination, req.nextUrl.origin));
         applySessionCookies(response, { token, onboarded });
@@ -131,6 +146,7 @@ export async function GET(req: NextRequest) {
         });
 
         response.cookies.delete(PKCE_VERIFIER_COOKIE);
+        response.cookies.delete(RETURN_TO_COOKIE);
 
         return response;
     } catch (error) {

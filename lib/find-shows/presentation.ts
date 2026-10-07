@@ -18,3 +18,24 @@ export function getFindShowGradient(seed: string) {
 export function getFindShowAvatarUrl(name: string) {
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&size=80&background=random&color=fff`;
 }
+
+const initialsStopWords = new Set(['a', 'an', 'and', 'de', 'di', 'du', 'for', 'of', 'the', '&']);
+
+/**
+ * Up to two initials for an event, used when it has no logo or the logo fails
+ * to load. Rendered locally so a missing logo costs no network request.
+ */
+export function getFindShowInitials(name: string) {
+  const words = name
+    .split(/[\s\-–—/]+/)
+    .map((word) => word.replace(/[.,:;!?'"`()[\]{}&+*#@|<>]/g, ''))
+    .filter((word) => word && !initialsStopWords.has(word.toLowerCase()));
+
+  return (
+    words
+      .slice(0, 2)
+      .map((word) => Array.from(word)[0])
+      .join('')
+      .toUpperCase() || '?'
+  );
+}

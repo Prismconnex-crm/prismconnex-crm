@@ -6,8 +6,17 @@ import { highlightSegments } from '@/lib/find-shows/search-events';
  * <mark>. Segment splitting lives in lib/find-shows/search-events.ts so it can
  * be unit-tested without a DOM.
  */
-export function HighlightText({ text, query }: { text: string; query: string }) {
-  const segments = highlightSegments(text, query);
+export function HighlightText({
+  text,
+  query,
+  anywhere = false,
+}: {
+  text: string;
+  query: string;
+  /** Highlight mid-word hits too — titles match anywhere, other fields at word starts. */
+  anywhere?: boolean;
+}) {
+  const segments = highlightSegments(text, query, { anywhere });
 
   return (
     <>

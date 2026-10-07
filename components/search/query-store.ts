@@ -66,6 +66,28 @@ function writeAll(entries: SavedQuery[]) {
   window.dispatchEvent(new Event(CHANGE_EVENT));
 }
 
+/**
+ * The exact moment a search was made — "24 Sep 2026, 08:12" — shown beside the
+ * relative label on a Recent card. `relativeTime` alone answers "how long ago"
+ * but not "when": two searches both reading "40 days ago" are otherwise
+ * indistinguishable, and a card is often the only record that a question was
+ * ever asked.
+ *
+ * Locale and zone are the viewer's own (`undefined` locale, no `timeZone`), so
+ * this reads in local time the way the rest of the app's dates do. Safe against
+ * hydration mismatch because Recent entries are read from localStorage in an
+ * effect, so the list renders only after mount — never during SSR.
+ */
+export function absoluteTime(timestamp: number): string {
+  return new Date(timestamp).toLocaleString(undefined, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 export function relativeTime(timestamp: number): string {
   const seconds = Math.max(0, Math.round((Date.now() - timestamp) / 1000));
   if (seconds < 60) return "just now";

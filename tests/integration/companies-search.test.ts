@@ -12,11 +12,20 @@ const EMPTY = {
 describe('buildCompanyQuery', () => {
   it('uses the pattern operators for prefix search so the index is usable', () => {
     const { sql, params } = buildCompanyQuery({ ...EMPTY, search: 'acme' }, 30, 0);
-    expect(sql).toContain('lower(name) ~>=~');
-    expect(sql).toContain('lower(name) ~<~');
-    expect(sql).toContain('ORDER BY lower(name) USING ~<~');
+    // Prefix search runs against the name with its spaces removed, so spacing
+    // on either side stops mattering. ORDER BY uses the same expression, which
+    // is what keeps filter and sort on idx_discovery_name_squashed_pattern.
+    expect(sql).toContain(`replace(lower(name), ' ', '') ~>=~`);
+    expect(sql).toContain(`replace(lower(name), ' ', '') ~<~`);
+    expect(sql).toContain(`ORDER BY replace(lower(name), ' ', '') USING ~<~`);
     expect(params).toContain('acme');
     expect(params).toContain('acmf'); // upper bound: last char incremented
+  });
+
+  it('strips whitespace from the term so spacing never blocks a match', () => {
+    const { params } = buildCompanyQuery({ ...EMPTY, search: '4 Matrix' }, 30, 0);
+    expect(params).toContain('4matrix');
+    expect(params).toContain('4matriy');
   });
 
   it('orders by rowCursor when browsing', () => {

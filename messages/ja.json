@@ -523,32 +523,6 @@
           "accent": "amber"
         }
       ],
-      "highlights": {
-        "title": "含まれる注目機能",
-        "description": "すべてのプランで利用できます。一部の機能は有料サブスクリプションが必要です。",
-        "items": [
-          {
-            "text": "チケット & 旅行モード (参加者体験)",
-            "accent": "rgba(34,211,238,",
-            "accentBorder": "rgba(6,182,212,"
-          },
-          {
-            "text": "プロモコード (有料プラン限定)",
-            "accent": "rgba(99,102,241,",
-            "accentBorder": "rgba(79,70,229,"
-          },
-          {
-            "text": "周辺施設 (地図プロバイダーの結果)",
-            "accent": "rgba(52,211,153,",
-            "accentBorder": "rgba(16,185,129,"
-          },
-          {
-            "text": "ローカライズされた言語・タイムゾーン・通貨",
-            "accent": "rgba(245,158,11,",
-            "accentBorder": "rgba(217,119,6,"
-          }
-        ]
-      },
       "addons": {
         "title": "アドオン",
         "description": "追加機能でプランを拡張できます。",

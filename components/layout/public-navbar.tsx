@@ -16,7 +16,6 @@ import { LanguageSwitcher } from '@/components/layout/language-switcher';
 const navLinks = [
   { href: '/product', labelKey: 'product' },
   { href: '/pricing', labelKey: 'pricing' },
-  { href: '/security', labelKey: 'security' },
   { href: '/find-shows', labelKey: 'findShows' },
 ] as const;
 

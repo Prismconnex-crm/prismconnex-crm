@@ -7,6 +7,7 @@ import { BadgeCheck, Globe2 } from 'lucide-react';
 import { FindShowsHero } from '@/components/find-shows/find-shows-hero';
 import { FindShowsFilterBar } from '@/components/find-shows/find-shows-filter-bar';
 import { FindShowGrid } from '@/components/find-shows/find-show-grid';
+import { eventYears } from '@/lib/find-shows/date-range';
 import { searchFindShowEvents } from '@/lib/find-shows/search-events';
 import { localizePathname } from '@/lib/locale';
 import type { Locale } from '@/types';
@@ -162,9 +163,15 @@ export function FindShowsPage({
   const activeFilterCount =
     Number(filters.region !== 'All Regions') +
     Number(Boolean(filters.country)) +
-    Number(filters.category !== 'All Categories');
+    Number(filters.category !== 'All Categories') +
+    Number(Boolean(filters.startMonth || filters.endMonth));
+  // Year choices for the Date Range filter: the years the catalog's events run in.
+  const dateRangeYears = useMemo(() => eventYears(events), [events]);
 
   const displayedEventCount = Math.min(visibleCount, filteredEvents.length);
+  // Locale-fixed on both server and client, so the formatted counts hydrate cleanly.
+  const numberFormat = useMemo(() => new Intl.NumberFormat(locale), [locale]);
+  const resultsKey = JSON.stringify([deferredQuery, region, country, category, startMonth, endMonth]);
 
   const heroStats = [
     { value: stats.totalEvents, suffix: '+', label: 'Trade Shows' },
@@ -191,6 +198,7 @@ export function FindShowsPage({
 
       <FindShowsFilterBar
         categories={categories}
+        dateRangeYears={dateRangeYears}
         filters={filters}
         onFiltersChange={setFilters}
         activeFilterCount={activeFilterCount}
@@ -206,8 +214,17 @@ export function FindShowsPage({
             className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
           >
             <div>
-              <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
-                Showing {displayedEventCount} of {filteredEvents.length} events
+              <p
+                aria-live="polite"
+                className="text-sm font-medium tabular-nums text-slate-500 dark:text-slate-400"
+              >
+                <span className="font-semibold text-slate-700 dark:text-slate-200">
+                  {numberFormat.format(filteredEvents.length)}{' '}
+                  {filteredEvents.length === 1 ? 'event' : 'events'} found
+                </span>
+                {filteredEvents.length ? (
+                  <> · showing {numberFormat.format(displayedEventCount)}</>
+                ) : null}
               </p>
               <h2 className="mt-1 text-2xl font-black tracking-tight text-slate-950 dark:text-white md:text-3xl">
                 Worldwide trade shows
@@ -216,12 +233,12 @@ export function FindShowsPage({
 
             <div className="flex flex-wrap gap-2">
               <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/85 px-3 py-2 text-xs font-semibold text-slate-600 dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-slate-300">
-                <Globe2 className="size-3.5 text-indigo-500" />
-                {stats.countries} countries available
+                <Globe2 aria-hidden="true" className="size-3.5 text-indigo-500" />
+                {numberFormat.format(stats.countries)} countries available
               </span>
               <span className="inline-flex items-center gap-2 rounded-full border border-slate-200/70 bg-white/85 px-3 py-2 text-xs font-semibold text-slate-600 dark:border-white/[0.08] dark:bg-white/[0.04] dark:text-slate-300">
-                <BadgeCheck className="size-3.5 text-emerald-500" />
-                {stats.totalEvents}+ total events
+                <BadgeCheck aria-hidden="true" className="size-3.5 text-emerald-500" />
+                {numberFormat.format(stats.totalEvents)}+ total events
               </span>
             </div>
           </motion.div>
@@ -230,6 +247,7 @@ export function FindShowsPage({
             events={visibleEvents}
             assets={assets}
             searchQuery={deferredQuery}
+            resultsKey={resultsKey}
             getDetailHref={(slug) => localizePathname(`/find-shows/${slug}`, locale)}
             visibleCount={displayedEventCount}
             totalCount={filteredEvents.length}

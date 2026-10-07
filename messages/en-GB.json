@@ -520,32 +520,6 @@
           "accent": "amber"
         }
       ],
-      "highlights": {
-        "title": "Included Feature Highlights",
-        "description": "Available across plans. Some features require a paid subscription.",
-        "items": [
-          {
-            "text": "Tickets and Travel Mode (attendee experience)",
-            "accent": "rgba(34,211,238,",
-            "accentBorder": "rgba(6,182,212,"
-          },
-          {
-            "text": "Promo codes (paid plans only)",
-            "accent": "rgba(99,102,241,",
-            "accentBorder": "rgba(79,70,229,"
-          },
-          {
-            "text": "Nearby essentials (map provider results)",
-            "accent": "rgba(52,211,153,",
-            "accentBorder": "rgba(16,185,129,"
-          },
-          {
-            "text": "Localized language, timezone, and currency",
-            "accent": "rgba(245,158,11,",
-            "accentBorder": "rgba(217,119,6,"
-          }
-        ]
-      },
       "addons": {
         "title": "Add-ons",
         "description": "Extend your plan with additional capabilities.",

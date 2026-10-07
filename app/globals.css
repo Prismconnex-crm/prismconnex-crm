@@ -990,18 +990,6 @@
   animation: nav-particle-float 4s ease-in-out infinite;
 }
 
-/* Feature-highlight card hover (pricing row) */
-.dark .fh-card:hover {
-  background: var(--fh-hover-bg-dark) !important;
-  box-shadow: var(--fh-hover-shadow-dark);
-}
-
-:root .fh-card:hover,
-.light .fh-card:hover {
-  background: var(--fh-hover-bg-light) !important;
-  box-shadow: var(--fh-hover-shadow-light);
-}
-
 /* Hide scrollbar for mobile horizontal scroll */
 .scrollbar-none {
   -ms-overflow-style: none;
