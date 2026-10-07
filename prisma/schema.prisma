@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider   = "prisma-client-js"
   engineType = "library"
 }
 
@@ -10,7 +10,6 @@ datasource db {
 }
 
 // ─── Foundation (user-provided) ───────────────────────────────
-
 
 model User {
   id        String   @id @default(cuid())
@@ -99,10 +98,10 @@ model Profile {
   /// active | inactive | deleted. Soft-delete only — the auth.users row is
   /// never removed, because hard deletion needs the service_role key which
   /// this project deliberately does not hold (see docs/PROFILE.md).
-  accountStatus  String    @default("active") @map("account_status")
-  lastLoginAt    DateTime? @map("last_login_at") @db.Timestamptz(6)
-  deactivatedAt  DateTime? @map("deactivated_at") @db.Timestamptz(6)
-  deletedAt      DateTime? @map("deleted_at") @db.Timestamptz(6)
+  accountStatus String    @default("active") @map("account_status")
+  lastLoginAt   DateTime? @map("last_login_at") @db.Timestamptz(6)
+  deactivatedAt DateTime? @map("deactivated_at") @db.Timestamptz(6)
+  deletedAt     DateTime? @map("deleted_at") @db.Timestamptz(6)
 
   // Preferences. Defaults intentionally mirror WorkspaceSettings above, so a
   // user who never opens the Preferences card behaves like their workspace.
@@ -136,20 +135,20 @@ model Workspace {
   region    String   @default("EU")
   createdAt DateTime @default(now())
 
-  memberships Membership[]
-  settings    WorkspaceSettings?
-  events      Event[]
-  companies   Company[]
-  contacts    Contact[]
-  leads       Lead[]
-  deals       Deal[]
-  sequences   Sequence[]
-  tasks       Task[]
-  imports     ImportJob[]
-  exports     ExportJob[]
-  audits      AuditLog[]
-  enrollments SequenceEnrollment[]
-  emailEvents EmailEvent[]
+  memberships    Membership[]
+  settings       WorkspaceSettings?
+  events         Event[]
+  companies      Company[]
+  contacts       Contact[]
+  leads          Lead[]
+  deals          Deal[]
+  sequences      Sequence[]
+  tasks          Task[]
+  imports        ImportJob[]
+  exports        ExportJob[]
+  audits         AuditLog[]
+  enrollments    SequenceEnrollment[]
+  emailEvents    EmailEvent[]
   savedCompanies SavedCompany[]
   credit         WorkspaceCredit?
   creditUsage    CreditUsageEntry[]
@@ -160,7 +159,7 @@ model Membership {
   id          String   @id @default(cuid())
   userId      String
   workspaceId String
-  role        String     @default("VIEWER")
+  role        String   @default("VIEWER")
   createdAt   DateTime @default(now())
 
   user      User      @relation(fields: [userId], references: [id])
@@ -265,7 +264,6 @@ model AuditLog {
 
 // ─── CRM Domain Models ───────────────────────────────────────
 
-
 model Event {
   id          String   @id @default(cuid())
   workspaceId String
@@ -310,13 +308,6 @@ model Company {
   contacts  Contact[]
   leads     Lead[]
   deals     Deal[]
-
-  @@index([name], map: "idx_company_name")
-  @@index([category], map: "idx_company_category")
-  @@index([employeeRange], map: "idx_company_employee")
-  @@index([region], map: "idx_company_region")
-  @@index([category, employeeRange, region], map: "idx_company_filters")
-  @@index([workspaceId])
   // NOTE: an expression index on the lowercased domain also exists, for the
   // sign-up company auto-detection lookup in /api/companies/by-domain. Prisma
   // can't express lower(domain), so it lives only in the migration
@@ -324,14 +315,21 @@ model Company {
   //   (lower("domain"), "createdAt") as idx_company_domain_lower
   // The matching indexes on DiscoveryCompany and CompanyContact are in
   // prisma/migrations/20260804000000_add_discovery_domain_index.
+
+  @@index([name], map: "idx_company_name")
+  @@index([category], map: "idx_company_category")
+  @@index([employeeRange], map: "idx_company_employee")
+  @@index([region], map: "idx_company_region")
+  @@index([category, employeeRange, region], map: "idx_company_filters")
+  @@index([workspaceId])
 }
 
 // Shared company discovery dataset (34.6M rows), migrated off the local-only
 // SQLite dev.db so every team member can query it without the 27GB file.
 // Unscoped (no workspaceId) — same shared-across-tenants dataset SQLite was.
 model DiscoveryCompany {
-  rowCursor       BigInt   @id @default(autoincrement())
-  id              String   @unique
+  rowCursor       BigInt  @id @default(autoincrement())
+  id              String  @unique
   name            String
   category        String?
   description     String?
@@ -342,13 +340,18 @@ model DiscoveryCompany {
   headquarters    String?
   region          String?
   revenueRange    String?
-  engagementScore Int?     @default(0)
+  engagementScore Int?    @default(0)
   trustSignals    String?
   tags            String?
   email           String?
   phone           String?
   highlights      String?
   insights        String?
+  // NOTE: an expression index also exists on the extracted country for the
+  // Country/Headcount steps — Prisma can't express it, so it lives only in
+  // prisma/migrations/20260725_add_discovery_filter_workflow_indexes:
+  //   ("category","region",(trim(split_part("headquarters",',',-1))),"employeeRange")
+  //   as idx_discovery_cat_region_country_emp
 
   @@index([employeeRange], map: "idx_discovery_employee")
   @@index([region], map: "idx_discovery_region")
@@ -356,11 +359,6 @@ model DiscoveryCompany {
   // list ordered by rowCursor DESC. Trailing rowCursor lets the Category(+Location)
   // step be a pre-sorted index scan that stops at LIMIT.
   @@index([category, region, rowCursor(sort: Desc)], map: "idx_discovery_cat_region_cursor")
-  // NOTE: an expression index also exists on the extracted country for the
-  // Country/Headcount steps — Prisma can't express it, so it lives only in
-  // prisma/migrations/20260725_add_discovery_filter_workflow_indexes:
-  //   ("category","region",(trim(split_part("headquarters",',',-1))),"employeeRange")
-  //   as idx_discovery_cat_region_country_emp
 }
 
 // Exhibitors imported from an event's public exhibitor directory.
@@ -374,24 +372,24 @@ model EventExhibitor {
   /// FindShowEvent.slug this exhibitor belongs to.
   eventSlug String
 
-  companyName String
+  companyName        String
   /// Canonical form of companyName (see scripts/lib/exhibitor-name-key.mjs).
   /// Used to match enrichment sources onto a listing; NOT unique, because a
   /// directory legitimately lists one company twice on different stands.
-  nameKey     String?
-  logoUrl     String?
+  nameKey            String?
+  logoUrl            String?
   /// Source directory page for this exhibitor - also the upsert key.
-  sourceDetailUrl   String
+  sourceDetailUrl    String
   /// Root directory page for the event, used as the link fallback when an
   /// exhibitor publishes no official website of its own.
   sourceDirectoryUrl String?
-  websiteUrl        String?
-  standNumber       String?
-  country           String?
-  phone             String?
+  websiteUrl         String?
+  standNumber        String?
+  country            String?
+  phone              String?
   companyLinkedInUrl String?
-  description       String?
-  categories        String[] @default([])
+  description        String?
+  categories         String[] @default([])
 
   // Personal contact — nullable, never inferred.
   firstName         String?
@@ -459,20 +457,20 @@ model Contact {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  company     Company?  @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  workspace   Workspace            @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  company     Company?             @relation(fields: [companyId], references: [id], onDelete: SetNull)
   enrollments SequenceEnrollment[]
 }
 
 model Lead {
-  id          String     @id @default(cuid())
+  id          String   @id @default(cuid())
   workspaceId String
   companyId   String?
-  status      String @default("NEW")
+  status      String   @default("NEW")
   source      String
-  score       Int        @default(0)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  score       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   company   Company?  @relation(fields: [companyId], references: [id], onDelete: SetNull)
@@ -485,7 +483,7 @@ model Deal {
   companyId   String?
   leadId      String?   @unique
   name        String
-  stage       String @default("DISCOVERY")
+  stage       String    @default("DISCOVERY")
   amount      Float     @default(0)
   cost        Float     @default(0)
   roi         Float?
@@ -567,9 +565,9 @@ model SequenceEnrollment {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  workspace Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  sequence  Sequence   @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
-  contact   Contact    @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  workspace Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  sequence  Sequence     @relation(fields: [sequenceId], references: [id], onDelete: Cascade)
+  contact   Contact      @relation(fields: [contactId], references: [id], onDelete: Cascade)
   events    EmailEvent[]
 }
 
@@ -584,4 +582,47 @@ model EmailEvent {
 
   workspace  Workspace          @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   enrollment SequenceEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+}
+
+/// Venue and organizer detail fetched from an event's own website, cached so a
+/// page view does not re-fetch a third-party site. Written only when a user
+/// opens that event — the 11,635-row catalog is never enriched in bulk.
+model EventEnrichment {
+  /// FindShowEvent.slug — the catalog has no numeric id.
+  eventSlug String @id
+
+  venueName     String?
+  venueAddress  String?
+  venueCity     String?
+  venueCountry  String?
+  venuePostcode String?
+  venueWebsite  String?
+
+  organizerName      String?
+  organizerLegalName String?
+  organizerWebsite   String?
+  organizerAddress   String?
+  organizerEmail     String?
+  organizerPhone     String?
+
+  /// Where the values came from, for the UI to attribute them.
+  sourceUrl String?
+  /// Null while a fetch has never succeeded; drives the 7-day re-fetch window.
+  fetchedAt DateTime @default(now())
+  /// Set when the last attempt found nothing, so a dead site is not retried hourly.
+  lastError String?
+
+  @@index([fetchedAt])
+}
+
+/// Free-form notes a user keeps against one event. One row per event.
+model EventNote {
+  /// FindShowEvent.slug — matches EventEnrichment.
+  eventSlug String   @id
+  /// Sanitised HTML from the notes editor.
+  html      String   @default("")
+  /// Data-URL PNG from the sketch pad, when the user drew something.
+  sketch    String?
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
 }

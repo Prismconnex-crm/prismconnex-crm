@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   Building2,
@@ -43,6 +44,13 @@ const EVENT_DATES = "20 - 22 Jan 2027";
 
 /** LinkedIn brand colour, used only for the company mark. */
 const LINKEDIN_BLUE = "#0A66C2";
+
+/** The show's own directory — the source these exhibitor records came from. */
+const BETT_DIRECTORY_DOMAIN = "bettshow.com";
+
+/** Back to the event's exhibitor grid, on the first page. */
+const EXHIBITORS_LIST_HREF =
+  "/app/events/bett-show-london-2027-01-20?tab=Exhibitors&page=1&pageSize=24";
 
 type ExhibitorProfile = {
   id: string;
@@ -97,6 +105,16 @@ function orNotAvailable(value: string | null | undefined): string {
 function prettyDomain(url: string | null): string | null {
   if (!url) return null;
   return url.replace(/^https?:\/\/(www\.)?/i, "").replace(/\/+$/, "") || null;
+}
+
+/** Categories are stored lower-case; the UI title-cases them for display. */
+function formatCategory(value: string | null | undefined): string {
+  const trimmed = value?.trim();
+  if (!trimmed) return NOT_AVAILABLE;
+  return trimmed
+    .split(" ")
+    .map((part) => (part === "&" ? "&" : part.charAt(0).toUpperCase() + part.slice(1)))
+    .join(" ");
 }
 
 function initials(name: string): string {
@@ -231,6 +249,7 @@ export function BettExhibitorProfile({
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>("Overview");
   const [logoFailed, setLogoFailed] = useState(false);
+  const router = useRouter();
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -330,9 +349,9 @@ export function BettExhibitorProfile({
                 <h2 className="text-[18px] font-bold tracking-tight text-slate-900 dark:text-white">
                   {exhibitor.name}
                 </h2>
-                <span className="rounded-full border border-indigo-200 bg-indigo-50 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-indigo-700 dark:border-indigo-500/20 dark:bg-indigo-500/10 dark:text-indigo-300">
-                  {EVENT_LABEL} Exhibitor
-                </span>
+                {/* The "BETT 2027 Exhibitor" pill was dropped: the trade show
+                    presence banner above the tabs says the same thing with the
+                    dates and stand attached, so the pill was redundant. */}
                 {/* The stand badge was dropped from the header: the stand is
                     already a field on the Overview tab's exhibitor record and
                     on the Events tab, so repeating it beside the name added
@@ -396,6 +415,27 @@ export function BettExhibitorProfile({
         <SummaryCard label="HQ" value={orNotAvailable(hq)} />
       </div>
 
+      {/* Trade show presence — above the tab bar rather than inside Overview,
+          so it stays visible on every tab. Text is slate-900/white rather than
+          the muted slate-600 used inside panels, because it is the one line
+          that says why this company is in the CRM at all. */}
+      <div className="rounded-[10px] border border-indigo-200 bg-indigo-50/60 p-3.5 shadow-sm dark:border-indigo-500/20 dark:bg-indigo-500/[0.07]">
+        <div className="flex items-start gap-3">
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-[10px] bg-indigo-100 text-indigo-600 dark:bg-indigo-500/15 dark:text-indigo-300">
+            <Sparkles className="size-4" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-[12px] font-bold text-slate-900 dark:text-white">
+              Trade show presence
+            </p>
+            <p className="mt-0.5 text-[12px] font-medium text-slate-900 dark:text-white">
+              Exhibiting at {EVENT_LABEL} — {EVENT_LOCATION}, {EVENT_DATES}
+              {exhibitor.stand ? `, stand ${exhibitor.stand}` : ""}.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Tabs */}
       <div className="rounded-[10px] border border-slate-200 bg-white shadow-sm dark:border-[#22304A] dark:bg-[#111B2E]">
         <div className="flex gap-1 overflow-x-auto border-b border-slate-200 px-2 dark:border-[#22304A]">
@@ -419,60 +459,75 @@ export function BettExhibitorProfile({
         <div className="p-3.5">
           {activeTab === "Overview" ? (
             <div className="space-y-2.5">
+              {/* Logo beside the company's own description. The description is
+                  the og:description/meta description from the exhibitor's
+                  official site, fetched server-side and stored on the record,
+                  so the page does not re-fetch a third-party site on every
+                  render. First-party copy — never generated or paraphrased. */}
               <Panel>
-                <div className="flex items-start gap-3">
-                  <div className="flex size-8 shrink-0 items-center justify-center rounded-[10px] bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-300">
-                    <Sparkles className="size-4" />
+                <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
+                  <div className="flex size-28 shrink-0 items-center justify-center overflow-hidden rounded-[12px] border border-slate-200 bg-white dark:border-[#22304A] dark:bg-[#0B1220]">
+                    {exhibitor.logoUrl && !logoFailed ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={exhibitor.logoUrl}
+                        alt={`${exhibitor.name} logo`}
+                        loading="lazy"
+                        className="max-h-24 max-w-[88%] object-contain p-1"
+                        onError={() => setLogoFailed(true)}
+                      />
+                    ) : (
+                      <span className="text-[26px] font-black tracking-tight text-indigo-500/60 dark:text-indigo-300/60">
+                        {initials(exhibitor.name)}
+                      </span>
+                    )}
                   </div>
-                  <div className="min-w-0">
+
+                  <div className="min-w-0 flex-1">
                     <p className="text-[12px] font-semibold text-slate-900 dark:text-white">
-                      Trade show presence
+                      Company description
                     </p>
-                    <p className="mt-0.5 text-[11px] text-slate-600 dark:text-slate-300">
-                      Exhibiting at {EVENT_LABEL} — {EVENT_LOCATION}, {EVENT_DATES}
-                      {exhibitor.stand ? `, stand ${exhibitor.stand}` : ""}.
-                    </p>
+                    {exhibitor.description?.trim() ? (
+                      <>
+                        <p className="mt-1.5 text-[12px] leading-6 text-slate-700 dark:text-slate-300">
+                          {exhibitor.description.trim()}
+                        </p>
+                        {domain ? (
+                          <p className="mt-2 text-[10px] text-slate-400 dark:text-slate-500">
+                            Source: {domain}
+                          </p>
+                        ) : null}
+                      </>
+                    ) : (
+                      <p className="mt-1.5 text-[12px] leading-6 text-slate-400 dark:text-slate-500">
+                        Description unavailable.
+                      </p>
+                    )}
                   </div>
                 </div>
               </Panel>
-
-              {/* About — the company's own published description, read from
-                  their website's meta/og description by
-                  scripts/fetch-exhibitor-descriptions.mjs. First-party copy, so
-                  nothing here is generated or paraphrased. Hidden entirely when
-                  the site published none, rather than showing an empty card. */}
-              {exhibitor.description?.trim() ? (
-                <Panel>
-                  <div className="flex items-start gap-3">
-                    <div className="flex size-8 shrink-0 items-center justify-center rounded-[10px] bg-slate-100 text-slate-500 dark:bg-[#0B1220] dark:text-slate-400">
-                      <Info className="size-4" />
-                    </div>
-                    <div className="min-w-0">
-                      <p className="text-[12px] font-semibold text-slate-900 dark:text-white">
-                        About {exhibitor.name}
-                      </p>
-                      <p className="mt-1 text-[11px] leading-5 text-slate-600 dark:text-slate-300">
-                        {exhibitor.description.trim()}
-                      </p>
-                      {domain ? (
-                        <p className="mt-1.5 text-[10px] text-slate-400 dark:text-slate-500">
-                          Source: {domain}
-                        </p>
-                      ) : null}
-                    </div>
-                  </div>
-                </Panel>
-              ) : null}
 
               <Panel>
                 <p className="mb-3 text-[12px] font-semibold text-slate-900 dark:text-white">
                   Exhibitor record
                 </p>
-                <div className="grid grid-cols-2 gap-x-4 gap-y-3 md:grid-cols-4">
+                <div className="grid grid-cols-2 items-end gap-x-4 gap-y-3 md:grid-cols-5">
                   <Field label="Show" value={EVENT_LABEL} />
                   <Field label="Stand" value={orNotAvailable(exhibitor.stand)} />
                   <Field label="Country" value={orNotAvailable(exhibitor.country)} />
-                  <Field label="Official website" value={orNotAvailable(domain)} />
+                  {/* The source directory, not the exhibitor's own domain —
+                      this row describes the BETT record. The company's real
+                      website stays a live link in the header. */}
+                  <Field label="Official website" value={BETT_DIRECTORY_DOMAIN} />
+                  <div className="flex justify-start md:justify-end">
+                    <button
+                      type="button"
+                      onClick={() => router.push(EXHIBITORS_LIST_HREF)}
+                      className="h-9 whitespace-nowrap rounded-[8px] bg-indigo-600 px-4 text-[13px] font-semibold text-white shadow-sm transition-colors hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400"
+                    >
+                      View Other Exhibitors
+                    </button>
+                  </div>
                 </div>
               </Panel>
 
@@ -481,11 +536,13 @@ export function BettExhibitorProfile({
                   Firmographics
                 </p>
                 {company ? (
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-3 md:grid-cols-4">
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-3 md:grid-cols-5">
                     <Field label="Founded" value={orNotAvailable(company.founded)} />
                     <Field label="Employee range" value={orNotAvailable(company.employeeRange)} />
                     <Field label="Headquarters" value={orNotAvailable(company.headquarters)} />
                     <Field label="Region" value={orNotAvailable(company.region)} />
+                    {/* Fifth column, to match the Exhibitor record row above. */}
+                    <Field label="Industry" value={formatCategory(company.category)} />
                   </div>
                 ) : (
                   <p className="text-[11px] text-slate-500 dark:text-slate-400">

@@ -24,6 +24,9 @@ import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { EventMap, googleMapsUrl } from '@/components/crm/event-map';
 import { ExhibitorsPanel } from '@/components/events/exhibitors-panel';
+import { EventCompactHero } from '@/components/events/event-compact-hero';
+import { EventVenueOrganizer } from '@/components/events/event-venue-organizer';
+import { EventNotesPanel } from '@/components/events/event-notes-panel';
 import type { FindShowEvent } from '@/types/find-shows';
 
 /**
@@ -265,12 +268,17 @@ export function EventDetailView({ event }: { event: FindShowEvent }) {
             {/* Content Display — Tab Switched */}
             {activeTab === 'Exhibitors' ? (
                 <ExhibitorsPanel event={event} />
+            ) : activeTab === 'Notes' ? (
+                /* Notes is its own full-width surface: the hero, map and Next
+                   Actions sidebar are context for reading about an event, not
+                   for writing against one. */
+                <EventNotesPanel eventSlug={event.slug} />
             ) : (
                 /* ---- DEFAULT: OVERVIEW + SIDEBAR ---- */
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                     <div className="lg:col-span-8 space-y-6">
                         <div className="rounded-3xl border border-slate-200 dark:border-[#22304A] bg-white dark:bg-[#111B2E] overflow-hidden shadow-xl">
-                            <EventHero event={event} />
+                            <EventCompactHero event={event} />
                             <div className="p-8 space-y-8">
                                 {/* Executive Overview is the Overview tab's own
                                     content. Location & Venue carries the venue
@@ -319,22 +327,7 @@ export function EventDetailView({ event }: { event: FindShowEvent }) {
                                     One component serves every event, so this
                                     applies across the whole catalog. */}
                                 {activeTab === 'Location & Venue' ? (
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="p-5 rounded-2xl border border-slate-100 dark:border-[#22304A] bg-slate-50/50 dark:bg-[#0B1220]/50">
-                                        <h4 className="mb-4 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">Venue Details</h4>
-                                        <div className="space-y-3">
-                                            <div className="flex items-start gap-3"><Hotel className="size-4 text-indigo-500 mt-0.5" /><span className="text-[13px] font-bold leading-snug text-slate-900 dark:text-white">{event.venue}</span></div>
-                                            <div className="flex items-start gap-3"><MapPin className="size-4 text-indigo-500 mt-0.5" /><span className="text-[13px] font-medium text-slate-700 dark:text-slate-300">{event.city}, {event.country}</span></div>
-                                        </div>
-                                    </div>
-                                    <div className="p-5 rounded-2xl border border-slate-100 dark:border-[#22304A] bg-slate-50/50 dark:bg-[#0B1220]/50">
-                                        <h4 className="mb-4 text-[11px] font-bold uppercase tracking-[0.12em] text-slate-600 dark:text-slate-300">Organizer</h4>
-                                        <div className="space-y-3">
-                                            <div className="flex items-start gap-3"><Globe2 className="size-4 text-indigo-500 mt-0.5" />{event.website ? (<a href={event.website} target="_blank" rel="noopener noreferrer" className="text-[13px] font-bold text-indigo-500 hover:underline truncate">{event.website.replace(/^https?:\/\/(www\.)?/, '')}</a>) : (<span className="text-[13px] font-medium text-slate-700 dark:text-slate-300">Official website not published</span>)}</div>
-                                            <div className="flex items-start gap-3"><Mail className="size-4 text-indigo-500 mt-0.5" />{event.email ? (<a href={`mailto:${event.email}`} title={`Contact email for ${event.name}`} className="text-[13px] font-bold text-indigo-500 hover:underline truncate">{event.email}</a>) : (<span className="text-[13px] font-medium text-slate-700 dark:text-slate-300">Contact email not published</span>)}</div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    <EventVenueOrganizer event={event} />
                                 ) : null}
                             </div>
                         </div>
