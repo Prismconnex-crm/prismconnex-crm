@@ -1,4 +1,4 @@
-import { TenantContext } from "../auth/tenant";
+import type { TenantContext } from "../auth/tenant";
 import { ForbiddenError } from "../http/errors";
 
 export enum Role {

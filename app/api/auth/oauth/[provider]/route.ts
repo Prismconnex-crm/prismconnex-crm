@@ -25,7 +25,11 @@ import { RETURN_TO_COOKIE, RETURN_TO_QUERY_PARAM, safeReturnTo } from "@/lib/aut
  * Redirect URLs, or Supabase rejects the authorize request.
  */
 export async function GET(req: NextRequest, { params }: { params: { provider: string } }) {
-    const signInUrl = new URL("/auth/sign-in", req.nextUrl.origin);
+    // Use the configured public app origin for both success and error
+    // redirects. In local dev Next can report 0.0.0.0 as the request origin
+    // when the server binds to all interfaces; browsers cannot navigate there.
+    const origin = process.env.APP_URL?.replace(/\/$/, "") || req.nextUrl.origin;
+    const signInUrl = new URL("/auth/sign-in", origin);
 
     // Where the sign-in page was asked to return (an exhibitor's details, say): only a path on this site.
     // Kept on the way back to the form if the provider cannot be used, and across the provider round-trip
@@ -69,8 +73,6 @@ export async function GET(req: NextRequest, { params }: { params: { provider: st
 
     // APP_URL matters behind a proxy or tunnel, where the request origin is not
     // the URL registered with Supabase and the provider.
-    const origin = process.env.APP_URL?.replace(/\/$/, "") || req.nextUrl.origin;
-
     const { authorizeUrl, codeVerifier } = AuthService.startOAuth(
         params.provider,
         `${origin}/auth/callback`

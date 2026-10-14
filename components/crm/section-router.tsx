@@ -17,6 +17,7 @@ import { SequenceSection } from "./sequence-section";
 import { AutomationSection } from "./automation-section";
 import { AnalyticsSection } from "./analytics-section";
 import { IntegrationsSection } from "./integrations-section";
+import { MeetingsSection } from "./meetings-section";
 import { DeliverabilitySection } from "./deliverability-section";
 import { TeamSection } from "./team-section";
 import { SettingsSection } from "./settings-section";
@@ -80,6 +81,7 @@ export function AppSectionRouter({ slug }: Props) {
     if (section === "automation") return <AutomationSection />;
     if (section === "analytics") return <AnalyticsSection />;
     if (section === "integrations") return <IntegrationsSection />;
+    if (section === "meetings") return <MeetingsSection />;
     if (section === "deliverability") return <DeliverabilitySection />;
     if (section === "team") return <TeamSection />;
     if (section === "settings") return <SettingsSection sub={sub} />;

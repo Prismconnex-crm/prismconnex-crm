@@ -25,6 +25,10 @@ model User {
 
   memberships Membership[]
   tasks       Task[]
+  ownedLeads  Lead[]     @relation("LeadOwner")
+  leadNotes   LeadNote[]
+  integrationConnections IntegrationConnection[]
+  webhookEndpoints WebhookEndpoint[] @relation("WebhookCreator")
 }
 
 /// Profile data for a Supabase Auth user. Credentials are NEVER stored here —
@@ -142,6 +146,7 @@ model Workspace {
   companies   Company[]
   contacts    Contact[]
   leads       Lead[]
+  leadNotes   LeadNote[]
   deals       Deal[]
   sequences   Sequence[]
   tasks       Task[]
@@ -154,6 +159,9 @@ model Workspace {
   credit         WorkspaceCredit?
   creditUsage    CreditUsageEntry[]
   referrals      Referral[]
+  integrationConnections IntegrationConnection[]
+  webhookEndpoints WebhookEndpoint[]
+  webhookDeliveries WebhookDelivery[]
 }
 
 model Membership {
@@ -465,18 +473,62 @@ model Contact {
 }
 
 model Lead {
-  id          String     @id @default(cuid())
+  id          String   @id @default(cuid())
   workspaceId String
   companyId   String?
-  status      String @default("NEW")
+  /// NEW | CONTACTED | QUALIFIED | NURTURING | CONVERTED | LOST — see
+  /// LEAD_STATUSES in models/lead.ts. Validated there rather than by a CHECK
+  /// constraint, so an older build sharing this database cannot be broken by
+  /// a new status value.
+  status      String   @default("NEW")
+  /// MANUAL | EVENT | IMPORT | REFERRAL | WEBSITE | DISCOVERY | OTHER
   source      String
-  score       Int        @default(0)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  /// 0-100 fit/confidence score.
+  score       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // ─── Lead management (migration 20260930120000) ───────────────────
+  // Nullable so the migration cannot fail on a database that already holds
+  // leads; the API requires fullName on create.
+  fullName       String?
+  email          String?
+  phone          String?
+  jobTitle       String?
+  /// Free text: a lead's company is often not (yet) a workspace Company row.
+  /// companyId above still links one when it is.
+  companyName    String?
+  /// CRM User.id of the salesperson who owns the lead. Must be a member of
+  /// the lead's workspace — enforced in LeadService.
+  ownerId        String?
+  nextFollowUpAt DateTime?
+
+  workspace Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  company   Company?   @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  owner     User?      @relation("LeadOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  deal      Deal?
+  notes     LeadNote[]
+
+  @@index([workspaceId, status])
+  @@index([workspaceId, ownerId])
+  @@index([workspaceId, createdAt])
+}
+
+/// A free-text note on a lead's timeline. Append-only from the UI.
+model LeadNote {
+  id          String   @id @default(cuid())
+  workspaceId String
+  leadId      String
+  /// CRM User.id of the author; kept (as null) if that user is removed.
+  authorId    String?
+  body        String
+  createdAt   DateTime @default(now())
 
   workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  company   Company?  @relation(fields: [companyId], references: [id], onDelete: SetNull)
-  deal      Deal?
+  lead      Lead      @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  author    User?     @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  @@index([leadId, createdAt])
 }
 
 model Deal {
@@ -584,4 +636,83 @@ model EmailEvent {
 
   workspace  Workspace          @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   enrollment SequenceEnrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+}
+
+// ─── Integrations ────────────────────────────────────────────
+
+/// A user's OAuth connection to an external service (today: calendars — Google,
+/// Microsoft 365, Outlook). One row per user, workspace and provider.
+///
+/// Tokens are AES-256-GCM encrypted (lib/integrations/token-crypto.ts) with
+/// INTEGRATIONS_ENCRYPTION_KEY and never leave the server; client secrets are
+/// never stored at all. `status` is connected | expired | error, and is only
+/// ever "connected" after a real OAuth exchange and API check succeeded.
+model IntegrationConnection {
+  id              String    @id @default(cuid())
+  workspaceId     String
+  userId          String
+  category        String    // calendar
+  provider        String    // google | microsoft365 | outlook
+  accountEmail    String?
+  scopes          String
+  accessTokenEnc  String
+  refreshTokenEnc String?
+  tokenExpiresAt  DateTime?
+  status          String    @default("connected")
+  lastError       String?
+  lastCheckedAt   DateTime?
+  connectedAt     DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, userId, provider])
+  @@index([workspaceId, category])
+}
+
+/// Workspace-owned outbound webhook subscriptions. Secrets are AES-GCM
+/// encrypted with INTEGRATIONS_ENCRYPTION_KEY and are only returned once when
+/// the endpoint is created or its signing secret is rotated.
+model WebhookEndpoint {
+  id              String   @id @default(cuid())
+  workspaceId     String
+  createdByUserId String?
+  name            String
+  url             String
+  secretEnc       String
+  events          String[] @default([])
+  isActive        Boolean  @default(true)
+  lastDeliveryAt  DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdBy User? @relation("WebhookCreator", fields: [createdByUserId], references: [id], onDelete: SetNull)
+  deliveries WebhookDelivery[]
+
+  @@unique([workspaceId, url])
+  @@index([workspaceId, isActive])
+}
+
+/// One row per outbound attempt. Payloads are intentionally not retained
+/// because CRM events may contain personal contact details.
+model WebhookDelivery {
+  id              String   @id @default(cuid())
+  workspaceId     String
+  endpointId      String
+  event           String
+  status          String   // PENDING | SUCCEEDED | FAILED
+  attempts        Int      @default(1)
+  statusCode      Int?
+  responseSummary String?
+  errorMessage    String?
+  createdAt       DateTime @default(now())
+  deliveredAt     DateTime?
+
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  endpoint  WebhookEndpoint @relation(fields: [endpointId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId, createdAt])
+  @@index([endpointId, createdAt])
 }

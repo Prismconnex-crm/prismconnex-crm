@@ -1,6 +1,6 @@
 "use client";
 
-import { SIGNED_OUT_SIGN_IN_HREF } from "@/lib/auth/routing";
+import { SIGNED_OUT_HOME_HREF } from "@/lib/auth/routing";
 import type { SignOutScope } from "@/components/app-shell/sign-out-dialog";
 
 /**
@@ -47,5 +47,5 @@ export async function signOutAndRedirect(scope: SignOutScope = "local"): Promise
         );
     }
 
-    window.location.replace(SIGNED_OUT_SIGN_IN_HREF);
+    window.location.replace(SIGNED_OUT_HOME_HREF);
 }
