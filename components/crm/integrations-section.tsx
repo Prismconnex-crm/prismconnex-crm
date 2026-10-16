@@ -99,6 +99,10 @@ function ProviderMark({ provider, size = "small" }: { provider: string; size?: "
                 return <svg {...common}><defs><linearGradient id="instagram-gradient" x1="2" y1="22" x2="22" y2="2" gradientUnits="userSpaceOnUse"><stop stopColor="#FFDC80"/><stop offset=".5" stopColor="#E1306C"/><stop offset="1" stopColor="#833AB4"/></linearGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#instagram-gradient)"/><rect x="6.5" y="6.5" width="11" height="11" rx="3.5" fill="none" stroke="white" strokeWidth="1.8"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="white" strokeWidth="1.8"/><circle cx="17.2" cy="6.9" r="1" fill="white"/></svg>;
             case "X (Twitter)":
                 return <svg {...common}><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.9 5.8 22H2.6l7.3-8.4L1.8 2h6.5l4.5 6.7L18.9 2Zm-1.1 18h1.7L7.2 3.9H5.4z"/></svg>;
+            case "CRM Forms":
+                return <FileText {...common} />;
+            case "File Storage":
+                return <HardDrive {...common} />;
             case "Gmail":
                 return <svg {...common}><path fill="#4285F4" d="M3 6.5v12h4V9.3z"/><path fill="#34A853" d="M17 9.3v9.2h4v-12z"/><path fill="#EA4335" d="m3 6.5 2.1-1.7L12 10l6.9-5.2L21 6.5l-9 6.8z"/><path fill="#C5221F" d="M3 18.5h4v-9.2L3 6.5z"/><path fill="#FBBC04" d="M17 9.3v9.2h4v-12z"/></svg>;
             case "Yahoo Mail":
@@ -361,10 +365,125 @@ function CalendarProviderDialog({
     );
 }
 
+function SocialProviderDialog({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+    const descriptions: Record<string, string> = {
+        LinkedIn: "Prismconnex Global Solutions Private Limited",
+        Facebook: "Connect your PrismConnex Facebook page",
+        Instagram: "PrismConnex Instagram profile",
+        "X (Twitter)": "PrismConnex on X",
+    };
+
+    return (
+        <Dialog open={open} onOpenChange={onOpenChange}>
+            <DialogContent className="max-h-[85vh] max-w-[480px] overflow-y-auto border border-slate-200 bg-white p-5 dark:border-[#22304A] dark:bg-[#0B1220]">
+                <DialogHeader className="mb-2">
+                    <DialogTitle className="text-[14px] font-bold text-slate-900 dark:text-white">Social media profiles</DialogTitle>
+                    <DialogDescription className="text-[11px] text-slate-500 dark:text-slate-400">
+                        Open a PrismConnex profile. Facebook stays in setup needed until its page URL is available.
+                    </DialogDescription>
+                </DialogHeader>
+                <div className="space-y-2">
+                    {SOCIAL_PROVIDERS.map((provider) => (
+                        <div key={provider} className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-[#22304A] dark:bg-[#111B2E]/60">
+                            <div className="flex items-center gap-3">
+                                <ProviderMark provider={provider} size="large" />
+                                <div className="min-w-0 flex-1">
+                                    <div className="text-[12px] font-bold text-slate-900 dark:text-white">{provider}</div>
+                                    <p className="mt-0.5 truncate text-[10px] text-slate-500 dark:text-slate-400">{descriptions[provider]}</p>
+                                </div>
+                                {getSocialProfileLink(provider) ? (
+                                    <a
+                                        {...getSocialProfileLink(provider)!}
+                                        aria-label={`Open the PrismConnex ${provider} profile`}
+                                        className="inline-flex h-8 shrink-0 items-center rounded-md bg-indigo-600 px-4 text-[10px] font-bold text-white transition-colors hover:bg-indigo-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+                                    >
+                                        Open
+                                    </a>
+                                ) : (
+                                    <span className="inline-flex shrink-0 items-center rounded-md bg-slate-200 px-3 py-1.5 text-[10px] font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                                        Setup needed
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+                <p className="mt-1 text-[9.5px] leading-relaxed text-slate-500 dark:text-slate-400">
+                    Profile links open in this tab. Opening a profile does not connect social account authorization.
+                </p>
+            </DialogContent>
+        </Dialog>
+    );
+}
+
+type ManualSetupCategory = "email" | "forms" | "storage";
+
+function ManualSetupDialog({
+    category,
+    open,
+    onOpenChange,
+}: {
+    category: ManualSetupCategory | null;
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+}) {
+    const setup = category ? {
+        email: {
+            title: "Connect an email account",
+            description: "Review the available mailbox providers. Secure account authorization is not configured yet.",
+            providers: [
+                ["Outlook Mail", "Personal Outlook.com, Hotmail and Live accounts"],
+                ["Gmail", "Google Workspace and Gmail accounts"],
+                ["Yahoo Mail", "Yahoo Mail accounts"],
+                ["Microsoft 365", "Work or school Microsoft accounts"],
+            ],
+        },
+        forms: {
+            title: "Set up CRM Forms",
+            description: "Website form publishing is not available yet. This integration is not connected.",
+            providers: [["CRM Forms", "Capture leads from your website"]],
+        },
+        storage: {
+            title: "Set up file storage",
+            description: "A file storage provider is not configured yet. This integration is not connected.",
+            providers: [["File Storage", "Store exports and attachments"]],
+        },
+    }[category] : null;
+
+    return (
+        <Dialog open={open} onOpenChange={onOpenChange}>
+            <DialogContent className="max-h-[85vh] max-w-[480px] overflow-y-auto border border-slate-200 bg-white p-5 dark:border-[#22304A] dark:bg-[#0B1220]">
+                <DialogHeader className="mb-2">
+                    <DialogTitle className="text-[14px] font-bold text-slate-900 dark:text-white">{setup?.title ?? "Integration setup"}</DialogTitle>
+                    <DialogDescription className="text-[11px] text-slate-500 dark:text-slate-400">{setup?.description}</DialogDescription>
+                </DialogHeader>
+                <div className="space-y-2">
+                    {setup?.providers.map(([provider, description]) => (
+                        <div key={provider} className="rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-[#22304A] dark:bg-[#111B2E]/60">
+                            <div className="flex items-center gap-3">
+                                <ProviderMark provider={provider} size="large" />
+                                <div className="min-w-0 flex-1">
+                                    <div className="text-[12px] font-bold text-slate-900 dark:text-white">{provider}</div>
+                                    <p className="mt-0.5 text-[10px] text-slate-500 dark:text-slate-400">{description}</p>
+                                </div>
+                                <span className="inline-flex shrink-0 items-center rounded-md bg-slate-200 px-3 py-1.5 text-[10px] font-bold text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+                                    Setup needed
+                                </span>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+}
+
 export function IntegrationsSection() {
     const [category, setCategory] = useState<Category>("all");
     const [selectedIntegration, setSelectedIntegration] = useState("calendar");
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [socialProvidersOpen, setSocialProvidersOpen] = useState(false);
+    const [manualSetupCategory, setManualSetupCategory] = useState<ManualSetupCategory | null>(null);
     const [videoProvidersOpen, setVideoProvidersOpen] = useState(false);
     const [banner, setBanner] = useState<Banner>(null);
     const [busy, setBusy] = useState<string | null>(null);
@@ -637,12 +756,21 @@ export function IntegrationsSection() {
                                     <div className="space-y-0.5"><h3 className="text-[13px] font-bold dark:text-white text-slate-900">Social Media</h3><p className="text-[10px] text-slate-500 dark:text-slate-400">Connect social pages and messaging channels</p></div>
                                 </button>
                                 <div className="flex flex-wrap gap-1.5">{SOCIAL_PROVIDERS.map((provider) => <ProviderPill key={provider} provider={provider} />)}</div>
-                                <span className="inline-flex items-center rounded-full bg-amber-50 dark:bg-amber-500/10 px-2 py-0.5 text-[9.5px] font-semibold text-amber-700 dark:text-amber-400">Setup needed</span>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setSelectedIntegration("social");
+                                        setSocialProvidersOpen(true);
+                                    }}
+                                    className="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[9.5px] font-semibold text-amber-700 transition-colors hover:bg-amber-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 dark:bg-amber-500/10 dark:text-amber-400 dark:hover:bg-amber-500/20"
+                                >
+                                    Setup needed
+                                </button>
                             </div>
                         )}
 
                         {show("email") && (
-                            <button type="button" aria-pressed={selectedIntegration === "email"} onClick={() => setSelectedIntegration("email")} className={cn("rounded-xl border p-3 text-left transition-colors flex flex-col items-start gap-3 shadow-sm", selectedIntegration === "email" ? "border-indigo-200 bg-indigo-50 dark:border-indigo-500/30 dark:bg-[#16233A]/40" : "dark:border-white/[0.06] border-slate-200 dark:bg-[#0B1220] bg-white hover:bg-slate-50 dark:hover:bg-[#111B2E]")}>
+                            <button type="button" aria-pressed={selectedIntegration === "email"} onClick={() => { setSelectedIntegration("email"); setManualSetupCategory("email"); }} className={cn("rounded-xl border p-3 text-left transition-colors flex flex-col items-start gap-3 shadow-sm", selectedIntegration === "email" ? "border-indigo-200 bg-indigo-50 dark:border-indigo-500/30 dark:bg-[#16233A]/40" : "dark:border-white/[0.06] border-slate-200 dark:bg-[#0B1220] bg-white hover:bg-slate-50 dark:hover:bg-[#111B2E]")}>
                                 <div className="flex items-start gap-2.5">
                                     <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-300"><Mail className="size-4" /></span>
                                     <div className="space-y-0.5"><h3 className="text-[13px] font-bold dark:text-white text-slate-900">Email Configuration</h3><p className="text-[10px] text-slate-500 dark:text-slate-400">Connect inboxes for CRM email workflows</p></div>
@@ -699,7 +827,7 @@ export function IntegrationsSection() {
 
                         {/* CRM Forms */}
                         {show("forms") && (
-                        <button type="button" aria-pressed={selectedIntegration === "forms"} onClick={() => setSelectedIntegration("forms")} className={cn("rounded-xl border p-3 text-left transition-colors flex flex-col items-start gap-3 shadow-sm", selectedIntegration === "forms" ? "border-indigo-200 bg-indigo-50 dark:border-indigo-500/30 dark:bg-[#16233A]/40" : "dark:border-white/[0.06] border-slate-200 dark:bg-[#0B1220] bg-white hover:bg-slate-50 dark:hover:bg-[#111B2E]")}>
+                        <button type="button" aria-pressed={selectedIntegration === "forms"} onClick={() => { setSelectedIntegration("forms"); setManualSetupCategory("forms"); }} className={cn("rounded-xl border p-3 text-left transition-colors flex flex-col items-start gap-3 shadow-sm", selectedIntegration === "forms" ? "border-indigo-200 bg-indigo-50 dark:border-indigo-500/30 dark:bg-[#16233A]/40" : "dark:border-white/[0.06] border-slate-200 dark:bg-[#0B1220] bg-white hover:bg-slate-50 dark:hover:bg-[#111B2E]")}>
                             <div className="flex items-start gap-2.5">
                                 <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-300"><FileText className="size-4" /></span>
                                 <div className="space-y-0.5">
@@ -716,7 +844,7 @@ export function IntegrationsSection() {
 
                         {/* Webhooks */}
                         {show("webhooks") && (
-                        <button type="button" aria-pressed={selectedIntegration === "webhooks"} onClick={() => setSelectedIntegration("webhooks")} className={cn("rounded-xl border p-3 text-left transition-colors flex flex-col items-start gap-3 shadow-sm", selectedIntegration === "webhooks" ? "border-indigo-200 bg-indigo-50 dark:border-indigo-500/30 dark:bg-[#16233A]/40" : "dark:border-white/[0.06] border-slate-200 dark:bg-[#0B1220] bg-white hover:bg-slate-50 dark:hover:bg-[#111B2E]")}>
+                        <button type="button" aria-pressed={selectedIntegration === "webhooks"} onClick={() => { setSelectedIntegration("webhooks"); if (webhookState && !webhookState.endpoints.some((endpoint) => endpoint.isActive)) setWebhookDialogOpen(true); }} className={cn("rounded-xl border p-3 text-left transition-colors flex flex-col items-start gap-3 shadow-sm", selectedIntegration === "webhooks" ? "border-indigo-200 bg-indigo-50 dark:border-indigo-500/30 dark:bg-[#16233A]/40" : "dark:border-white/[0.06] border-slate-200 dark:bg-[#0B1220] bg-white hover:bg-slate-50 dark:hover:bg-[#111B2E]")}>
                             <div className="flex items-start gap-2.5">
                                 <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-cyan-50 text-cyan-600 dark:bg-cyan-500/10 dark:text-cyan-300"><Cable className="size-4" /></span>
                                 <div className="space-y-0.5">
@@ -733,7 +861,7 @@ export function IntegrationsSection() {
 
                         {/* File Storage */}
                         {show("storage") && (
-                        <button type="button" aria-pressed={selectedIntegration === "storage"} onClick={() => setSelectedIntegration("storage")} className={cn("rounded-xl border p-3 text-left transition-colors flex flex-col items-start gap-3 shadow-sm", selectedIntegration === "storage" ? "border-indigo-200 bg-indigo-50 dark:border-indigo-500/30 dark:bg-[#16233A]/40" : "dark:border-white/[0.06] border-slate-200 dark:bg-[#0B1220] bg-white hover:bg-slate-50 dark:hover:bg-[#111B2E]")}>
+                        <button type="button" aria-pressed={selectedIntegration === "storage"} onClick={() => { setSelectedIntegration("storage"); setManualSetupCategory("storage"); }} className={cn("rounded-xl border p-3 text-left transition-colors flex flex-col items-start gap-3 shadow-sm", selectedIntegration === "storage" ? "border-indigo-200 bg-indigo-50 dark:border-indigo-500/30 dark:bg-[#16233A]/40" : "dark:border-white/[0.06] border-slate-200 dark:bg-[#0B1220] bg-white hover:bg-slate-50 dark:hover:bg-[#111B2E]")}>
                             <div className="flex items-start gap-2.5">
                                 <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-orange-50 text-orange-600 dark:bg-orange-500/10 dark:text-orange-300"><HardDrive className="size-4" /></span>
                                 <div className="space-y-0.5">
@@ -1028,6 +1156,14 @@ export function IntegrationsSection() {
                 status={calendar.data}
                 loading={calendar.loading}
                 loadError={calendar.error}
+            />
+
+            <SocialProviderDialog open={socialProvidersOpen} onOpenChange={setSocialProvidersOpen} />
+
+            <ManualSetupDialog
+                category={manualSetupCategory}
+                open={manualSetupCategory !== null}
+                onOpenChange={(open) => { if (!open) setManualSetupCategory(null); }}
             />
 
             <Dialog open={webhookDialogOpen} onOpenChange={(open) => {
