@@ -53,6 +53,12 @@ import {
   pdfMetadata,
   pdfText,
   saysPlanComingSoon,
+  isErrorShell,
+  saysPlanOnRequest,
+  namesSiteMap,
+  planPageNamesOtherEdition,
+  namesAccessMap,
+  namesSalesDocument,
   predatesPreviousEdition,
   readEvidence,
   robotsSitemaps,
@@ -1002,6 +1008,10 @@ class Discovery {
     };
     // A file whose upload date predates the previous edition is that edition's, whatever else is wrong with it.
     if (predatesPreviousEdition(candidate.fileDate, this.profile)) candidate.otherEdition = true;
+    // A parking, shuttle or directions map is how to reach the show, not its floor plan (unless the show is about parking).
+    if (namesAccessMap(`${urlWords(candidate.url)} ${candidate.link}`) && !namesAccessMap(this.input.name)) {
+      return reject('a parking/transport or directions map, not the exhibition floor plan');
+    }
     try {
       let contentTitle: string | null = null;
       let contentBody: string | null = null;
@@ -1021,6 +1031,11 @@ class Discovery {
         if (LOGIN_URL.test(finalUrl) && !LOGIN_URL.test(candidate.url)) return reject('requires a login: the link redirects to a sign-in page');
         if (DIRECTIONS_QUERY.test(new URL(finalUrl).search)) return reject('a location/directions map, not a floor plan');
         if (saysPlanComingSoon(crawled.body)) return reject('the organizer says this floor plan is not published yet (coming soon)');
+        if (namesSiteMap(`${urlWords(finalUrl)} ${contentTitle}`)) return reject('a site map ("plan du site"), not a floor plan');
+        const otherEditionOfCrawled = planPageNamesOtherEdition(crawled.body, this.profile);
+        if (otherEditionOfCrawled) return reject(otherEditionOfCrawled);
+        if (saysPlanOnRequest(crawled.body)) return reject('the page asks visitors to contact the organizer for the floor plan; it shows none');
+        if (isErrorShell(crawled.body)) return reject('the plan page shows an error (invalid address or page not found), not a plan');
         // A page headed "2027 floor plan" that still shows last year's plan is not this edition's plan.
         const shown = Array.from(this.pageShows.get(crawled.url) ?? [])
           .map((key) => this.candidates.get(key))
@@ -1080,10 +1095,19 @@ class Discovery {
           if (candidate.role === 'plan' && contentBody && !namesFloorPlan(`${candidate.link} ${contentTitle ?? ''}`) && floorPlanMentions(contentBody) === 0 && candidate.page?.isPlanPage !== true) {
             return reject('PDF text does not mention a floor plan');
           }
+          const documentName = decodeURIComponent(new URL(finalUrl).pathname.split('/').pop() ?? '');
+          if (namesSalesDocument(documentName) && contentBody && floorPlanMentions(contentBody) === 0) {
+            return reject(`a sales document (${documentName}) whose text never mentions a floor plan`);
+          }
         } else if (kind === 'page' || kind === 'interactive') {
           const html = response.body.toString('utf8');
           contentTitle = pageHeadline(html);
           embeddable = !blocksFraming(response.headers);
+          if (kind === 'page' && namesSiteMap(`${urlWords(response.url)} ${contentTitle ?? ''}`)) return reject('a site map ("plan du site"), not a floor plan');
+          const otherEditionOfPage = kind === 'page' ? planPageNamesOtherEdition(pageText(html), this.profile) : null;
+          if (otherEditionOfPage) return reject(otherEditionOfPage);
+          if (kind === 'page' && saysPlanOnRequest(pageText(html))) return reject('the page asks visitors to contact the organizer for the floor plan; it shows none');
+          if (isErrorShell(pageText(html))) return reject('the plan page shows an error (invalid address or page not found), not a plan');
           if (kind === 'page' && !namesFloorPlan(`${urlWords(response.url)} ${contentTitle ?? ''}`)) return reject('page is not a floor-plan page');
         if (kind === 'page' && NEWS_PATH.test(new URL(response.url).pathname)) return reject('a news/press article about the floor plan, not the plan');
         }
@@ -1092,6 +1116,12 @@ class Discovery {
           const modified = new Date(response.headers['last-modified']);
           if (!Number.isNaN(modified.getTime())) fileDate = modified.toISOString().slice(0, 7);
         }
+      }
+      // A plan link that lands on another year's page (".../plan-du-salon/" → ".../plan-du-salon-2023/") shows that
+      // edition's plan, whatever the link itself says.
+      if ((kind === 'page' || kind === 'interactive') && finalUrl !== candidate.url) {
+        const landed = readEvidence(withoutUploadFolder(urlWords(finalUrl)), this.profile);
+        if (landed.otherYears.length && !landed.year) return reject(`the link leads to the ${landed.otherYears.join('/')} plan page (${finalUrl}), not this edition's`);
       }
       const verdict = judgeCandidate(
         {

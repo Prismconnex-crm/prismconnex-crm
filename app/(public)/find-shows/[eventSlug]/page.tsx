@@ -1,10 +1,14 @@
+import { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft, CalendarDays, MapPin, Users, Store, Building2, ExternalLink } from 'lucide-react';
+import { ArrowLeft, CalendarDays, Clock, MapPin, Users, Store, Building2, ExternalLink } from 'lucide-react';
 import { getFindShowDetail, getFindShowRegisterUrl } from '@/lib/find-shows/eventseye';
 import { findShowEventsBySlug } from '@/lib/find-shows/catalog';
-import { getFindShowAvatarUrl, getFindShowGradient } from '@/lib/find-shows/presentation';
+import { resolveEventTiming } from '@/lib/find-shows/event-timing-resolver';
+import type { FindShowDetail, FindShowEvent } from '@/types/find-shows';
+import { getFindShowAvatarUrl } from '@/lib/find-shows/presentation';
+import { EventHeroBackground, EventHeroGradient } from '@/components/find-shows/event-hero-background';
 import { TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EventTabs } from '@/components/find-shows/event-tabs';
 import { EventRegistrationDialog } from '@/components/find-shows/event-registration-dialog';
@@ -28,7 +32,6 @@ export default async function FindShowDetailRoute({
   const detail = await getFindShowDetail(event.slug);
   const registerUrl = getFindShowRegisterUrl(detail, event);
   
-  const bannerUrl = detail.bannerUrl;
   const logoUrl = detail.logoUrl ?? getFindShowAvatarUrl(event.name);
 
   return (
@@ -42,22 +45,19 @@ export default async function FindShowDetailRoute({
           Back to Find Shows
         </Link>
 
-        <div className="mt-6 overflow-hidden rounded-[32px] border border-slate-200/70 bg-white/90 shadow-[0_24px_70px_rgba(15,23,42,0.12)] dark:border-white/[0.08] dark:bg-[#0f1729]/90 dark:shadow-[0_24px_70px_rgba(0,0,0,0.36)]">
-          <div className="relative h-72">
-            {bannerUrl ? (
-              <Image
-                src={bannerUrl}
-                alt={`${event.name} banner`}
-                fill
-                sizes="100vw"
-                className="object-cover"
+        <div className="mt-6 rounded-[32px] border border-slate-200/70 bg-white/90 shadow-[0_24px_70px_rgba(15,23,42,0.12)] dark:border-white/[0.08] dark:bg-[#0f1729]/90 dark:shadow-[0_24px_70px_rgba(0,0,0,0.36)]">
+          {/* The banner clips its own corners: overflow-hidden on the outer card
+              would make it a scroll container and stop the snapshot card sticking. */}
+          <div className="relative h-72 overflow-hidden rounded-t-[31px]">
+            {/* Streams in: the gradient paints first, so an official site being
+                slow never holds up the page. */}
+            <Suspense fallback={<EventHeroGradient slug={event.slug} />}>
+              <EventHeroBackground
+                slug={event.slug}
+                website={registerUrl}
+                eventName={event.name}
               />
-            ) : (
-              <div
-                className="absolute inset-0"
-                style={{ backgroundImage: getFindShowGradient(event.slug) }}
-              />
-            )}
+            </Suspense>
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-transparent" />
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
               <div className="flex items-end gap-4">
@@ -82,7 +82,7 @@ export default async function FindShowDetailRoute({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 px-6 py-8 md:grid-cols-[1.2fr_0.8fr] md:px-8">
+          <div className="grid grid-cols-1 gap-8 px-6 py-8 md:grid-cols-[1.2fr_0.8fr] md:items-start md:px-8">
             
             {/* Left Column: Tabs Content. min-w-0 keeps the grid column at the
                 card's width so the tab row scrolls rather than widening it. */}
@@ -156,17 +156,24 @@ export default async function FindShowDetailRoute({
               </EventTabs>
             </div>
 
-            {/* Right Column: Event Snapshot */}
-            <div className="flex flex-col rounded-3xl border border-slate-200/70 bg-slate-50/90 p-6 dark:border-white/[0.08] dark:bg-white/[0.04]">
+            {/* Right Column: Event Snapshot. Sized to its own content (items-start) so the
+                Register button never moves when a tab's content changes height; from md up it
+                sticks below the 72px navbar, capped to the viewport so the button stays visible. */}
+            <div className="flex flex-col rounded-3xl md:sticky md:top-24 md:max-h-[calc(100vh-7.5rem)] border border-slate-200/70 bg-slate-50/90 p-6 dark:border-white/[0.08] dark:bg-white/[0.04]">
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
                 Event Date
               </p>
               
-              <div className="mt-5 flex-1 space-y-6 text-sm text-slate-700 dark:text-slate-200">
+              <div className="mb-8 mt-5 min-h-0 space-y-6 text-sm md:overflow-y-auto text-slate-700 dark:text-slate-200">
                 <div className="flex items-start gap-3">
                   <CalendarDays className="mt-0.5 size-5 shrink-0 text-indigo-500" />
                   <span className="font-semibold text-slate-900 dark:text-white text-base">{event.displayDate}</span>
                 </div>
+
+                {/* Verified official clock times only; renders nothing otherwise. Streams in so a slow official site never holds up the page. */}
+                <Suspense fallback={null}>
+                  <EventTimingDetails event={event} detail={detail} />
+                </Suspense>
                 
                 <div className="flex items-start gap-3">
                   <Building2 className="mt-0.5 size-5 shrink-0 text-emerald-500" />
@@ -210,13 +217,53 @@ export default async function FindShowDetailRoute({
               </div>
 
               {/* Action Button Area */}
-              <div className="mt-8 pt-6 border-t border-slate-200/60 dark:border-white/[0.08]">
+              <div className="mt-auto shrink-0 pt-6 border-t border-slate-200/60 dark:border-white/[0.08]">
                 <EventRegistrationDialog registerUrl={registerUrl} eventName={event.name} />
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/** Event Start Time / Event End Time — shown only for a verified official time of this edition. */
+async function EventTimingDetails({ event, detail }: { event: FindShowEvent; detail: FindShowDetail }) {
+  // A failure while reading an official site must never break the event page: show no times instead.
+  const timing = await resolveEventTiming(event, detail).catch(() => null);
+  if (!timing || timing.status !== 'VERIFIED_TIME' || (!timing.formattedStartTime && !timing.formattedEndTime)) {
+    return null;
+  }
+
+  return (
+    <div className="space-y-4">
+      {timing.formattedStartTime && (
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+            Event Start Time
+          </p>
+          <div className="mt-2 flex items-start gap-3">
+            <Clock className="mt-0.5 size-5 shrink-0 text-indigo-500" />
+            <span className="font-semibold text-slate-900 dark:text-white text-base">
+              {timing.formattedStartTime}
+            </span>
+          </div>
+        </div>
+      )}
+      {timing.formattedEndTime && (
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
+            Event End Time
+          </p>
+          <div className="mt-2 flex items-start gap-3">
+            <Clock className="mt-0.5 size-5 shrink-0 text-indigo-500" />
+            <span className="font-semibold text-slate-900 dark:text-white text-base">
+              {timing.formattedEndTime}
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

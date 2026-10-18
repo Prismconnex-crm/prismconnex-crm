@@ -151,7 +151,7 @@ export function EventRegistrationDialog({ registerUrl, eventName }: EventRegistr
                 className="pt-2"
               >
                 <div className="rounded-xl shadow-inner bg-slate-100 p-4 mb-6 dark:bg-[#111928] border dark:border-white/[0.04]">
-                   <p className="text-[12.5px] text-slate-600 dark:text-slate-300 leading-relaxed font-medium">Booth spaces are managed directly by event organizers. Submit a request to be placed on the exhibitor waitlist.</p>
+                   <p className="text-[12.5px] text-slate-600 dark:text-slate-300 leading-relaxed font-medium">Booth spaces are managed directly by event organizers. Submit a request to be placed on the exhibitor website.</p>
                 </div>
                 {registerUrl && (
                   <a

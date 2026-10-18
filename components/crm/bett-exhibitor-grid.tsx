@@ -8,14 +8,14 @@ import { cn } from "@/lib/utils";
 import type { Exhibitor } from "@/types/exhibitors";
 
 /**
- * BETT-only exhibitor browser: a card grid instead of the shared vertical list.
- * Server-paginated through /api/exhibitors (page/pageSize/q/sort), with page and
+ * Exhibitor browser for BETT (and AAPEX, see components/events/exhibitors-panel.tsx): a card grid instead of
+ * the shared vertical list. Server-paginated through /api/exhibitors (page/pageSize/q/sort), with page and
  * pageSize mirrored into the URL so a refresh restores the same view.
  *
- * Clicking a card navigates to the Companies page filtered to that exhibitor.
- * The two links inside a card — the domain and the "View detail" pill — still
- * open the exhibitor's own site in a new tab, and stop the click from reaching
- * the card underneath.
+ * By default — BETT — clicking a card navigates to the Companies page filtered to that exhibitor, and the two
+ * links inside a card — the domain and the "View detail" pill — open the exhibitor's own site in a new tab,
+ * stopping the click from reaching the card underneath. Another event can pass `onSelect` (what a card click
+ * does) and `onOpenWebsite` (what the pill does) instead: the BETT company profile is BETT's own page.
  */
 
 /** Last-resort target when an exhibitor published no site and no directory page. */
@@ -101,7 +101,19 @@ function pageWindow(current: number, total: number): (number | "gap")[] {
   return out;
 }
 
-export function BettExhibitorGrid({ eventSlug, expected }: { eventSlug: string; expected?: number | null }) {
+export function BettExhibitorGrid({
+  eventSlug,
+  expected,
+  onSelect,
+  onOpenWebsite,
+}: {
+  eventSlug: string;
+  expected?: number | null;
+  /** A card click; defaults to BETT's company profile on the Companies page. */
+  onSelect?: (exhibitor: Exhibitor) => void;
+  /** The "View detail" pill; defaults to the exhibitor's page in a new tab. */
+  onOpenWebsite?: (exhibitor: Exhibitor) => void;
+}) {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [sort, setSort] = useState<SortKey>("name");
@@ -336,7 +348,13 @@ export function BettExhibitorGrid({ eventSlug, expected }: { eventSlug: string; 
         ) : (
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
             {items.map((ex) => (
-              <ExhibitorCard key={ex.id} exhibitor={ex} onSelect={openInCompanies} />
+              <ExhibitorCard
+                key={ex.id}
+                exhibitor={ex}
+                onSelect={onSelect ?? openInCompanies}
+                selectTitle={onSelect ? `View ${ex.name} details` : `View ${ex.name} on the Companies page`}
+                onOpenWebsite={onOpenWebsite}
+              />
             ))}
           </div>
         )}
@@ -423,9 +441,13 @@ function PagerButton({
 function ExhibitorCard({
   exhibitor,
   onSelect,
+  selectTitle,
+  onOpenWebsite,
 }: {
   exhibitor: Exhibitor;
   onSelect: (exhibitor: Exhibitor) => void;
+  selectTitle: string;
+  onOpenWebsite?: (exhibitor: Exhibitor) => void;
 }) {
   const [logoFailed, setLogoFailed] = useState(false);
   const href = exhibitorHref(exhibitor);
@@ -446,7 +468,7 @@ function ExhibitorCard({
           onSelect(exhibitor);
         }
       }}
-      title={`View ${exhibitor.name} on the Companies page`}
+      title={selectTitle}
       className="cursor-pointer group relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white/70 p-4 shadow-sm backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-indigo-400/70 hover:shadow-[0_18px_45px_-18px_rgba(79,70,229,0.55)] dark:border-[#22304A] dark:bg-[#111B2E]/70 dark:hover:border-indigo-400/50 dark:hover:shadow-[0_18px_45px_-18px_rgba(99,102,241,0.65)]"
     >
       {/* Neon sheen, only on hover */}
@@ -510,25 +532,49 @@ function ExhibitorCard({
         ) : (
           <p className="text-[11px] font-bold text-slate-400 dark:text-slate-500">No official site published</p>
         )}
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(event) => event.stopPropagation()}
-          title={
-            exhibitor.website
-              ? `Open ${exhibitor.name} official website`
-              : "No official site published — opens the show directory"
-          }
-          className="mt-2 flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white/60 py-1.5 text-[11px] font-black text-indigo-600 transition-all group-hover:border-indigo-400/60 group-hover:bg-indigo-50 dark:border-[#22304A] dark:bg-[#0B1220]/60 dark:text-indigo-300 dark:group-hover:border-indigo-400/40 dark:group-hover:bg-indigo-500/10"
-        >
-          {exhibitor.website ? "View detail" : "Open show directory"}
-          <ExternalLink className="size-3" />
-        </a>
+        {onOpenWebsite ? (
+          // Same pill, handled in the app instead of a new tab; stopPropagation as for the link below.
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              onOpenWebsite(exhibitor);
+            }}
+            onKeyDown={(event) => event.stopPropagation()}
+            title={
+              exhibitor.website
+                ? `Open ${exhibitor.name} official website in Prismconnex`
+                : "No official site published — opens the show directory in Prismconnex"
+            }
+            className={`w-full ${VIEW_DETAIL_CLASS}`}
+          >
+            {exhibitor.website ? "View detail" : "Open show directory"}
+            <ExternalLink className="size-3" />
+          </button>
+        ) : (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(event) => event.stopPropagation()}
+            title={
+              exhibitor.website
+                ? `Open ${exhibitor.name} official website`
+                : "No official site published — opens the show directory"
+            }
+            className={VIEW_DETAIL_CLASS}
+          >
+            {exhibitor.website ? "View detail" : "Open show directory"}
+            <ExternalLink className="size-3" />
+          </a>
+        )}
       </div>
     </div>
   );
 }
+
+const VIEW_DETAIL_CLASS =
+  "mt-2 flex items-center justify-center gap-1.5 rounded-xl border border-slate-200 bg-white/60 py-1.5 text-[11px] font-black text-indigo-600 transition-all group-hover:border-indigo-400/60 group-hover:bg-indigo-50 dark:border-[#22304A] dark:bg-[#0B1220]/60 dark:text-indigo-300 dark:group-hover:border-indigo-400/40 dark:group-hover:bg-indigo-500/10";
 
 function ExhibitorGridSkeleton({ count }: { count: number }) {
   return (

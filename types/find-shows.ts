@@ -23,6 +23,24 @@ export type FindShowAsset = {
   eventseyeUrl: string | null;
 };
 
+export type EventTimingStatus =
+  | 'VERIFIED_TIME'
+  | 'VERIFIED_NO_TIME'
+  | 'UNAVAILABLE'
+  | 'FETCH_ERROR';
+
+export type EventTimingResult = {
+  status: EventTimingStatus;
+  startTime: string | null;
+  endTime: string | null;
+  timeZone: string | null;
+  formattedStartTime: string | null;
+  formattedEndTime: string | null;
+  sourceUrl: string | null;
+  evidence: string | null;
+  checkedAt: string;
+};
+
 export type FindShowDetail = FindShowAsset & {
   description: string | null;
   fullVenueAddress: string | null;
@@ -30,6 +48,10 @@ export type FindShowDetail = FindShowAsset & {
   exhibitorCount: number | null;
   website: string | null;
   lastUpdated: string | null;
+  startTime?: string | null;
+  endTime?: string | null;
+  timeZone?: string | null;
+  timing?: EventTimingResult | null;
 };
 
 export type FindShowFilters = {
@@ -61,6 +83,10 @@ export type FindShowSeedRecord = {
   monthYear?: string;
   /** e.g. "6 days", when the listing states it. */
   duration?: string;
+  startTime?: string | null;
+  endTime?: string | null;
+  timeZone?: string | null;
+  timing?: EventTimingResult | null;
 };
 
 export type FindShowEvent = {
@@ -105,4 +131,8 @@ export type FindShowEvent = {
   /** "August 2026" — drives the Month-Year filter. */
   monthYear: string;
   duration: string;
+  startTime?: string | null;
+  endTime?: string | null;
+  timeZone?: string | null;
+  timing?: EventTimingResult | null;
 };

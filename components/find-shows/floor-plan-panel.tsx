@@ -1,7 +1,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ExternalLink, Info, Loader2, Map as MapIcon, RotateCw } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ExternalLink, Info, Loader2, LogIn, Map as MapIcon, RotateCw } from 'lucide-react';
+import { signInHrefReturningTo } from '@/lib/auth/return-to';
+import { isSignedIn } from '@/lib/auth/session-client';
+import { floorPlanTabUrl } from '@/lib/find-shows/floor-plan-return';
 import type { FindShowFloorPlan } from '@/lib/find-shows/floor-plan';
 import type { FloorPlanStatus, FloorPlanTrace } from '@/lib/find-shows/floor-plan-discovery';
 import { PdfPlanViewer } from './pdf-plan-viewer';
@@ -160,12 +164,60 @@ function debugParams() {
 }
 
 /**
- * The Floor Plan tab. Radix mounts a tab's content only while it is open, so
+ * The Floor Plan tab, for every event: signed-in visitors see the floor plan; anyone else is asked to sign
+ * in with the existing Prismconnex sign-in, which returns to this event's Floor Plan tab. Clicking the tab
+ * signed out goes straight to sign-in (see EventTabs); this covers an address that opens the tab directly
+ * and a cancelled sign-in. Nothing about the floor plan is asked for until the session is confirmed, and
+ * the rule never depends on the edition's record, so plans found later are covered the same way.
+ */
+export function FloorPlanPanel(props: { slug: string; eventName: string; editionDate?: string }) {
+  const router = useRouter();
+  const [access, setAccess] = useState<'checking' | 'signed-in' | 'signed-out'>('checking');
+
+  useEffect(() => {
+    let live = true;
+    isSignedIn().then((ok) => live && setAccess(ok ? 'signed-in' : 'signed-out'));
+    return () => {
+      live = false;
+    };
+  }, []);
+
+  if (access === 'signed-in') return <FloorPlanResults {...props} />;
+  if (access === 'checking') {
+    return (
+      <p className="flex items-center gap-2 rounded-2xl border border-slate-200/70 px-4 py-6 text-sm text-slate-500 dark:border-white/[0.08] dark:text-slate-400">
+        <Loader2 className="size-4 animate-spin" />
+        Checking your sign-in…
+      </p>
+    );
+  }
+  const signIn = () => {
+    const { pathname, search } = window.location;
+    router.push(signInHrefReturningTo(floorPlanTabUrl(pathname, search)));
+  };
+  return (
+    <div className="space-y-3 rounded-2xl border border-dashed border-slate-300/80 p-8 text-center dark:border-white/[0.12]">
+      <p className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400">
+        <MapIcon className="size-4 shrink-0" />
+        Sign in to view the floor plan for this event.
+      </p>
+      <div>
+        <button type="button" onClick={signIn} className={linkClass}>
+          <LogIn className="size-3.5" />
+          Sign in
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * The floor plan itself. Radix mounts a tab's content only while it is open, so
  * the lookup runs when the tab is first opened, for this event only. It says
  * none has been published only when the official sources were searched through
  * without finding a verified plan; a search that could not finish says so.
  */
-export function FloorPlanPanel({ slug, eventName, editionDate }: { slug: string; eventName: string; editionDate?: string }) {
+function FloorPlanResults({ slug, eventName, editionDate }: { slug: string; eventName: string; editionDate?: string }) {
   const [state, setState] = useState<LoadState>({ status: 'loading' });
   // Bumped by "Try again": asks the server to search an unsettled edition again now.
   const [retries, setRetries] = useState(0);

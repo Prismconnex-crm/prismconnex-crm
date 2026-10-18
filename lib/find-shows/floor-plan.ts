@@ -235,6 +235,35 @@ const NOT_PLAN_PATTERN = bounded(
 );
 export const namesNotPlan = (text: string) => NOT_PLAN_PATTERN.test(normalize(text));
 
+/**
+ * A website's site map, not a floor plan: French "plan du site" (and its neighbours) uses the same word "plan".
+ * Read on a page's address and headline, so ".../legalite/plan-du-site" is never taken for the show's plan.
+ * English "site map" is left alone: at a fair or festival it is the map of the grounds.
+ */
+const SITE_MAP_PATTERN = bounded(/plan du site|mappa del sito|mapa del sitio|mapa do site|mapa strony|seitenubersicht|sitemap/);
+export const namesSiteMap = (text: string) => SITE_MAP_PATTERN.test(normalize(text));
+
+/**
+ * A map for getting to the show, not of the show: "FLIBS-2026-Parking-and-Transportation-Map.pdf", "Anfahrt",
+ * "shuttle map". "Transport" alone is not enough (shows are called "Transport Logistic"); a name that also says
+ * floor or hall plan is kept.
+ */
+const ACCESS_MAP_PATTERN = bounded(
+  /parking|car park|parkplatz\w*|shuttle\w*|directions?|anfahrt\w*|wegbeschreibung|getting there|how to get there|plan d acces|transport(?:ation)? maps?/
+);
+const FLOOR_PLAN_WORDS = bounded(/floor ?plans?|hall ?plans?|hallenplan\w*|exhibit(?:ion|or)? (?:hall )?(?:plan|map)s?|stand ?plan|booth ?map/);
+/**
+ * A sales document by its own file name ("AllSport-Brochure.pdf", "IE26 Exhibit Prospectus.pdf", "oferta"): it holds
+ * the floor plan only when its text says so. A link calling it the floor plan is not enough.
+ */
+const SALES_DOCUMENT_PATTERN = bounded(/brochures?|prospectus|oferta|rate ?cards?|media ?kits?|sales ?kits?|sponsorship/);
+export const namesSalesDocument = (fileName: string) => SALES_DOCUMENT_PATTERN.test(normalize(fileName));
+
+export const namesAccessMap = (text: string) => {
+  const normalized = normalize(text);
+  return ACCESS_MAP_PATTERN.test(normalized) && !FLOOR_PLAN_WORDS.test(normalized);
+};
+
 /** Link text that says nothing about what it links to ("Download", "PDF", "here"). */
 export const isGenericLinkText = (text: string) =>
   normalize(text).length === 0 ||
@@ -266,6 +295,29 @@ export const saysComingSoon = (text: string) => {
 export function saysPlanComingSoon(pageText: string) {
   const lines = pageText.split('\n').map((line) => line.trim()).filter(Boolean);
   return lines.some((line, index) => saysComingSoon(line) && (namesFloorPlan(line) || namesFloorPlan(lines[index - 1] ?? '')));
+}
+
+/**
+ * Whether a page sends visitors to the organizer for the floor plan instead of showing one ("Please contact
+ * the organizers for updated floor plan", "floor plan on request"). Like "coming soon", the page itself is
+ * then not a plan; a plan image or file on it is still judged on its own.
+ */
+const PLAN_ON_REQUEST =
+  /\b(?:contact (?:the |our )?(?:organi[sz]ers?|organi[sz]ing team|sales team|team|us)\b.{0,40}\bfloor ?plans?\b|floor ?plans?\b.{0,40}\b(?:on|upon|by) request\b|request (?:the|a|an|our)(?: updated| latest)? floor ?plan)/i;
+export function saysPlanOnRequest(pageText: string) {
+  return pageText.split('\n').some((line) => PLAN_ON_REQUEST.test(line));
+}
+
+/**
+ * Whether a plan page is an error shell: next to no visible text, and what there is says the address is
+ * invalid or the page is missing ("loading... Invalid Url!", "404 Page not found"). Visitors would see an
+ * error there, not a plan, whatever the page linking to it says. An interactive plan that draws itself with
+ * script also shows little text, but no such error, so it is unaffected.
+ */
+const ERROR_SHELL = /\b(?:invalid (?:url|link|address)|page (?:not found|introuvable|nicht gefunden)|not found|404)\b/i;
+export function isErrorShell(pageText: string) {
+  const visible = pageText.replace(/\s+/g, ' ').trim();
+  return visible.length < 300 && ERROR_SHELL.test(visible);
 }
 
 export const namesExhibitorInfo = (text: string) => matchesVocabulary(text, EXHIBITOR_BOUNDED, EXHIBITOR_UNSPACED);
@@ -941,6 +993,22 @@ function namesEditionMonth(normalized: string, profile: EditionProfile) {
   });
 }
 
+/**
+ * What a plan page's own lines about its plan say ("Voici le plan du Salon de Bordeaux 2018 :"). When they name only
+ * another year or another city, the page shows that edition's plan, whatever its menus and footer name.
+ */
+export function planPageNamesOtherEdition(pageText: string, profile: EditionProfile): string | null {
+  const lines = pageText
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line && line.length <= 300 && namesFloorPlan(line) && !namesSiteMap(line));
+  if (!lines.length) return null;
+  const evidence = readEvidence(lines.join('\n'), profile);
+  if (evidence.otherYears.length && !evidence.year && !evidence.dates) return `the page's own plan is for ${evidence.otherYears.join('/')}, not ${profile.year}`;
+  if (evidence.otherCities.length && !evidence.city && !evidence.venue) return `the page's own plan is for ${list(evidence.otherCities)}`;
+  return null;
+}
+
 export function readEvidence(text: string, profile: EditionProfile, options: { long?: boolean } = {}): Evidence {
   const normalized = normalize(text);
   const years = editionYears(normalized, text, profile, Boolean(options.long));
@@ -1216,7 +1284,14 @@ function hexString(value: string) {
   return hex.match(/.{2}/g)?.map((code) => String.fromCharCode(parseInt(code, 16))).join('') ?? '';
 }
 
-/** The decoded streams of a PDF (Flate-compressed ones inflated). */
+/**
+ * Largest a single inflated stream may grow: a floor-plan PDF's image or vector
+ * stream can inflate to hundreds of MB, which would exhaust the heap; such a
+ * stream is skipped (it is drawing or pixels, not the text we read).
+ */
+const MAX_INFLATED_STREAM = 16_000_000;
+
+/** The decoded streams of a PDF (Flate-compressed ones inflated), one at a time. */
 function* pdfStreams(buffer: Buffer): Generator<string> {
   const raw = buffer.toString('latin1');
   const streamStart = /stream\r?\n/g;
@@ -1226,7 +1301,7 @@ function* pdfStreams(buffer: Buffer): Generator<string> {
     const end = raw.indexOf('endstream', start);
     if (end === -1) break;
     try {
-      yield inflateSync(buffer.subarray(start, end)).toString('latin1');
+      yield inflateSync(buffer.subarray(start, end), { maxOutputLength: MAX_INFLATED_STREAM }).toString('latin1');
     } catch {
       const plain = raw.slice(start, end);
       // Only a stream that is itself text, never image or font bytes that happen to contain "BT…ET".
@@ -1245,7 +1320,9 @@ function* pdfStreams(buffer: Buffer): Generator<string> {
 export function pdfText(buffer: Buffer): string | null {
   const pieces: string[] = [];
   let total = 0;
-  for (const content of Array.from(pdfStreams(buffer))) {
+  const streams = pdfStreams(buffer);
+  for (let next = streams.next(); !next.done; next = streams.next()) {
+    const content = next.value;
     for (const block of content.match(/BT[\s\S]*?ET/g) ?? []) {
       let line = '';
       for (const token of block.match(/\((?:\\.|[^\\)])*\)|<[0-9a-fA-F\s]+>|TJ|Tj|T\*|Td|TD|'|"/g) ?? []) {
@@ -1271,7 +1348,17 @@ export type PdfMetadata = { title: string | null; created: string | null };
 export function pdfMetadata(buffer: Buffer): PdfMetadata {
   const raw = buffer.toString('latin1');
   const sources = [raw.slice(0, 200_000), raw.slice(-200_000)];
-  for (const stream of Array.from(pdfStreams(buffer)).slice(-40)) if (/\/Title|dc:title|CreateDate/.test(stream)) sources.push(stream);
+  // Metadata streams among the last 40, kept without holding every inflated stream at once.
+  const metadata: { index: number; stream: string }[] = [];
+  let count = 0;
+  const streams = pdfStreams(buffer);
+  for (let next = streams.next(); !next.done; next = streams.next()) {
+    const stream = next.value;
+    if (/\/Title|dc:title|CreateDate/.test(stream)) metadata.push({ index: count, stream });
+    count++;
+    while (metadata.length && metadata[0].index < count - 40) metadata.shift();
+  }
+  for (const { stream } of metadata) sources.push(stream);
   let title: string | null = null;
   let created: string | null = null;
   for (const text of sources) {

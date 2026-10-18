@@ -20,7 +20,8 @@ await build({
   target: 'node20',
   outfile,
   tsconfig: path.join(root, 'tsconfig.json'),
-  external: ['next', 'next/*'],
+  // Prisma stays external: the CRM exhibitor sync (lib/exhibitors/crm-sync-queue.ts) reaches it lazily.
+  external: ['next', 'next/*', '@prisma/client', '.prisma/client'],
   logLevel: 'warning',
 });
 

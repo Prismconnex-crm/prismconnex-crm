@@ -1,6 +1,6 @@
 'use client';
 
-import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react';
+import { useDeferredValue, useEffect, useMemo, useRef, useState, type SetStateAction } from 'react';
 import { motion } from 'framer-motion';
 import { useLocale } from 'next-intl';
 import { BadgeCheck, Globe2 } from 'lucide-react';
@@ -9,7 +9,9 @@ import { FindShowsFilterBar } from '@/components/find-shows/find-shows-filter-ba
 import { FindShowGrid } from '@/components/find-shows/find-show-grid';
 import { eventYears } from '@/lib/find-shows/date-range';
 import { searchFindShowEvents } from '@/lib/find-shows/search-events';
-import { localizePathname } from '@/lib/locale';
+import { localizePathname, stripLocaleFromPathname } from '@/lib/locale';
+import { createResultsHistory, type ResultsHistory } from '@/lib/find-shows/results-history';
+import { DEFAULT_FILTERS, PAGE_SIZE, scrollStorageKey } from '@/lib/find-shows/results-state';
 import type { Locale } from '@/types';
 import type {
   FindShowAsset,
@@ -19,14 +21,7 @@ import type {
   FindShowsCategory,
 } from '@/types/find-shows';
 
-const initialFilters: FindShowFilters = {
-  query: '',
-  region: 'All Regions',
-  country: '',
-  category: 'All Categories',
-  startMonth: '',
-  endMonth: '',
-};
+const initialFilters: FindShowFilters = DEFAULT_FILTERS;
 
 
 function buildSeedAssetMap(events: FindShowEvent[]) {
@@ -56,7 +51,10 @@ export function FindShowsPage({
   const locale = useLocale() as Locale;
   const resultsRef = useRef<HTMLElement>(null);
   const [filters, setFilters] = useState(initialFilters);
-  const [visibleCount, setVisibleCount] = useState(12);
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  // Where to scroll once the results read from the address are on screen; a new object each time, so
+  // returning to the same position twice still scrolls.
+  const [scrollTarget, setScrollTarget] = useState<{ top: number } | null>(null);
   const [likedEventSlugs, setLikedEventSlugs] = useState<string[]>([]);
   const [likesLoaded, setLikesLoaded] = useState(false);
   const [assets, setAssets] = useState<Record<string, FindShowAsset>>(() =>
@@ -91,16 +89,62 @@ export function FindShowsPage({
     window.localStorage.setItem('likedEvents', JSON.stringify(likedEventSlugs));
   }, [likedEventSlugs, likesLoaded]);
 
+  const historyRef = useRef<ResultsHistory | null>(null);
+  const resultsHistory = () => (historyRef.current ??= createResultsHistory(window));
+
+  // A filter action is a navigation: it starts the grid again from its first page and becomes its own
+  // history entry, so Back steps through Europe → Germany → … one state at a time.
+  const changeFilters = (update: SetStateAction<FindShowFilters>) => {
+    const nextFilters = typeof update === 'function' ? update(filters) : update;
+    setFilters(nextFilters);
+    setVisibleCount(PAGE_SIZE);
+    resultsHistory().commit({ filters: nextFilters, visibleCount: PAGE_SIZE });
+  };
+
+  // Shows the results state in the address, scrolled to where the visitor left that address.
+  const applyAddress = () => {
+    const { pathname, search } = window.location;
+    const state = resultsHistory().read();
+    setFilters(state.filters);
+    setVisibleCount(state.visibleCount);
+    const savedScroll = Number(window.sessionStorage.getItem(scrollStorageKey(pathname, search)));
+    setScrollTarget(savedScroll > 0 ? { top: savedScroll } : null);
+  };
+
+  // The address is the source of truth: read once mounted (a fresh load, a shared link, or Back from an
+  // event page, which remounts this page) — like EventTabs, so the server render and hydration stay
+  // identical — and again on every Back/Forward between results states, which keeps this page mounted.
   useEffect(() => {
-    setVisibleCount(12);
-  }, [
-    deferredQuery,
-    filters.region,
-    filters.country,
-    filters.category,
-    filters.startMonth,
-    filters.endMonth,
-  ]);
+    applyAddress();
+    const onPopState = () => {
+      if (stripLocaleFromPathname(window.location.pathname) === '/find-shows') applyAddress();
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Remember how far down the results the visitor is, per address, for the restore above.
+  useEffect(() => {
+    const resultsPathname = window.location.pathname;
+    let frame = 0;
+    const save = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        // An event page's own scroll-to-top must not overwrite the results position.
+        if (window.location.pathname !== resultsPathname) return;
+        window.sessionStorage.setItem(
+          scrollStorageKey(resultsPathname, window.location.search),
+          String(Math.round(window.scrollY))
+        );
+      });
+    };
+    window.addEventListener('scroll', save, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', save);
+    };
+  }, []);
 
   // deferredQuery keeps typing responsive across the ~11k event catalog: the
   // input updates on every keystroke while the grid re-filters and re-ranks at
@@ -123,6 +167,13 @@ export function FindShowsPage({
     () => filteredEvents.slice(0, visibleCount),
     [filteredEvents, visibleCount]
   );
+
+  // Scroll back once the restored results are on screen: the deferred query has caught up.
+  useEffect(() => {
+    if (!scrollTarget || deferredQuery !== filters.query) return;
+    setScrollTarget(null);
+    requestAnimationFrame(() => window.scrollTo({ top: scrollTarget.top }));
+  }, [scrollTarget, deferredQuery, filters.query, visibleEvents]);
 
   useEffect(() => {
     const pendingSlugs = visibleEvents.map((event) => event.slug).filter((slug) => !assets[slug]);
@@ -186,11 +237,17 @@ export function FindShowsPage({
           run the same filter and just bring the grid back into view. */}
       <FindShowsHero
         searchQuery={filters.query}
-        onSearchQueryChange={(value) =>
-          setFilters((currentFilters) => ({ ...currentFilters, query: value }))
-        }
+        onSearchQueryChange={(value) => {
+          // One typing burst is one history entry (see results-history.ts).
+          const nextFilters = { ...filters, query: value };
+          setFilters(nextFilters);
+          setVisibleCount(PAGE_SIZE);
+          resultsHistory().type({ filters: nextFilters, visibleCount: PAGE_SIZE });
+        }}
         onSearchSubmit={() => {
-          setVisibleCount(12);
+          setVisibleCount(PAGE_SIZE);
+          resultsHistory().update({ filters, visibleCount: PAGE_SIZE });
+          resultsHistory().endTyping();
           resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }}
         stats={heroStats}
@@ -200,12 +257,12 @@ export function FindShowsPage({
         categories={categories}
         dateRangeYears={dateRangeYears}
         filters={filters}
-        onFiltersChange={setFilters}
+        onFiltersChange={changeFilters}
         activeFilterCount={activeFilterCount}
-        onClear={() => setFilters(initialFilters)}
+        onClear={() => changeFilters(initialFilters)}
       />
 
-      <section ref={resultsRef} className="scroll-mt-[132px] px-5 py-8 md:px-8 md:py-10">
+      <section ref={resultsRef} className="scroll-mt-[132px] px-5 py-8 md:px-8 md:py-10 lg:px-6 xl:px-8">
         <div className="mx-auto max-w-7xl">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
@@ -251,8 +308,13 @@ export function FindShowsPage({
             getDetailHref={(slug) => localizePathname(`/find-shows/${slug}`, locale)}
             visibleCount={displayedEventCount}
             totalCount={filteredEvents.length}
-            onLoadMore={() => setVisibleCount((currentCount) => currentCount + 12)}
-            onClearFilters={() => setFilters(initialFilters)}
+            onLoadMore={() => {
+              // More of the same results, not a navigation: kept in the current entry for Back to restore.
+              const nextCount = visibleCount + PAGE_SIZE;
+              setVisibleCount(nextCount);
+              resultsHistory().update({ filters, visibleCount: nextCount });
+            }}
+            onClearFilters={() => changeFilters(initialFilters)}
           />
         </div>
       </section>
