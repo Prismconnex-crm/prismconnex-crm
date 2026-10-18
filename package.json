@@ -7,7 +7,7 @@
     "generate:sqlite": "prisma generate --schema prisma/sqlite-companies.prisma",
     "db:seed": "node --experimental-strip-types prisma/seed.ts",
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/copy-pdf-worker.mjs && next build",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
