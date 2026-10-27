@@ -3,6 +3,7 @@ import { z } from "zod";
 import { validateBody } from "@/lib/http/validate";
 import { AuthService } from "@/services/auth.service";
 import { jsonOk, jsonError } from "@/lib/http/response";
+import { clientIp } from "@/lib/auth/otp-guard";
 
 /**
  * Server-side contract, and the source of truth for validation. The client
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
 
         // Creates the Supabase Auth user (password stored only there); the
         // on_auth_user_created trigger creates the matching profiles row.
-        const result = await AuthService.signUp(data);
+        const result = await AuthService.signUp(data, clientIp(req.headers));
 
         return jsonOk(
             {

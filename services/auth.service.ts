@@ -1,7 +1,13 @@
 import * as gotrue from "@/lib/supabase/gotrue";
 import type { OAuthProviderKey, SupabaseSession } from "@/lib/supabase/gotrue";
 import { ProfileService } from "@/services/profile.service";
-import { BadRequestError, UnauthorizedError } from "@/lib/http/errors";
+import { BadRequestError, ConflictError, InvalidOtpError, UnauthorizedError } from "@/lib/http/errors";
+import {
+    assertCanVerify,
+    consumeOtpSend,
+    recordVerifyFailure,
+    recordVerifySuccess,
+} from "@/lib/auth/otp-guard";
 import type { ProfileDTO } from "@/models/profile";
 
 /**
@@ -50,13 +56,26 @@ export class AuthService {
      * runtime rather than hard-coded — the caller uses it to decide between
      * sending the user to /auth/verify and signing them straight in.
      */
-    static async signUp(params: SignUpParams) {
+    static async signUp(params: SignUpParams, ip = "unknown") {
+        // Every signup emails a code, so it spends from the same budget as
+        // Resend Code.
+        consumeOtpSend(params.email, ip);
+
         const { user, session } = await gotrue.signUp(params.email, params.password, {
             first_name: params.firstName,
             middle_name: params.middleName,
             last_name: params.lastName,
             phone: params.phone,
         });
+
+        // Supabase hides an existing account behind a fake user and sends no
+        // email. Without this check the UI went to the verify screen and the
+        // user waited for a code that would never arrive.
+        if (gotrue.isExistingAccountSignUp(user)) {
+            throw new ConflictError(
+                "An account with this email already exists. Sign in instead, or reset your password."
+            );
+        }
 
         // The trigger has already committed the profile alongside the auth user.
         // ensureProfile() is the fallback if the trigger is ever missing.
@@ -71,10 +90,30 @@ export class AuthService {
     }
 
     /** Confirms a signup with the emailed OTP, then loads the profile. */
-    static async verify(email: string, code: string): Promise<AuthResult> {
-        const session = await gotrue.verifySignUpOtp(email, code);
+    static async verify(email: string, code: string, ip = "unknown"): Promise<AuthResult> {
+        assertCanVerify(email, ip);
+
+        let session: SupabaseSession;
+        try {
+            session = await gotrue.verifySignUpOtp(email, code);
+        } catch (error) {
+            if (error instanceof InvalidOtpError) recordVerifyFailure(email);
+            throw error;
+        }
+
+        recordVerifySuccess(email);
         const profile = await ProfileService.ensureProfileForSession(session.user);
         return { session, profile };
+    }
+
+    /**
+     * Emails a fresh signup code (the previous one stops working). Supabase
+     * answers the same for unknown or already-verified addresses, so this
+     * reveals nothing about which emails are registered.
+     */
+    static async resendSignUpCode(email: string, ip = "unknown") {
+        consumeOtpSend(email, ip);
+        await gotrue.resendSignUpOtp(email);
     }
 
     /**

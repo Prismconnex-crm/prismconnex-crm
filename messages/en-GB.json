@@ -876,7 +876,8 @@
         "passwordRequired": "Password is required"
       },
       "status": {
-        "signedOut": "You have been signed out successfully."
+        "signedOut": "You have been signed out successfully.",
+        "verified": "Email verified. You can sign in now."
       }
     },
     "signUp": {
@@ -935,10 +936,18 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Verify"
+        "submit": "Verify",
+        "resend": "Resend code",
+        "resendIn": "Resend code in {seconds}s"
       },
       "errors": {
-        "verify": "Failed to verify"
+        "verify": "Failed to verify",
+        "resend": "Couldn't resend the code",
+        "emailRequired": "Enter your email address first"
+      },
+      "status": {
+        "resent": "A new code has been sent. Check your inbox and spam folder.",
+        "unverified": "Your email isn't verified yet. Enter the code we emailed you, or request a new one."
       }
     },
     "forgotPassword": {

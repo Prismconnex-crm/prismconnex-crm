@@ -44,3 +44,49 @@ export class InternalServerError extends ApiError {
         this.name = 'InternalServerError';
     }
 }
+
+export class ConflictError extends ApiError {
+    constructor(message = 'Conflict') {
+        super(message, 409);
+        this.name = 'ConflictError';
+    }
+}
+
+export class TooManyRequestsError extends ApiError {
+    constructor(message = 'Too Many Requests', public retryAfterSeconds?: number) {
+        super(message, 429, retryAfterSeconds ? { retryAfterSeconds } : undefined);
+        this.name = 'TooManyRequestsError';
+    }
+}
+
+/**
+ * Correct password, but the signup OTP was never verified. A distinct code so
+ * the sign-in form can send the user back to the verify step instead of just
+ * showing text.
+ */
+export class EmailNotConfirmedError extends UnauthorizedError {
+    constructor(message = 'Please verify your email address before signing in.') {
+        super(message);
+        this.name = 'EmailNotConfirmedError';
+    }
+}
+
+/** The OTP was wrong, expired, or already used — GoTrue does not say which. */
+export class InvalidOtpError extends BadRequestError {
+    constructor(
+        message = 'That verification code is invalid or has expired. Check the latest email or request a new code.'
+    ) {
+        super(message);
+        this.name = 'InvalidOtpError';
+    }
+}
+
+/** The auth provider accepted the request but could not send the email. */
+export class EmailDeliveryError extends ApiError {
+    constructor(
+        message = "We couldn't send the verification email. Email delivery is not working on the server right now — please try again later."
+    ) {
+        super(message, 503);
+        this.name = 'EmailDeliveryError';
+    }
+}

@@ -879,7 +879,8 @@
         "passwordRequired": "パスワードを入力してください"
       },
       "status": {
-        "signedOut": "ログアウトしました。"
+        "signedOut": "ログアウトしました。",
+        "verified": "メールアドレスが確認されました。サインインできます。"
       }
     },
     "signUp": {
@@ -938,10 +939,18 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "確認する"
+        "submit": "確認する",
+        "resend": "コードを再送信",
+        "resendIn": "{seconds}秒後に再送信できます"
       },
       "errors": {
-        "verify": "確認に失敗しました"
+        "verify": "確認に失敗しました",
+        "resend": "コードを再送信できませんでした",
+        "emailRequired": "先にメールアドレスを入力してください"
+      },
+      "status": {
+        "resent": "新しいコードを送信しました。受信トレイと迷惑メールフォルダをご確認ください。",
+        "unverified": "メールアドレスがまだ確認されていません。届いたコードを入力するか、新しいコードをリクエストしてください。"
       }
     },
     "forgotPassword": {

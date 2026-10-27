@@ -13,7 +13,7 @@ import {
 } from '@/components/auth/auth-card';
 import { GoogleIcon, MicrosoftIcon } from '@/components/auth/brand-icons';
 import { FormField, PasswordField } from '@/components/auth/form-field';
-import { createSignInSchema, toFieldErrors } from '@/models/auth';
+import { createSignInSchema, isEmail, toFieldErrors } from '@/models/auth';
 import { resolveOAuthErrorCode } from '@/lib/auth/oauth-errors';
 import { RETURN_TO_QUERY_PARAM, safeReturnTo } from '@/lib/auth/return-to';
 import { readJsonResponse, type ApiErrorBody } from '@/lib/http/read-json';
@@ -95,6 +95,7 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
     }
 
     if (params.get('signedOut')) setNotice(t('status.signedOut'));
+    if (params.get('verified')) setNotice(t('status.verified'));
   }, [t]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -127,6 +128,16 @@ export function SignInForm({ onSwitchToSignUp }: { onSwitchToSignUp: () => void 
       const data = await readJsonResponse<
         ApiErrorBody & { onboarded?: boolean; mfaRequired?: boolean }
       >(res);
+      // Right password, but the signup code was never entered. Send the user
+      // back to the verify step (where they can also resend the code) rather
+      // than leaving them at a dead end.
+      if (res.status === 401 && data?.error?.code === 'EmailNotConfirmedError') {
+        const query = new URLSearchParams({ unverified: '1' });
+        if (isEmail(email)) query.set('email', email);
+        router.push(`/auth/verify?${query.toString()}`);
+        return;
+      }
+
       if (!res.ok || !data) {
         throw new Error(data?.error?.message || t('errors.signIn'));
       }

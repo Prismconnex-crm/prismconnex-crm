@@ -879,7 +879,8 @@
         "passwordRequired": "Le mot de passe est requis"
       },
       "status": {
-        "signedOut": "Vous avez été déconnecté avec succès."
+        "signedOut": "Vous avez été déconnecté avec succès.",
+        "verified": "E-mail vérifié. Vous pouvez maintenant vous connecter."
       }
     },
     "signUp": {
@@ -938,10 +939,18 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Verifier"
+        "submit": "Verifier",
+        "resend": "Renvoyer le code",
+        "resendIn": "Renvoyer le code dans {seconds} s"
       },
       "errors": {
-        "verify": "Verification impossible"
+        "verify": "Verification impossible",
+        "resend": "Impossible de renvoyer le code",
+        "emailRequired": "Saisissez d'abord votre adresse e-mail"
+      },
+      "status": {
+        "resent": "Un nouveau code a été envoyé. Vérifiez votre boîte de réception et vos spams.",
+        "unverified": "Votre e-mail n'est pas encore vérifié. Saisissez le code reçu ou demandez-en un nouveau."
       }
     },
     "forgotPassword": {

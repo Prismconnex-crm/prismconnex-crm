@@ -8,7 +8,8 @@ import { findShowEventsBySlug } from '@/lib/find-shows/catalog';
 import { resolveEventTiming } from '@/lib/find-shows/event-timing-resolver';
 import type { FindShowDetail, FindShowEvent } from '@/types/find-shows';
 import { getFindShowAvatarUrl } from '@/lib/find-shows/presentation';
-import { EventHeroBackground, EventHeroGradient } from '@/components/find-shows/event-hero-background';
+import { EventHeroBackground, EventHeroGradient, EventHeroIntrinsicArtwork } from '@/components/find-shows/event-hero-background';
+import { getFindShowCardCover } from '@/lib/find-shows/card-image-registry';
 import { TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { EventTabs } from '@/components/find-shows/event-tabs';
 import { EventRegistrationDialog } from '@/components/find-shows/event-registration-dialog';
@@ -33,6 +34,30 @@ export default async function FindShowDetailRoute({
   const registerUrl = getFindShowRegisterUrl(detail, event);
   
   const logoUrl = detail.logoUrl ?? getFindShowAvatarUrl(event.name);
+  const cover = getFindShowCardCover(event.slug);
+  const intrinsicCover = cover?.status === 'image' && cover.heroLayout === 'intrinsic' ? cover : null;
+
+  const heroTitle = (
+    <div className="flex items-end gap-4">
+      <div className="relative size-16 shrink-0 overflow-hidden rounded-full border border-white/25 bg-white shadow-lg">
+        {/* Inset 15% so a wide wordmark fits the circle unclipped. */}
+        <div className="absolute inset-[15%]">
+          <Image
+            src={logoUrl}
+            alt={`${event.name} logo`}
+            fill
+            sizes="64px"
+            className="object-contain"
+          />
+        </div>
+      </div>
+      <div>
+        <h1 className="text-3xl font-black tracking-tight text-white md:text-4xl">
+          {event.name}
+        </h1>
+      </div>
+    </div>
+  );
 
   return (
     <div className="px-5 py-12 md:px-8 md:py-16">
@@ -48,6 +73,14 @@ export default async function FindShowDetailRoute({
         <div className="mt-6 rounded-[32px] border border-slate-200/70 bg-white/90 shadow-[0_24px_70px_rgba(15,23,42,0.12)] dark:border-white/[0.08] dark:bg-[#0f1729]/90 dark:shadow-[0_24px_70px_rgba(0,0,0,0.36)]">
           {/* The banner clips its own corners: overflow-hidden on the outer card
               would make it a scroll container and stop the snapshot card sticking. */}
+          {intrinsicCover ? (
+            // Artwork shown whole at its own aspect ratio with the title below
+            // it: the hero grows to fit rather than shrinking the artwork.
+            <div className="relative overflow-hidden rounded-t-[31px]">
+              <EventHeroIntrinsicArtwork cover={intrinsicCover} eventName={event.name} />
+              <div className="relative p-6 md:p-8">{heroTitle}</div>
+            </div>
+          ) : (
           <div className="relative h-72 overflow-hidden rounded-t-[31px]">
             {/* Streams in: the gradient paints first, so an official site being
                 slow never holds up the page. */}
@@ -59,28 +92,9 @@ export default async function FindShowDetailRoute({
               />
             </Suspense>
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/40 to-transparent" />
-            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-              <div className="flex items-end gap-4">
-                <div className="relative size-16 shrink-0 overflow-hidden rounded-full border border-white/25 bg-white shadow-lg">
-                  {/* Inset 15% so a wide wordmark fits the circle unclipped. */}
-                  <div className="absolute inset-[15%]">
-                    <Image
-                      src={logoUrl}
-                      alt={`${event.name} logo`}
-                      fill
-                      sizes="64px"
-                      className="object-contain"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <h1 className="text-3xl font-black tracking-tight text-white md:text-4xl">
-                    {event.name}
-                  </h1>
-                </div>
-              </div>
-            </div>
+            <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">{heroTitle}</div>
           </div>
+          )}
 
           <div className="grid grid-cols-1 gap-8 px-6 py-8 md:grid-cols-[1.2fr_0.8fr] md:items-start md:px-8">
             

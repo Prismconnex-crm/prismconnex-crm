@@ -879,7 +879,8 @@
         "passwordRequired": "Passwort ist erforderlich"
       },
       "status": {
-        "signedOut": "Sie wurden erfolgreich abgemeldet."
+        "signedOut": "Sie wurden erfolgreich abgemeldet.",
+        "verified": "E-Mail bestätigt. Sie können sich jetzt anmelden."
       }
     },
     "signUp": {
@@ -938,10 +939,18 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Bestaetigen"
+        "submit": "Bestaetigen",
+        "resend": "Code erneut senden",
+        "resendIn": "Code erneut senden in {seconds} s"
       },
       "errors": {
-        "verify": "Bestaetigung fehlgeschlagen"
+        "verify": "Bestaetigung fehlgeschlagen",
+        "resend": "Code konnte nicht erneut gesendet werden",
+        "emailRequired": "Geben Sie zuerst Ihre E-Mail-Adresse ein"
+      },
+      "status": {
+        "resent": "Ein neuer Code wurde gesendet. Prüfen Sie Ihren Posteingang und Spam-Ordner.",
+        "unverified": "Ihre E-Mail-Adresse ist noch nicht bestätigt. Geben Sie den zugesandten Code ein oder fordern Sie einen neuen an."
       }
     },
     "forgotPassword": {

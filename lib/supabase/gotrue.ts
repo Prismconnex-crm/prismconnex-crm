@@ -2,7 +2,11 @@ import { createHash, randomBytes } from "node:crypto";
 import {
     ApiError,
     BadRequestError,
+    EmailDeliveryError,
+    EmailNotConfirmedError,
     InternalServerError,
+    InvalidOtpError,
+    TooManyRequestsError,
     UnauthorizedError,
 } from "@/lib/http/errors";
 import { authDebug, maskEmail, maskToken } from "@/lib/auth/auth-debug";
@@ -27,6 +31,8 @@ export type SupabaseUser = {
     created_at?: string;
     last_sign_in_at?: string | null;
     email_confirmed_at?: string | null;
+    /** Empty on the obfuscated user returned for an already-registered signup. */
+    identities?: unknown[] | null;
     user_metadata?: Record<string, unknown> | null;
     /** Present on GET /user. Only `verified` factors actually gate sign-in. */
     factors?: SupabaseFactor[] | null;
@@ -89,6 +95,15 @@ function extractMessage(body: unknown, fallback: string) {
     return fallback;
 }
 
+/** GoTrue's machine-readable `error_code` (e.g. "otp_expired"), when present. */
+function extractErrorCode(body: unknown): string | undefined {
+    if (body && typeof body === "object") {
+        const value = (body as Record<string, unknown>).error_code;
+        if (typeof value === "string") return value;
+    }
+    return undefined;
+}
+
 async function request<T>(
     path: string,
     init: {
@@ -136,8 +151,41 @@ async function request<T>(
         if (res.status === 401 || /invalid login credentials/i.test(message)) {
             throw new UnauthorizedError("Invalid email or password");
         }
-        if (/email not confirmed/i.test(message)) {
-            throw new UnauthorizedError("Please confirm your email address before signing in");
+        const errorCode = extractErrorCode(json);
+
+        if (errorCode === "email_not_confirmed" || /email not confirmed/i.test(message)) {
+            throw new EmailNotConfirmedError();
+        }
+
+        // GoTrue answers a wrong, expired AND already-used OTP identically
+        // (403 otp_expired, "Token has expired or is invalid"), so one message
+        // has to cover all three.
+        if (errorCode === "otp_expired" || /token has expired or is invalid/i.test(message)) {
+            throw new InvalidOtpError();
+        }
+
+        // The SMTP send failed inside GoTrue (and the signup was rolled back,
+        // so no half-created user is left behind). This is a server-side email
+        // configuration fault — say so instead of a bare 500. The upstream
+        // text was already logged above when AUTH_DEBUG is on; log it always
+        // here because without it the cause is invisible.
+        if (/error sending .*email/i.test(message)) {
+            console.error("[auth] Supabase could not send an email", {
+                endpoint: path,
+                status: res.status,
+                message,
+            });
+            throw new EmailDeliveryError();
+        }
+
+        // GoTrue's per-user cooldown between emails to the same address.
+        const cooldown = /after (\d+) seconds?/i.exec(message);
+        if (res.status === 429 && cooldown) {
+            const seconds = Number(cooldown[1]);
+            throw new TooManyRequestsError(
+                `Please wait ${seconds} seconds before requesting another code.`,
+                seconds
+            );
         }
 
         // Supabase's built-in email service is capped at a few messages per
@@ -202,6 +250,25 @@ export async function verifySignUpOtp(email: string, token: string) {
         method: "POST",
         body: { type: "signup", email, token },
     });
+}
+
+/**
+ * Re-sends the signup OTP. Supabase invalidates the previous code and answers
+ * 200 whether or not the address belongs to an unconfirmed user (no
+ * enumeration), so a 200 means "queued", not "delivered".
+ */
+export async function resendSignUpOtp(email: string) {
+    await request<unknown>("/resend", { method: "POST", body: { type: "signup", email } });
+}
+
+/**
+ * A signup for an already-registered email gets an obfuscated user back
+ * (enumeration protection): a random id and an empty `identities` array, and
+ * no email is sent. An unconfirmed re-signup returns the real user with its
+ * identity, and Supabase re-sends the code — that case must keep working.
+ */
+export function isExistingAccountSignUp(user: SupabaseUser) {
+    return Array.isArray(user.identities) && user.identities.length === 0;
 }
 
 /** Sends the password-recovery email. */

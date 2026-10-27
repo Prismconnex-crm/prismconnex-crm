@@ -7,6 +7,7 @@ import { ExhibitorDetailDialog, ExhibitorLogo } from './exhibitor-detail-dialog'
 import { OfficialPageDialog, type OfficialPageTarget } from './official-page-view';
 import { signInHrefReturningTo } from '@/lib/auth/return-to';
 import { exhibitorsContextUrl, readExhibitorsContext, withoutExhibitor } from '@/lib/find-shows/exhibitor-return';
+import { EMPTY_EXHIBITORS_MESSAGE, exhibitorsPanelView, type ExhibitorsLoadState } from '@/lib/find-shows/exhibitors-panel-view';
 import {
   ALPHABET,
   filterCards,
@@ -23,9 +24,8 @@ const linkClass =
 const cardClass =
   'group flex h-full w-full min-w-0 flex-col gap-3 rounded-2xl border border-slate-200/60 bg-white p-4 text-left shadow-sm transition-all hover:-translate-y-0.5 hover:border-indigo-300 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/40 dark:border-white/[0.06] dark:bg-[#0b1120] dark:hover:border-indigo-400/40';
 
-/** The count block the tab always opens with: the directory's count once known, else the catalog's. */
-function Summary({ count, fallbackCount }: { count: number | null; fallbackCount: number | null }) {
-  const shown = count ?? fallbackCount;
+/** The count block the tab always opens with; no number at all until one is known. */
+function Summary({ count }: { count: number | null }) {
   return (
     <div className="flex items-center gap-4">
       <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-400">
@@ -33,7 +33,7 @@ function Summary({ count, fallbackCount }: { count: number | null; fallbackCount
       </div>
       <div className="min-w-0">
         <p className="text-sm font-semibold text-slate-900 dark:text-white">Exhibiting Companies</p>
-        <p className="mt-1 text-2xl font-black text-slate-900 dark:text-white">{shown ? shown.toLocaleString() : 'TBA'}</p>
+        {count ? <p className="mt-1 text-2xl font-black text-slate-900 dark:text-white">{count.toLocaleString()}</p> : null}
       </div>
     </div>
   );
@@ -297,7 +297,6 @@ function SkeletonGrid() {
   );
 }
 
-type LoadState = { status: 'loading' } | { status: 'ready'; directory: ExhibitorDirectory } | { status: 'error' };
 type ApiAnswer = ExhibitorDirectory & { pending?: boolean };
 
 /** While the server is still searching, ask again this often, for up to this long. */
@@ -316,7 +315,7 @@ const FAILED_MESSAGE = 'We couldn’t finish checking the official exhibitor dir
  * keeps showing "Finding official exhibitors…" and asks again until it ends.
  */
 export function ExhibitorsDirectoryPanel({ slug, fallbackCount }: { slug: string; fallbackCount: number | null }) {
-  const [state, setState] = useState<LoadState>({ status: 'loading' });
+  const [state, setState] = useState<ExhibitorsLoadState>({ status: 'loading' });
   const [attempt, setAttempt] = useState(0);
   // An official page (directory, sign-in) shown inside Prismconnex: no link here opens a tab or leaves the app.
   const [official, setOfficial] = useState<OfficialPageTarget | null>(null);
@@ -362,16 +361,16 @@ export function ExhibitorsDirectoryPanel({ slug, fallbackCount }: { slug: string
   );
 
   const directory = state.status === 'ready' ? state.directory : null;
-  const listed = directory?.status === 'VERIFIED_LIST' ? directory.total ?? directory.exhibitors.length : null;
+  const view = exhibitorsPanelView(state, fallbackCount);
 
   return (
     <div className="space-y-5 rounded-3xl border border-slate-200/70 bg-slate-50/50 p-4 dark:border-white/[0.08] dark:bg-white/[0.02] sm:p-6">
-      <Summary count={listed} fallbackCount={fallbackCount} />
+      <Summary count={view.count} />
       <div className="border-t border-slate-200/60 pt-5 dark:border-white/[0.08]">
-        {state.status === 'loading' ? <SkeletonGrid /> : null}
-        {state.status === 'error' || directory?.status === 'DISCOVERY_INCOMPLETE' ? <Notice action={retry}>{FAILED_MESSAGE}</Notice> : null}
-        {directory?.status === 'VERIFIED_LIST' ? <DirectoryView slug={slug} directory={directory} onOfficial={setOfficial} /> : null}
-        {directory?.status === 'LOGIN_REQUIRED_DIRECTORY' && directory.source ? (
+        {view.body === 'loading' ? <SkeletonGrid /> : null}
+        {view.body === 'failed' ? <Notice action={retry}>{FAILED_MESSAGE}</Notice> : null}
+        {view.body === 'list' && directory ? <DirectoryView slug={slug} directory={directory} onOfficial={setOfficial} /> : null}
+        {view.body === 'login' && directory?.source ? (
           <Notice
             action={
               <button type="button" onClick={() => setOfficial({ kind: 'login' })} className={linkClass}>
@@ -383,10 +382,10 @@ export function ExhibitorsDirectoryPanel({ slug, fallbackCount }: { slug: string
             The official exhibitor directory for {directory.source.editionLabel} is only available to signed-in users on {directory.source.platformLabel}.
           </Notice>
         ) : null}
-        {directory?.status === 'VERIFIED_EMPTY_DIRECTORY' ? (
+        {view.body === 'empty' ? (
           <Notice
             action={
-              directory.source ? (
+              directory?.source ? (
                 <button type="button" onClick={() => setOfficial({ kind: 'directory' })} className={linkClass}>
                   <Globe className="size-3.5" />
                   Official directory
@@ -394,10 +393,10 @@ export function ExhibitorsDirectoryPanel({ slug, fallbackCount }: { slug: string
               ) : undefined
             }
           >
-            Official exhibitor directory found, but exhibitors have not been published yet.
+            {EMPTY_EXHIBITORS_MESSAGE}
           </Notice>
         ) : null}
-        {directory?.status === 'OFFICIAL_DIRECTORY_LINK' && directory.source ? (
+        {view.body === 'link' && directory?.source ? (
           <Notice
             action={
               <button type="button" onClick={() => setOfficial({ kind: 'directory' })} className={linkClass}>
@@ -409,7 +408,6 @@ export function ExhibitorsDirectoryPanel({ slug, fallbackCount }: { slug: string
             The official exhibitor directory for {directory.source.editionLabel} is on the organizer’s website; its exhibitors could not be listed here.
           </Notice>
         ) : null}
-        {directory?.status === 'NO_VERIFIED_DIRECTORY' ? <Notice>Official exhibitor information is not available yet.</Notice> : null}
       </div>
       <OfficialPageDialog
         slug={slug}

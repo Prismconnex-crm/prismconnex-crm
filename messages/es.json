@@ -879,7 +879,8 @@
         "passwordRequired": "La contraseña es obligatoria"
       },
       "status": {
-        "signedOut": "Has cerrado sesión correctamente."
+        "signedOut": "Has cerrado sesión correctamente.",
+        "verified": "Correo verificado. Ya puedes iniciar sesión."
       }
     },
     "signUp": {
@@ -938,10 +939,18 @@
         "code": "XXXXXX"
       },
       "actions": {
-        "submit": "Verificar"
+        "submit": "Verificar",
+        "resend": "Reenviar código",
+        "resendIn": "Reenviar código en {seconds} s"
       },
       "errors": {
-        "verify": "No se pudo verificar"
+        "verify": "No se pudo verificar",
+        "resend": "No se pudo reenviar el código",
+        "emailRequired": "Introduce primero tu correo electrónico"
+      },
+      "status": {
+        "resent": "Se ha enviado un nuevo código. Revisa tu bandeja de entrada y la carpeta de spam.",
+        "unverified": "Tu correo aún no está verificado. Introduce el código que te enviamos o solicita uno nuevo."
       }
     },
     "forgotPassword": {
