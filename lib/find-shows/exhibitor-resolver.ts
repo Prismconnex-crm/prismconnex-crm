@@ -186,6 +186,12 @@ async function search(event: FindShowEvent, key: string, previous: ExhibitorReco
     attempt
   );
   await writeExhibitorRecord(record).catch(() => undefined);
+  // A new or changed verified list goes on to the CRM's EventExhibitor rows for this edition's slugs
+  // (lib/exhibitors/crm-sync-queue.ts). Imported lazily — it reaches the database — and never awaited
+  // by the tab or allowed to fail it.
+  if (record.verified?.status === 'VERIFIED_LIST' && record.verified.checkedAt !== previous?.verified?.checkedAt) {
+    void import('@/lib/exhibitors/crm-sync-queue').then((queue) => queue.queueCrmExhibitorSync(record)).catch(() => undefined);
+  }
   return record;
 }
 

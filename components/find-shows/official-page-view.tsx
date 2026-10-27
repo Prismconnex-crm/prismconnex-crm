@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ArrowLeft, Check, Copy, Info, Loader2, ShieldAlert } from 'lucide-react';
+import { ArrowLeft, Check, Copy, ExternalLink, Info, Loader2, ShieldAlert } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { officialViewMode } from '@/lib/find-shows/official-frame';
+import { safeWebsiteUrl } from '@/lib/exhibitors/website-viewer';
 
 /** Which stored official page to show: a card's profile, or the event's official directory or its sign-in page. */
 export type OfficialPageTarget = { kind: 'profile'; id: string } | { kind: 'directory' } | { kind: 'login' };
@@ -29,24 +30,43 @@ const UNCONFIRMED_LOAD_MS = 20_000;
  *    in-app with the address to copy;
  *  - unknown: the check was inconclusive (bot protection, timeout, server error). That says nothing about
  *    whether the browser may show it, so the original address is tried in the same frame — see UnconfirmedFrame.
- * Nothing here opens a tab or a window, or navigates away from Prismconnex.
+ * Nothing here opens a tab or a window, or navigates away from Prismconnex — except, when `openExternally` is
+ * set (the CRM Exhibitors tab's website viewer), an explicit "Open website externally" link beside a page that
+ * cannot be shown. `checkUrl` swaps the check for another endpoint answering the same FrameCheck
+ * (/api/exhibitors/frame for a CRM exhibitor); `slug`/`target` are then unused.
  */
-export function OfficialPageView({ slug, target, title, onBack }: { slug: string; target: OfficialPageTarget; title: string; onBack?: () => void }) {
+export function OfficialPageView({
+  slug,
+  target,
+  title,
+  onBack,
+  checkUrl,
+  openExternally = false,
+}: {
+  slug: string;
+  target: OfficialPageTarget;
+  title: string;
+  onBack?: () => void;
+  checkUrl?: string;
+  openExternally?: boolean;
+}) {
   const [check, setCheck] = useState<FrameCheck | null | 'error'>(null);
   const [copied, setCopied] = useState(false);
   const query = `slug=${encodeURIComponent(slug)}&kind=${target.kind}${target.kind === 'profile' ? `&id=${encodeURIComponent(target.id)}` : ''}`;
+  const endpoint = checkUrl ?? `/api/find-shows/exhibitors/official-frame?${query}`;
+  const external = openExternally ? (url: string) => safeWebsiteUrl(url) : () => null;
 
   useEffect(() => {
     const controller = new AbortController();
     setCheck(null);
-    fetch(`/api/find-shows/exhibitors/official-frame?${query}`, { signal: controller.signal })
+    fetch(endpoint, { signal: controller.signal })
       .then((response) => (response.ok ? (response.json() as Promise<FrameCheck>) : Promise.reject(new Error(`HTTP ${response.status}`))))
       .then(setCheck)
       .catch((error: Error) => {
         if (error.name !== 'AbortError') setCheck('error');
       });
     return () => controller.abort();
-  }, [query]);
+  }, [endpoint]);
 
   const copy = (url: string) => {
     navigator.clipboard?.writeText(url).then(
@@ -70,7 +90,7 @@ export function OfficialPageView({ slug, target, title, onBack }: { slug: string
         <div className="min-w-0">
           <DialogTitle className="truncate text-sm font-bold text-slate-900 dark:text-white">{title}</DialogTitle>
           <DialogDescription className="truncate text-[11px] text-slate-500 dark:text-slate-400">
-            {check && check !== 'error' ? new URL(check.url).host : 'Official page'} · shown inside Prismconnex
+            {check && check !== 'error' ? (openExternally ? check.url : new URL(check.url).host) : 'Official page'} · shown inside Prismconnex
           </DialogDescription>
         </div>
       </div>
@@ -81,7 +101,7 @@ export function OfficialPageView({ slug, target, title, onBack }: { slug: string
             <Loader2 className="size-4 animate-spin" /> Opening the official page…
           </p>
         ) : check === 'error' ? (
-          <Fallback reason="The official page could not be found for this exhibitor." url={null} copied={false} onCopy={copy} />
+          <Fallback reason="The official page could not be found for this exhibitor." url={null} copied={false} onCopy={copy} externalUrl={null} />
         ) : officialViewMode(check.frame) === 'frame' ? (
           <iframe
             key={check.url}
@@ -93,10 +113,10 @@ export function OfficialPageView({ slug, target, title, onBack }: { slug: string
             className="h-full w-full border-0 bg-white"
           />
         ) : officialViewMode(check.frame) === 'try-frame' ? (
-          <UnconfirmedFrame key={check.url} url={check.url} title={title} copied={copied} onCopy={copy} />
+          <UnconfirmedFrame key={check.url} url={check.url} title={title} copied={copied} onCopy={copy} externalUrl={external(check.url)} />
         ) : (
           // Confirmed blocked: never an empty frame — the reason and the address.
-          <Fallback reason={check.reason} url={check.url} copied={copied} onCopy={copy} />
+          <Fallback reason={check.reason} url={check.url} copied={copied} onCopy={copy} externalUrl={external(check.url)} />
         )}
       </div>
     </div>
@@ -112,7 +132,19 @@ export function OfficialPageView({ slug, target, title, onBack }: { slug: string
  * checked, with the address to copy and a way to the standard explanation should the frame stay empty. What
  * Prismconnex can detect — the page never loading at all — switches to that explanation by itself.
  */
-function UnconfirmedFrame({ url, title, copied, onCopy }: { url: string; title: string; copied: boolean; onCopy: (url: string) => void }) {
+function UnconfirmedFrame({
+  url,
+  title,
+  copied,
+  onCopy,
+  externalUrl,
+}: {
+  url: string;
+  title: string;
+  copied: boolean;
+  onCopy: (url: string) => void;
+  externalUrl: string | null;
+}) {
   const [state, setState] = useState<'loading' | 'loaded' | 'no-load' | 'gave-up'>('loading');
 
   useEffect(() => {
@@ -121,7 +153,7 @@ function UnconfirmedFrame({ url, title, copied, onCopy }: { url: string; title: 
   }, []);
 
   if (state === 'no-load') {
-    return <Fallback reason="The official site did not load inside Prismconnex." url={url} copied={copied} onCopy={onCopy} />;
+    return <Fallback reason="The official site did not load inside Prismconnex." url={url} copied={copied} onCopy={onCopy} externalUrl={externalUrl} />;
   }
   if (state === 'gave-up') {
     return (
@@ -130,6 +162,7 @@ function UnconfirmedFrame({ url, title, copied, onCopy }: { url: string; title: 
         url={url}
         copied={copied}
         onCopy={onCopy}
+        externalUrl={externalUrl}
       />
     );
   }
@@ -149,6 +182,7 @@ function UnconfirmedFrame({ url, title, copied, onCopy }: { url: string; title: 
             {copied ? <Check className="size-3" /> : <Copy className="size-3" />}
             {copied ? 'Copied' : 'Copy link'}
           </button>
+          {externalUrl ? <ExternalWebsiteLink href={externalUrl} compact /> : null}
           <button
             type="button"
             onClick={() => setState('gave-up')}
@@ -177,14 +211,28 @@ function UnconfirmedFrame({ url, title, copied, onCopy }: { url: string; title: 
   );
 }
 
-function Fallback({ reason, url, copied, onCopy }: { reason: string | null; url: string | null; copied: boolean; onCopy: (url: string) => void }) {
+function Fallback({
+  reason,
+  url,
+  copied,
+  onCopy,
+  externalUrl,
+}: {
+  reason: string | null;
+  url: string | null;
+  copied: boolean;
+  onCopy: (url: string) => void;
+  externalUrl: string | null;
+}) {
   return (
     <div className="flex h-full items-center justify-center overflow-y-auto p-6">
       <div className="w-full max-w-md space-y-3 text-center">
         <span className="mx-auto flex size-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600 dark:bg-amber-500/15 dark:text-amber-400">
           <ShieldAlert className="size-5" />
         </span>
-        <p className="text-sm font-bold text-slate-900 dark:text-white">Official profile cannot be displayed inside Prismconnex.</p>
+        <p className="text-sm font-bold text-slate-900 dark:text-white">
+          {externalUrl ? 'This website cannot be displayed inside Prismconnex.' : 'Official profile cannot be displayed inside Prismconnex.'}
+        </p>
         {reason ? <p className="text-xs leading-relaxed text-slate-500 dark:text-slate-400">{reason}</p> : null}
         {url ? (
           <div className="space-y-2">
@@ -199,10 +247,30 @@ function Fallback({ reason, url, copied, onCopy }: { reason: string | null; url:
               {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
               {copied ? 'Copied' : 'Copy link'}
             </button>
+            {externalUrl ? <ExternalWebsiteLink href={externalUrl} /> : null}
           </div>
         ) : null}
       </div>
     </div>
+  );
+}
+
+/** The CRM viewer's way out when a page cannot be shown here: the original address in a new tab, nothing more. */
+function ExternalWebsiteLink({ href, compact = false }: { href: string; compact?: boolean }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={
+        compact
+          ? 'inline-flex items-center gap-1 rounded-md border border-amber-300/70 px-2 py-1 font-semibold transition-colors hover:bg-amber-100 dark:border-amber-400/30 dark:hover:bg-amber-500/15'
+          : 'ml-2 inline-flex items-center gap-1.5 rounded-lg bg-indigo-600 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-indigo-500'
+      }
+    >
+      <ExternalLink className={compact ? 'size-3' : 'size-3.5'} />
+      Open website externally
+    </a>
   );
 }
 

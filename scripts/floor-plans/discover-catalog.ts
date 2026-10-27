@@ -15,7 +15,9 @@
  * --recheck-plans (re-judge editions with a verified plan after the
  * verification rules change: a plan the new search does not confirm is dropped
  * and the edition takes the new status; =unconfirmed limits it to plans whose
- * latest search did not confirm them).
+ * latest search did not confirm them), --retry-only (skip the first pass:
+ * only the larger-budget retry of the given editions' temporary failures, e.g.
+ * to finish a batch that was stopped after its first pass).
  *
  * - One search per edition: catalog records listing the same show on the
  *   same site section, city and dates share it.
@@ -26,7 +28,9 @@
  *   are retried in a second pass with a larger budget; they never overwrite a
  *   verified plan or a verified "none published" (see the store).
  * - Web search is off unless BRAVE_SEARCH_API_KEY is set: keyless search
- *   engines block a batch of this size.
+ *   engines block a batch of this size. --search=duckduckgo turns on the
+ *   keyless provider for a small, low-concurrency batch (one query at a time,
+ *   spaced, pausing when the engine pushes back); --search=off disables search.
  *
  * Output (reports/floor-plans/): summary.json, summary.md, and a row per
  * catalog event in floor-plans.csv / floor-plans.jsonl — name, year, city,
@@ -38,7 +42,7 @@ import path from 'path';
 import type { FindShowEvent } from '@/types/find-shows';
 import { findShowEvents } from '@/lib/find-shows/catalog';
 import { siteKey, websiteDomain } from '@/lib/find-shows/floor-plan';
-import { braveSearch, type FloorPlanStatus } from '@/lib/find-shows/floor-plan-discovery';
+import { braveSearch, duckDuckGoSearch, type FloorPlanStatus, type SearchProvider } from '@/lib/find-shows/floor-plan-discovery';
 import { editionKey, searchEdition, storedEdition } from '@/lib/find-shows/floor-plan-resolver';
 import {
   effectiveResult,
@@ -66,10 +70,19 @@ const SITE_GAP_MS = option('site-gap-ms', 1_500);
 const REFRESH = args.has('refresh');
 const REPORT_ONLY = args.has('report');
 const RECHECK_PLANS = args.has('recheck-plans');
+const RETRY_ONLY = args.has('retry-only');
 const SLUGS = args.get('slug')?.split(',').filter(Boolean) ?? null;
+const SEARCH = args.get('search') ?? null;
 const REPORT_DIR = path.join(process.cwd(), 'reports', 'floor-plans');
 
 const STATUSES: FloorPlanStatus[] = ['VERIFIED_PLAN', 'VERIFIED_NO_PLAN', 'DISCOVERY_INCOMPLETE', 'NETWORK_ERROR', 'DOWNLOAD_FAILED'];
+
+/** Web search for the batch: Brave with a key; DuckDuckGo only when asked for (--search=duckduckgo); none with --search=off. */
+function searchProvider(): SearchProvider | null {
+  if (SEARCH === 'off') return null;
+  if (SEARCH === 'duckduckgo') return duckDuckGoSearch();
+  return process.env.BRAVE_SEARCH_API_KEY ? braveSearch(process.env.BRAVE_SEARCH_API_KEY) : null;
+}
 
 // --- Editions -----------------------------------------------------------------
 
@@ -161,7 +174,7 @@ async function runPass(
     stopping = true;
   };
   process.once('SIGINT', stop);
-  const search = process.env.BRAVE_SEARCH_API_KEY ? braveSearch(process.env.BRAVE_SEARCH_API_KEY) : null;
+  const search = searchProvider();
 
   /** The next edition whose site is idle and rested (one edition per site at a time). */
   const next = () => {
@@ -366,8 +379,10 @@ async function main() {
     const records = new Map<string, EditionRecord | null>();
     for (const edition of editions) records.set(edition.key, await readRecord(edition.key));
     const todo = editions.filter((edition) => needsSearch(records.get(edition.key) ?? null)).slice(0, LIMIT);
-    console.log(`${editions.length - todo.length} editions already settled or out of attempts; searching ${todo.length}. Concurrency ${CONCURRENCY}, one edition per site at a time.`);
-    await runPass('pass 1', todo, { timeMs: 55_000, maxPages: 60, maxCandidates: 30 });
+    if (!RETRY_ONLY) {
+      console.log(`${editions.length - todo.length} editions already settled or out of attempts; searching ${todo.length}. Concurrency ${CONCURRENCY}, one edition per site at a time. Web search: ${searchProvider()?.name ?? 'off'}.`);
+      await runPass('pass 1', todo, { timeMs: 55_000, maxPages: 60, maxCandidates: 30 });
+    }
 
     if (!process.exitCode) {
       // Temporary failures get one more try, with more time and pages.
@@ -391,6 +406,22 @@ async function main() {
   }
   await writeReport(catalogEditions());
 }
+
+/**
+ * Node's built-in fetch (undici) can trip an internal assertion when a server closes the TLS connection
+ * mid-response. It surfaces as an uncaught exception outside any request, and would end a batch of
+ * thousands of editions over one misbehaving site. That request still ends at its timeout and counts as a
+ * temporary failure, so the batch carries on; any other uncaught error stops the process as before.
+ */
+process.on('uncaughtException', (error) => {
+  const undiciAssertion = (error as { code?: string }).code === 'ERR_ASSERTION' && /undici/.test(error.stack ?? '');
+  if (undiciAssertion) {
+    console.log(`[batch] ignored an HTTP client assertion from a server that closed the connection mid-response`);
+    return;
+  }
+  console.error(error);
+  process.exit(1);
+});
 
 main().catch((error) => {
   console.error(error);

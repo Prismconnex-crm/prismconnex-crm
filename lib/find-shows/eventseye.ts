@@ -1,6 +1,14 @@
 import { unstable_cache } from 'next/cache';
-import { findShowEventsBySlug } from '@/lib/find-shows/catalog';
+import { findShowEvents, findShowEventsBySlug } from '@/lib/find-shows/catalog';
 import type { FindShowAsset, FindShowDetail, FindShowEvent } from '@/types/find-shows';
+import {
+  buildHeroSiteIndex,
+  createHeroImageClaims,
+  heroShowKey,
+  resolveEventHeroImageResult,
+  type HeroImage,
+} from '@/lib/find-shows/event-hero-image';
+import { getRegisteredHeroImage, screenAutomaticHeroImage, type FindShowHeroImage } from '@/lib/find-shows/hero-image-registry';
 
 const EVENTSEYE_BASE_URL = 'https://www.eventseye.com';
 const EVENTSEYE_SEARCH_URL = 'https://www.eventseye.com/cgi-bin/tsearch.pl';
@@ -493,4 +501,68 @@ export async function getFindShowAsset(slug: string) {
 
 export async function getFindShowDetail(slug: string) {
   return getCachedEventseyeDetail(slug);
+}
+
+let heroSiteIndex: ReturnType<typeof buildHeroSiteIndex> | null = null;
+
+/**
+ * Where the event's site sits among the catalog's other shows, and what
+ * identifies the event in an image; the catalog is indexed once.
+ */
+function heroSiteContext(event: FindShowEvent, website: string | null) {
+  heroSiteIndex ??= buildHeroSiteIndex(findShowEvents);
+  return heroSiteIndex({ ...event, website });
+}
+
+class HeroSiteUnreachableError extends Error {}
+
+/**
+ * Banner photo from the event's official site (see event-hero-image.ts), or
+ * null when no large enough image can be confidently tied to this event.
+ * Eventseye's own images are thumbnails and are never stretched into the
+ * banner. Cached per slug for a week, a confirmed miss included. A site that
+ * didn't answer throws instead, which unstable_cache doesn't store: a slow
+ * first response (Iran CONFAIR's took ~18s against a 12s timeout) used to
+ * leave the gradient up for a week.
+ */
+const getCachedHeroImage = unstable_cache(
+  async (slug: string, website: string | null): Promise<HeroImage | null> => {
+    const event = findShowEventsBySlug[slug];
+    if (!event) return null;
+    // The catalog's own URL when it has one: the site index is keyed on it, so
+    // the shared-page and sibling checks compare like with like.
+    const site = event.website && !isEventseyeUrl(event.website) ? event.website : website;
+    const result = await resolveEventHeroImageResult(site, heroSiteContext(event, site)).catch(() => null);
+    if (!result?.reachable) throw new HeroSiteUnreachableError(slug);
+    return result.image;
+  },
+  // v7: evidence rules tightened after the 2026-10-11 resolver audit (no file-name,
+  // schema or share-card matches; embed check); drops v6 picks, incl. removed images.
+  ['find-show-hero-image-v7'],
+  { revalidate: 60 * 60 * 24 * 7 }
+);
+
+/** An unreachable site is retried after an hour rather than on every view. */
+const UNREACHABLE_RETRY_MS = 60 * 60 * 1000;
+const unreachableUntil = new Map<string, number>();
+const automaticHeroClaims = createHeroImageClaims();
+
+/**
+ * The banner photo for an event page: a hand-verified photo from the hero
+ * registry first, otherwise the automatic resolver's (unless denylisted or
+ * shared with another show), otherwise null (the page keeps its gradient).
+ */
+export async function getFindShowHeroImage(slug: string, website: string | null): Promise<FindShowHeroImage | null> {
+  const registered = getRegisteredHeroImage(slug);
+  if (registered) return registered;
+
+  if ((unreachableUntil.get(slug) ?? 0) > Date.now()) return null;
+  try {
+    const image = await getCachedHeroImage(slug, website);
+    const event = findShowEventsBySlug[slug];
+    return screenAutomaticHeroImage(image, heroShowKey(event?.name ?? slug), automaticHeroClaims);
+  } catch {
+    unreachableUntil.set(slug, Date.now() + UNREACHABLE_RETRY_MS);
+    return null;
+  }
 }

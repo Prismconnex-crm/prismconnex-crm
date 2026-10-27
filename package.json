@@ -7,7 +7,7 @@
     "generate:sqlite": "prisma generate --schema prisma/sqlite-companies.prisma",
     "db:seed": "node --experimental-strip-types prisma/seed.ts",
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/copy-pdf-worker.mjs && next build",
     "start": "next start",
     "lint": "next lint",
     "test": "vitest",
@@ -16,7 +16,9 @@
     "benchmark:companies:after": "node scripts/benchmark-companies-after.js",
     "import:find-shows:eventseye": "node scripts/import-eventseye-country.mjs",
     "floor-plans:discover": "node scripts/floor-plans/run.mjs",
-    "exhibitors:discover": "node scripts/exhibitors/run.mjs"
+    "event-timings:discover": "node scripts/event-timings/run.mjs",
+    "exhibitors:discover": "node scripts/exhibitors/run.mjs",
+    "exhibitors:sync-crm": "node scripts/exhibitors/sync-crm.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",

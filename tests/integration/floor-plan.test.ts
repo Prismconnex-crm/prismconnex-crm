@@ -3,6 +3,13 @@ import { describe, expect, it } from 'vitest';
 import {
   carriesBrand,
   saysPlanComingSoon,
+  isErrorShell,
+  saysPlanOnRequest,
+  namesSiteMap,
+  planPageNamesOtherEdition,
+  namesAccessMap,
+  namesSalesDocument,
+  floorPlanMentions,
   decorationFile,
   looksLikePhoto,
   editionDates,
@@ -104,6 +111,69 @@ describe('recognizing floor plans in any catalog language', () => {
     expect(saysPlanComingSoon('Hallenplan folgt in Kürze')).toBe(true);
     // "Coming soon" about something else does not mean the plan is.
     expect(saysPlanComingSoon('Floor plan\nHall 1 Hall 2\nRegistration\nTickets coming soon')).toBe(false);
+  });
+
+  it('hears a plan page send visitors to the organizer instead of showing a plan', () => {
+    expect(saysPlanOnRequest('Home\nFloor Plan\nPlease contact the organizers for updated floor plan\n10th Interplast Pack Africa 2026')).toBe(true);
+    expect(saysPlanOnRequest('Floor plan available on request')).toBe(true);
+    expect(saysPlanOnRequest('Request the latest floor plan from our sales team')).toBe(true);
+    // A plan page with booking contacts on other lines still shows its plan.
+    expect(saysPlanOnRequest('Floor Plan 2026\nHall 1 Hall 2\nBook your stand: contact us at sales@example.com')).toBe(false);
+  });
+
+  it('knows a sales document by its file name, and whether its text holds a floor plan', () => {
+    expect(namesSalesDocument('AllSport-Brochure.pdf')).toBe(true);
+    expect(namesSalesDocument('IE26 Exhibit Prospectus.pdf')).toBe(true);
+    expect(namesSalesDocument('Oferta-World-Hotel-en-2027.pdf')).toBe(true);
+    expect(namesSalesDocument('TSESA2026_Full Floorplan.pdf')).toBe(false);
+    // A brochure of dates and booth rates never names a floor plan; a prospectus with its plan does.
+    expect(floorPlanMentions('2027 Hunting, Fishing & Travel Shows · BOOTH SPACE Corner booth add $250 · Space Rates')).toBe(0);
+    expect(floorPlanMentions('Exhibit Prospectus · Floor Plan · Hall A · Booth 1200')).toBeGreaterThan(0);
+  });
+
+  it('tells a parking or directions map from the exhibition floor plan', () => {
+    expect(namesAccessMap('flibs 2026 parking and transportation map 10 08 26 pdf')).toBe(true);
+    expect(namesAccessMap('Shuttle map')).toBe(true);
+    expect(namesAccessMap('Anfahrt & Parken')).toBe(true);
+    expect(namesAccessMap('Plan d\'accès')).toBe(true);
+    // The show maps on the same page, a show named for transport, and a plan that also shows parking are kept.
+    expect(namesAccessMap('FLIBS 2026 Broward County Convention Center Map')).toBe(false);
+    expect(namesAccessMap('Transport Logistic 2027 Hallenplan')).toBe(false);
+    expect(namesAccessMap('Floor plan and parking')).toBe(false);
+  });
+
+  it('reads which edition a plan page says its own plan is for', () => {
+    const obArtParis = editionProfile({ name: "Ob'Art", city: 'Paris', startDate: '2026-11-20', knownCities: new Set(['paris', 'bordeaux']) });
+    // The page's menus and footer name the Paris 2026 show; its plan is Bordeaux 2018's.
+    const page = "Paris\nLe plan du salon\nVoici le plan du Salon de Bordeaux 2018 :\nOb'Art Paris - 20-22 Nov 2026\nPlan du site";
+    expect(planPageNamesOtherEdition(page, obArtParis)).toMatch(/2018/);
+    expect(planPageNamesOtherEdition('Le plan du salon\nVoici le plan du salon de Bordeaux', obArtParis)).toMatch(/Bordeaux/);
+    // This edition's plan, or a plan line that names no edition, is not another edition's.
+    expect(planPageNamesOtherEdition('Le plan du salon\nVoici le plan du Salon de Paris 2026 :', obArtParis)).toBeNull();
+    expect(planPageNamesOtherEdition('Le plan du salon\nHall 1 Stand A12', obArtParis)).toBeNull();
+  });
+
+  it('tells a site map from a floor plan, in French too', () => {
+    expect(namesSiteMap('vignerons independants com legalite plan du site')).toBe(true);
+    expect(namesSiteMap('Plan du site | Vignerons Indépendants')).toBe(true);
+    expect(namesSiteMap('Sitemap')).toBe(true);
+    expect(namesSiteMap('Mappa del sito')).toBe(true);
+    expect(namesSiteMap('Plan du salon 2026')).toBe(false);
+    expect(namesSiteMap('Hallenplan / Site plan Hall 3')).toBe(false);
+    // At a fair or festival, a "site map" is the map of the grounds.
+    expect(namesSiteMap('Festival site map 2026')).toBe(false);
+  });
+
+  it('tells a plan page that only shows an error from a plan page', () => {
+    // An organizer's plan viewer opened without the event in its address.
+    expect(isErrorShell('Floorplan\nloading...\nInvalid Url!')).toBe(true);
+    expect(isErrorShell('404\nPage not found\nBack to home')).toBe(true);
+    expect(isErrorShell('Page introuvable')).toBe(true);
+    // An interactive plan drawn by script shows little text but no error.
+    expect(isErrorShell('Floor plan | My Easyfairs\nRecherche par nom, catégorie, bâtiment…')).toBe(false);
+    expect(isErrorShell('loading...')).toBe(false);
+    // A real plan page that mentions "not found" in passing is long, not a shell.
+    expect(isErrorShell(`Floor plan 2026\n${'Hall 1 Stand A12 Hall 2 Stand B04 '.repeat(20)}\nExhibitor not found? Contact us`)).toBe(false);
   });
 
   it('tells generic download links from named ones', () => {
@@ -331,6 +401,14 @@ describe('what the plan itself says', () => {
     expect(pdfText(Buffer.concat([pdfWith(header), image]))).toContain('1 - 2 August 2026');
   });
 
+  it('skips a stream that inflates past the size cap instead of exhausting the heap', () => {
+    const huge = deflateSync(Buffer.alloc(20_000_000));
+    const bomb = Buffer.concat([Buffer.from('stream\n', 'latin1'), huge, Buffer.from('\nendstream\n', 'latin1')]);
+    const pdf = Buffer.concat([pdfWith(header, '/Title (Floorplan Melbourne 2026)'), bomb]);
+    expect(pdfText(pdf)).toContain('1 - 2 August 2026');
+    expect(pdfMetadata(pdf).title).toBe('Floorplan Melbourne 2026');
+  });
+
   it('reads what a web page says it is: its title and main heading, not its body', () => {
     const html = `<html><head><title>2026 Floor Plan | Cruise Ship Interiors Europe 2026 | Hamburg</title></head>
       <body><h1>Floor Plan</h1><p>Also see our Miami 2027 show</p></body></html>`;
@@ -434,7 +512,7 @@ describe('helpers', () => {
 
 // --- The search, against in-memory sites --------------------------------------
 
-type FakeSite = Record<string, { body: string | Buffer; type?: string; status?: number }>;
+type FakeSite = Record<string, { body: string | Buffer; type?: string; status?: number; landsOn?: string }>;
 
 function fakeFetcher(site: FakeSite): Fetcher {
   return async (url): Promise<Fetched> => {
@@ -449,7 +527,8 @@ function fakeFetcher(site: FakeSite): Fetcher {
     }
     const type = entry.type ?? (key.endsWith('.pdf') ? 'application/pdf' : key.endsWith('.png') ? 'image/png' : 'text/html; charset=utf-8');
     const body = typeof entry.body === 'string' ? Buffer.from(entry.body) : entry.body;
-    return { url: key, status: entry.status ?? 200, contentType: type, headers: { 'content-type': type }, body, truncated: false };
+    // `landsOn`: the address a redirect ends at.
+    return { url: entry.landsOn ?? key, status: entry.status ?? 200, contentType: type, headers: { 'content-type': type }, body, truncated: false };
   };
 }
 
@@ -465,6 +544,41 @@ const franchising = {
   otherCities: ['Sydney', 'Brisbane'],
 };
 const budget = { timeMs: 10_000 };
+
+describe('a plan link that redirects to another year', () => {
+  const salon = {
+    name: 'Artemisia',
+    city: 'Marseille',
+    startDate: '2026-10-23',
+    endDate: '2026-10-25',
+    country: 'France',
+    venue: 'Parc Chanot',
+    organizer: 'Spas Organisation',
+    website: 'https://www.salon.example',
+  };
+  const site = (landsOn?: string) =>
+    fakeFetcher({
+      'https://www.salon.example': { body: '<title>Artemisia Marseille</title><p>23 - 25 octobre 2026, Parc Chanot, Marseille</p><a href="/visiteurs/">Visiteurs</a>' },
+      'https://www.salon.example/visiteurs': {
+        body: '<title>Visiteurs | Artemisia Marseille</title><p>Artemisia Marseille, 23 - 25 octobre 2026, Parc Chanot</p><a href="/visiteurs/le-plan-du-salon/">Le plan du salon</a>',
+      },
+      'https://www.salon.example/visiteurs/le-plan-du-salon': {
+        body: '<title>Le plan du salon | Artemisia Marseille</title><h1>Le plan du salon Artemisia Marseille</h1><p>Hall 1 Hall 2 Stand A1 Stand B4</p>',
+        landsOn,
+      },
+    });
+
+  it('does not take the plan page another year\'s address lands on', async () => {
+    const result = await discoverFloorPlan(salon, { fetcher: site('https://www.salon.example/visiteurs/le-plan-du-salon-2023/'), search: null, budget });
+    expect(result.status).not.toBe('VERIFIED_PLAN');
+    expect(result.floorPlan).toBeNull();
+  });
+
+  it('still takes the same plan page when it is not redirected elsewhere', async () => {
+    const result = await discoverFloorPlan(salon, { fetcher: site(), search: null, budget });
+    expect(result.status).toBe('VERIFIED_PLAN');
+  });
+});
 
 describe('discovering the plan on the official sources', () => {
   it('follows exhibitor pages to this edition’s plan and skips other cities’ plans', async () => {

@@ -75,3 +75,5 @@ data/find-shows-seed.backup.json
 # original logo uploads (byte-identical duplicates of public/prismconnex-logo-*.jpeg)
 public/Prismconnex logo.jpeg
 public/Prismconnex logo2.jpeg
+# Copied from node_modules by scripts/copy-pdf-worker.mjs at build time.
+public/pdf.worker.min.mjs

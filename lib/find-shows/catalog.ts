@@ -376,6 +376,10 @@ function toEvent(record: FindShowSeedRecord): FindShowEvent {
     seedCity: record.city,
     monthYear: record.monthYear ?? parsedDates.startMonth ?? '',
     duration: record.duration ?? '',
+    startTime: record.startTime ?? null,
+    endTime: record.endTime ?? null,
+    timeZone: record.timeZone ?? null,
+    timing: record.timing ?? null,
   };
 }
 

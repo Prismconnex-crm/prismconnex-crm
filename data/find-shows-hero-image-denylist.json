@@ -1,0 +1,3894 @@
+{
+ "_comment": "Images the automatic hero resolver must never use, from the reviewed read-only audit in reports/hero-images/resolver-audit-2026-10-11 (visual review plus live re-check): logos, stock, promo and text cards, other events’ photos, images that fail to load when embedded, and photos shared by different shows. Read by lib/find-shows/hero-image-registry.ts. Applies only to automatic picks; hand-verified registry entries are separate.",
+ "entries": [
+  {
+   "imageUrl": "http://caravanssalon.pl/media/f0xhvexn/csp_2026_mapa_a4_start.jpg",
+   "reason": "Audit 2026-10-11: Map graphic",
+   "events": [
+    "caravans-salon-poznan-2026-10-15"
+   ]
+  },
+  {
+   "imageUrl": "http://dacha.interopttorg.ru/pig/dacha.jpg",
+   "reason": "Audit 2026-10-11: Stock garden photo",
+   "events": [
+    "dacha-garden-landscape-small-scale-mechanization-moscow-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "http://romtherm.ro/wp-content/uploads/2025/08/1980x1080px_ROMTHERM_PACKSHOT26.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "romtherm-bucharest-2027-04-15"
+   ]
+  },
+  {
+   "imageUrl": "http://sh.cippe.com.cn/public/images/2023/yudengji2023_en.jpg",
+   "reason": "Audit 2026-10-11: 2023 registration text banner",
+   "events": [
+    "cippe-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "http://stier.co.il/isprint/wp-content/uploads/sites/20/2017/04/ISPRINT-13_main.jpg",
+   "reason": "Audit 2026-10-11: Stock eye graphic",
+   "events": [
+    "isprint-tel-aviv-2026-11-03"
+   ]
+  },
+  {
+   "imageUrl": "http://targuldeturism.ro/wp-content/uploads/2025/08/TTR-II-editia-de-toamna.jpg",
+   "reason": "Audit 2026-10-11: Illustration collage",
+   "events": [
+    "ttr-targul-de-turism-al-romaniei-bucharest-2026-11-19"
+   ]
+  },
+  {
+   "imageUrl": "http://www.adexco.id/wp-content/uploads/2026/09/ADEXCO-Thank-You.webp",
+   "reason": "Audit 2026-10-11: 'Thank you' text graphic",
+   "events": [
+    "adexco-jakarta-jakarta-2026-09-09"
+   ]
+  },
+  {
+   "imageUrl": "http://www.cctvexpo.com/images/CCTV-web-org.jpeg",
+   "reason": "Audit 2026-10-11: Promo poster for the 2023 edition",
+   "events": [
+    "cctv-expo-new-delhi-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "http://www.conxemar.com/wp-content/uploads/2026/04/banner-conxemar-fondo-color1-lila.webp",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "conxemar-vigo-2026-10-06"
+   ]
+  },
+  {
+   "imageUrl": "http://www.dentechasia.com/img/gallery/DSC02816.JPG",
+   "reason": "Post-remediation visual review 2026-10-11: Shows another event name (Health Asia) as an overlay",
+   "events": [
+    "dentech-asia-karachi-karachi-2026-09-10"
+   ]
+  },
+  {
+   "imageUrl": "http://www.dpes.com.cn/UploadFiles/news/images/2026912443.jpg",
+   "reason": "Audit 2026-10-11: Image is captioned PRINTING United Expo 2026 (USA), a different event",
+   "events": [
+    "dpes-sign-and-led-expo-china-guangzhou-2027-02-24"
+   ]
+  },
+  {
+   "imageUrl": "http://www.enciwinner.it/media/3798/ew2024_banner1600.jpg?anchor=center&mode=crop&width=2400&height=825&rnd=133733785500000000",
+   "reason": "Audit 2026-10-11: 2024 promo poster",
+   "events": [
+    "enci-winner-bologna-2026-12-01"
+   ]
+  },
+  {
+   "imageUrl": "http://www.malaysiagiftsfair.com.my/data/editor/2026/mgf-kv-2026.jpg?v=1776826129862",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "malaysia-gifts-fair-kuala-lumpur-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "http://www.mitexpo.ru/upload/iblock/31d/zsz3c6n544r2h60b4mo7ueiwidk1uk4g.webp",
+   "reason": "Post-remediation visual review 2026-10-11: exhibitor video-invitation card with play button and dates",
+   "events": [
+    "mitex-moscow-2026-11-10"
+   ]
+  },
+  {
+   "imageUrl": "http://www.mitexpo.ru/upload/iblock/6e4/dck7vv01b6j81yncl8kxz4j759mo8fl9.webp",
+   "reason": "Audit 2026-10-11: Video thumbnail with play button",
+   "events": [
+    "mitex-moscow-2026-11-10"
+   ]
+  },
+  {
+   "imageUrl": "http://www.mitexpo.ru/upload/iblock/733/pxxxu5od0yc825vw54pq2jid3exoswzo.webp",
+   "reason": "Post-remediation visual review 2026-10-11: Video thumbnail with play button",
+   "events": [
+    "mitex-moscow-2026-11-10"
+   ]
+  },
+  {
+   "imageUrl": "http://www.paper-com.com.hk/images/DMP-header(1200)-Nov.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "dmp-china-dongguan-international-plastics-packaging-and-rubber-exhibition-shenzhen-2026-11-04"
+   ]
+  },
+  {
+   "imageUrl": "http://www.sofexjordan.com/Img/AppBranding.jpg",
+   "reason": "Audit 2026-10-11: App-store promo graphic",
+   "events": [
+    "sofex-jordan-aqaba-2026-10-27"
+   ]
+  },
+  {
+   "imageUrl": "https://2027.cired.net/wp-content/uploads/2025/03/og-img.jpg",
+   "reason": "Audit 2026-10-11: Logo card",
+   "events": [
+    "cired-stockholm-2027-06-14"
+   ]
+  },
+  {
+   "imageUrl": "https://2027.ieee-rfid.org/files/2026/07/ieee-rfid-2027-hero.jpg",
+   "reason": "Audit 2026-10-11: Illustration",
+   "events": [
+    "ieee-rfid-memphis-tn-2027-06-14"
+   ]
+  },
+  {
+   "imageUrl": "https://acam.be/beurzen/acam-koninklijke-academie-voor-mineralogie-extra-informatie-beurs-button.jpg",
+   "reason": "Audit 2026-10-11: Stock minerals photo",
+   "events": [
+    "imra-beurs-antwerp-2027-02-01"
+   ]
+  },
+  {
+   "imageUrl": "https://ad2s-bordeaux.com/images/2026/downloads/Banniere%20PSD%20Groupe%20Cellutec%20AD2S.jpg",
+   "reason": "Audit 2026-10-11: Exhibitor advert banner",
+   "events": [
+    "ad2s-aerospace-and-defence-support-and-services-merignac-2026-09-22"
+   ]
+  },
+  {
+   "imageUrl": "https://aeromart-toulouse.com/images/photos/AdobeStock_783148250.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: AI-style render",
+   "events": [
+    "aeromart-toulouse-toulouse-2026-12-01"
+   ]
+  },
+  {
+   "imageUrl": "https://aestetica.it/wp-content/uploads/2026/09/aestetica_sitoweb_desktop_1920x830.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "aestetica-napoli-2026-11-07"
+   ]
+  },
+  {
+   "imageUrl": "https://agrokomplex.sk/wp-content/uploads/2021/04/agrokomplex-gardenia_1065645125.jpg",
+   "reason": "Audit 2026-10-11: Stock flower close-up",
+   "events": [
+    "gardenia-nitra-nitra-2027-04-21"
+   ]
+  },
+  {
+   "imageUrl": "https://airtech-eg.com/wp-content/uploads/2020/11/airtech-2020-Final-1.jpg",
+   "reason": "Audit 2026-10-11: Faded graphic",
+   "events": [
+    "airtech-cairo-2026-12-17"
+   ]
+  },
+  {
+   "imageUrl": "https://aite.gr/wp-content/uploads/2026/05/BANNER-EXPO-2026.jpg",
+   "reason": "Audit 2026-10-11: Promo collage",
+   "events": [
+    "athens-international-tourism-and-culture-expo-athens-2026-12-11"
+   ]
+  },
+  {
+   "imageUrl": "https://allfoodindonesia.com/wp-content/uploads/2022/03/header-bacary.jpg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "bacary-indonesia-jakarta-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://allfoodindonesia.com/wp-content/uploads/2022/03/header-health-herbal.jpg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "herbal-and-health-food-indonesia-jakarta-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://allfoodindonesia.com/wp-content/uploads/2022/03/header-prosweets.jpg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "prosweets-and-snacks-expo-jakarta-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://allradaustria.at/wp-content/uploads/2026/07/allradaustria-2027-1-scaled.jpg",
+   "reason": "Audit 2026-10-11: Text graphic",
+   "events": [
+    "adventure-allrad-austria-tulln-2027-05-06"
+   ]
+  },
+  {
+   "imageUrl": "https://alltforsjon.se/wp-content/uploads/2024/07/allt-for-sjon-1200x628-1.jpg",
+   "reason": "Audit 2026-10-11: Stock speedboat aerial",
+   "events": [
+    "alt-for-sjon-stockholm-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://alltforsjon.se/wp-content/uploads/2025/09/AFS_puff_startsida-scaled.webp",
+   "reason": "Post-remediation visual review 2026-10-11: Stock lifestyle photo (sailing)",
+   "events": [
+    "alt-for-sjon-stockholm-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://amberexpo.pl/wp-content/uploads/2026/09/procad-expo-2026-kalendarz.jpg",
+   "reason": "Audit 2026-10-11: Promo banner for another fair (Procad Expo) on a shared calendar",
+   "events": [
+    "gdanskie-targi-szkol-ponadpodstawowych-gdansk-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://amiwebsite.blob.core.windows.net/ami-strapi-assets/uploads/PWE_EU_2024_showfloor5_72ppi_32888da715.jpg",
+   "reason": "Shared by 3 different shows (COMPOUNDING & RECYCLING EXPO EUROPE / AMI COUPOUNDING & RECYCLING EXPO / PLASTICS EXTRUSION WORLD EXPO EUROPE)",
+   "events": [
+    "compounding-and-recycling-expo-europe-frankfurt-2026-09-23",
+    "ami-coupounding-and-recycling-expo-frankfurt-2026-09-23",
+    "plastics-extrusion-world-expo-europe-frankfurt-2026-09-23"
+   ]
+  },
+  {
+   "imageUrl": "https://api-frontassets.inwink.com/event/78192350-9d5d-f111-8fcb-6045bd954326/asset/1ea9121f-5fc2-f111-bf5b-000d3a20cb52/file/capture-20d-e2-80-99e-cc-81cran-202026-10-07-20a-cc-80-2016-55.webp?mw=1920",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "seanergy-montpellier-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://api-frontassets.inwink.com/event/b98b2e2c-25f1-f011-8195-0022488a3e24/asset/5f50c393-65f1-f011-8195-6045bd95462d/file/france-20-20salon-20tatouage-202025-59-jpg",
+   "reason": "Audit 2026-10-11: Tattoo close-up",
+   "events": [
+    "salon-du-tatouage-de-clermont-ferrand-clermont-ferrand-2026-10-17"
+   ]
+  },
+  {
+   "imageUrl": "https://api-frontassets.inwink.com/event/e5119ca4-ad02-f111-8330-6045bd9548dc/asset/52f999e9-e21b-f111-9a49-6045bd9541be/file/banner-tbb-linkedin-1",
+   "reason": "Audit 2026-10-11: Promo banner (Munich 2026, different event)",
+   "events": [
+    "tbb-connect-munich-2026-10-28"
+   ]
+  },
+  {
+   "imageUrl": "https://api-frontassets.inwink.com/event/eee686e0-2a75-f111-ac9b-6045bd954d86/asset/511f4811-3175-f111-ac9b-6045bd954d86/file/visuel-20foire-20aper-c3-a7u-20site-20web",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "foire-internationale-de-metz-metz-2026-09-25"
+   ]
+  },
+  {
+   "imageUrl": "https://arenaofbeauty.com/wp-content/uploads/2026/05/ArenaofBeauty_banner_2027.jpg",
+   "reason": "Audit 2026-10-11: Collage graphic",
+   "events": [
+    "arena-of-beauty-sofia-2027-04-23"
+   ]
+  },
+  {
+   "imageUrl": "https://arredamont.it/wp-content/uploads/2025/01/arredamont_legno-arredo-1.jpg",
+   "reason": "Audit 2026-10-11: Furniture product photo",
+   "events": [
+    "arredamont-longarone-2026-10-01"
+   ]
+  },
+  {
+   "imageUrl": "https://art3f.fr/wp-content/uploads/2024/06/HAUTE-SAVOIE_26_4x3_FR.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "art3f-haute-savoie-la-roche-sur-foron-2026-10-09"
+   ]
+  },
+  {
+   "imageUrl": "https://articrea.tn/wp-content/uploads/2025/09/Articrea25-landscape-scaled.jpg",
+   "reason": "Audit 2026-10-11: Stock still life",
+   "events": [
+    "articrea-tunis-2026-10-01"
+   ]
+  },
+  {
+   "imageUrl": "https://ascend.events/wp-content/uploads/2025/09/ASCEND26-socialcard.jpg?ver=1757442103",
+   "reason": "Audit 2026-10-11: Promo text graphic (Washington 2026)",
+   "events": [
+    "ascend-washington-d-c-2027-05-18"
+   ]
+  },
+  {
+   "imageUrl": "https://asfw-nairobi.com/wp-content/uploads/2026/04/teaser2025_visitors.jpg",
+   "reason": "Audit 2026-10-11: Image captioned ASFW Nairobi (a different event); Shared by 2 different shows (EAST AFRICA TEXTILE & LEATHER WEEK / ASFW (AFRICA SOURCING & FASHION WEEK) - NAIROBI)",
+   "events": [
+    "east-africa-textile-and-leather-week-nairobi-2027-05-27",
+    "asfw-africa-sourcing-and-fashion-week-nairobi-nairobi-2027-05-27"
+   ]
+  },
+  {
+   "imageUrl": "https://asialabex.com/wp-content/uploads/2026/07/Visitor-Video.png",
+   "reason": "Audit 2026-10-11: Video thumbnail graphic with text",
+   "events": [
+    "asia-labex-gandhinagar-2027-01-21"
+   ]
+  },
+  {
+   "imageUrl": "https://ausjetconnect.com.au/wp-content/uploads/2025/09/Ausjet-2026-landing-page-image-1920px.webp",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "ausjet-sydney-2026-10-28"
+   ]
+  },
+  {
+   "imageUrl": "https://austropharm.at/wp-content/uploads/2025/01/austropharm2023-054.jpg",
+   "reason": "Audit 2026-10-11: Venue exterior (Messe Wien), not the event",
+   "events": [
+    "austropharm-vienna-2027-04-22"
+   ]
+  },
+  {
+   "imageUrl": "https://autofest.co/img/spot-05-WB.jpg",
+   "reason": "Audit 2026-10-11: Promo graphic (2x1 offer)",
+   "events": [
+    "autofest-caribe-barranquilla-2026-11-05"
+   ]
+  },
+  {
+   "imageUrl": "https://automechanika.messefrankfurt.com/content/dam/messefrankfurt-redaktion/automechanika/2028/kv/amf-2028-kv-stage.webp.2560.jpg",
+   "reason": "Audit 2026-10-11: Automechanika Frankfurt key visual (a different event)",
+   "events": [
+    "reifen-frankfurt-2026-09-08"
+   ]
+  },
+  {
+   "imageUrl": "https://automorrowegypt.com/juvugep/uploads/2026/09/Automorrow-KV-Pyramids-.webp",
+   "reason": "Audit 2026-10-11: Key-visual artwork (sand art), not an event photo",
+   "events": [
+    "automorrow-egypt-international-motor-show-cairo-2027-02-01"
+   ]
+  },
+  {
+   "imageUrl": "https://automotoretro.it/wp-content/uploads/2026/03/Porsche-911-Carrera-1989-1.jpg",
+   "reason": "Audit 2026-10-11: Image does not load over https in a browser (TIMEOUT); initial: VERIFIED_RELEVANT",
+   "events": [
+    "automotoretro-parma-2027-03-05"
+   ]
+  },
+  {
+   "imageUrl": "https://b3326075.assetcdn.net/2.0/3326075/wp-content/uploads/2019/08/HerbstmesseMesseshuttle26.jpg",
+   "reason": "Audit 2026-10-11: Route map",
+   "events": [
+    "die-neue-herbstmesse-klagenfurt-2026-09-16"
+   ]
+  },
+  {
+   "imageUrl": "https://b3326075.assetcdn.net/2.0/3326075/wp-content/uploads/2019/10/Routenplan-Holzmesse2026.jpg",
+   "reason": "Audit 2026-10-11: Route map",
+   "events": [
+    "internationale-holzmesse-klagenfurt-2026-09-02"
+   ]
+  },
+  {
+   "imageUrl": "https://b3326075.assetcdn.net/2.0/3326075/wp-content/uploads/2019/10/treffpunkt-jagd-kaerntner-messen-die-jagdmesse.jpg?lossy=0&strip=1&webp=1",
+   "reason": "Audit 2026-10-11: Stock deer photo",
+   "events": [
+    "treffpunkt-jagd-klagenfurt-2026-09-02"
+   ]
+  },
+  {
+   "imageUrl": "https://b3326075.assetcdn.net/2.0/3326075/wp-content/uploads/2025/10/Familienmesse-web.jpg",
+   "reason": "Audit 2026-10-11: Route map",
+   "events": [
+    "familienmesse-frauenmesse-klagenfurt-2026-11-13"
+   ]
+  },
+  {
+   "imageUrl": "https://backoffice.inviteo.com/upload/compte586/Base/inscriptions_manifestation/image1/0706-banner_amrae2027.jpg",
+   "reason": "Audit 2026-10-11: Text banner",
+   "events": [
+    "les-rencontres-amrae-deauville-2027-02-03"
+   ]
+  },
+  {
+   "imageUrl": "https://bangladesh-medical.com/wp-content/uploads/2025/06/WhatsApp-Image-2025-06-15-at-10.47.54-AM.jpeg",
+   "reason": "Audit 2026-10-11: Logo card (2025)",
+   "events": [
+    "bimex-bangladesh-international-medical-expo-dhaka-2026-11-26"
+   ]
+  },
+  {
+   "imageUrl": "https://batmassan.se/uploads/sites/6/2023/10/batmassan-hero-med-segelbat-2024-1920x1080.jpg",
+   "reason": "Audit 2026-10-11: Stock sea landscape",
+   "events": [
+    "batmassan-goteborg-boat-show-gothenburg-2027-02-01"
+   ]
+  },
+  {
+   "imageUrl": "https://beautytradespecial.nl/wp-content/uploads/sites/19/2025/08/2025-03-08_09-Beauty-Trade-Special-Jaarbeurs-Utrecht-webres-22.jpg",
+   "reason": "Audit 2026-10-11: Decorative balloons graphic",
+   "events": [
+    "beauty-trade-special-utrecht-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://bfshow-hml.s3.amazonaws.com/714/BFSHOW-7-EDIT0709.jpg",
+   "reason": "Audit 2026-10-11: Product still life",
+   "events": [
+    "bfshow-brazilian-footwear-show-sao-paulo-2026-11-10"
+   ]
+  },
+  {
+   "imageUrl": "https://biomessen.info/wp-content/uploads/2023/01/BioMessen-BioWest-Header-1.jpg",
+   "reason": "Audit 2026-10-11: Stock vegetables photo",
+   "events": [
+    "biowest-dusseldorf-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://biomessen.info/wp-content/uploads/2023/02/BioMessen-BioNord-Header.jpg",
+   "reason": "Audit 2026-10-11: Stock berries photo",
+   "events": [
+    "bionord-hamburg-2026-10-11"
+   ]
+  },
+  {
+   "imageUrl": "https://boatshow.co.nz/wp-content/uploads/2024/04/BS24_Website-Features_Trailers_Banner.jpg",
+   "reason": "Audit 2026-10-11: Boat-trailer product photo",
+   "events": [
+    "hutchwilco-new-zealand-boat-show-auckland-2027-05-13"
+   ]
+  },
+  {
+   "imageUrl": "https://boatshow.co.nz/wp-content/uploads/2024/04/Shimano-Pavilion.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Single-person close-up",
+   "events": [
+    "hutchwilco-new-zealand-boat-show-auckland-2027-05-13"
+   ]
+  },
+  {
+   "imageUrl": "https://bulmedica.bg/wp-content/uploads/2025/03/header_1371x494_buldental-2025_en3.jpg",
+   "reason": "Audit 2026-10-11: Logo banner",
+   "events": [
+    "buldental-sofia-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://bulmedica.bg/wp-content/uploads/2025/03/header_1371x494_bulmedica-2025_en2.jpg",
+   "reason": "Audit 2026-10-11: Logo banner",
+   "events": [
+    "bulmedica-sofia-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://bulmedica.bg/wp-content/uploads/2025/03/header_1371x494_derma-2025_en4.jpg",
+   "reason": "Audit 2026-10-11: Logo banner",
+   "events": [
+    "derma-and-aesthetics-sofia-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://cafesdecolombiaexpo.com/img/spot-campana-web.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "cafes-de-colombia-expo-bogota-2026-10-15"
+   ]
+  },
+  {
+   "imageUrl": "https://cairoict.com/site/og.jpg",
+   "reason": "Audit 2026-10-11: Promo text graphic",
+   "events": [
+    "cairo-ict-cairo-2026-11-08"
+   ]
+  },
+  {
+   "imageUrl": "https://campvillmark.no/wp-content/uploads/sites/24/2022/11/CV_Hjemmeside-0637-scaled.jpg",
+   "reason": "Audit 2026-10-11: Stock landscape",
+   "events": [
+    "camp-villmark-lillestr-m-2027-03-12"
+   ]
+  },
+  {
+   "imageUrl": "https://ccmshow.co.uk/media/bhqdtt2b/ccms26-motorhome-header-coachman-travelmaster-location-2026-range-138.webp?width=310&height=250&format=webp",
+   "reason": "Audit 2026-10-11: Product photo (motorhome outdoors), not the show",
+   "events": [
+    "caravan-camping-and-motorhome-show-birmingham-2027-02-16"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_AIS_4ECF9403_5056_B731_4C2E7E25E0DDB2FB/productImages/6AFC0FF6-E6FB-E97C-2ABE3A74D091BD4F_cover.jpg",
+   "reason": "Audit 2026-10-11: Stock venue/landmark photo (Galleria Milan)",
+   "events": [
+    "world-retail-congress-milan-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Ascentia_4E961A52_5056_B739_54289B84DF34E888/productImages/00FBCD09-9D9C-F229-18833384D7DAD296_cover.png",
+   "reason": "Audit 2026-10-11: Promo banner (Bett Brasil)",
+   "events": [
+    "bett-brazil-educar-sao-paulo-2027-05-04"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Ascentia_4E961A52_5056_B739_54289B84DF34E888/productImages/104DD42D-E894-20C9-BD7958950C11C1B3_cover.png",
+   "reason": "Audit 2026-10-11: Bett Show promo banner: a different (co-located) event",
+   "events": [
+    "education-show-london-bett-london-2027-01-20"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Ascentia_4E961A52_5056_B739_54289B84DF34E888/productImages/652DDD45-EE38-65EE-65B0F9B733CD5B3A_cover.jpg",
+   "reason": "Audit 2026-10-11: Stock plant photo",
+   "events": [
+    "glee-birmingham-2026-09-08"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Ascentia_4E961A52_5056_B739_54289B84DF34E888/productImages/B31AB56D-E359-8572-506EFC2411AB117A_cover.png",
+   "reason": "Audit 2026-10-11: Promo banner with text",
+   "events": [
+    "bett-show-london-2027-01-20"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Ascentia_4E961A52_5056_B739_54289B84DF34E888/productImages/EA86B594-B817-660A-BA0C832F49FC0CF7_cover.png",
+   "reason": "Audit 2026-10-11: Promo text card",
+   "events": [
+    "spring-fair-birmingham-2027-02-07"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Briefing_1C55814B_5056_B739_544022F19077A8D2/productImages/2774A5A0-B895-E9BE-AA33D1A394504C3E_cover.jpg",
+   "reason": "Audit 2026-10-11: Stock field photo",
+   "events": [
+    "farm-business-innovation-birmingham-2026-11-04"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Business_DCF4FF16_FAB8_0D4B_807D8955A223D6D8/productImages/138839A7-B6CF-3A95-3A91D464D3F14D60_cover.png",
+   "reason": "Audit 2026-10-11: Text graphic",
+   "events": [
+    "the-business-show-miami-miami-fl-2027-04-14"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Business_DCF4FF16_FAB8_0D4B_807D8955A223D6D8/productImages/1562501F-EB2A-199E-E075DA957D2A5DC7_cover.png",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "international-franchise-show-london-2027-04-16"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Business_DCF4FF16_FAB8_0D4B_807D8955A223D6D8/productImages/848FDE07-DD4B-8A03-9A104EF1D3B5BAA0_cover.png",
+   "reason": "Audit 2026-10-11: Near-blank graphic",
+   "events": [
+    "retrain-expo-london-london-2026-11-11"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Business_DCF4FF16_FAB8_0D4B_807D8955A223D6D8/productImages/858B4EAE-CDD0-BEA4-4DC695EDC2912A29_cover.png",
+   "reason": "Audit 2026-10-11: Logo card of a different event (Going Global Live); Shared by 2 different shows (GOING GLOBAL LIVE - LONDON / FOREIGN DIRECT INVESTMENT EXPO)",
+   "events": [
+    "going-global-live-london-london-2026-11-11",
+    "foreign-direct-investment-expo-london-2026-11-11"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Business_DCF4FF16_FAB8_0D4B_807D8955A223D6D8/productImages/C501B520-DDDF-CE8C-F04A550D5A124EDC_cover.jpg",
+   "reason": "Audit 2026-10-11: NYC skyline graphic for a different event (White & Private Label New York); Shared by 4 different shows (WHITE LABEL EXPO WORLD EXPO - FRANKFURT / ECOMMERCE PACKAGING & LABELLING EXPO - USA / SMART RETAIL TECH - USA)",
+   "events": [
+    "white-label-expo-world-expo-frankfurt-frankfurt-2027-05-01",
+    "ecommerce-packaging-and-labelling-expo-usa-las-vegas-nv-2026-09-23",
+    "smart-retail-tech-usa-new-york-ny-2026-09-30",
+    "white-label-expo-world-expo-usa-new-york-new-york-ny-2026-09-30"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CL_US_323E7AA7_5056_B733_8303D39C538813E0/productImages/632A685C-99E6-F02C-E6A4B13A02791646_cover.jpg",
+   "reason": "Audit 2026-10-11: Illustration landscape",
+   "events": [
+    "the-smoky-mountain-gift-show-gatlinburg-tn-2026-11-04"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CL_US_323E7AA7_5056_B733_8303D39C538813E0/productImages/6BCA172D-F130-4E40-116332DB22312EF8_cover.png",
+   "reason": "Audit 2026-10-11: Decorative bat pattern graphic",
+   "events": [
+    "halloween-and-party-expo-new-orleans-la-2027-01-11"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CL_US_323E7AA7_5056_B733_8303D39C538813E0/productImages/72311C00-D32D-EB16-45FD03734165F8D4_cover.png",
+   "reason": "Audit 2026-10-11: Blank texture",
+   "events": [
+    "womens-wear-in-nevada-las-vegas-nv-2026-08-09"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CL_US_323E7AA7_5056_B733_8303D39C538813E0/sites/fdic2026/media/backgrounds/photo_1.jpg/fit-in/1200x9999/filters:no_upscale()",
+   "reason": "Audit 2026-10-11: Stock firefighter photo",
+   "events": [
+    "fdic-fire-departments-instructors-conference-indianapolis-in-2027-04-12"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Clarion__96F66098_5056_B733_492B7F3A0E159DC7/productImages/D088C21D-0B2C-1AB0-529B535BF0088DAD_cover.jpg",
+   "reason": "Audit 2026-10-11: Key-visual graphic",
+   "events": [
+    "itec-london-2027-05-11"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/productImages/11C3A32B-C1FD-0A88-2EC6BB3063141290_cover.jpg",
+   "reason": "Audit 2026-10-11: Flag and H2 icon graphic",
+   "events": [
+    "hydrogen-technology-expo-north-america-houston-tx-2027-01-13"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/productImages/1CA77C24-D836-B788-4718A158E3914BBA_cover.png",
+   "reason": "Audit 2026-10-11: Blank colour graphic",
+   "events": [
+    "london-vet-show-london-2026-11-19"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/productImages/534FB253-041B-E60C-89DF0AF8733040C1_cover.jpg",
+   "reason": "Audit 2026-10-11: Same Tech Show Frankfurt image shared by 7 events; Shared by 7 different shows (BIG DATA & AI WORLD LONDON / CLOUD & CYBER SECURITY EXPO EUROPE - LONDON / DATA CENTRE WORLD)",
+   "events": [
+    "big-data-and-ai-world-london-london-2027-03-10",
+    "cloud-and-cyber-security-expo-europe-london-london-2027-03-10",
+    "data-centre-world-london-2027-03-10",
+    "cloud-expo-europe-london-london-2027-03-10",
+    "big-data-and-ai-world-frankfurt-frankfurt-2027-05-19",
+    "data-centre-world-europe-paris-paris-2026-11-18",
+    "big-data-and-ai-world-paris-paris-2026-11-18"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/productImages/544F4BD1-C183-A8D2-F84B481F58DBCE25_cover.png",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "pharmacy-forum-uk-barcelona-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/productImages/5567AAD3-987F-1C9C-2041916B855C4905_cover.jpg",
+   "reason": "Audit 2026-10-11: Flag and CO2 icon graphic",
+   "events": [
+    "carbon-capture-technology-conference-and-expo-north-america-houston-tx-2027-01-13"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/productImages/82E3A858-0AEF-42EB-C327725A2CCDB0AE_cover.png",
+   "reason": "Audit 2026-10-11: Logo card",
+   "events": [
+    "automotive-testing-expo-europe-stuttgart-2027-06-02"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/productImages/9E774EE3-985F-792B-E136274C1D83C4F9_cover.png",
+   "reason": "Audit 2026-10-11: Text graphic",
+   "events": [
+    "hr-technologies-france-paris-2027-01-20"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/productImages/A1FC131E-0C31-CAB9-1A0D1379F73C6E2F_cover.png",
+   "reason": "Audit 2026-10-11: Same eCommerce Expo Asia image applied to a different-dated record",
+   "events": [
+    "ecommerce-expo-asia-singapore-2026-09-29"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/productImages/AEAC8367-A979-D07C-58BBC3F72E1EE479_cover.webp",
+   "reason": "Audit 2026-10-11: Stylised graphic",
+   "events": [
+    "100-optical-london-2027-02-27"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/productImages/AEE92D45-0BD1-7BA1-6BFEA299C5FE09F9_cover.png",
+   "reason": "Audit 2026-10-11: Logo card",
+   "events": [
+    "automotive-testing-expo-north-america-novi-mi-2026-10-27"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/productImages/B56FBF83-EF08-B7E5-A1E6B29CFFBA986B_cover.png",
+   "reason": "Audit 2026-10-11: Promo text banner",
+   "events": [
+    "hr-technologies-uk-london-2027-05-05"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/productImages/D61E9DE6-9085-3F5F-3489B5EEFCCA2F5A_cover.jpg",
+   "reason": "Audit 2026-10-11: Logo card",
+   "events": [
+    "adas-and-autonomous-vehicles-usa-san-jose-ca-2026-08-26"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/sites/DTS-2023/media/ASV17987.jpg",
+   "reason": "Audit 2026-10-11: Cropped stage close-up",
+   "events": [
+    "dts-dental-technology-showcase-birmingham-2027-05-14"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/sites/pharmagora-plus-2026/media/PGP27-Visitor-Stats-2.png",
+   "reason": "Audit 2026-10-11: Statistics chart graphic",
+   "events": [
+    "pharmagora-plus-paris-2027-03-13"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_ConnextX_793F3CB5_ED38_EF65_B80E79D332BA020F/sites/HIX-LDN-2024/media/_sample/hero/image/hero_01.jpg",
+   "reason": "Audit 2026-10-11: Stock interior",
+   "events": [
+    "hix-hotel-interiors-experience-london-2026-11-25"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Dubai_Wo_4B15F265_5056_B739_54F3125D47F0BC95/productImages/7883677F-B1A3-934B-8A334B445FBF095D_cover.jpg",
+   "reason": "Audit 2026-10-11: Stock candy close-up",
+   "events": [
+    "yummex-middle-east-dubai-2026-09-15"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Dubai_Wo_4B15F265_5056_B739_54F3125D47F0BC95/sites/gulfood-2026/media/EXHIBIT.png",
+   "reason": "Audit 2026-10-11: Promo text over photo",
+   "events": [
+    "gulfood-exhibition-dubai-2027-03-15"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Eljays44_0C6B3E86_AC08_7DF8_C3A24E451131A40E/productImages/5BBF85F1-BEC7-AEC4-06EF5C75C75C1BF8_cover.png",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "circular-tech-expo-farnborough-2026-10-13"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Hannover_0951A339_E071_215F_6004B96FAE3D505F/productImages/9541C619-08FC-FC80-7D90F3A144AA6923_cover.png",
+   "reason": "Audit 2026-10-11: 'Welcome to Hannover Fairs' graphic, not this event",
+   "events": [
+    "hr-innovation-and-tech-fest-new-zealand-auckland-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_InfoComm_7E24A281_FE1F_C0AC_30C2FDCBA1A4EC67/productImages/F079AA3F-0F15-B273-BADA48F1DFBF7324_cover.jpg",
+   "reason": "Audit 2026-10-11: Abstract gradient",
+   "events": [
+    "infocomm-southeast-asia-kuala-lumpur-2027-07-28"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_InfoComm_807A12DE_5056_B731_4C911D504F318565/productImages/DFCD5F5E-BF04-5440-F34C1D6A90A4F6D3_cover.png",
+   "reason": "Audit 2026-10-11: Abstract gradient",
+   "events": [
+    "infocomm-international-orlando-fl-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Integrat_169E7B04_E6F3_39F6_8BE4DB27C54F731E/sites/ise-2027/media/2027/the-show-shoe/CHAMPION-ISE-2027-ON-WHITE-DETAILS-10-LOW-RES.jpg",
+   "reason": "Audit 2026-10-11: Product shot (sneaker)",
+   "events": [
+    "ise-integrated-systems-europe-barcelona-2027-02-02"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_JEC_Grou_6AF8533B_A785_E68C_038072A9950C5023/productImages/09B7E9B3-D8BB-AAE3-5CC86163CF36C449_cover.jpg",
+   "reason": "Audit 2026-10-11: Graphic collage",
+   "events": [
+    "jec-world-paris-2027-03-02"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Living_M_79270501_92E7_1113_4D3ED84A37D03D63/productImages/275CC8B3-AE6A-127E-969537EA168A013F_cover.webp",
+   "reason": "Audit 2026-10-11: Generic destination landscape (aurora), not an event photo",
+   "events": [
+    "adventure-travel-show-london-2027-01-09"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Mark_All_D856883D_926F_07B7_E9D09EE4984A0639/productImages/2409F199-72A8-49F0-98211C532336F1A2_cover.png",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "subcon-birmingham-2027-06-09"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Mark_All_D856883D_926F_07B7_E9D09EE4984A0639/sites/bapco-2026/media/darryl2.jpg",
+   "reason": "Audit 2026-10-11: Single person portrait (chairman)",
+   "events": [
+    "british-apco-liverpool-2027-03-23"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Mash_Med_B34ADAB8_B232_86A9_C581AF1F81387A43/sites/International-Confex/media/hero/CONFEX-26-Website-Where-the-events-industry-meets-2-.png",
+   "reason": "Audit 2026-10-11: Text graphic",
+   "events": [
+    "international-confex-london-2027-03-03"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Montgome_3A190450_F7F9_948C_B67144DED7FF8F0D/productImages/6E358009-E09C-6A4F-0AE6B799B2ECF6D7_cover.jpg",
+   "reason": "Audit 2026-10-11: Promo for the 2028 edition of a different city (Electra Mining Africa)",
+   "events": [
+    "electra-mining-africa-johannesburg-2026-09-07"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Montgome_3A190450_F7F9_948C_B67144DED7FF8F0D/productImages/A7A88E1F-E90D-E281-35656DFBECE3FD47_cover.jpg",
+   "reason": "Shared by 4 different shows (A-OSH EXPO AFRICA / FACILITIES MANAGEMENT EXPO / FIREXPO SOUTH AFRICA)",
+   "events": [
+    "a-osh-expo-africa-johannesburg-2027-06-01",
+    "facilities-management-expo-johannesburg-2027-06-01",
+    "firexpo-south-africa-johannesburg-2027-06-01",
+    "securex-south-africa-johannesburg-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Montgome_3A190450_F7F9_948C_B67144DED7FF8F0D/productImages/A9DE1992-D56F-1DD8-A76E786F9BD7E7C3_cover.jpg",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "kzn-industrial-technology-exhibition-durban-2027-07-27"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Montgome_B1B4C8FA_E3BA_05DA_18BFD74DA8885CDB/productImages/970D900D-D174-85FE-03248BC930CAA245_cover.jpg",
+   "reason": "Audit 2026-10-11: Logo sign close-up",
+   "events": [
+    "the-pub-show-london-2027-04-05"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Montgome_B1B4C8FA_E3BA_05DA_18BFD74DA8885CDB/productImages/A7EBBA3C-B2B0-90FC-D04828CC0B4F84B7_cover.jpg",
+   "reason": "Audit 2026-10-11: Stock food photo",
+   "events": [
+    "ife-international-food-and-drink-event-london-2027-04-05"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Montgome_B1B4C8FA_E3BA_05DA_18BFD74DA8885CDB/productImages/ABFE705D-0EAC-61A5-B2AEB029FEE71E77_cover.png",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "surface-design-show-london-2027-02-02"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Montgome_B1B4C8FA_E3BA_05DA_18BFD74DA8885CDB/productImages/B91F49B9-B7BA-5904-FC81CEC6BACBA14E_cover.png",
+   "reason": "Audit 2026-10-11: Product graphic",
+   "events": [
+    "ife-manufacturing-london-2027-04-05"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Montgome_B1B4C8FA_E3BA_05DA_18BFD74DA8885CDB/sites/fit-show-2023/media/FIT_27_Campaign_Lockup_HR_main.png",
+   "reason": "Audit 2026-10-11: Logo campaign graphic",
+   "events": [
+    "fit-show-birmingham-2027-05-18"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Montgome_B1B4C8FA_E3BA_05DA_18BFD74DA8885CDB/sites/hrc-2025/media/7-events-FDHW-no-titles-with-dates-4x.png",
+   "reason": "Post-remediation visual review 2026-10-11: Logo card",
+   "events": [
+    "hrc-hotel-restaurant-and-catering-london-2027-04-05"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_NexD_AE6992C8_DAA4_5E83_CF4A32DB4762E74D/productImages/45A2A5DB-DD3D-83A2-ABBDEB8C44517722_cover.jpg",
+   "reason": "Audit 2026-10-11: Stock London skyline",
+   "events": [
+    "resilience-world-nexus-rwn-summit-london-2026-10-06"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_NexD_AE6992C8_DAA4_5E83_CF4A32DB4762E74D/sites/WARN2026/media/Homepage_proposed.png/fit-in/1200x9999/filters:no_upscale()",
+   "reason": "Post-remediation visual review 2026-10-11: Stock city skyline",
+   "events": [
+    "resilience-world-nexus-rwn-summit-london-2026-10-06"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Nineteen_F7A1E73F_5056_B725_6BE81DEAAC036B43/productImages/2F958A2F-9ED0-C930-5C42BEC8385319FD_cover.webp",
+   "reason": "Audit 2026-10-11: Product close-up (safety tapes)",
+   "events": [
+    "the-health-and-safety-event-birmingham-2027-04-27"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Nineteen_F7A1E73F_5056_B725_6BE81DEAAC036B43/productImages/926B9707-AF69-CF28-A00AF61C1064E74F_cover.jpg",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "pro-integration-future-asia-singapore-2026-11-10"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Nineteen_F7A1E73F_5056_B725_6BE81DEAAC036B43/productImages/B0025477-92B6-EBBA-CE81FAE2002CDB0B_cover.webp",
+   "reason": "Audit 2026-10-11: Vehicle product graphic",
+   "events": [
+    "commercial-vehicle-show-birmingham-2027-04-20"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_Northsta_5B1737B2_5056_B733_83AD112B2FDD2BEF/productImages/2B2E9207-AB1A-0B27-FC74DEABFA6CA1B9_cover.jpg",
+   "reason": "Audit 2026-10-11: Text sign close-up",
+   "events": [
+    "teams-europe-manchester-2027-03-23"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_SPE__29FE44FF_5056_B733_49EC4D60A02A6A7D/productImages/10878502-9561-CE86-B5D811A59343FA98_cover.jpg",
+   "reason": "Audit 2026-10-11: Stock offshore platform image",
+   "events": [
+    "otc-offshore-technology-conference-houston-tx-2027-05-03"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_SPE__29FE44FF_5056_B733_49EC4D60A02A6A7D/productImages/9ACC217F-D392-DD24-0B8767127A143DF3_cover.png",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "atce-spe-annual-technical-conference-and-exhibition-houston-tx-2026-10-21"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_TransGlo_DB55CC41_0052_9F0E_6F42C9E24DA38904/productImages/49AA528F-F841-9F62-41D817F018367AEE_cover.png",
+   "reason": "Audit 2026-10-11: Logo graphic for co-located expos",
+   "events": [
+    "e-waste-world-conference-and-expo-frankfurt-2027-05-12"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_William__AADC8E30_F363_0056_DE6E71696B61B261/productImages/04E7C608-DB6A-A4FC-DFB4A84D8D4FE219_cover.png",
+   "reason": "Audit 2026-10-11: Promo text banner",
+   "events": [
+    "world-agri-tech-innovation-summit-san-francisco-san-francisco-ca-2027-03-09"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_William__AADC8E30_F363_0056_DE6E71696B61B261/productImages/138AC015-0C72-F365-D2C09B6C61AE13B6_cover.png",
+   "reason": "Audit 2026-10-11: Graphic collage",
+   "events": [
+    "world-water-tech-innovation-summit-london-2027-02-23"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.asp.events/CLIENT_William__AADC8E30_F363_0056_DE6E71696B61B261/productImages/DE87DBEA-AF88-3826-86B37B3FFBC02AEE_cover.png",
+   "reason": "Audit 2026-10-11: Promo text banner",
+   "events": [
+    "future-food-tech-san-francisco-san-francisco-ca-2027-03-11"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.bfldr.com/KOIHB2Q3/at/q9sh67w4rc7zhs3gvsjsb8s/AM27-ASCO-voices-banner.png?auto=webp",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "asco-annual-meeting-chicago-il-2027-06-04"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.lestrans.com/wp-content/uploads/2026/09/site-trans26-tendances-prog.jpg",
+   "reason": "Audit 2026-10-11: Concert photo (different festival programme)",
+   "events": [
+    "trans-musicales-de-rennes-rennes-2026-12-02"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.mytuyap.com/maktekavrasya/img/header/maktek-slider.jpg.webp",
+   "reason": "Audit 2026-10-11: Stock graphic",
+   "events": [
+    "maktek-eurasia-istanbul-2026-09-28"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.prod.website-files.com/602dbdb79f31b841658a0da1/6ab172c68909142e9c701fff_Premio%20IF%20Roca%20Cer%C3%A1mica%20%20-%20Expo%20Revestir%202025%20%20(2).jpg",
+   "reason": "Audit 2026-10-11: Exhibitor wall/logo product shot",
+   "events": [
+    "expo-revestir-sao-paulo-2027-02-22"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.prod.website-files.com/6315dd998da657350c04e5db/6315dd998da657e40a04e63c_Christmas%20Fayre%20Header%202-poster-00001.jpg",
+   "reason": "Audit 2026-10-11: Promo graphic",
+   "events": [
+    "christmas-shopping-fayre-exeter-2026-11-27"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.prod.website-files.com/64cb932c06a19430fec6e3de%2F6a9a8d4c83fccba89e399e42_ons_2026_%E2%80%93_welcome_back_in_2028%20%28720p%29_poster.0000000.jpg",
+   "reason": "Audit 2026-10-11: Aerial of venue/town",
+   "events": [
+    "offshore-northern-seas-stavanger-2026-08-24"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.prod.website-files.com/66cdb8140e3729ff5c99c051/6907747e97c5c1e84ef2cea5_2026-header.jpeg",
+   "reason": "Audit 2026-10-11: Venue exterior at night",
+   "events": [
+    "auto-zurich-zurich-2026-11-05"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.prod.website-files.com/66e3e78b0484f4971e51018f/6a3272ea65f1632b696dda23_Midem27_Newsletter-Startup_Header.jpg",
+   "reason": "Audit 2026-10-11: Promo text graphic (Start Up Challenge)",
+   "events": [
+    "midem-cannes-2027-01-19"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.prod.website-files.com/67a08ce94496399b65504787%2F698615499f9bbd426b9947b7_CONF3RENCE_am_web_poster.0000000.jpg",
+   "reason": "Audit 2026-10-11: Venue model graphic",
+   "events": [
+    "conf3rence-dortmund-2026-09-15"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.prod.website-files.com/67e1525fa0838fa173040a39%2F69c25cda03d38f3082d50a5e_RDVCarnot_video-header_1_poster.0000000.jpg",
+   "reason": "Audit 2026-10-11: Dark faded image",
+   "events": [
+    "les-rendez-vous-carnot-paris-2026-10-21"
+   ]
+  },
+  {
+   "imageUrl": "https://cdn.prod.website-files.com/68c414df0d64b21878faab09%2F68d3f0ab06f99c1bf054c7dd_Header_MBM_2026_v3-poster-00001.jpg",
+   "reason": "Audit 2026-10-11: Faded product graphic",
+   "events": [
+    "minalogic-business-meetings-grenoble-2027-03-11"
+   ]
+  },
+  {
+   "imageUrl": "https://cemscmsbucket.oss-cn-hongkong.aliyuncs.com/Mim-Cems/cemsSection/6a9265c421e06_Mim_web_Slider_2026_Desktop.webp",
+   "reason": "Audit 2026-10-11: Illustration",
+   "events": [
+    "mim-maroc-in-mode-casablanca-2026-11-03"
+   ]
+  },
+  {
+   "imageUrl": "https://cemscmsbucket.oss-cn-hongkong.aliyuncs.com/textech-bangladesh/cemsSiteSetting/6791cc9c23048_Textech_Web_Slider.webp",
+   "reason": "Audit 2026-10-11: Collage graphic",
+   "events": [
+    "textech-international-expo-bangladesh-dhaka-2026-09-02"
+   ]
+  },
+  {
+   "imageUrl": "https://classicalnext.com/wp-content/uploads/2025/08/This-was-Classical_NEXT-2025-0-18-screenshot.jpg",
+   "reason": "Audit 2026-10-11: Blurred stage close-up",
+   "events": [
+    "classical-next-katowice-2027-05-11"
+   ]
+  },
+  {
+   "imageUrl": "https://clean-spectaculum.transforms.svdcdn.com/production/misc/seo-image.jpg?w=1200&h=630&q=82&auto=format&fit=clip&dm=1778164515&s=659dddbfe67707cbcdfa1a9594d8fcd4",
+   "reason": "Audit 2026-10-11: Logo card",
+   "events": [
+    "the-cleaning-show-london-2027-03-16"
+   ]
+  },
+  {
+   "imageUrl": "https://congres.mobilinpulse.com/wp-content/uploads/2026/10/congres-mobilinpulse-partage.jpg",
+   "reason": "Audit 2026-10-11: Stock highway aerial",
+   "events": [
+    "congres-atec-its-france-les-rencontres-de-la-mobilite-intelligente-montrouge-2027-01-19"
+   ]
+  },
+  {
+   "imageUrl": "https://contechvietnam.com/wp-content/uploads/2019/03/contech-04.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "contech-viet-hanoi-2026-09-16"
+   ]
+  },
+  {
+   "imageUrl": "https://conventa.si/wp-content/uploads/2025/08/conventa-opengraph.png",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "conventa-ljubljana-2027-02-09"
+   ]
+  },
+  {
+   "imageUrl": "https://corporate.india-itme.com/wp-content/uploads/2024/05/ITME-AFRICA-2020-banner.jpg",
+   "reason": "Audit 2026-10-11: 2020 event promo banner",
+   "events": [
+    "india-itme-noida-2026-12-04"
+   ]
+  },
+  {
+   "imageUrl": "https://cosmeticaafrica.com/wp-content/uploads/2026/02/COSMETICA-AFRICA-2027_11zon-1-scaled.webp",
+   "reason": "Audit 2026-10-11: Stock model portrait",
+   "events": [
+    "cosmetica-north-africa-algiers-2027-01-13"
+   ]
+  },
+  {
+   "imageUrl": "https://cpm-moscow.com/wp-content/uploads/sites/5/2017/10/parallax_cpm-kids_1600x768.jpg",
+   "reason": "Audit 2026-10-11: Same 'CPM Kids' image as CPM Kids Feb record; children close-up",
+   "events": [
+    "cpm-kids-moscow-2026-09-01"
+   ]
+  },
+  {
+   "imageUrl": "https://cremonamusica.com/wp-content/uploads/2025/01/Header_accordion-1.jpg",
+   "reason": "Audit 2026-10-11: Graphic collage",
+   "events": [
+    "accordion-show-cremona-2026-10-02"
+   ]
+  },
+  {
+   "imageUrl": "https://cremonamusica.com/wp-content/uploads/2025/01/Header_winds-1.jpg",
+   "reason": "Audit 2026-10-11: Graphic collage",
+   "events": [
+    "cremona-winds-cremona-2026-10-02"
+   ]
+  },
+  {
+   "imageUrl": "https://cruiseshipinteriors-expo.com/wp-content/uploads/2026/09/CSI-Future-Leaders-Pop-up.jpg",
+   "reason": "Audit 2026-10-11: Promo pop-up graphic",
+   "events": [
+    "csi-cruise-ship-interiors-americas-miami-fl-2027-06-23"
+   ]
+  },
+  {
+   "imageUrl": "https://cubabusinessreport.com/wp-content/uploads/2025/06/fihav-2025.jpg",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "fihav-havana-international-fair-havana-2026-11-01"
+   ]
+  },
+  {
+   "imageUrl": "https://dam-assets.escardio.org/images/cbfe15a6717911f1b41da23c455b2da2",
+   "reason": "Audit 2026-10-11: Graphic",
+   "events": [
+    "ehra-europace-cardiostim-helsinki-2027-04-11"
+   ]
+  },
+  {
+   "imageUrl": "https://dam-assets.escardio.org/images/Zz1lYjBjNjRmYTA2ODIxMWYxYjFkNDcyYTFlYzQ0NDY4MQ==",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "esc-congress-munich-2026-08-28"
+   ]
+  },
+  {
+   "imageUrl": "https://dgm.de/fileadmin/_processed_/8/7/csm_ICAA_SharePic_981725386d.jpeg",
+   "reason": "Audit 2026-10-11: Text graphic",
+   "events": [
+    "icaa-berlin-2026-09-13"
+   ]
+  },
+  {
+   "imageUrl": "https://digitechasean.com/wp-content/uploads/2023/04/counter-bg-digitech.webp?id=5727",
+   "reason": "Audit 2026-10-11: Dark faded header",
+   "events": [
+    "digitech-asean-thailand-and-ai-connect-bangkok-2026-11-25"
+   ]
+  },
+  {
+   "imageUrl": "https://download.snec.org.cn/SNEC/img/2025/02/11//%E5%82%A8%E8%83%BD&%E6%B0%A2%E8%83%BD%E7%85%A7%E7%89%87-79025396.jpg",
+   "reason": "Shared by 2 different shows (SNEC ENERGY STORAGE / SNEC PV POWER EXPO)",
+   "events": [
+    "snec-energy-storage-shanghai-2026-09-28",
+    "snec-pv-power-expo-shanghai-2026-09-28"
+   ]
+  },
+  {
+   "imageUrl": "https://dreamhack.com/atlanta/wp-content/uploads/sites/12/2025/12/2026-Atlanta-SEO.webp",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "dream-hack-atlanta-atlanta-ga-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://dreamhack.com/birmingham/wp-content/uploads/sites/26/2025/12/2026-Birmingham-SEO.webp",
+   "reason": "Audit 2026-10-11: Promo text banner",
+   "events": [
+    "dream-hack-birmingham-birmingham-2027-04-02"
+   ]
+  },
+  {
+   "imageUrl": "https://dreamhack.com/stockholm/wp-content/uploads/sites/25/2025/12/DH-Stockholm-SEO-2026.webp",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "dream-hack-stockholm-stockholm-2026-11-27"
+   ]
+  },
+  {
+   "imageUrl": "https://drema.pl/media/oqlb0chd/drema-2026-linkedin-t%C5%82o-1400-x-500-px-7.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "drema-poznan-2026-09-08"
+   ]
+  },
+  {
+   "imageUrl": "https://drive.ifa-berlin.com/drive/2026/09/_cache/61fdf31248ea8e30e2a82c63e3625cf1_4d69f077a764fb29641030454979c927.png.webp",
+   "reason": "Audit 2026-10-11: Floor plan graphic",
+   "events": [
+    "ifa-berlin-berlin-2026-09-04"
+   ]
+  },
+  {
+   "imageUrl": "https://easyfairsassets.com/sites/152/2022/05/Realty-lets-talk-real-estate.jpg",
+   "reason": "Audit 2026-10-11: Promo banner (2022)",
+   "events": [
+    "realty-belgium-brussels-2026-09-01"
+   ]
+  },
+  {
+   "imageUrl": "https://easyfairsassets.com/sites/162/2023/07/20230306_Bakkersvak-JoniIsraeli-023-5V7A9056.jpg",
+   "reason": "Audit 2026-10-11: Food product close-up",
+   "events": [
+    "bakkersvak-and-ijs-vak-gorinchem-2027-03-07"
+   ]
+  },
+  {
+   "imageUrl": "https://easyfairsassets.com/sites/167/2026/03/28jan-SKILLS-KLEIN-122.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Product/process close-up",
+   "events": [
+    "auto-prof-gorinchem-gorinchem-2027-02-02"
+   ]
+  },
+  {
+   "imageUrl": "https://easyfairsassets.com/sites/201/2025/11/KevinvlPhotography_20251112_1533_Recreatie_DS205312_Digitalisering-Recreatietechniek_LR.jpg",
+   "reason": "Shared by 2 different shows (RECREATIE NEXT LEVEL / RECREATIE VAKBEURS)",
+   "events": [
+    "recreatie-next-level-gorinchem-2027-02-01",
+    "recreatie-vakbeurs-hardenberg-2026-11-17"
+   ]
+  },
+  {
+   "imageUrl": "https://easyfairsassets.com/sites/229/2026/04/Worksafe_Visual_2-2.jpg",
+   "reason": "Audit 2026-10-11: Stock B&W safety worker",
+   "events": [
+    "worksafe-namur-namur-2026-11-26"
+   ]
+  },
+  {
+   "imageUrl": "https://easyfairsassets.com/sites/241/2020/02/Worksafe_Visual_1.jpg",
+   "reason": "Audit 2026-10-11: Stock safety worker photo",
+   "events": [
+    "worksafe-antwerp-antwerp-2027-03-17"
+   ]
+  },
+  {
+   "imageUrl": "https://easyfairsassets.com/sites/328/2026/04/Jared-Padalecki-Genevieve-photoshoot-duo-FACTS-Spring-2026.jpg",
+   "reason": "Audit 2026-10-11: Celebrity photoshoot close-up",
+   "events": [
+    "facts-comic-con-ghent-2026-10-31"
+   ]
+  },
+  {
+   "imageUrl": "https://eco-cdn.iqpc.com/eco/images/builder/ccw-uk-summit-customer-experience-event-london-ccw-europe-event-background-1_x7By8KdRmK06hb2krBm4yO3nJ8v7kg3wimpEGIdp.jpg",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "ccw-uk-summit-london-2027-05-10"
+   ]
+  },
+  {
+   "imageUrl": "https://ecomexpo.eu/blog/images/ecomexpo-2027-save-the-date.jpg",
+   "reason": "Audit 2026-10-11: Save-the-date graphic",
+   "events": [
+    "ecomexpo-vilnius-2026-10-09"
+   ]
+  },
+  {
+   "imageUrl": "https://edifica.cl/wp-content/uploads/2025/08/Imagen-OG_Edifica.jpg",
+   "reason": "Audit 2026-10-11: Stock worker with logo",
+   "events": [
+    "edifica-santiago-2026-10-20"
+   ]
+  },
+  {
+   "imageUrl": "https://educa.messukeskus.com/wp-content/uploads/sites/29/2024/06/educa-1920x600-01-scaled-2.jpg",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "educa-helsinki-2027-01-29"
+   ]
+  },
+  {
+   "imageUrl": "https://elecrama.com/wp-content/uploads/2026/06/Elecrama-Web-Banner_Live-Now.jpg-1.jpeg",
+   "reason": "Audit 2026-10-11: Promo banner with text",
+   "events": [
+    "elecrama-noida-2027-02-20"
+   ]
+  },
+  {
+   "imageUrl": "https://elfack.com/uploads/sites/15/2025/03/Elfack_hero_logotype_1920x1080.jpg",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "elfack-gothenburg-2027-05-11"
+   ]
+  },
+  {
+   "imageUrl": "https://emitex.ar.messefrankfurt.com/content/dam/messefrankfurt-argentina/emitex/images/headers/EMTX_encabezado-home.jpg",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "emitex-buenos-aires-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://emitex.ar.messefrankfurt.com/content/dam/messefrankfurt-argentina/emitex/images/headers/EMTX_encabezado-home.webp.2560.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Abstract key visual",
+   "events": [
+    "emitex-buenos-aires-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://en.rubbertech-expo.com/Public/front/img/index/rubbertech-%E7%94%B5%E5%AD%90%E5%BF%AB%E8%AE%AF%E5%BA%95%E5%9B%BE-1920x620.jpg",
+   "reason": "Audit 2026-10-11: Product close-up (tyres)",
+   "events": [
+    "rubbertech-china-shanghai-2026-09-15"
+   ]
+  },
+  {
+   "imageUrl": "https://en.unicera.com.tr/wp-content/uploads/2026/06/image.webp",
+   "reason": "Audit 2026-10-11: National flag graphic",
+   "events": [
+    "unicera-istanbul-2026-11-01"
+   ]
+  },
+  {
+   "imageUrl": "https://energycouncil.com/wp-content/uploads/WECA-3.jpg",
+   "reason": "Audit 2026-10-11: Abstract gradient",
+   "events": [
+    "weca-world-energy-capital-assembly-london-2026-12-09"
+   ]
+  },
+  {
+   "imageUrl": "https://esxence.com/wp-content/uploads/2020/07/Esxence-Progetti-Special-Projects-Health-Beauty.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Text graphic",
+   "events": [
+    "esxence-milan-2027-02-24"
+   ]
+  },
+  {
+   "imageUrl": "https://esxence.com/wp-content/uploads/2026/06/ESXENCE-HOME-PAGE.jpg",
+   "reason": "Audit 2026-10-11: Stock perfume spray photo",
+   "events": [
+    "esxence-milan-2027-02-24"
+   ]
+  },
+  {
+   "imageUrl": "https://evexevents.com/images/events/360food-syria-1.webp",
+   "reason": "Audit 2026-10-11: Graphic",
+   "events": [
+    "healthinnovate-damascus-2027-02-01"
+   ]
+  },
+  {
+   "imageUrl": "https://expo-centre.ae/wp-content/uploads/2024/10/SIBF.jpg",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "sharjah-world-book-fair-sharjah-2026-11-04"
+   ]
+  },
+  {
+   "imageUrl": "https://expo-champs.com/wp-content/uploads/sites/11/2025/05/expo-champs_web_image_slideshow-scaled-1.jpg",
+   "reason": "Audit 2026-10-11: Stock field photo",
+   "events": [
+    "expo-champs-saint-hyacinthe-qc-2026-08-18"
+   ]
+  },
+  {
+   "imageUrl": "https://expoantad.com.mx/2026/wp-content/uploads/2026/05/sesion-inaugural-ok.jpg",
+   "reason": "Shared by 2 different shows (EXPO ANTAD & ALIMENTARIA / EXPO ANTAD & ALIMENTARIA MEXICO)",
+   "events": [
+    "expo-antad-and-alimentaria-guadalajara-2027-05-01",
+    "expo-antad-and-alimentaria-mexico-guadalajara-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://expoconstruccionyexpodiseno.com/img/spot-sobre-la-feria-en.webp",
+   "reason": "Audit 2026-10-11: Promo graphic",
+   "events": [
+    "expoconstruccion-expodiseno-bogota-2027-05-18"
+   ]
+  },
+  {
+   "imageUrl": "https://expoflowers.ro/wp-content/uploads/2025/09/1980x1080px_EXPO_FLOWERS_PACKSHOT26.jpg",
+   "reason": "Audit 2026-10-11: Promo poster (Flowers & Garden 2026)",
+   "events": [
+    "expo-flowers-and-garden-bucharest-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://expomanualidades.info/cdmx/wp-content/uploads/2025/11/Expo-Manualidades-CDMX-04.jpg",
+   "reason": "Audit 2026-10-11: Promo poster (2026)",
+   "events": [
+    "expo-merceria-y-manualidades-mexico-mexico-city-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://expopartes.co/wp-content/uploads/2023/05/60-expopartes.jpg",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "expopartes-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://f-istanbul.com/data/files/2025-os/ekrangrnts2024-07-25160054large.jpg",
+   "reason": "Audit 2026-10-11: Aerial venue photo (2024), not event content",
+   "events": [
+    "f-istanbul-istanbul-2026-08-26"
+   ]
+  },
+  {
+   "imageUrl": "https://fan.adultentertainmentexpo.com/_next/image?url=https%3A%2F%2Fassets.avn.com%2Fmarketing%2F2026%2Fzz.png&w=3840&q=75",
+   "reason": "Post-remediation visual review 2026-10-11: Adult-entertainment models; unsuitable banner",
+   "events": [
+    "avn-adult-entertainment-expo-las-vegas-nv-2027-01-20"
+   ]
+  },
+  {
+   "imageUrl": "https://fcecosmetique.com.br/wp-content/uploads/2025/11/bg-hero-abstract-2026.webp",
+   "reason": "Audit 2026-10-11: Abstract background",
+   "events": [
+    "fce-cosmetique-sao-paulo-2027-06-08"
+   ]
+  },
+  {
+   "imageUrl": "https://feriaexposolar.com/img/spot-LESSO-Exposolar.jpg",
+   "reason": "Audit 2026-10-11: Exhibitor advert",
+   "events": [
+    "exposolar-colombia-bogota-2026-10-28"
+   ]
+  },
+  {
+   "imageUrl": "https://finnbuild.messukeskus.com/wp-content/uploads/sites/13/2025/11/FinnBuild26_Hero_2560x1440.jpg",
+   "reason": "Audit 2026-10-11: City aerial",
+   "events": [
+    "finnbuild-helsinki-2026-09-29"
+   ]
+  },
+  {
+   "imageUrl": "https://friedrichshafen.inter-dive.de/images/2027-ID-FN-Banner.jpg",
+   "reason": "Audit 2026-10-11: Save-the-date promo; Shared by 2 different shows (INTERDIVE - FRIEDRICHSHAFEN / INTERDIVE)",
+   "events": [
+    "interdive-friedrichshafen-friedrichshafen-2026-09-24",
+    "interdive-friedrichshafen-2026-09-24"
+   ]
+  },
+  {
+   "imageUrl": "https://futuralia.fil.pt/wp-content/uploads/2026/03/1920x1080_Futuraliav3.jpg",
+   "reason": "Audit 2026-10-11: Stock portrait on orange",
+   "events": [
+    "futuralia-lisboa-lisbon-2027-03-17"
+   ]
+  },
+  {
+   "imageUrl": "https://galexpo.com.ua/derevo/images/header-2027-en.jpg",
+   "reason": "Audit 2026-10-11: Promo text banner",
+   "events": [
+    "woodprocessing-ukraine-lviv-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://gastrosweetfest.cz/wp-content/uploads/2024/10/GASTRO-SWEET-FEST_25_2068x1200.jpg",
+   "reason": "Audit 2026-10-11: Stock food graphic",
+   "events": [
+    "gastro-sweet-fest-prague-2026-11-19"
+   ]
+  },
+  {
+   "imageUrl": "https://generisgp.com/wp-content/uploads/2025/09/AMS-2026-Secondary-Banner.webp",
+   "reason": "Audit 2026-10-11: Promo text banner (Chicago 2026)",
+   "events": [
+    "american-manufacturing-summit-chicago-il-2027-03-16"
+   ]
+  },
+  {
+   "imageUrl": "https://generisgp.com/wp-content/uploads/2025/09/ESC-2025.webp",
+   "reason": "Audit 2026-10-11: Promo banner for European Supply Chain Summit (a different event)",
+   "events": [
+    "european-food-manufacturing-summit-dusseldorf-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://globalairportsforum.com/wp-content/uploads/2025/12/GAF-2026-Hero-Image.jpg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "global-airports-forum-riyadh-2026-11-30"
+   ]
+  },
+  {
+   "imageUrl": "https://gq1gq8a7dl-staging.wpdns.site/wp-content/uploads/2026/06/collage4.png",
+   "reason": "Audit 2026-10-11: Photo collage",
+   "events": [
+    "amaze-conference-chandigarh-2026-12-10"
+   ]
+  },
+  {
+   "imageUrl": "https://graphene-flagship.eu/media/8d8b95476d8f6d7/grapheneweek2019_0170-2.jpg?width=1280&quality=80",
+   "reason": "Audit 2026-10-11: 2019 photo, seven editions old, unlabelled",
+   "events": [
+    "graphene-flahship-vicenza-2026-09-22"
+   ]
+  },
+  {
+   "imageUrl": "https://greenenergyexpo-romenvirotec.ro/wp-content/uploads/2026/05/Grafic_ce-categorii-ROMEN-ro.jpg",
+   "reason": "Audit 2026-10-11: Statistics chart",
+   "events": [
+    "green-energy-expo-and-romenvirotec-bucharest-2027-03-23"
+   ]
+  },
+  {
+   "imageUrl": "https://groupeproexpo.com/maries/wp-content/uploads/sites/3/2026/04/cropped-couverture-facebook.Salon_.des_.maries.2027.jpg",
+   "reason": "Audit 2026-10-11: Promotional poster with dates and text",
+   "events": [
+    "salon-des-maries-de-quebec-quebec-city-qc-2027-01-09"
+   ]
+  },
+  {
+   "imageUrl": "https://gustav.messedornbirn.at/_next/image?url=https%3A%2F%2Fimg2.storyblok.com%2F3000x0%2Fsmart%2Ffilters%3Aquality(75)%2Ff%2F136739%2F2851x1901%2Fde2c507bcf%2Fgustav_herrenzimmer_2.jpg&w=3840&q=75",
+   "reason": "Audit 2026-10-11: Stock lifestyle photo",
+   "events": [
+    "gustav-dornbirn-2026-10-16"
+   ]
+  },
+  {
+   "imageUrl": "https://handlingexpo.com/wp-content/uploads/2021/04/Handling-expo-01-S01-1.png",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "handling-expo-cairo-2026-12-17"
+   ]
+  },
+  {
+   "imageUrl": "https://handmadestories.it/wp-content/uploads/2023/09/banner_homepage_hms.jpg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "handmade-stories-bologna-bologna-2026-11-27"
+   ]
+  },
+  {
+   "imageUrl": "https://hermesbi.com/wp-content/uploads/2025/11/hermesbi-iran-artificial-intelligence-exhibition.webp",
+   "reason": "Audit 2026-10-11: Text graphic",
+   "events": [
+    "ai-x-international-exhibition-of-artificial-intelligence-and-related-industries-tehran-2027-01-01"
+   ]
+  },
+  {
+   "imageUrl": "https://higherlogicdownload.s3.amazonaws.com/NACE/fdbb124f-1288-457c-b4e7-b483c84c3d5a/UploadedImages/ogHero.jpg",
+   "reason": "Audit 2026-10-11: Logo card",
+   "events": [
+    "ampp-annual-conference-and-expo-columbus-oh-2027-04-11"
+   ]
+  },
+  {
+   "imageUrl": "https://hitex.s3.us-east-1.amazonaws.com/uploads/Dssg8Lkt2M9nVjxXTVCWv.jpg",
+   "reason": "Audit 2026-10-11: Signage close-up only",
+   "events": [
+    "hitex-erbil-2026-10-06"
+   ]
+  },
+  {
+   "imageUrl": "https://holidayworldshowni.com/site/uploads/sys_articles/caravan-2.webp",
+   "reason": "Audit 2026-10-11: Generic stock-style caravan-by-the-sea image",
+   "events": [
+    "dublin-caravan-and-camping-show-belfast-belfast-2027-01-08"
+   ]
+  },
+  {
+   "imageUrl": "https://hotelresortdesign-south.com/wp-content/uploads/2026/06/HRDS-Meta-Description-27.jpg",
+   "reason": "Audit 2026-10-11: Interior render with logo",
+   "events": [
+    "hrds-hotel-and-resort-design-south-miami-fl-2027-06-23"
+   ]
+  },
+  {
+   "imageUrl": "https://i0.wp.com/saudimedlabexpo.com/wp-content/uploads/2023/01/medlab-sectors.png?w=1957&ssl=1",
+   "reason": "Audit 2026-10-11: Icon graphic",
+   "events": [
+    "saudi-international-medlab-expo-riyadh-2026-10-12"
+   ]
+  },
+  {
+   "imageUrl": "https://i0.wp.com/www.mostradelgelato.com/wp-content/uploads/2026/06/arte-del-gelato_PuntoIT-2.jpg?w=1280&ssl=1",
+   "reason": "Audit 2026-10-11: Promo collage",
+   "events": [
+    "mig-mostra-internazionale-del-gelato-artigianale-longarone-2026-11-01"
+   ]
+  },
+  {
+   "imageUrl": "https://icsift.com/_next/image?url=%2Fpreview.jpg&w=1920&q=75",
+   "reason": "Audit 2026-10-11: Video thumbnail with play button (2024 conference)",
+   "events": [
+    "icsift-international-conference-on-sustainability-innovation-and-future-technologies-malay-2026-08-21"
+   ]
+  },
+  {
+   "imageUrl": "https://identicom4.ro/wp-content/uploads/2019/05/00_generic_facebook-001.jpg",
+   "reason": "Audit 2026-10-11: Stock earth-at-night image",
+   "events": [
+    "identicom4-cluj-napoca-2026-10-06"
+   ]
+  },
+  {
+   "imageUrl": "https://ifmac.net/img/home/home-event/slider-image-overflow-1.webp",
+   "reason": "Audit 2026-10-11: Near-blank dark graphic",
+   "events": [
+    "ifmac-and-woodmac-jakarta-2026-09-23"
+   ]
+  },
+  {
+   "imageUrl": "https://ik.imagekit.io/by5zmjhxl/banner%20naval%202026%201-min.jpg",
+   "reason": "Audit 2026-10-11: Promo banner (2026)",
+   "events": [
+    "naval-defense-philippines-manila-2027-06-16"
+   ]
+  },
+  {
+   "imageUrl": "https://image.fachmessen.ch/baumaschinen-messe.ch/upload/image/SUVA_web.jpg",
+   "reason": "Audit 2026-10-11: Partner safety photo (SUVA), not an event photo",
+   "events": [
+    "baumag-baumaschinen-messe-lucerne-2027-01-21"
+   ]
+  },
+  {
+   "imageUrl": "https://image.isle.org.cn/banner/f0a954fad9fb47dbb3cf55db6c0708e7.jpg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "isle-international-smart-display-and-integrated-system-exhibition-shenzhen-2027-03-03"
+   ]
+  },
+  {
+   "imageUrl": "https://image.jimcdn.com/app/cms/image/transf/none/path/s31c2f4e3a0f8ae1c/image/i9584313bad2766bf/version/1622465535/kristalia-mineral-expos-bourse-millau-2021.jpg",
+   "reason": "Audit 2026-10-11: Historic 1972 poster/map",
+   "events": [
+    "kristalia-mineral-expo-millau-millau-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://images.squarespace-cdn.com/content/v1/51317d52e4b027b1c04e8a10/1655523608865-RREGJ9J1UAB6N508DXI0/Port+de+Guadeloupe.jpeg",
+   "reason": "Audit 2026-10-11: Stock port photo (Guadeloupe)",
+   "events": [
+    "pool-art-fair-guadeloupe-black-market-pointe-a-pitre-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://images.squarespace-cdn.com/content/v1/5fdbbc01a3712544f03dbf8e/1609286577984-EA50CSIC4IR40IFDMJAW/Beautiful+backyard.jpg?format=2500w",
+   "reason": "Audit 2026-10-11: Stock garden",
+   "events": [
+    "riverside-home-and-backyard-show-riverside-ca-2026-08-01"
+   ]
+  },
+  {
+   "imageUrl": "https://images.squarespace-cdn.com/content/v1/6345b4802626380e1ffb19e1/898ef04d-f4ee-44bc-b21e-ea85fdc6b55f/cc_bw.png?format=1500w",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "chicago-collective-women-s-edition-chicago-il-2026-08-23"
+   ]
+  },
+  {
+   "imageUrl": "https://images.squarespace-cdn.com/content/v1/67c95e02401f3a14c9e5bce9/49f0187e-6994-4143-ad33-41214a323b3f/preview.webp",
+   "reason": "Audit 2026-10-11: Stock carpentry photo",
+   "events": [
+    "hytte-messen-lillestr-m-2027-04-02"
+   ]
+  },
+  {
+   "imageUrl": "https://indagra-food.ro/wp-content/uploads/2026/07/1980x1080px_INDAGRA_FOOD_26.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "indagra-food-and-drink-bucharest-2026-10-28"
+   ]
+  },
+  {
+   "imageUrl": "https://indagra.ro/wp-content/uploads/2026/07/1980x1080px_INDAGRA_26.jpg",
+   "reason": "Audit 2026-10-11: Promo graphic",
+   "events": [
+    "indagra-bucharest-2026-10-28"
+   ]
+  },
+  {
+   "imageUrl": "https://indoaerospace.com/images/header/header-blank.jpg",
+   "reason": "Audit 2026-10-11: Stock aircraft graphic",
+   "events": [
+    "indo-aerospace-expo-and-forum-jakarta-2026-11-18"
+   ]
+  },
+  {
+   "imageUrl": "https://indomarine.co/images/header/headbanner.jpg",
+   "reason": "Audit 2026-10-11: Promo graphic",
+   "events": [
+    "indo-marine-jakarta-2026-11-18"
+   ]
+  },
+  {
+   "imageUrl": "https://indorichexpo.com/_next/image?url=%2Fmedia%2Fa84c2e9b-233a-46ec-b36e-ebdbe51e5650&w=3840&q=75",
+   "reason": "Audit 2026-10-11: Promo text banner",
+   "events": [
+    "bifhex-indonesia-bandung-2027-02-01"
+   ]
+  },
+  {
+   "imageUrl": "https://info.influencegrp.com/hubfs/Blog%20Hero%20-%202026-09-21T191614.546.png",
+   "reason": "Audit 2026-10-11: Stock text photo",
+   "events": [
+    "higher-ed-facilities-forum-san-antonio-tx-2026-11-08"
+   ]
+  },
+  {
+   "imageUrl": "https://instalacje.com/media/jlhknawt/instalacje-1400x500.jpg",
+   "reason": "Audit 2026-10-11: 'Page under construction' text image",
+   "events": [
+    "instalacje-poznan-2027-02-09"
+   ]
+  },
+  {
+   "imageUrl": "https://intermach.com.br/wp-content/uploads/2026/05/Img-Destaque-Intermach-2027.webp",
+   "reason": "Audit 2026-10-11: Promo key visual",
+   "events": [
+    "intermach-brasil-joinville-sc-2027-07-13"
+   ]
+  },
+  {
+   "imageUrl": "https://internationalemineralenbeurs.nl/wp-content/uploads/2018/02/Mineralen-1111.jpg",
+   "reason": "Audit 2026-10-11: Product close-up (minerals)",
+   "events": [
+    "international-mineralen-beurs-the-hague-2026-10-03"
+   ]
+  },
+  {
+   "imageUrl": "https://io-creo.it/wp-content/uploads/2026/04/io-creo-slide-novembre-2026-ok.jpg",
+   "reason": "Audit 2026-10-11: Prohibition icon graphic",
+   "events": [
+    "io-creo-pordenone-2026-11-20"
+   ]
+  },
+  {
+   "imageUrl": "https://ipapexpo.ir/wp-content/uploads/2022/07/Exhibiran-IPAP.jpg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "ipap-and-pacprocess-tehran-tehran-2026-10-01"
+   ]
+  },
+  {
+   "imageUrl": "https://ipcc.ir/en/wp-content/uploads/2026/10/26th-IPCC-2026-Slider-9232026-EN.webp",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "ipcc-tehran-2026-12-01"
+   ]
+  },
+  {
+   "imageUrl": "https://ipi-conference.com/images/uniterevolution/IPI-slides-0.jpg",
+   "reason": "Audit 2026-10-11: Product graphic",
+   "events": [
+    "ipi-conference-dusseldorf-2026-11-24"
+   ]
+  },
+  {
+   "imageUrl": "https://jarmarkswdominika.pl/wp-content/uploads/2026/07/jsd26-merch-ksiazeczka-i-koszulki.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Merchandise close-up",
+   "events": [
+    "jarmark-sw-dominika-gdansk-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://jesalextetic.com/wp-content/uploads/2026/09/Banner-JESAL-EXTETIC-2027-scaled.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "jesal-extetic-alicante-2027-02-01"
+   ]
+  },
+  {
+   "imageUrl": "https://kaizer.com.my/wp-content/uploads/2025/12/banner_ipmex-2026-01-scaled.webp",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "ipmex-malaysia-kuala-lumpur-2026-08-12"
+   ]
+  },
+  {
+   "imageUrl": "https://kapexfair.com/wp-content/uploads/2026/05/kapex-slider-2026-EN.webp",
+   "reason": "Audit 2026-10-11: Promo slider with text",
+   "events": [
+    "nobel-kapex-fair-kayseri-2026-09-09"
+   ]
+  },
+  {
+   "imageUrl": "https://kibafair.com/main/images/section1_bg-pc_kicef.jpg",
+   "reason": "Audit 2026-10-11: Logo key visual",
+   "events": [
+    "kicef-korea-industrial-complex-export-fair-seoul-2026-09-01"
+   ]
+  },
+  {
+   "imageUrl": "https://labace.com.br/images/bg-labace2025.jpg",
+   "reason": "Audit 2026-10-11: Blank texture",
+   "events": [
+    "labace-sao-paulo-2026-08-04"
+   ]
+  },
+  {
+   "imageUrl": "https://lamaisonduterroirbeaujolais.com/wp-content/uploads/Depliant-2022_P7-8_Salon-des-Vins-du-Beaujolais-scaled.jpg",
+   "reason": "Audit 2026-10-11: Brochure photo from 2022, unlabelled",
+   "events": [
+    "salon-des-vins-du-beaujolais-beaujeu-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://landscapeexpo.in/wp-content/uploads/2024/11/LandscapeandGardeningExpo.png",
+   "reason": "Audit 2026-10-11: Faded logo graphic",
+   "events": [
+    "landscape-and-gardening-expo-mumbai-2026-10-01"
+   ]
+  },
+  {
+   "imageUrl": "https://liftexpo.pl/wp-content/uploads/2024/05/Miedzynarodowe-Targi-Dzwigow-Komponentow-i-Technologii-Transportu-Pionowego.png",
+   "reason": "Audit 2026-10-11: Logo over stock image",
+   "events": [
+    "liftexpo-poland-warsaw-2026-10-20"
+   ]
+  },
+  {
+   "imageUrl": "https://livebuzzwebpublic.blob.core.windows.net/legalex/legalex-home-v1.jpg",
+   "reason": "Audit 2026-10-11: Stock skyline",
+   "events": [
+    "legalex-london-2027-02-01"
+   ]
+  },
+  {
+   "imageUrl": "https://livebuzzwebpublic.blob.core.windows.net/william-reed/Food-Drink-Expo-2026-v1.jpg",
+   "reason": "Audit 2026-10-11: Image shows Food & Drink Expo signage, a different (co-located) event; Shared by 2 different shows (FOOD & DRINK EXPO / RESTAURANT SHOW)",
+   "events": [
+    "food-and-drink-expo-birmingham-2027-04-12",
+    "restaurant-show-birmingham-2027-04-12"
+   ]
+  },
+  {
+   "imageUrl": "https://llbexpo.se/wp-content/uploads/2024/05/Prisinfo-banner.jpg",
+   "reason": "Audit 2026-10-11: Stock aurora",
+   "events": [
+    "audio-video-lighting-llb-expo-stockholm-2026-10-06"
+   ]
+  },
+  {
+   "imageUrl": "https://logistex.global/img/og.jpg",
+   "reason": "Audit 2026-10-11: Text graphic",
+   "events": [
+    "logistex-muscat-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://lssusa.solarenergyevents.com/wp-content/uploads/sites/28/2024/10/LSS-USA-Website-Hero-Image-option-2-01-1-scaled.jpg",
+   "reason": "Audit 2026-10-11: Graphic overlay, mostly red",
+   "events": [
+    "large-scale-solar-usa-dallas-tx-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://mafbex.com/wp-content/uploads/2026/03/2025-MB-WEBSITE-HIGHLIGHTS.jpg",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "mafbex-cebu-city-2026-09-10"
+   ]
+  },
+  {
+   "imageUrl": "https://mapofflavours.gr/files/repository/20251020123156_Map_of_Flavours_2025.jpg",
+   "reason": "Audit 2026-10-11: Stock product photo",
+   "events": [
+    "map-of-flavours-thessaloniki-2026-11-28"
+   ]
+  },
+  {
+   "imageUrl": "https://maredimoda.com/wp-content/uploads/2026/10/sustain-maredimoda-pablo06.jpg",
+   "reason": "Audit 2026-10-11: Product/award still life",
+   "events": [
+    "maredimoda-intimodimoda-cannes-2026-10-27"
+   ]
+  },
+  {
+   "imageUrl": "https://marelec.ucsd.edu/wp-content/uploads/sites/545/2026/09/Marelec-main-graphic.jpg",
+   "reason": "Audit 2026-10-11: Key-visual with text",
+   "events": [
+    "marelec-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://martwineanddesign.com/img/wd-2023-bg-bottles.jpg",
+   "reason": "Audit 2026-10-11: Stock wine bottles graphic",
+   "events": [
+    "wine-and-design-a-tasting-group-chicago-il-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://matka.messukeskus.com/wp-content/uploads/sites/31/2026/04/Matka27_herobanneri_2560x1000.png",
+   "reason": "Audit 2026-10-11: Icon graphic",
+   "events": [
+    "matka-helsinki-2027-01-21"
+   ]
+  },
+  {
+   "imageUrl": "https://meblepolska.pl/media/xwpbgnj4/meble_polska_1400x500_eng_v3-kopia.jpg",
+   "reason": "Audit 2026-10-11: Promo text graphic",
+   "events": [
+    "meble-polska-poznan-2027-02-23"
+   ]
+  },
+  {
+   "imageUrl": "https://media.koelnmesse.io/imm2021/redaktionell/imm/img/layout/buehnen/imm_header-website_2300x1230.jpg",
+   "reason": "Audit 2026-10-11: Illustration graphic",
+   "events": [
+    "imm-cologne-cologne-2027-01-19"
+   ]
+  },
+  {
+   "imageUrl": "https://media.koelnmesse.io/interzum2021/redaktionell/interzum/img/layout/stages/interzum_27.jpg",
+   "reason": "Audit 2026-10-11: Material texture graphic",
+   "events": [
+    "interzum-cologne-2027-05-11"
+   ]
+  },
+  {
+   "imageUrl": "https://media.koelnmesse.io/kindundjugend/redaktionell/kind-jugend/img/layout/teaser/open-graph-images/kind-jugend_open_graph_6.jpg",
+   "reason": "Audit 2026-10-11: OG product image",
+   "events": [
+    "kind-jugend-cologne-2026-09-15"
+   ]
+  },
+  {
+   "imageUrl": "https://media.koelnmesse.io/spogagafa/redaktionell/spoga-gafa/img/layout_9/open-graph-images/spoga-gafa_open_graph_11_1200x675.jpg",
+   "reason": "Audit 2026-10-11: Garden stock graphic",
+   "events": [
+    "spoga-gafa-cologne-2027-06-15"
+   ]
+  },
+  {
+   "imageUrl": "https://media.koelnmesse.io/spogahorse/redaktionell/spogahorse/img/teilnahme_und_planung_2/spogahorse_visual.jpg",
+   "reason": "Audit 2026-10-11: Campaign graphic with large text",
+   "events": [
+    "spoga-horse-cologne-2027-01-30"
+   ]
+  },
+  {
+   "imageUrl": "https://media.pittimmagine.com/image/upload/c_scale,f_auto,q_auto,w_auto/v1790602761/EPITTI/TESTO/2027_6/HERO/HOME_testo_1440x697_TESTO.jpg",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "testo-florence-2027-02-19"
+   ]
+  },
+  {
+   "imageUrl": "https://medicarexpo.vn/Uploads/files/Anh/Anh%202026/Anh%20HT.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Banner text shows 2025 while the alt says 2026; edition conflicts",
+   "events": [
+    "vietmedicare-expo-ho-chi-minh-2026-11-25"
+   ]
+  },
+  {
+   "imageUrl": "https://mercatodeivini.it/wp-content/uploads/sites/2/2022/11/parcheggi.jpg",
+   "reason": "Audit 2026-10-11: Stock wine barrels",
+   "events": [
+    "mercato-dei-vini-dei-vignaioli-indipendenti-bologna-2026-11-01"
+   ]
+  },
+  {
+   "imageUrl": "https://mipel.com/wp-content/uploads/2026/09/banner-website-mipel131-mobile.jpg",
+   "reason": "Audit 2026-10-11: Promo text graphic",
+   "events": [
+    "mipel-milan-2026-09-13"
+   ]
+  },
+  {
+   "imageUrl": "https://mmec-moz.com/wp-content/uploads/2023/10/mmec-bg_03.webp",
+   "reason": "Audit 2026-10-11: Stock oil-platform image",
+   "events": [
+    "mmec-mozambique-mining-oil-and-gas-and-energy-conference-and-exhibition-maputo-2027-05-12"
+   ]
+  },
+  {
+   "imageUrl": "https://mobicheckin-assets.eventmaker.io/uploads/events/69b5252a0df821b8901072d4/blog_articles/6a9817dcc6fd13ce94fbfd47/Modular_Sytsem_Grafik_Presse.jpg?Expires=1854921599&Signature=qmrx6ZbRSYpjEbsxeRtTiU0H90zkE8qsIsN84wGytckehCQjrM-essU2ZiB61VKGjNj9UuZiCfZU7t-6rZ3iwRtmUEL4wzqpauQARr1DI4VOZoWYi5d5sHb4vhrsanT~6t8G8LkPNxqqUexvUD3-1y2M8XVPCve7ZpPVvUbCvFc~V32FiZKF~oRiXwUR2nP6QVqF1dXWAsSyEb2xrr3wkmv3WmyW0r1Fe1sPCidUytcT7-ET2SQKvRxBrudtTbGO3zJtJg2bNcgakMwxVWn-uoVjh9MzXylmjAgEVkNAdEIeKM1OkRw7cNoVTMOtyfuZmGkGhBdwGv-Z4XxvZRdHaw__&Key-Pair-Id=K901T7O9PELQE",
+   "reason": "Post-remediation visual review 2026-10-11: Product render",
+   "events": [
+    "sido-lyon-lyon-2026-09-16"
+   ]
+  },
+  {
+   "imageUrl": "https://mobicheckin-assets.s3.eu-west-1.amazonaws.com/uploads/events/67191be101b963483320b3eb/website/SURCAR_2506_MANDELIEU_396_3a977373-8da3-4beb-adfc-ef9772c0ca47.jpg",
+   "reason": "Audit 2026-10-11: Photo of a different event (SURCAR European Congress Cannes 2025)",
+   "events": [
+    "surcar-europe-cannes-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://mobicheckin-assets.s3.eu-west-1.amazonaws.com/uploads/events/6a397b552eb1083288a127ff/assets-folder6a3d502e51a509123eba150e/Mont-de-Marsan-InfosupLandes_25_Cover_Home_1420x960_db807a01-7193-45fe-a98e-d6c5d66bb0de_de802b75-f0f4-43d0-bda2-1dfb8c86b6eb.jpg",
+   "reason": "Audit 2026-10-11: Stock lifestyle photo",
+   "events": [
+    "infosup-des-landes-mont-de-marsan-2026-11-17"
+   ]
+  },
+  {
+   "imageUrl": "https://mobicheckin-assets.s3.eu-west-1.amazonaws.com/uploads/events/6a397f4b3aa3f5b8f9a21f90/assets-folder6a3e4c0a68afbeb74645f024/Niort_26_Cover_Home_1420x960_1872c690-fede-4750-a5f4-02cbb55caf89_191f2331-06d3-4d1b-91fd-77734e08b465.jpg",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "le-salon-de-l-enseignement-superieur-de-niort-niort-2026-11-21"
+   ]
+  },
+  {
+   "imageUrl": "https://mobila-expo.ro/wp-content/uploads/2026/02/PM__1921x1080px_Mobila_Expo_2026.jpg",
+   "reason": "Audit 2026-10-11: Promo poster (Mobila Expo 2026)",
+   "events": [
+    "mobila-expo-bucharest-2027-04-15"
+   ]
+  },
+  {
+   "imageUrl": "https://mondial.paris/wp-content/uploads/salons-pms/2026/10/Aito-Paris-Motor-Show.png",
+   "reason": "Audit 2026-10-11: Car silhouette promo (different brand news)",
+   "events": [
+    "mondial-de-l-auto-paris-paris-2026-10-12"
+   ]
+  },
+  {
+   "imageUrl": "https://myfireworks.link/img/processed/web_banner_imox_2027__1__0562.webp",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "indonesia-marine-and-offshore-expo-imox-batam-2026-08-05"
+   ]
+  },
+  {
+   "imageUrl": "https://mygetex.com/wp-content/uploads/slider/cache/be0d20a1e754573814147a6bfcc8dcd2/getex-home-slide-4b.jpg",
+   "reason": "Audit 2026-10-11: Stock graduates photo",
+   "events": [
+    "gulf-education-and-training-exhibition-getex-dubai-dubai-2027-02-03"
+   ]
+  },
+  {
+   "imageUrl": "https://nordiskatradgardar.se/wp-content/uploads/2026/04/Nordiska_Tradgardar_fotograf_Angelica_Liljenroth-31.jpg",
+   "reason": "Audit 2026-10-11: Image does not load over https in a browser (TIMEOUT); initial: UNCERTAIN",
+   "events": [
+    "nordiska-tradgardar-stockholm-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://nordstil.messefrankfurt.com/content/dam/messefrankfurt-redaktion/nordstil/2027-winter/stage/nordstil-w27-stage-startseite.webp.2560.jpg",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "nordstil-hamburg-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://obrablancaexpo.com/wp-content/uploads/2026/10/international-conferences-obra-blanca-carme-pinos-.png?v=20",
+   "reason": "Audit 2026-10-11: Speaker promo card",
+   "events": [
+    "obra-blanca-expo-mexico-city-2026-10-13"
+   ]
+  },
+  {
+   "imageUrl": "https://olivtech.izfas.com.tr/images2/img/1800/ResimGaleri/1-olivtech-9272.jpg",
+   "reason": "Audit 2026-10-11: Promo graphic",
+   "events": [
+    "olivtech-izmir-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://pamed-expo.com/wp-content/uploads/2025/09/banner-pamed-2026-1.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "pamed-hammamet-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://pbs.twimg.com/profile_banners/1811654988642578432/1724667922",
+   "reason": "Audit 2026-10-11: Promo banner (2024)",
+   "events": [
+    "imt-industrial-expo-faridabad-2026-12-01"
+   ]
+  },
+  {
+   "imageUrl": "https://pensionfundsafrica.com/wp-content/uploads/2023/03/BOZ6384.jpg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "pia-africa-pension-funds-and-alternative-investments-africa-flic-en-flac-2027-03-17"
+   ]
+  },
+  {
+   "imageUrl": "https://pet-variety.com/wp-content/uploads/2026/04/KW1_3924-scaled.webp",
+   "reason": "Post-remediation visual review 2026-10-11: Stock animal photo",
+   "events": [
+    "thailand-international-dog-show-and-pet-variety-bangkok-2026-10-08"
+   ]
+  },
+  {
+   "imageUrl": "https://pet-variety.com/wp-content/uploads/2026/09/16th-Pet-Banner-11-09-26.webp",
+   "reason": "Audit 2026-10-11: Promo poster with QR",
+   "events": [
+    "thailand-international-dog-show-and-pet-variety-bangkok-2026-10-08"
+   ]
+  },
+  {
+   "imageUrl": "https://pliki.konferencje.ptwp.pl/i/d0/1a/51/09m61k5d3ojvr34l.jpg",
+   "reason": "Audit 2026-10-11: Promo poster (2025)",
+   "events": [
+    "toolex-katowice-2026-10-13"
+   ]
+  },
+  {
+   "imageUrl": "https://popcon.us/popcon-indy/wp-content/uploads/sites/6/2025/11/popcon-indy-social.jpg",
+   "reason": "Audit 2026-10-11: Stock family promo graphic with logo",
+   "events": [
+    "indy-pop-con-indianapolis-in-2027-03-26"
+   ]
+  },
+  {
+   "imageUrl": "https://primex.mymedia.delivery/1920x1280/p/o/wp-content/uploads/2020/03/Where-Farmers-Foodies-Meet-primexsocial.jpg",
+   "reason": "Audit 2026-10-11: Social photo-frame snapshot",
+   "events": [
+    "primex-field-days-casino-nsw-2027-05-20"
+   ]
+  },
+  {
+   "imageUrl": "https://publeaders.com.au/wp-content/uploads/sites/7/2023/03/www.publeaders.com_.au_.png",
+   "reason": "Audit 2026-10-11: Promo text card (2023)",
+   "events": [
+    "pub-leaders-summit-brisbane-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://pubscholars.org/wp-content/uploads/Nursing-Conference-banner-image.webp",
+   "reason": "Audit 2026-10-11: Promo graphic for a different conference",
+   "events": [
+    "mental-health-conference-2026-boston-ma-2026-11-20"
+   ]
+  },
+  {
+   "imageUrl": "https://putechindia.com/wp-content/uploads/2026/05/Call-for-Pappers-Banner.jpg.jpeg",
+   "reason": "Audit 2026-10-11: Schedule/topics text graphic",
+   "events": [
+    "pu-tech-noida-2027-01-20"
+   ]
+  },
+  {
+   "imageUrl": "https://puzzleexpo-s3-images-prod.s3.eu-west-3.amazonaws.com/editions/1f00140c-9864-47d0-97cd-f0206136bd20/banner-276be710-8f04-4dc6-9f8b-8de54e3a9873.webp",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "salon-de-l-habitat-de-tours-tours-2026-10-16"
+   ]
+  },
+  {
+   "imageUrl": "https://puzzleexpo-s3-images-prod.s3.eu-west-3.amazonaws.com/editions/72444c8e-2a51-4a0d-87b3-de523ef3615f/banner-3244ed94-5ed5-494a-a4e3-4b2b1a25dd65.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "salon-du-mariage-de-tours-tours-2026-10-16"
+   ]
+  },
+  {
+   "imageUrl": "https://qconsf.com/modules/custom/qcon_common/images/og/og-sf-2026.jpg",
+   "reason": "Audit 2026-10-11: Promo text graphic",
+   "events": [
+    "qcon-san-francisco-san-francisco-ca-2026-11-16"
+   ]
+  },
+  {
+   "imageUrl": "https://qtxasset.com/quartz/qcloud2/2025-11-basic-block/Be%2BWell%20Purple%20Medium%20BG_3.png?VersionId=wTqv_UnJxH7o.Jjj6rH7_icpqJzPDYMd",
+   "reason": "Audit 2026-10-11: Blank pattern",
+   "events": [
+    "be-well-beauty-and-wellness-show-new-york-ny-2027-03-07"
+   ]
+  },
+  {
+   "imageUrl": "https://res.cloudinary.com/marketplaceevents/image/fetch/w_1440,h_450,ar_3.2,f_auto,q_auto/https://cdn.marketplaceevents.com/sitefinity/images/minneapolisnorthwestsportshowlibraries/homepage/minneapolis-northwest-sportshowf4dbb32c-b8f3-43cd-8395-c801a23fef52.jpg?sfvrsn=81f74d3f_1",
+   "reason": "Audit 2026-10-11: Stock canoe landscape",
+   "events": [
+    "northwest-sportshow-minneapolis-mn-2027-03-11"
+   ]
+  },
+  {
+   "imageUrl": "https://rlcglobalforum.com/wp-content/uploads/home-rlc-global-fourm-desktop.webp",
+   "reason": "Audit 2026-10-11: Generic dark portrait",
+   "events": [
+    "rlc-global-forum-riyadh-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://rommedica.ro/wp-content/uploads/2026/07/1920x1080px_Rommedica_26.jpg",
+   "reason": "Audit 2026-10-11: Stock medical graphic",
+   "events": [
+    "rommedica-bucharest-2026-10-16"
+   ]
+  },
+  {
+   "imageUrl": "https://ruokamessut.messukeskus.com/wp-content/uploads/sites/43/2024/05/Ruoka-25-banneri.jpg",
+   "reason": "Audit 2026-10-11: Promo poster (2025)",
+   "events": [
+    "ruoka-food-fair-helsinki-2027-04-02"
+   ]
+  },
+  {
+   "imageUrl": "https://s3.eu-west-3.amazonaws.com/customer-it.milanounica.www/1317/7858/5745/johsef-h-clissold-son_4.JPG",
+   "reason": "Post-remediation visual review 2026-10-11: Fabric close-up, not the event",
+   "events": [
+    "milano-unica-milan-2027-02-02"
+   ]
+  },
+  {
+   "imageUrl": "https://s3.eu-west-3.amazonaws.com/customer-it.milanounica.www/1317/7858/5745/johsef-h-clissold-son_4.JPG",
+   "reason": "Post-remediation visual review 2026-10-11: Fabric close-up, not the event",
+   "events": [
+    "milano-unica-milan-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://s3.eu-west-3.amazonaws.com/customer-it.milanounica.www/8017/8340/7270/Milano_Unica_43_0002.jpg",
+   "reason": "Audit 2026-10-11: Blurred dark installation",
+   "events": [
+    "milano-unica-milan-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://sagalexpo.pt/wp-content/uploads/2021/09/background-visitar-sagalexpo.jpg",
+   "reason": "Audit 2026-10-11: Stock office background",
+   "events": [
+    "sagal-expo-lisbon-2027-04-05"
+   ]
+  },
+  {
+   "imageUrl": "https://salmed.pl/media/5twfznst/salmed_1400x500_eng.jpg",
+   "reason": "Audit 2026-10-11: Logo banner",
+   "events": [
+    "salmed-connect-poznan-2027-05-18"
+   ]
+  },
+  {
+   "imageUrl": "https://saopauloboatshow.com.br/wp-content/uploads/2026/05/spbs-2026-header.webp",
+   "reason": "Audit 2026-10-11: Product render (yacht)",
+   "events": [
+    "sao-paulo-boat-show-sao-paulo-2026-09-24"
+   ]
+  },
+  {
+   "imageUrl": "https://savor-bevmx.com/wp-content/uploads/2024/03/bevmx-mobile.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "bevmx-bangladesh-electric-vehicle-and-mobility-exhibition-dhaka-2026-11-26"
+   ]
+  },
+  {
+   "imageUrl": "https://savor-watermanagement.com/wp-content/uploads/2026/05/WaterEx-phone.jpg.jpeg",
+   "reason": "Audit 2026-10-11: Promo text card",
+   "events": [
+    "waterex-water-management-show-dhaka-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://sea-tec.it/wp-content/uploads/2026/08/seatec-revolution-head.jpg",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "seatec-carrara-2027-03-10"
+   ]
+  },
+  {
+   "imageUrl": "https://site.avoxa-events.de/wp-content/uploads/opengraph-pharmacon-meran.jpg",
+   "reason": "Audit 2026-10-11: Image is for Pharmacon Meran 2025, a different event",
+   "events": [
+    "pharmacon-schladming-schladming-2027-01-17"
+   ]
+  },
+  {
+   "imageUrl": "https://srwyzuphagismgamvrxz.supabase.co/storage/v1/object/public/alpha-win-media/events/15/hero/1777339306155-lake-george.jpg",
+   "reason": "Audit 2026-10-11: Triathlon swim start, a different race (HITS Lake George) on a shared site",
+   "events": [
+    "hits-championship-lake-george-ny-lake-george-ny-2026-09-05"
+   ]
+  },
+  {
+   "imageUrl": "https://srwyzuphagismgamvrxz.supabase.co/storage/v1/object/public/alpha-win-media/events/20/hero/1777339055114-napa-fall.jpg",
+   "reason": "Audit 2026-10-11: Triathlon race photo, a different race on a shared site",
+   "events": [
+    "hits-championship-napa-valley-ca-fall-napa-ca-2026-10-24"
+   ]
+  },
+  {
+   "imageUrl": "https://static.en-pays-basque.fr/wp-content/uploads/2020/06/piment2.jpeg",
+   "reason": "Audit 2026-10-11: Stock chili photo",
+   "events": [
+    "fete-du-piment-d-espelette-espelette-2026-10-24"
+   ]
+  },
+  {
+   "imageUrl": "https://static.labiennale.org/files/styles/full_screen_slide/public/architettura/2023/1300x600/guests_from_the_future_biennale_architettura_2023.jpg?itok=68KYu0d5",
+   "reason": "Audit 2026-10-11: 2023 Biennale photo, unlabelled",
+   "events": [
+    "biennale-di-venezia-architettura-venice-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://static.labiennale.org/files/styles/full_screen_slide/public/danza/2023/1300x600/scott_elstermann_biennale_danza_2023_-.jpg?itok=dm7HESWV",
+   "reason": "Audit 2026-10-11: Dance performance (2023), different Biennale section",
+   "events": [
+    "biennale-di-venezia-danza-venice-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://static.routedesvins.alsace/wp-content/uploads/lei/pictures/229001198-fete-du-gewurztraminer-1-1600x900.jpg",
+   "reason": "Audit 2026-10-11: Street parade photo (town festival), not identifiable",
+   "events": [
+    "fete-du-gewurztraminer-bergheim-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://static.tildacdn.com/tild3738-3437-4232-b633-666531626330/omr_1200x630_pix_eng.jpg",
+   "reason": "Audit 2026-10-11: Text banner",
+   "events": [
+    "omr-st-petersburg-2026-10-05"
+   ]
+  },
+  {
+   "imageUrl": "https://steelfabme.com/wp-content/uploads/2026/02/HomePage-steelfab.webp",
+   "reason": "Audit 2026-10-11: Dark stock welding-sparks image",
+   "events": [
+    "steelfab-sharjah-2027-01-11"
+   ]
+  },
+  {
+   "imageUrl": "https://sudtraditions.fr/wp-content/uploads/2026/08/Sud-traditions-V7-1.jpg",
+   "reason": "Audit 2026-10-11: Floor plan drawing",
+   "events": [
+    "salon-sud-tradition-uzes-2027-05-07"
+   ]
+  },
+  {
+   "imageUrl": "https://syskevasia-expo.gr/wp-content/uploads/2019/10/packaging4u-gr-home-main.jpg",
+   "reason": "Audit 2026-10-11: Packaging product photo",
+   "events": [
+    "syskevasia-athens-2026-11-06"
+   ]
+  },
+  {
+   "imageUrl": "https://tab-expo.com/content-images/hero/simon-hurry-LuiwD6fnKM8-unsplash.jpg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "tabexpo-budapest-2027-05-27"
+   ]
+  },
+  {
+   "imageUrl": "https://taiwanindustryweek.com.tw/img/shows/subcon-white.webp",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "subcon-taiwan-taipei-2026-10-20"
+   ]
+  },
+  {
+   "imageUrl": "https://tecnotextilbrasil.com.br/wp-content/uploads/2025/04/Banner-Site-TB271.jpg",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "tecnotextil-brasil-americana-2027-04-27"
+   ]
+  },
+  {
+   "imageUrl": "https://tgca.org/wp-content/uploads/2025/03/tgca-first-meeting.webp",
+   "reason": "Audit 2026-10-11: Historic 1950 archive photo",
+   "events": [
+    "tgca-show-auction-and-display-awards-denton-tx-2026-10-01"
+   ]
+  },
+  {
+   "imageUrl": "https://thailandcatloversfair.com/wp-content/uploads/2026/09/3rd-Cat-Banner-11-09-26.webp",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "thailand-cat-lovers-fair-bangkok-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://thailandfranchising.com/wp-content/uploads/2024/03/homepage-imagefeature-tfbo.jpg",
+   "reason": "Audit 2026-10-11: Promo banner for 2024 edition",
+   "events": [
+    "tfbo-thailand-franchise-and-business-opportunity-bangkok-2027-06-10"
+   ]
+  },
+  {
+   "imageUrl": "https://thecamxtest.wpengine.com/wp-content/uploads/AKPA_CAMX_Banner-02.jpg",
+   "reason": "Audit 2026-10-11: Product graphic",
+   "events": [
+    "camx-atlanta-ga-2026-09-21"
+   ]
+  },
+  {
+   "imageUrl": "https://themakeupshow.com/wp-content/uploads/2024/12/NYC-20th-Anniverary.webp",
+   "reason": "Audit 2026-10-11: Collage graphic",
+   "events": [
+    "the-makeup-show-nyc-new-york-ny-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://tourest.ee/wp-content/uploads/2026/02/esikaas.jpg",
+   "reason": "Audit 2026-10-11: Stock lighthouse landscape",
+   "events": [
+    "tourest-tallinn-2027-02-01"
+   ]
+  },
+  {
+   "imageUrl": "https://tulipfestival.ca/wp-content/uploads/2026/04/Tulip-Taxi.jpg",
+   "reason": "Audit 2026-10-11: Stock tulip-field photo",
+   "events": [
+    "canadian-tulip-festival-festival-canadien-des-tulipes-ottawa-on-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://uppersideconferences.com/HOME2026/images/photos/RS2026_QUANTUM.jpg",
+   "reason": "Audit 2026-10-11: Text graphic",
+   "events": [
+    "quantum-networks-summit-paris-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://usatradetasting.com/en/blog/images/w/1650/USATT-08072024073226000000-66b3695a1086f.jpg",
+   "reason": "Audit 2026-10-11: News photo of people at a lake, unrelated to the event",
+   "events": [
+    "usa-trade-tasting-chicago-il-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://vapexpo-spain.com/wp-content/uploads/2026/06/VAPEXPO-2026_banner-ASISTENCIA_1920x777-dual.jpg",
+   "reason": "Audit 2026-10-11: Text graphic",
+   "events": [
+    "vapexpo-spain-madrid-2027-05-29"
+   ]
+  },
+  {
+   "imageUrl": "https://vep-tradeshow.hktdc.com/event/hkdgp/wp-content/uploads/sites/2/2022/07/1_Diamond%E9%91%BD%E7%9F%B3_w1400.jpg",
+   "reason": "Audit 2026-10-11: Stock diamond product photo",
+   "events": [
+    "hktdc-hong-kong-international-diamond-gem-and-pearl-show-hong-kong-2027-03-02"
+   ]
+  },
+  {
+   "imageUrl": "https://vep-tradeshow.hktdc.com/event/hktoyfair/wp-content/uploads/sites/46/2022/11/Smart-Tech-toys_w1400.jpg",
+   "reason": "Audit 2026-10-11: Stock photo of a child with toy",
+   "events": [
+    "hong-kong-toys-and-games-fair-hong-kong-2027-01-11"
+   ]
+  },
+  {
+   "imageUrl": "https://verdipassioni.it/wp-content/uploads/2026/09/header-2027-ok.jpeg",
+   "reason": "Audit 2026-10-11: Prohibition icon graphic",
+   "events": [
+    "verdi-passioni-modena-2027-02-01"
+   ]
+  },
+  {
+   "imageUrl": "https://vifaexpo.com/wp-content/uploads/2026/06/5-scaled.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Certificate/text image",
+   "events": [
+    "vifa-expo-ho-chi-minh-2027-03-08"
+   ]
+  },
+  {
+   "imageUrl": "https://vilog.vn/wp-content/uploads/2022/10/bia-vilog-4.jpg",
+   "reason": "Audit 2026-10-11: Stock container ship",
+   "events": [
+    "vilog-vietnam-international-logistics-exhibition-ho-chi-minh-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://vinamacexpo.com/Uploads/files/Anh%202026/Banner_Vinamac-2026.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "vinamac-expo-ho-chi-minh-2026-11-25"
+   ]
+  },
+  {
+   "imageUrl": "https://vitalis.nu/uploads/sites/21/2024/02/vitalis-16-9.jpg",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "vitalis-gothenburg-2027-05-24"
+   ]
+  },
+  {
+   "imageUrl": "https://vitrinainmobiliariacaribe.com/img/Spots-Constructoras-Web.jpg",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "vimo-vitrina-immobiliaria-del-caribe-barranquilla-2026-10-23"
+   ]
+  },
+  {
+   "imageUrl": "https://vtcheese.com/wp-content/uploads/2026/09/2026-Cheesemakers-Festival-Sold-Out-Header_Artboard-3-1920-x-1005-1200x628.png",
+   "reason": "Audit 2026-10-11: 'Sold out' promo graphic",
+   "events": [
+    "annual-vermont-cheesemakers-festival-burlington-vt-2026-09-20"
+   ]
+  },
+  {
+   "imageUrl": "https://websummit.com/wp-media/2023/10/Centre-Stage-during-the-opening-night-of-Web-Summit-2022-at-the-Altice-Arena-in-Lisbon-Portugal-16-9.jpg",
+   "reason": "Audit 2026-10-11: 2022 photo of a different venue (Web Summit Lisbon) on a record not in Lisbon",
+   "events": [
+    "web-summit-lisbon-2026-11-09"
+   ]
+  },
+  {
+   "imageUrl": "https://wocee.ph/wp-content/uploads/revslider/video-media/Wocee-Wosas_59.jpeg",
+   "reason": "Audit 2026-10-11: Renders all black (visual)",
+   "events": [
+    "wocee-manila-2026-08-05"
+   ]
+  },
+  {
+   "imageUrl": "https://wordpress-senaf-evolio.s3.eu-central-1.amazonaws.com/2025/09/Evolio_hero.jpg",
+   "reason": "Audit 2026-10-11: Stock food photo (olives)",
+   "events": [
+    "evolio-expo-bari-2027-01-28"
+   ]
+  },
+  {
+   "imageUrl": "https://world-shisha.transforms.svdcdn.com/production/misc/seo-shisha.jpg?w=1200&h=630&q=82&auto=format&fit=clip&dm=1789482048&s=21d154fd2baec509e40af4aad5ad882d",
+   "reason": "Audit 2026-10-11: Logo card",
+   "events": [
+    "world-shisha-dubai-dubai-2027-01-20"
+   ]
+  },
+  {
+   "imageUrl": "https://worldbex.com/wp-content/uploads/2026/08/2027-WB-FACEBOOK-COVER-hires.jpg",
+   "reason": "Audit 2026-10-11: Promo poster with QR code",
+   "events": [
+    "worldbex-manila-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://worldfood-istanbul.com/slider/project_file_10_1791283570.jpg",
+   "reason": "Audit 2026-10-11: Promo competition graphic",
+   "events": [
+    "worldfood-istanbul-istanbul-2026-12-15"
+   ]
+  },
+  {
+   "imageUrl": "https://worldgreenenergyexpo.com/wp-content/uploads/2026/04/World-Green-Energy-Expo-2027.png",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "world-green-energy-and-sustainability-expo-gandhinagar-2027-05-07"
+   ]
+  },
+  {
+   "imageUrl": "https://worldrefiningassociation.com/wp-content/uploads/25LARTC-Header-1920x600_02_v2-scaled.jpg",
+   "reason": "Audit 2026-10-11: Dark faded header",
+   "events": [
+    "lartc-buenos-aires-2026-09-08"
+   ]
+  },
+  {
+   "imageUrl": "https://worldrefiningassociation.com/wp-content/uploads/25NARTC-Header-1920x600_v3_01-scaled.jpg",
+   "reason": "Audit 2026-10-11: Near-blank dark header",
+   "events": [
+    "nartc-houston-tx-2027-02-02"
+   ]
+  },
+  {
+   "imageUrl": "https://worldrefiningassociation.com/wp-content/uploads/ARTC-Header-1920x600-3.jpg",
+   "reason": "Audit 2026-10-11: Dark faded header",
+   "events": [
+    "artc-singapore-2026-10-28"
+   ]
+  },
+  {
+   "imageUrl": "https://wosas.ph/wp-content/uploads/revslider/video-media/Wocee-Wosas_25.jpeg",
+   "reason": "Audit 2026-10-11: Renders all black (visual)",
+   "events": [
+    "wosas-manila-2026-08-05"
+   ]
+  },
+  {
+   "imageUrl": "https://www.agri-trade.com/wp-content/uploads/2026/09/2026-tickets-on-sale-web-hero-6abd7f6b568dc.webp",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "agri-trade-equipment-exposition-red-deer-ab-2026-11-11"
+   ]
+  },
+  {
+   "imageUrl": "https://www.agrideiz.fr/images/event/f58a0efc-f3ba-f011-8194-6045bd90aa7b/asset/b8952252-b1c4-f011-8195-0022487f0371/file/agri-deiz-2025-6.webp?mw=2000&stamp=2025-11-18T19%3A03%3A52.55",
+   "reason": "Audit 2026-10-11: Livestock close-up (cow), not the event floor",
+   "events": [
+    "agri-deiz-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.agroexpo.com/img/spot-contactos-comerciales.jpg",
+   "reason": "Audit 2026-10-11: Promo text banner",
+   "events": [
+    "agroexpo-bogota-bogota-2027-07-14"
+   ]
+  },
+  {
+   "imageUrl": "https://www.agromek.dk/Files/Images/MCH365/Agromek/Forside/Agromek-landbrugsmesse-i-Herning.jpg",
+   "reason": "Audit 2026-10-11: Stock field photo",
+   "events": [
+    "agromek-herning-2026-11-24"
+   ]
+  },
+  {
+   "imageUrl": "https://www.andigraf.com.co/admin/wp-content/uploads/2022/08/ANDIGRAFICA.jpg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "andigrafica-bogota-2027-06-15"
+   ]
+  },
+  {
+   "imageUrl": "https://www.antiquariapadova.com/wp-content/uploads/2025/09/antiquaria-padova_coppia-di-mobiletti-radica-noce.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Antique furniture product shot",
+   "events": [
+    "antiquaria-padova-padua-2026-11-07"
+   ]
+  },
+  {
+   "imageUrl": "https://www.artmontecarlo.ch/wp-content/uploads/2024/01/artmonte-carlo-2023_Menour_photo-Baptiste-Janin-scaled.jpg",
+   "reason": "Audit 2026-10-11: Art installation photo from 2023 edition, unlabelled",
+   "events": [
+    "art-monte-carlo-monaco-2027-04-22"
+   ]
+  },
+  {
+   "imageUrl": "https://www.artoza.com/wp-content/uploads/2026/06/Artoza2027-Social-Sharing-ENG.jpg",
+   "reason": "Audit 2026-10-11: Logo card",
+   "events": [
+    "artoza-athens-2027-02-26"
+   ]
+  },
+  {
+   "imageUrl": "https://www.asws.nl/web/images/uploads/banners/en-fair-pedicure-header/beurs-pedicure.jpg",
+   "reason": "Audit 2026-10-11: Stock pedicure photo",
+   "events": [
+    "fair-pedicure-and-beauty-utrecht-2026-10-24"
+   ]
+  },
+  {
+   "imageUrl": "https://www.automationindiaexpo.com/img/banner/biggest-automation.webp",
+   "reason": "Audit 2026-10-11: Promo poster (2026)",
+   "events": [
+    "automation-expo-mumbai-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.autosalonkorea.com/images/visual_01.jpg",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "auto-salon-week-seoul-2026-10-23"
+   ]
+  },
+  {
+   "imageUrl": "https://www.baa.org/wp-content/uploads/2026/09/BMRACEDAY-52.jpg",
+   "reason": "Audit 2026-10-11: Boston Marathon race photo, not the expo",
+   "events": [
+    "boston-marathon-expo-boston-ma-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.beautyifa.com/wp-content/uploads/2026/10/BIFA-Hero-EN.webp",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "bifa-beauty-ingredients-and-formulation-asia-hong-kong-2026-11-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.berufsinfomesse.de/sites/berufsinfomesse.de/files/Blockbild-Berufsinfomesse.jpg",
+   "reason": "Audit 2026-10-11: Stock hands photo",
+   "events": [
+    "berufsinfomesse-offenburg-2027-04-09"
+   ]
+  },
+  {
+   "imageUrl": "https://www.bgce.in/hero-poster.jpg",
+   "reason": "Audit 2026-10-11: Illustration (AI-like)",
+   "events": [
+    "bharat-global-cultural-expo-bangalore-2026-10-28"
+   ]
+  },
+  {
+   "imageUrl": "https://www.bioenergia.fi/wp-content/uploads/2020/02/Bioenergia-video.jpg",
+   "reason": "Audit 2026-10-11: Stock forest aerial",
+   "events": [
+    "bio-co2-use-and-removal-bioenergia-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.biofit-event.com/wp-content/uploads/2026/02/PITCH-BIOFIT.jpeg",
+   "reason": "Audit 2026-10-11: Image does not load over https in a browser (TIMEOUT); initial: UNCERTAIN",
+   "events": [
+    "biofit-marseille-2026-12-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.biogas-convention.com/fileadmin/_processed_/c/4/csm_biogas-header-2026-kassel_e9ae037355.jpg",
+   "reason": "Audit 2026-10-11: Venue exterior at night",
+   "events": [
+    "biogas-convention-and-trade-fair-kassel-2026-11-25"
+   ]
+  },
+  {
+   "imageUrl": "https://www.bondexpo-messe.de/wp-content/uploads/revslider/video-media/motek-messe-2021-trailer_10.jpeg",
+   "reason": "Audit 2026-10-11: 2021 photo of logo signs (Motek/Bondexpo), unlabelled",
+   "events": [
+    "bondexpo-stuttgart-2026-10-06"
+   ]
+  },
+  {
+   "imageUrl": "https://www.boot-berlin.de/boot-fun-berlin/1.-landingpages/outventure_2026_hero_grafik_desktop_5120x3200px.jpg",
+   "reason": "Audit 2026-10-11: Stock outdoor lifestyle",
+   "events": [
+    "boot-and-fun-berlin-berlin-2026-11-26"
+   ]
+  },
+  {
+   "imageUrl": "https://www.cabinet-gtec.fr/wp-content/uploads/2026/05/CMO-IN-TECH-WEB-16.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Single speaker close-up",
+   "events": [
+    "cmo-in-tech-courbevoie-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.capitale-de-la-choucroute.fr/wp-content/uploads/2018/09/Photo-capitale-de-la-choucroute-14.jpg",
+   "reason": "Audit 2026-10-11: Brass-band street parade (town festival); not the show",
+   "events": [
+    "fete-de-la-choucroute-krautergersheim-2026-09-26"
+   ]
+  },
+  {
+   "imageUrl": "https://www.casamoderna.it/wp-content/uploads/2026/10/Foto-1-fiera-Casa-Moderna.jpg",
+   "reason": "Audit 2026-10-11: Composite with stock model",
+   "events": [
+    "casa-moderna-udine-2026-10-02"
+   ]
+  },
+  {
+   "imageUrl": "https://www.caspianminingexpo.com/images/home/home-hero-bg.webp",
+   "reason": "Audit 2026-10-11: Stock aerial excavator photo",
+   "events": [
+    "caspian-mining-expo-baku-2027-03-31"
+   ]
+  },
+  {
+   "imageUrl": "https://www.cbexindia.in/wp-content/uploads/2026/06/cbex-banner-.1.jpg-1.jpeg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "cbex-chocolate-and-bakery-expo-new-delhi-2026-10-08"
+   ]
+  },
+  {
+   "imageUrl": "https://www.chanchao.com.tw/exhibitionfiles/banner/TPCA_4612-0.jpg?v=1",
+   "reason": "Audit 2026-10-11: Promo key visual",
+   "events": [
+    "tpca-show-taipei-2026-10-20"
+   ]
+  },
+  {
+   "imageUrl": "https://www.chanchao.com.tw/ExhibitionFiles/banners/ATLIFE/Zone_12/ATLIFE_736-1.jpg",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "atlife-assistive-technology-for-life-taipei-2027-05-13"
+   ]
+  },
+  {
+   "imageUrl": "https://www.chanchao.com.tw/ExhibitionFiles/banners/TIBS/Zone_12/TIBS_588-1.jpg",
+   "reason": "Audit 2026-10-11: Promo poster with dates (visual)",
+   "events": [
+    "tibs-taipei-international-bakery-show-taipei-2027-03-11"
+   ]
+  },
+  {
+   "imageUrl": "https://www.chillventa.de/_next/image?url=https%3A%2F%2Fedge.sitecorecloud.io%2Fnurnbergmes0e18-nmmultisite6e34-prod50da-6065%2Fmedia%2FProject%2FNuernbergMesse%2FChillventa%2FBilder-und-Grafiken%2FBild-und-Text%2Fchillventa-n-textimage-digital-guide.jpg%3Fh%3D1268%26iar%3D0%26w%3D1588%26sc_lang%3Den&w=1920&q=75",
+   "reason": "Audit 2026-10-11: App promo photo",
+   "events": [
+    "chillventa-nuremberg-2026-10-13"
+   ]
+  },
+  {
+   "imageUrl": "https://www.cosmoprof.com/media/cosmoprof/2022/loghi/_0000_CPBO_black.jpg",
+   "reason": "Audit 2026-10-11: Logo card; Shared by 2 different shows (COSMOPACK / COSMOPROF WORLDWIDE BOLOGNA)",
+   "events": [
+    "cosmopack-bologna-2027-03-18",
+    "cosmoprof-worldwide-bologna-bologna-2027-03-18"
+   ]
+  },
+  {
+   "imageUrl": "https://www.cybershowparis.fr/og-cybershowparis-2027.jpg",
+   "reason": "Audit 2026-10-11: Text graphic (event name/date card)",
+   "events": [
+    "cyber-show-paris-paris-2027-01-27"
+   ]
+  },
+  {
+   "imageUrl": "https://www.dardeco.com.tn/wp-content/uploads/2022/11/slide-dardeco-2022-tr.jpg",
+   "reason": "Audit 2026-10-11: Stock still life",
+   "events": [
+    "dardeco-salon-de-la-decoration-et-du-design-tunis-2026-12-18"
+   ]
+  },
+  {
+   "imageUrl": "https://www.datacentres-africa.com/wp-content/uploads/sites/109/2024/01/DSCF0237-scaled.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Close-up with camera-name alt",
+   "events": [
+    "pan-african-datacentres-exhibition-and-conference-johannesburg-2027-06-22"
+   ]
+  },
+  {
+   "imageUrl": "https://www.dolciditalia.it/wp-content/uploads/2022/07/og-cover-dolciditalia.jpg",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "dolci-d-italia-spoleto-2026-10-30"
+   ]
+  },
+  {
+   "imageUrl": "https://www.dstsuedwest.de/fileadmin/data/sites/dstsuedwest.de/Slider/DST_Key_Visual_Start_05.jpg",
+   "reason": "Audit 2026-10-11: Machinery key visual",
+   "events": [
+    "dst-dreh-und-spantage-sudwest-villingen-schwenningen-2027-04-07"
+   ]
+  },
+  {
+   "imageUrl": "https://www.eicma.it/wp-content/uploads/2026/06/EICMA26_HEAD_ENG.jpg",
+   "reason": "Audit 2026-10-11: Product key visual (motorcycle cover)",
+   "events": [
+    "eicma-esposizione-internazionale-del-ciclo-e-motociclo-milan-2026-11-05"
+   ]
+  },
+  {
+   "imageUrl": "https://www.enovitisincampo.it/archivioFiles/slider/campo.jpg",
+   "reason": "Audit 2026-10-11: Vineyard machinery stock-style photo",
+   "events": [
+    "enovitis-in-campo-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.eurocheval.de/sites/eurocheval.de/files/eurocheval-Blockbild.jpg",
+   "reason": "Audit 2026-10-11: Stock horse and girl photo",
+   "events": [
+    "eurocheval-offenburg-2027-07-08"
+   ]
+  },
+  {
+   "imageUrl": "https://www.euroforum.nl/media/filer_public/4b/ee/4bee1f4e-24ee-4955-af0e-340759e816db/74164_banners10.jpg",
+   "reason": "Audit 2026-10-11: Abstract gradient",
+   "events": [
+    "nationaal-waterstof-congres-national-hydrogen-congress-utrecht-2026-11-25"
+   ]
+  },
+  {
+   "imageUrl": "https://www.expocafe.mx/wp-content/uploads/2026/06/expocafe-2026-1.jpg",
+   "reason": "Audit 2026-10-11: Illustration poster",
+   "events": [
+    "expo-cafe-mexico-city-2026-09-03"
+   ]
+  },
+  {
+   "imageUrl": "https://www.expoindustria.it/hubfs/Entrata_expo_industria_2019.webp",
+   "reason": "Audit 2026-10-11: 2019 building exterior",
+   "events": [
+    "expo-industria-vicenza-2026-10-27"
+   ]
+  },
+  {
+   "imageUrl": "https://www.expomanualidades.info/guadalajara/wp-content/uploads/2025/10/Expo-Manualidades-2026-ReservaStand-05-13.32.35.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "expo-merceria-y-manualidades-guadalajara-guadalajara-2026-08-27"
+   ]
+  },
+  {
+   "imageUrl": "https://www.expopharm.de/messe/apotheken/downloads/opengraph-expopharm-1_1200-x-630.jpg",
+   "reason": "Audit 2026-10-11: OG image (stage)",
+   "events": [
+    "expopharm-munich-2026-09-15"
+   ]
+  },
+  {
+   "imageUrl": "https://www.extracon.eu/wp-content/uploads/2025/11/SEO-2026-EXTRACON.jpg",
+   "reason": "Audit 2026-10-11: Illustration",
+   "events": [
+    "extracon-pordenone-2027-02-06"
+   ]
+  },
+  {
+   "imageUrl": "https://www.fakuma-messe.de/wp-content/uploads/2026/04/PM_FAKUMA_mold_your_future_2026_01_EN-scaled-uai-2560x1097.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Promo poster",
+   "events": [
+    "fakuma-friedrichshafen-2026-10-12"
+   ]
+  },
+  {
+   "imageUrl": "https://www.fakuma-messe.de/wp-content/uploads/revslider/video-media/fakuma-banner-video_14.jpeg",
+   "reason": "Audit 2026-10-11: Entrance canopy photo only",
+   "events": [
+    "fakuma-friedrichshafen-2026-10-12"
+   ]
+  },
+  {
+   "imageUrl": "https://www.festivaldjangoreinhardt.com/wp-content/uploads/2026/01/Festival-Django-Reinhartdt-2026-banner-site.jpg",
+   "reason": "Audit 2026-10-11: Festival poster with text",
+   "events": [
+    "festival-django-reinhardt-fontainebleau-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.fete-du-citron.com/local/cache-gd2/2e/332013f67dff2bbf3c62c0ec859ed0.jpg?1791552025",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "fete-du-citron-menton-2027-02-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.fierabolzano.it/uploads/seo/civil_protect_visual_gjel_hmrw_l.jpg",
+   "reason": "Audit 2026-10-11: Key-visual graphic",
+   "events": [
+    "civil-protec-bolzano-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.fierabolzano.it/uploads/seo/prowinter_visual_2025_small_ub7y_budm_l.jpg",
+   "reason": "Audit 2026-10-11: Image does not load over https in a browser (TIMEOUT); initial: UNCERTAIN",
+   "events": [
+    "prowinter-bolzano-2027-01-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.fintechfestival.sg/hubfs/SFF-Website-Featured-Image_R2.jpg",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "singapore-fintech-festival-singapore-2026-11-18"
+   ]
+  },
+  {
+   "imageUrl": "https://www.foiresdecorse.com/wp-content/uploads/2024/05/sartinesu_foire_casgiu.jpg",
+   "reason": "Audit 2026-10-11: Product close-up (cheese)",
+   "events": [
+    "fiera-di-u-casgiu-venaco-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.freshproduce.com/siteassets/images/events/global-produce-and-floral-show/2025/mobile-hero-2025v3.jpg/_croppings/event-landing-page-open-graph.jpg",
+   "reason": "Audit 2026-10-11: Stage graphic of a different event layout",
+   "events": [
+    "global-produce-and-floral-show-orlando-fl-2026-10-15"
+   ]
+  },
+  {
+   "imageUrl": "https://www.futuretravelexperience.com/wp-content/uploads/2026/07/apex-fte-expo-asia-social-768x403-1.jpg",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "apex-expo-future-travel-experience-singapore-2026-11-18"
+   ]
+  },
+  {
+   "imageUrl": "https://www.galabau-messe.com/_next/image?url=https%3A%2F%2Fedge.sitecorecloud.io%2Fnurnbergmes0e18-nmmultisite6e34-prod50da-6065%2Fmedia%2FProject%2FNuernbergMesse%2FGaLaBau%2FDefaultImages%2FDefaultImages%2FExternalVideoThumbnail.webp%3Fh%3D1552%26iar%3D0%26w%3D2760&w=3840&q=75",
+   "reason": "Post-remediation visual review 2026-10-11: Default video thumbnail (blank)",
+   "events": [
+    "galabau-nuremberg-2026-09-15"
+   ]
+  },
+  {
+   "imageUrl": "https://www.gameon.lt/wp-content/uploads/2026/02/2025_11_09_GameOn3_2MP_Soc_tinklams-35.jpg",
+   "reason": "Audit 2026-10-11: Stage key visual",
+   "events": [
+    "gameon-vilnius-2026-10-23"
+   ]
+  },
+  {
+   "imageUrl": "https://www.gast.si/wp-content/uploads/2026/02/WEB-HEAD-GASTexpo-2027_ANG.jpg",
+   "reason": "Audit 2026-10-11: Promo banner for another show on a shared site",
+   "events": [
+    "sladoled-gelato-ljubljana-2027-02-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.gastronoma.es/wp-content/uploads/2026/09/BERND-KNOLLER.jpeg",
+   "reason": "Audit 2026-10-11: Single black-and-white portrait, not an event photo (visual)",
+   "events": [
+    "gastronoma-valencia-2026-10-26"
+   ]
+  },
+  {
+   "imageUrl": "https://www.get-nord.com/fileadmin/_processed_/e/7/csm_gt_header_fallback_ea30c520e1.jpg",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "get-nord-hamburg-2026-11-19"
+   ]
+  },
+  {
+   "imageUrl": "https://www.giardina.ch/en/img/asset/bGlicmFyeS9naWFyZGluYV90cmVlLmpwZw/giardina_tree.jpg?p=-webp&s=bd1e856f062877635df56dbcdd757337",
+   "reason": "Audit 2026-10-11: Single plant on black background, not an event photo (visual)",
+   "events": [
+    "giardina-zurich-zurich-2027-03-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.giftex.in/_next/image?url=https%3A%2F%2Fassets.giftex.in%2Fauctions%2F49%2Fpc-sep26-hom2.jpg&w=1920&q=75",
+   "reason": "Audit 2026-10-11: Product close-up (watch)",
+   "events": [
+    "giftex-india-mumbai-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.gruenewoche.de/_next/image?url=%2Fapi%2Fimage-without-cache-control%3Furl%3Dhttps%253A%252F%252Fmesse-berlinprod-media.e-spirit.cloud%252F36b01921-e247-4b4d-87d4-f20914a19134%252Fgruene-woche%252Fbilder%252Fstartseite%252Fprogramm_xxxldesk43.png&w=3840&q=75",
+   "reason": "Audit 2026-10-11: App promo graphic (phone)",
+   "events": [
+    "grune-woche-international-green-week-berlin-berlin-2027-01-15"
+   ]
+  },
+  {
+   "imageUrl": "https://www.iaa-transportation.com/.imaging/mte/vda-theme/1400w/dam/iaa-transportation/2026/grafiken/key-visual/iaa-2026-keyvisual-v3.jpg/jcr:content/iaa-2026-keyvisual-v3.jpg",
+   "reason": "Audit 2026-10-11: Key-visual graphic",
+   "events": [
+    "iaa-transportation-hannover-2026-09-15"
+   ]
+  },
+  {
+   "imageUrl": "https://www.iacf.co.uk/wp-content/uploads/2021/05/Runway-hero.jpg",
+   "reason": "Audit 2026-10-11: Product close-up (antique cameras)",
+   "events": [
+    "runway-monday-at-newark-antiques-and-collectors-fair-newark-on-trent-2026-09-21"
+   ]
+  },
+  {
+   "imageUrl": "https://www.icastfishing.org/wp-content/uploads/2023/03/angler-at-dawn-icast-image_res.jpg",
+   "reason": "Audit 2026-10-11: Stock fishing sunset",
+   "events": [
+    "icast-orlando-fl-2027-07-13"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ideanatale.it/wp-content/uploads/2026/04/Header-mobile.jpg",
+   "reason": "Audit 2026-10-11: Promo text banner",
+   "events": [
+    "idea-natale-udine-2026-11-13"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/almoneda/img/imagen-passion-almoneda/almoneda-am26.jpg",
+   "reason": "Audit 2026-10-11: Graphic",
+   "events": [
+    "antik-passion-almoneda-madrid-2027-04-03"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/arco/img/caomposicion-imagen-arco/rrss-arco.webp",
+   "reason": "Audit 2026-10-11: Abstract/blurred graphic",
+   "events": [
+    "arco-lisboa-lisbon-2027-05-20"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/bisutex/img/imagen-bisutex/rrss-bisutex-v2.jpg",
+   "reason": "Audit 2026-10-11: Product shot (handbag)",
+   "events": [
+    "bisutex-madrid-2026-09-24"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/estampa/img/detalle-exposicion/rrss-estampa.webp",
+   "reason": "Audit 2026-10-11: Illustration",
+   "events": [
+    "estampa-madrid-2026-09-24"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/feriarte/img/piezas-feriarte/feriarte-rrss.webp",
+   "reason": "Audit 2026-10-11: Text graphic",
+   "events": [
+    "feriarte-madrid-2026-11-21"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/fiaa/img/ilustracion-autobus-entorno-virtual/redes-sociales-fiaa.jpg",
+   "reason": "Audit 2026-10-11: Illustration",
+   "events": [
+    "fiaa-madrid-2026-09-22"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/fitur/img/chica-soplando-pompas/redes-sociales-fitur-27.jpg",
+   "reason": "Audit 2026-10-11: Illustration graphic",
+   "events": [
+    "fitur-madrid-2027-01-20"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/gamergy/img/chico-brazos-alto/imagen-redes-gamergy-v2.jpg",
+   "reason": "Audit 2026-10-11: Stock graphic",
+   "events": [
+    "gamergy-madrid-2026-12-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/genera/img/composicion-genera/redes-sociales-genera.jpg",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "genera-madrid-2026-11-24"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/iberpet/img/imagen-iberzoo-propet/hb-iberpet.webp",
+   "reason": "Audit 2026-10-11: Graphic collage",
+   "events": [
+    "iberzoo-propet-madrid-2027-03-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/intergift/img/grafico-intergift/rrss-intergift.webp",
+   "reason": "Audit 2026-10-11: Stock interior photo",
+   "events": [
+    "intergift-madrid-2027-02-03"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/look/img/modelo-delante-estatuas-rostros-look/hb-salon-look.webp",
+   "reason": "Post-remediation visual review 2026-10-11: Stock model photo",
+   "events": [
+    "salon-look-internacional-madrid-2026-10-30"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/look/img/mujer-posando-estatuas-detras-ella/rrss-look.webp",
+   "reason": "Audit 2026-10-11: Stock beauty portrait",
+   "events": [
+    "salon-look-internacional-madrid-2026-10-30"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/matelec/img/grafismo-edificio/redes-sociales-matelec.jpg",
+   "reason": "Audit 2026-10-11: Logo graphic; Shared by 2 different shows (MATELEC INDUSTRY / MATELEC)",
+   "events": [
+    "matelec-industry-madrid-2026-11-24",
+    "matelec-madrid-2026-11-24"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/mbfw-madrid/img/invernadero-del-palacio-cristal-arganzuela/arganzuela.webp",
+   "reason": "Audit 2026-10-11: Venue photo (greenhouse), not the event",
+   "events": [
+    "mercedes-benz-fashion-week-madrid-madrid-2026-09-14"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/motortec/img/m/imagen-fachada-ifema-madrid-motortec/hb-motortec.webp",
+   "reason": "Post-remediation visual review 2026-10-11: Illustration render",
+   "events": [
+    "motortec-automechanika-madrid-madrid-2027-04-07"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/motortec/img/moto-coche-camion/redes-sociales-motortec.jpg",
+   "reason": "Audit 2026-10-11: Social-share graphic for a different show (Motortec) on a shared site",
+   "events": [
+    "motortec-automechanika-madrid-madrid-2027-04-07"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/promogift/img/cubo-impresion-3d-letras-promogift/redes-sociales-promogift.jpg",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "pmg-promogift-madrid-2027-01-12"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/simo-educacion/img/boceto-gente-interactuando-realidad-virtual-simo-educacion/hb-simo-2024-v1.webp",
+   "reason": "Post-remediation visual review 2026-10-11: Illustration",
+   "events": [
+    "simo-educacion-madrid-2026-11-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/simo-educacion/img/grafismo-chico-chica-gafas-vr/rrss-simo.webp",
+   "reason": "Audit 2026-10-11: Stock graphic",
+   "events": [
+    "simo-educacion-madrid-2026-11-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ifema.es/veteco/img/cristaleras-edificio/redes-sociales-veteco.jpg",
+   "reason": "Audit 2026-10-11: Logo graphic",
+   "events": [
+    "veteco-madrid-2026-11-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ilm-offenbach.de/uploads/_1200x630_crop_center-center_none/ilm-offenbach-meta-image.jpg",
+   "reason": "Audit 2026-10-11: Logo overlay",
+   "events": [
+    "ilm-offenbach-am-main-2026-08-29"
+   ]
+  },
+  {
+   "imageUrl": "https://www.incontropordenone.it/wp-content/uploads/2026/09/UNIPN-banner-puntodincontro2026_01.jpg",
+   "reason": "Audit 2026-10-11: Logo/aerial graphic",
+   "events": [
+    "punto-di-incontro-pordenone-2026-11-11"
+   ]
+  },
+  {
+   "imageUrl": "https://www.index-qatar.com/wp-content/uploads/sites/8/2025/08/Index-Qatar-OG-2025.jpg",
+   "reason": "Audit 2026-10-11: Promo text graphic",
+   "events": [
+    "index-qatar-doha-2026-10-06"
+   ]
+  },
+  {
+   "imageUrl": "https://www.indiamattresstechexpo.com/images/IME-become-an-exhibitor_res.JPG",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "india-mattresstech-expo-upholstery-supplies-noida-2027-03-03"
+   ]
+  },
+  {
+   "imageUrl": "https://www.infratech.nl/site/images/images/header_infratech2027.jpg",
+   "reason": "Audit 2026-10-11: Generic illustrated city aerial header",
+   "events": [
+    "infratech-belgium-rotterdam-2027-01-12"
+   ]
+  },
+  {
+   "imageUrl": "https://www.innotrans.de/_next/image?url=%2Fapi%2Fimage-without-cache-control%3Furl%3Dhttps%253A%252F%252Fmesse-berlinprod-media.e-spirit.cloud%252F448767fa-cc42-4213-b1d2-4a6d7cb01b90%252Finnotrans%252Finnotrans%252Finnotrans-2026%252Fstartseite%252Finnotrans-plus-u-app_xxxldesk43.png&w=3840&q=75",
+   "reason": "Audit 2026-10-11: App screenshot",
+   "events": [
+    "innotrans-berlin-2026-09-22"
+   ]
+  },
+  {
+   "imageUrl": "https://www.inta.org/wp-content/uploads/images/about/INTA-events-About.jpg",
+   "reason": "Audit 2026-10-11: Logo letters close-up (INTA)",
+   "events": [
+    "inta-annual-meeting-san-diego-ca-2027-05-08"
+   ]
+  },
+  {
+   "imageUrl": "https://www.interpack.com/interpackcache/pica/3/3/2/6/7/5/11789091724753573/interpack2026_StartUp-Zone-Buehne-1600x500.jpg",
+   "reason": "Audit 2026-10-11: Signage close-up (Interpack Düsseldorf start-up zone), a different event",
+   "events": [
+    "interpack-china-shanghai-2026-11-16"
+   ]
+  },
+  {
+   "imageUrl": "https://www.isee-expo.com/wp-content/uploads/2024/06/isee-original-banner-slider-new.jpg",
+   "reason": "Audit 2026-10-11: Abstract globe graphic",
+   "events": [
+    "isee-india-new-delhi-2026-12-03"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ispo.com.cn/upload/202609/1789356929.jpg",
+   "reason": "Audit 2026-10-11: Promotional text card (ISPO Beijing 2027 poster); alt says 2025",
+   "events": [
+    "ispo-beijing-beijing-2027-01-07"
+   ]
+  },
+  {
+   "imageUrl": "https://www.itb-asia.com/wp-content/uploads/2026/01/Z62_5020-1-scaled.jpg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "itb-asia-singapore-2026-10-21"
+   ]
+  },
+  {
+   "imageUrl": "https://www.iwa.info/_next/image?url=https%3A%2F%2Fedge.sitecorecloud.io%2Fnurnbergmes0e18-nmmultisite6e34-prod50da-6065%2Fmedia%2FProject%2FNuernbergMesse%2FIWA-OutdoorClassics%2FBilder-und-Grafiken%2FImage-Slider%2FSlider-Home%2Fiwa-n-imageslider-aussteller.jpg&w=3840&q=75",
+   "reason": "Post-remediation visual review 2026-10-11: Single-person portrait",
+   "events": [
+    "iwa-and-outdoorclassics-nuremberg-2027-03-04"
+   ]
+  },
+  {
+   "imageUrl": "https://www.izb-online.com/fileadmin/_processed_/8/8/csm_rz_260512_leitmotiv_izb_26_1920x606_homep_rgb_4_17fe9a62a4.webp",
+   "reason": "Audit 2026-10-11: Product render (car)",
+   "events": [
+    "izb-internationale-zuliefererborse-wolfsburg-2026-10-27"
+   ]
+  },
+  {
+   "imageUrl": "https://www.jewellerysalon.com/images/home-bg.jpg",
+   "reason": "Audit 2026-10-11: Stock portrait graphic",
+   "events": [
+    "jewellery-salon-ryadh-riyadh-2026-11-04"
+   ]
+  },
+  {
+   "imageUrl": "https://www.jugendundberuf.info/wp-content/uploads/2025/09/ooevv_2026.jpg",
+   "reason": "Audit 2026-10-11: Advert for a transport ticket, unrelated",
+   "events": [
+    "jugend-and-beruf-wels-2026-09-30"
+   ]
+  },
+  {
+   "imageUrl": "https://www.junioshow.com.tr/Content/images/junioshow2026_en_slider_yenikv_jpg%20(3).jpeg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "junioshow-bursa-2026-09-08"
+   ]
+  },
+  {
+   "imageUrl": "https://www.laroutedurock.com/wp-content/uploads/2024/02/la-route-du-rock.webp",
+   "reason": "Audit 2026-10-11: Concert key visual for a different event",
+   "events": [
+    "la-route-du-rock-saint-malo-2026-08-12"
+   ]
+  },
+  {
+   "imageUrl": "https://www.latintyreautopartsexpo.com/wp-content/uploads/2026/08/LatinTyreyAutoPartsExpo2026-3.jpg",
+   "reason": "Audit 2026-10-11: Venue exterior; Shared by 2 different shows (LATIN AMERICAN & CARIBBEAN TYRE EXPO / LATIN AUTO PARTS EXPO)",
+   "events": [
+    "latin-american-and-caribbean-tyre-expo-panama-city-2026-08-12",
+    "latin-auto-parts-expo-panama-city-2026-08-12"
+   ]
+  },
+  {
+   "imageUrl": "https://www.lebensart-messe.de/files/uploads/standorte/liebenberg/besucher/gelaendeplan/lebensart-liebenberg-gelaendeplan-2026.jpg",
+   "reason": "Audit 2026-10-11: Site plan graphic",
+   "events": [
+    "lebensart-messe-liebenberg-lowenberger-land-2026-08-07"
+   ]
+  },
+  {
+   "imageUrl": "https://www.lunchshow.co.uk/wp-content/uploads/2024/11/lunch_Share_1440x1080.jpg",
+   "reason": "Audit 2026-10-11: Promo poster (2025)",
+   "events": [
+    "lunch-london-2026-09-16"
+   ]
+  },
+  {
+   "imageUrl": "https://www.maisondumariage.com/evenements/images/13480/Visuels-Affiches-Site-Web-_3055-x-17825.jpg?s=615ae96e11e08556d5fefc64492003b5",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "salon-du-mariage-du-pays-basque-bayonne-2026-11-07"
+   ]
+  },
+  {
+   "imageUrl": "https://www.marmomac.com/media/ylel1zsk/marmomac_2025_veronafiere_ennevifoto_9466.jpg?width=2560&height=1150&rnd=134097499898370000",
+   "reason": "Audit 2026-10-11: Abstract interior",
+   "events": [
+    "marmomac-verona-2026-09-22"
+   ]
+  },
+  {
+   "imageUrl": "https://www.matecia.com/wp-content/uploads/2026/03/1920X750-MATECIA-Kolkata-slide-1-Golden12.jpg",
+   "reason": "Audit 2026-10-11: Promo text banner",
+   "events": [
+    "matecia-new-delhi-2026-08-20"
+   ]
+  },
+  {
+   "imageUrl": "https://www.maz-oldtimertage.de/files/uploads/Bilder/OTM/slider/DSC08307.jpg",
+   "reason": "Audit 2026-10-11: Vintage car product photo, not the event floor",
+   "events": [
+    "oldtimertage-muhlengeez-gulzow-pruzen-2027-05-08"
+   ]
+  },
+  {
+   "imageUrl": "https://www.medcare-leipzig.de/medcare/hintergrundbilder/MedCareHero.webp",
+   "reason": "Audit 2026-10-11: Stock medical graphic",
+   "events": [
+    "medcare-leipzig-leipzig-2026-09-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.messe-florian.de/fileadmin/Projekte/dd-florian/Images/2026/Slider/2730_Slider.jpg",
+   "reason": "Audit 2026-10-11: City landscape graphic",
+   "events": [
+    "florian-dresden-2026-10-08"
+   ]
+  },
+  {
+   "imageUrl": "https://www.messe-stuttgart.de/eltefa/fileadmin/media/allgemein/eltefa_header_neu.jpg",
+   "reason": "Audit 2026-10-11: Abstract tech graphic",
+   "events": [
+    "eltefa-stuttgart-2027-03-02"
+   ]
+  },
+  {
+   "imageUrl": "https://www.messe-stuttgart.de/infotagefachdental-frankfurt/fileadmin/media/00-allgemein/infotage-fachdental-herobild-webseite.jpg",
+   "reason": "Audit 2026-10-11: Stock dental portrait graphic",
+   "events": [
+    "id-infotage-dental-frankfurt-frankfurt-2026-11-06"
+   ]
+  },
+  {
+   "imageUrl": "https://www.messe-stuttgart.de/infotagefachdental-muenchen/fileadmin/media/00-allgemein/infotage-fachdental-herobild-webseite.jpg",
+   "reason": "Audit 2026-10-11: Stock dental portrait graphic",
+   "events": [
+    "id-infotage-dental-munchen-munich-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.messe-stuttgart.de/infotagefachdental-stuttgart/fileadmin/media/00-allgemein/infotage-fachdental-herobild-webseite-1920-594-px-stuttgart.jpg",
+   "reason": "Audit 2026-10-11: Stock dental portrait graphic",
+   "events": [
+    "fachdental-stuttgart-stuttgart-2026-10-16"
+   ]
+  },
+  {
+   "imageUrl": "https://www.messe-stuttgart.de/veggie/fileadmin/media/veggie-messe-stuttgart.jpg",
+   "reason": "Audit 2026-10-11: Food close-up",
+   "events": [
+    "veggie-and-frei-von-stuttgart-2026-11-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.metz-expo.com/upload/evenement/7537-Urbest.jpg",
+   "reason": "Audit 2026-10-11: Poster for Salon des Maires (a different event on a shared organiser site)",
+   "events": [
+    "urbest-metz-metz-2027-01-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.mieux-vivre-expo.com/wp-content/uploads/2022/07/slider_Mieux-Vivre-Expo.jpg",
+   "reason": "Audit 2026-10-11: Illustration",
+   "events": [
+    "mieux-vivre-expo-la-roche-sur-foron-2026-10-29"
+   ]
+  },
+  {
+   "imageUrl": "https://www.mihas.com.my/images/hero/hero-desktop.jpg",
+   "reason": "Audit 2026-10-11: Abstract globe graphic",
+   "events": [
+    "mihas-kuala-lumpur-2026-09-23"
+   ]
+  },
+  {
+   "imageUrl": "https://www.minex.ir/imgs/1753098620.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Text graphic",
+   "events": [
+    "minex-iran-tehran-2026-10-09"
+   ]
+  },
+  {
+   "imageUrl": "https://www.mobacshow.com/wp/wp-content/uploads/2025/02/mobac2025_exhibition_guide01-1.jpg",
+   "reason": "Audit 2026-10-11: Exhibition-guide document page",
+   "events": [
+    "mobac-show-chiba-2027-03-02"
+   ]
+  },
+  {
+   "imageUrl": "https://www.motorship.com/propulsion-and-future-fuels-conference/wp-content/uploads/sites/2/2024/12/00_322737_hamburgpff2024_696077.webp",
+   "reason": "Post-remediation visual review 2026-10-11: Port photo labelled 2024 (previous edition)",
+   "events": [
+    "propulsion-and-future-fuels-conference-hamburg-2026-12-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.myesr.org/app/uploads/2026/03/ECR-2027-OG_image_BE.jpg",
+   "reason": "Audit 2026-10-11: Key-visual with text",
+   "events": [
+    "ecr-vienna-2027-03-03"
+   ]
+  },
+  {
+   "imageUrl": "https://www.nationalconvenienceshow.co.uk/images/2026/background-reed-ncs.webp",
+   "reason": "Audit 2026-10-11: Abstract gradient",
+   "events": [
+    "national-convenience-show-birmingham-ncs-birmingham-2027-04-12"
+   ]
+  },
+  {
+   "imageUrl": "https://www.neuralscience.scientexconference.com/cfiles/seo/_seo_schema_126960c5.webp",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "neurology-congress-dubai-2026-11-06"
+   ]
+  },
+  {
+   "imageUrl": "https://www.noliatradgard.se/wp-content/uploads/sites/7/2024/01/noliatradgard_logotyp-scaled.jpg",
+   "reason": "Audit 2026-10-11: Logo card",
+   "events": [
+    "nolia-tradgard-umea-2027-04-23"
+   ]
+  },
+  {
+   "imageUrl": "https://www.npa.ie/wp-content/uploads/2026/10/National-Ploughing-Championships-2027-Venue-Announcement27.jpg",
+   "reason": "Audit 2026-10-11: Promo text banner",
+   "events": [
+    "national-ploughing-championships-tullamore-2026-09-15"
+   ]
+  },
+  {
+   "imageUrl": "https://www.oceanenergy-europe.eu/wp-content/uploads/2026/03/OEE.png",
+   "reason": "Audit 2026-10-11: Logo over stock sea",
+   "events": [
+    "oee-ocean-energy-europe-the-hague-2026-10-05"
+   ]
+  },
+  {
+   "imageUrl": "https://www.offpriceshow.com/lasvegas/sites/fashion/lasvegas/files/2026-03/offprice_byinforma_0826_hero_02_1920x1080.jpg",
+   "reason": "Audit 2026-10-11: Stock fashion product shot",
+   "events": [
+    "off-price-las-vegas-las-vegas-nv-2026-08-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.omc.it/public/upl_images/epweb3/OMC_FIERA101.jpg",
+   "reason": "Audit 2026-10-11: Flag close-up",
+   "events": [
+    "omc-med-energy-ravenna-2027-04-13"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ortogiardinopordenone.it/wp-content/uploads/ortogiardino-banner-slider-2027-it.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "orto-giardino-pordenone-2027-03-06"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ovibeja.pt/images/2026/slide_2026_ovibeja.jpg?26",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "ovibeja-beja-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.parkercountypeachfestival.org/images/website_graphics/peachfest_opengraph-img_w.jpg",
+   "reason": "Audit 2026-10-11: Promo graphic with text",
+   "events": [
+    "parker-county-peach-festival-weatherford-tx-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.patrimoineculturel.com/wp-content/uploads/2025/10/SIPC-2025_export_1_%C2%A9AlexGallosi-4426.jpg",
+   "reason": "Audit 2026-10-11: Architectural detail graphic",
+   "events": [
+    "salon-du-patrimoine-culturel-paris-2026-10-29"
+   ]
+  },
+  {
+   "imageUrl": "https://www.paviljonki.fi/wp-content/uploads/kuljetus2023_www_1990x640.jpg",
+   "reason": "Audit 2026-10-11: 2023 promo text graphic",
+   "events": [
+    "kuljetus-jyvaskyla-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.perimeter-protection.de/_next/image?url=https%3A%2F%2Fedge.sitecorecloud.io%2Fnurnbergmes0e18-nmmultisite6e34-prod50da-6065%2Fmedia%2FProject%2FNuernbergMesse%2FPerimeter-Protection%2FBilder-und-Grafiken%2FText-Image%2Fperimeter-protection-n-textimage-utsec-drohne.jpg%3Fh%3D1268%26iar%3D0%26w%3D1590&w=1920&q=75",
+   "reason": "Post-remediation visual review 2026-10-11: Product close-up (drone)",
+   "events": [
+    "perimeter-protection-nuremberg-2027-01-19"
+   ]
+  },
+  {
+   "imageUrl": "https://www.philatelia-muenchen.de/wp-content/uploads/2026/02/Philatelia-2026-AT-Markenedition.jpg",
+   "reason": "Audit 2026-10-11: Stamp product graphic",
+   "events": [
+    "philatelia-munchen-internationale-briefmarken-borse-munchen-munich-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.propostefair.it/wp-content/uploads/2026/04/Proposte2026_Home_05-scaled.jpg",
+   "reason": "Audit 2026-10-11: Venue interior render",
+   "events": [
+    "proposte-como-2027-05-04"
+   ]
+  },
+  {
+   "imageUrl": "https://www.prowein.de/cache/pica/5/6/2/5/4/6/7527191757956764/PROWEIN-FLAG-THEMEDWORLD.jpg",
+   "reason": "Audit 2026-10-11: Abstract gradient graphic",
+   "events": [
+    "prowein-dusseldorf-2027-03-07"
+   ]
+  },
+  {
+   "imageUrl": "https://www.rawmec-lb.com/og-banner-01.jpg",
+   "reason": "Audit 2026-10-11: Promo banner",
+   "events": [
+    "rawmec-beirut-2026-09-22"
+   ]
+  },
+  {
+   "imageUrl": "https://www.refriamericas.com/images/rfa/rfa-2025-header-slider-expositores.jpg",
+   "reason": "Audit 2026-10-11: Faded overlay graphic",
+   "events": [
+    "refri-americas-san-jose-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.rehacare.de/cache/picf/5/4/4/9/4342731776152826/2026_rehacare_1024x500_GooglePaystore_150.jpg",
+   "reason": "Audit 2026-10-11: Promo graphic",
+   "events": [
+    "rehacare-international-dusseldorf-2026-09-23"
+   ]
+  },
+  {
+   "imageUrl": "https://www.rnmp.com.br/wp-content/uploads/2026/08/banner_43a_RNMP_1920x800px_02.jpg.jpeg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "rnmp-rodada-de-negocios-da-moda-pernambucana-caruaru-2026-08-03"
+   ]
+  },
+  {
+   "imageUrl": "https://www.salon-naturally.fr/wp-content/uploads/2026/05/Fete-des-meres_naturally-scaled.jpeg",
+   "reason": "Audit 2026-10-11: Stock gift-box photo",
+   "events": [
+    "naturally-paris-paris-2027-05-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.salonchocolate.mx/wp-content/uploads/2026/01/Salon-Chocolate-Cacao-15-Aniversario-1-scaled.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "salon-chocolate-y-cacao-mexico-city-2026-09-03"
+   ]
+  },
+  {
+   "imageUrl": "https://www.salondelachasse.com/wp-content/uploads/salon-de-la-chasse-2023-rsx-scaled.jpg",
+   "reason": "Audit 2026-10-11: Key-visual poster (Salon de la Chasse 2023)",
+   "events": [
+    "salon-de-la-chasse-et-de-la-faune-sauvage-mantes-la-jolie-2027-03-19"
+   ]
+  },
+  {
+   "imageUrl": "https://www.salondesmigrateurs.com/wp-content/uploads/salondesmigrateurs-cover-scaled.jpg",
+   "reason": "Audit 2026-10-11: Logo/bird stock graphic",
+   "events": [
+    "le-salon-des-migrateurs-cayeux-sur-mer-2027-07-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.saloninfirmier.fr/images/event/732d1fc0-5683-f011-b483-002248809d93/asset/4a02fede-231e-f111-9a49-6045bd9541be/file/ministere_sfaph_cmjn.webp?mw=1200&stamp=2026-03-12T14%3A58%3A08.05",
+   "reason": "Audit 2026-10-11: Ministry logo text card",
+   "events": [
+    "salon-infirmier-paris-2027-03-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.salonsett.com/images/video/sett2025_poster.webp",
+   "reason": "Audit 2026-10-11: Stage key visual (2025 poster)",
+   "events": [
+    "sett-montpellier-2026-11-03"
+   ]
+  },
+  {
+   "imageUrl": "https://www.salonsiane.com/wp-content/uploads/2025/11/fond_siane-slider-scaled.jpg",
+   "reason": "Audit 2026-10-11: Abstract gradient",
+   "events": [
+    "siane-toulouse-2026-10-13"
+   ]
+  },
+  {
+   "imageUrl": "https://www.satte.in/images/SATTE2026-WEB_banner.jpg",
+   "reason": "Audit 2026-10-11: QR-code promo image",
+   "events": [
+    "satte-new-delhi-new-delhi-2027-01-19"
+   ]
+  },
+  {
+   "imageUrl": "https://www.sberatel.info/wp-content/uploads/2026/07/sberatel_2026_cm_hurvinek_1.jpg",
+   "reason": "Audit 2026-10-11: Puppet/product close-up",
+   "events": [
+    "sberatel-collector-prague-2026-09-04"
+   ]
+  },
+  {
+   "imageUrl": "https://www.seafair.org/wp-content/uploads/2024/12/Dixin_2024_Seafair_Weekend_5131.jpg",
+   "reason": "Audit 2026-10-11: Air-show photo, not the event",
+   "events": [
+    "boeing-seafair-air-show-seattle-wa-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.seafair.org/wp-content/uploads/2025/01/goodman-skybox-seafair-weekend.webp",
+   "reason": "Post-remediation visual review 2026-10-11: Empty tent interior, not the event",
+   "events": [
+    "boeing-seafair-air-show-seattle-wa-2027-07-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.sejem-agra.si/wp-content/uploads/sites/2/2026/08/AGRA-CED-meghivo-slo.jpg",
+   "reason": "Audit 2026-10-11: Programme text graphic",
+   "events": [
+    "agra-slovenia-gornja-radgona-2026-08-22"
+   ]
+  },
+  {
+   "imageUrl": "https://www.sejemdom.si/app/uploads/2024/02/dom-main-banner-2024-desktop.jpg",
+   "reason": "Audit 2026-10-11: Stock lifestyle graphic",
+   "events": [
+    "sejem-dom-home-fair-ljubljana-2027-03-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.siee-pollutec.com/wp-content/uploads/2025/11/Pollutec-Slide-water.jpg",
+   "reason": "Audit 2026-10-11: Stock water texture",
+   "events": [
+    "siee-pollutec-algerie-algiers-2027-03-29"
+   ]
+  },
+  {
+   "imageUrl": "https://www.silmoistanbul.com/Uploads/News/0G2NJM9NZ9ZFXV15BM646RJ1Q0P0J1.jpg",
+   "reason": "Audit 2026-10-11: Promo collage",
+   "events": [
+    "silmo-istanbul-istanbul-2026-11-18"
+   ]
+  },
+  {
+   "imageUrl": "https://www.silmoistanbul.com/Uploads/News/22NH6O068V3GF23HK8G1082E560TZR.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Promo poster",
+   "events": [
+    "silmo-istanbul-istanbul-2026-11-18"
+   ]
+  },
+  {
+   "imageUrl": "https://www.siof.cn/cache/img/42b7db00b940fda29a4fd8aabf3ca145621fa119950c.jpg",
+   "reason": "Audit 2026-10-11: Stock portrait",
+   "events": [
+    "siof-china-shanghai-international-optics-fair-shanghai-2027-02-23"
+   ]
+  },
+  {
+   "imageUrl": "https://www.sitem.fr/wp-content/uploads/2025/03/sitem-2025.jpg",
+   "reason": "Audit 2026-10-11: Promo poster for SITEM 2025 with text",
+   "events": [
+    "sitem-paris-2027-03-31"
+   ]
+  },
+  {
+   "imageUrl": "https://www.spexa.jp/content/dam/sitebuilder/rxjp/spexa/images/jp/tokyo/common/top/spexa-top-eventmap.jpg",
+   "reason": "Audit 2026-10-11: Floor map graphic",
+   "events": [
+    "spexa-space-business-expo-tokyo-2027-05-12"
+   ]
+  },
+  {
+   "imageUrl": "https://www.splash.online/img/asset/c2l0ZS9zcGxhc2gtdHdpdHRlci5qcGc/splash-twitter.jpg?p=meta_twitter&s=e705cf7d2e49fa81cdbe13c37b3879cc",
+   "reason": "Audit 2026-10-11: Stock pool photo",
+   "events": [
+    "splash-gold-coast-2026-08-19"
+   ]
+  },
+  {
+   "imageUrl": "https://www.targikielce.pl/storage/image/core_files/2019/12/6/b4921192abb91befbeb3b8f913fa03a2/hol-expo-baner-glowny.jpg",
+   "reason": "Audit 2026-10-11: Illustration",
+   "events": [
+    "hol-expo-kielce-2026-10-14"
+   ]
+  },
+  {
+   "imageUrl": "https://www.targikielce.pl/storage/image/core_files/2020/11/26/e9ccd5630b377c3602088554f4a21a5d/sacroexpo-baner-glowny.jpg",
+   "reason": "Audit 2026-10-11: Sculpture stock graphic",
+   "events": [
+    "sacroexpo-kielce-2027-06-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.targikielce.pl/storage/image/core_files/2020/2/25/7d29cd379c23aee295bd2476f19a9fcd/mspo-baner-glowny-en.jpg",
+   "reason": "Audit 2026-10-11: Stock graphic",
+   "events": [
+    "mspo-kielce-2026-09-08"
+   ]
+  },
+  {
+   "imageUrl": "https://www.targikielce.pl/storage/image/core_files/2022/4/13/98232544a7e9d6265b909d89530d1ea5/stom-fix-baner-glowny-pl.jpg",
+   "reason": "Audit 2026-10-11: Product close-up (screws)",
+   "events": [
+    "stom-fix-kielce-2027-04-06"
+   ]
+  },
+  {
+   "imageUrl": "https://www.targikielce.pl/storage/image/core_files/2024/4/21/e34497045768493b2eb6413c73fb34dd/transexpo-baner-glowny.jpg",
+   "reason": "Audit 2026-10-11: Illustration",
+   "events": [
+    "transexpo-kielce-2026-10-14"
+   ]
+  },
+  {
+   "imageUrl": "https://www.targikielce.pl/storage/image/core_files/2024/8/8/9d0adaf2ef3ea51e6c130110fb9d2dac/ifre-baner-glowny-en.jpg",
+   "reason": "Audit 2026-10-11: Product graphic",
+   "events": [
+    "kielce-ifre-expo-kielce-2027-06-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.targikielce.pl/storage/image/core_files/2025/11/12/e5ac03d654231e50a3a07109a07c55fb/future-private-labels-baner-glowny-en.jpg",
+   "reason": "Audit 2026-10-11: Graphic collage",
+   "events": [
+    "future-private-labels-expo-kielce-2026-10-28"
+   ]
+  },
+  {
+   "imageUrl": "https://www.tattoomotorexpo.com/img/hero-2027.jpg",
+   "reason": "Audit 2026-10-11: Hotlink-protected: loads only on the organiser’s own page, fails when embedded from another site (as the Prismconnex banner would be)",
+   "events": [
+    "naonian-tattoo-motor-expo-pordenone-2027-04-10"
+   ]
+  },
+  {
+   "imageUrl": "https://www.tecnoedificios.com/images/tce/banner-empresas/bannertce-02.jpg",
+   "reason": "Audit 2026-10-11: Stock city graphic",
+   "events": [
+    "tecno-edificios-mexico-mexico-city-2026-10-13"
+   ]
+  },
+  {
+   "imageUrl": "https://www.terrapinn-cdn.com/conference/festival-of-biologics/img/hero-2.jpg",
+   "reason": "Shared by 2 different shows (FESTIVAL OF BIOLOGICS - SAN DIEGO / FESTIVAL OF BIOLOGICS - EUROPA)",
+   "events": [
+    "festival-of-biologics-san-diego-san-diego-ca-2027-03-01",
+    "festival-of-biologics-europa-basel-2026-10-13"
+   ]
+  },
+  {
+   "imageUrl": "https://www.tourisma.it/wp-content/uploads/2019/03/TOURISMA097-1.jpg",
+   "reason": "Audit 2026-10-11: Stock tourist selfie",
+   "events": [
+    "tourisma-florence-2027-02-26"
+   ]
+  },
+  {
+   "imageUrl": "https://www.tubepipeshow.com/images/tpsv-visuals/home-banner-02.webp",
+   "reason": "Audit 2026-10-11: Stock pipes graphic",
+   "events": [
+    "tube-and-pipes-show-vietnam-hanoi-2026-11-25"
+   ]
+  },
+  {
+   "imageUrl": "https://www.veterinexpo.be/wp-content/uploads/2026/08/2C69DC03-E090-4D09-A113-B2CFBB59A4B9.jpeg",
+   "reason": "Audit 2026-10-11: Statistics chart",
+   "events": [
+    "veterinexpo-ciney-2026-11-21"
+   ]
+  },
+  {
+   "imageUrl": "https://www.vietpharmatech.vn/Uploads/files/cau-hinh/front-view-doctor-wearing-with-substances_23-2149994398.jpg",
+   "reason": "Audit 2026-10-11: Stock lab photo",
+   "events": [
+    "vietpharma-and-tech-ho-chi-minh-2026-11-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.visualimpact.org.au/images/slides/vi-sydney-2026-conference-expo.jpg",
+   "reason": "Audit 2026-10-11: Promo poster",
+   "events": [
+    "visual-impact-sydney-sydney-2026-09-02"
+   ]
+  },
+  {
+   "imageUrl": "https://www.weftec.org/wp-content/uploads/2026/05/weftec-social-sharing-v1.jpg",
+   "reason": "Audit 2026-10-11: Promo social card",
+   "events": [
+    "weftec-new-orleans-la-2026-09-26"
+   ]
+  },
+  {
+   "imageUrl": "https://www.wintimaess.ch/wp-content/uploads/2022/06/wintimaess-startscreen-grafik2.jpg",
+   "reason": "Audit 2026-10-11: Abstract graphic",
+   "events": [
+    "winti-mass-winterthur-2026-11-18"
+   ]
+  },
+  {
+   "imageUrl": "https://www.wpcenergy.org/images/2026/10/02/riyadh_thb.jpg",
+   "reason": "Post-remediation visual review 2026-10-11: Stock city skyline",
+   "events": [
+    "wpc-energy-congress-riyadh-2026-10-11"
+   ]
+  },
+  {
+   "imageUrl": "https://www.xenia.gr/wp-content/uploads/2026/04/Xenia-2026-Social-Sharing-Photo-April-.jpg",
+   "reason": "Audit 2026-10-11: Logo card",
+   "events": [
+    "xenia-athens-2026-11-21"
+   ]
+  },
+  {
+   "imageUrl": "https://www.zv.hr/UserDocsImages/banneri/1433x531px/Interliber%201430x530_hr.jpg",
+   "reason": "Audit 2026-10-11: Promo text card (visual)",
+   "events": [
+    "interliber-zagreb-2026-11-10"
+   ]
+  },
+  {
+   "imageUrl": "https://zhejiangfair-osaka.com/jp/wp-content/uploads/2026/03/head_zhejiang.jpg",
+   "reason": "Audit 2026-10-11: Text banner",
+   "events": [
+    "zhejiang-export-fair-fair-osaka-osaka-2026-09-09"
+   ]
+  },
+  {
+   "imageUrl": "https://mondial.paris/wp-content/uploads/salons-pms/2026/10/Deepal_Model_page_1824x2156_SKD_1_c907a9137f-e1791367234724.png",
+   "reason": "Live-page check 2026-10-12: car-brand product image (alt 'Aperçu de la Chery Q qui sera présente au Mondial de l'Auto 2026 © Chery'), shown after the previous pick was denylisted",
+   "events": [
+    "mondial-de-l-auto-paris-paris-2026-10-12"
+   ]
+  }
+ ]
+}
