@@ -57,6 +57,27 @@ export class OtpExpiredError extends ApiError {
     }
 }
 
+export class ConflictError extends ApiError {
+    constructor(message = 'Conflict') {
+        super(message, 409);
+        this.name = 'ConflictError';
+    }
+}
+
+/**
+ * Supabase accepted the request but its mailer (the project's SMTP) failed to
+ * send. GoTrue reports this as a bare 500 "Error sending … email"; it is an
+ * upstream outage from this app's point of view, hence 503.
+ */
+export class EmailDeliveryError extends ApiError {
+    constructor(
+        message = "We couldn't send the verification email right now. Please try again in a few minutes, or contact support if it keeps happening."
+    ) {
+        super(message, 503);
+        this.name = 'EmailDeliveryError';
+    }
+}
+
 export class InternalServerError extends ApiError {
     constructor(message = 'Internal Server Error', details?: unknown) {
         super(message, 500, details);

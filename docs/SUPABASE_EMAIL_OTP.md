@@ -196,6 +196,7 @@ Read it as:
 | `confirmationSentAt` set, no email | Handed to SMTP and dropped there → the built-in mailer refused a non-team address, or spam filtering. **Check #2 above.** |
 | Email arrives with a link but no code | Template still `{{ .ConfirmationURL }}`. **Check #1 above.** |
 | `429 over_email_send_rate_limit` | Built-in mailer's 2/hour project-wide quota. **Check #2 above.** |
+| `500 unexpected_failure` "Error sending confirmation email" (UI: "We couldn't send the verification email…", 503 `EmailDeliveryError`) | GoTrue's SMTP send itself failed; no user is created. If `/recover` fails the same way it is the SMTP config (credentials, unverified sender, host/port), not the template. The SMTP server's own reason is only in **Logs → Auth**. **Check #2 above.** |
 | `"supabase returned a session — email confirmation is DISABLED"` | "Confirm email" is off for the project; no email is sent by design and signup logs the user straight in. |
 | `500 Supabase Auth is not configured` | `SUPABASE_URL` / `SUPABASE_ANON_KEY` missing from `.env`. |
 

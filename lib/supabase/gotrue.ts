@@ -2,6 +2,8 @@ import { createHash, randomBytes } from "node:crypto";
 import {
     ApiError,
     BadRequestError,
+    ConflictError,
+    EmailDeliveryError,
     InternalServerError,
     UnauthorizedError,
 } from "@/lib/http/errors";
@@ -164,6 +166,30 @@ async function request<T>(
             );
         }
 
+        // GoTrue answers 500 `unexpected_failure` "Error sending confirmation
+        // email" / "Error sending recovery email" when its SMTP send fails —
+        // bad SMTP credentials, an unverified sender, or the wrong host/port in
+        // the dashboard's SMTP settings. Nothing the user typed is wrong, so say
+        // so instead of passing the mailer's wording through; the exact body is
+        // in the authDebug line above. See docs/SUPABASE_EMAIL_OTP.md.
+        if (res.status >= 500 && /error sending .*email/i.test(message)) {
+            // Logged unconditionally (authDebug is off in production). GoTrue
+            // never returns the SMTP server's own reason; `error_id` is what
+            // finds it in Dashboard → Logs → Auth. None of these are secrets.
+            const b = (json ?? {}) as Record<string, unknown>;
+            console.error(
+                "[Supabase Auth] the project's mailer failed to send. Check Authentication → SMTP Settings in the Supabase dashboard; search Logs → Auth for error_id.",
+                {
+                    endpoint: path,
+                    status: res.status,
+                    error_code: b.error_code ?? null,
+                    error_id: b.error_id ?? res.headers.get("sb-request-id"),
+                    msg: message,
+                }
+            );
+            throw new EmailDeliveryError();
+        }
+
         if (res.status >= 500) {
             throw new InternalServerError(message);
         }
@@ -237,7 +263,24 @@ export async function signUp(email: string, password: string, data: SignUpMetada
         return { user: session.user, session };
     }
 
-    const user = result as SupabaseUser & { confirmation_sent_at?: string };
+    const user = result as SupabaseUser & {
+        confirmation_sent_at?: string;
+        identities?: unknown[] | null;
+    };
+
+    // An address that already has a confirmed account comes back as 200 with
+    // a fabricated id and an empty `identities` array (GoTrue's enumeration
+    // protection) and no email is sent. Without this check the user is sent to
+    // /auth/verify to wait for a code that never comes. An existing but
+    // *unconfirmed* address keeps its identity and gets a fresh code instead.
+    if (Array.isArray(user.identities) && user.identities.length === 0) {
+        authDebug("signup address already has a confirmed account", {
+            email: maskEmail(email),
+        });
+        throw new ConflictError(
+            "An account with this email already exists. Please sign in, or reset your password if you've forgotten it."
+        );
+    }
 
     // The single most useful line when "no email arrived" is being diagnosed.
     //
