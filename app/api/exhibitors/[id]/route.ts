@@ -128,6 +128,13 @@ export async function GET(_request: Request, { params }: { params: { id: string 
         profileUrl: exhibitor.sourceDetailUrl,
         directoryUrl: exhibitor.sourceDirectoryUrl,
         description: exhibitor.description,
+        descriptionSource: exhibitor.descriptionSource,
+        // The sector the company actually works in, classified from its own
+        // website. Separate from company.category, which for these rows is the
+        // import bucket "trade show events".
+        industry: exhibitor.industry,
+        industryEvidence: exhibitor.industryEvidence,
+        industrySource: exhibitor.industrySource,
       },
       company,
       matchedBy: company ? (domain && company.domain?.toLowerCase() === domain ? "domain" : "name") : null,
