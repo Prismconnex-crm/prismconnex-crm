@@ -1,0 +1,24 @@
+[mcp_servers.context7]
+url = "https://mcp.context7.com/mcp"
+
+[mcp_servers.github]
+url = "https://api.githubcopilot.com/mcp/"
+bearer_token_env_var = "GITHUB_PAT"
+
+[mcp_servers.playwright]
+command = "npx"
+args = [
+    "-y",
+    "@playwright/mcp@0.0.78",
+]
+
+[mcp_servers.playwright.env]
+PLAYWRIGHT_BROWSERS_PATH = 'D:\playwright-browsers'
+
+[mcp_servers.postgres]
+command = "npx"
+args = [
+    "-y",
+    "@modelcontextprotocol/server-postgres@0.6.2",
+    "postgresql://postgres:prismconnex_local@localhost:5432/prismconnex_dev",
+]
