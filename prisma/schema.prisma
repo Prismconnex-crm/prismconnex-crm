@@ -399,6 +399,26 @@ model EventExhibitor {
   description        String?
   categories         String[] @default([])
 
+  /// Sector the company actually works in, classified from its own website
+  /// copy. Distinct from DiscoveryCompany.category, which for these rows is
+  /// the import bucket "trade show events" and says nothing about the business.
+  /// Null means no confident answer — shown as "Not available" rather than a
+  /// guess, because a wrong sector misleads anyone choosing who to meet.
+  /// Where `description` came from. A domain means the company's own site said
+  /// it; "authored" means we wrote it from public information because the
+  /// company publishes no usable description (or no website at all). The
+  /// profile page states which, so a reader is never told the company said
+  /// something it did not.
+  descriptionSource String?
+
+  industry          String?
+  /// The phrases in the company's own copy that decided `industry`, so any row
+  /// can be audited without re-running the classifier.
+  industryEvidence  String[] @default([])
+  /// Where the deciding text came from, e.g. the URL fetched.
+  industrySource    String?
+  industryCheckedAt DateTime?
+
   // Personal contact — nullable, never inferred.
   firstName         String?
   lastName          String?
@@ -748,12 +768,22 @@ model EventEnrichment {
 
 /// Free-form notes a user keeps against one event. One row per event.
 model EventNote {
-  /// FindShowEvent.slug — matches EventEnrichment.
-  eventSlug String   @id
+  id        String   @id @default(cuid())
+  /// FindShowEvent.slug — matches EventEnrichment. Many notes per event, which
+  /// is why this is no longer the primary key.
+  eventSlug String
+  /// First line of the content, kept denormalised so the Recent/Saved lists
+  /// render without parsing every note's HTML.
+  title     String   @default("")
   /// Sanitised HTML from the notes editor.
   html      String   @default("")
   /// Data-URL PNG from the sketch pad, when the user drew something.
   sketch    String?
+  /// True once the user pressed Save. Autosave keeps a note current but leaves
+  /// this false, so a draft the user never committed stays out of Saved.
+  saved     Boolean  @default(false)
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
+
+  @@index([eventSlug, updatedAt])
 }

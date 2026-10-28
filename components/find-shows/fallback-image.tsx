@@ -17,12 +17,17 @@ export function FallbackImage({
   alt,
   className,
   fetchPriority,
+  width,
+  height,
   children,
 }: {
   sources: string[];
   alt: string;
   className?: string;
   fetchPriority?: 'high' | 'low' | 'auto';
+  /** Intrinsic size, so the browser reserves the image's aspect ratio before it loads. */
+  width?: number;
+  height?: number;
   children?: ReactNode;
 }) {
   const [index, setIndex] = useState(0);
@@ -38,6 +43,8 @@ export function FallbackImage({
         src={src}
         alt={alt}
         className={className}
+        width={width}
+        height={height}
         decoding="async"
         fetchPriority={fetchPriority}
         ref={(node) => {

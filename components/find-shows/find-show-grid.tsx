@@ -53,7 +53,11 @@ export function FindShowGrid({
                 // Stagger within each page of 12 so appended cards don't wait
                 // behind the ones already shown.
                 transition={{ duration: 0.3, delay: (index % 12) * 0.04 }}
-                className="h-full"
+                // min-w-0: a grid item is otherwise as wide as its longest
+                // unbreakable line, so one long truncated location ("San
+                // Fernando del Valle de Catamarca.") widened every phone card
+                // past the screen.
+                className="h-full min-w-0"
               >
                 <FindShowCard
                   event={event}

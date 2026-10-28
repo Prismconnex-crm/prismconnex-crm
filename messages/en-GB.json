@@ -54,7 +54,7 @@
         "terms": "Terms of Service",
         "cookies": "Cookie Policy"
       },
-      "copyright": "� 2026 Prismconnex. All rights reserved.",
+      "copyright": "© 2026 Prismconnex. All rights reserved.",
       "builtWithPrefix": "Built with",
       "builtWithSuffix": "for trade show professionals worldwide."
     },
@@ -876,7 +876,8 @@
         "passwordRequired": "Password is required"
       },
       "status": {
-        "signedOut": "You have been signed out successfully."
+        "signedOut": "You have been signed out successfully.",
+        "verified": "Email verified. You can sign in now."
       }
     },
     "signUp": {
@@ -936,7 +937,8 @@
       },
       "actions": {
         "submit": "Verify",
-        "resend": "Resend Verification Code"
+        "resend": "Resend Verification Code",
+        "resendIn": "Resend code in {seconds}s"
       },
       "errors": {
         "verify": "Failed to verify",
@@ -947,6 +949,10 @@
       "expiresIn": "Expires in {seconds}s",
       "notices": {
         "resent": "A new verification code has been sent to your email."
+      },
+      "status": {
+        "resent": "A new code has been sent. Check your inbox and spam folder.",
+        "unverified": "Your email isn't verified yet. Enter the code we emailed you, or request a new one."
       }
     },
     "forgotPassword": {

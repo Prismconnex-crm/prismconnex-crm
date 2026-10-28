@@ -3,6 +3,7 @@ import { z } from "zod";
 import { validateBody } from "@/lib/http/validate";
 import { AuthService } from "@/services/auth.service";
 import { jsonOk, jsonError } from "@/lib/http/response";
+import { clientIp } from "@/lib/auth/otp-guard";
 
 const resendSchema = z.object({
     email: z.string().trim().pipe(z.email()),
@@ -30,7 +31,8 @@ export async function POST(req: NextRequest) {
         const data = validateBody(resendSchema, body);
 
         const { expiresInSeconds, cooldownSeconds } = await AuthService.resendSignUpOtp(
-            data.email
+            data.email,
+            clientIp(req.headers)
         );
 
         return jsonOk({

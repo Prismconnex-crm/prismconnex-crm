@@ -3,12 +3,19 @@ import type { OAuthProviderKey, SupabaseSession } from "@/lib/supabase/gotrue";
 import { ProfileService } from "@/services/profile.service";
 import { SignUpOtpRepository } from "@/repositories/signup-otp.repository";
 import {
-    ApiError,
     BadRequestError,
+    InvalidOtpError,
     OtpExpiredError,
+    TooManyRequestsError,
     UnauthorizedError,
 } from "@/lib/http/errors";
 import { authDebug, maskEmail } from "@/lib/auth/auth-debug";
+import {
+    assertCanVerify,
+    consumeOtpSend,
+    recordVerifyFailure,
+    recordVerifySuccess,
+} from "@/lib/auth/otp-guard";
 import type { ProfileDTO } from "@/models/profile";
 
 /**
@@ -57,13 +64,19 @@ export class AuthService {
      * runtime rather than hard-coded — the caller uses it to decide between
      * sending the user to /auth/verify and signing them straight in.
      */
-    static async signUp(params: SignUpParams) {
+    static async signUp(params: SignUpParams, ip = "unknown") {
+        // Every signup emails a code, so it spends from the same budget as
+        // Resend Code.
+        consumeOtpSend(params.email, ip);
+
         const { user, session } = await gotrue.signUp(params.email, params.password, {
             first_name: params.firstName,
             middle_name: params.middleName,
             last_name: params.lastName,
             phone: params.phone,
         });
+        // An already-registered address (Supabase's fake, identity-less user)
+        // has already been refused with a 409 inside gotrue.signUp.
 
         // The trigger has already committed the profile alongside the auth user.
         // ensureProfile() is the fallback if the trigger is ever missing.
@@ -80,22 +93,26 @@ export class AuthService {
     /**
      * Confirms a signup with the emailed OTP, then loads the profile.
      *
-     * Enforces the 90-second lifetime BEFORE the code reaches Supabase. Two
-     * reasons it has to happen on this side:
+     * Two independent server-side gates run before the code reaches Supabase:
      *
-     *  1. The project-wide "Email OTP Expiration" setting is shared with
-     *     password recovery, so it cannot be lowered to 90s without expiring
-     *     reset links too (see SignUpOtpRepository).
-     *  2. GoTrue answers 403 `otp_expired` for a *wrong* code exactly as it does
-     *     for a stale one — verified against the live project — so it cannot
-     *     tell the user which of the two happened. Checking the issue time here
-     *     is what separates "expired, here's a resend button" from "that code is
-     *     wrong, try again".
+     *  - lib/auth/otp-guard.ts caps wrong guesses per email (and attempts per
+     *    IP), so a 6-digit code cannot be brute-forced.
+     *  - The 90-second lifetime. It has to be enforced on this side because:
+     *     1. The project-wide "Email OTP Expiration" setting is shared with
+     *        password recovery, so it cannot be lowered to 90s without expiring
+     *        reset links too (see SignUpOtpRepository).
+     *     2. GoTrue answers 403 `otp_expired` for a *wrong* code exactly as it
+     *        does for a stale one — verified against the live project — so it
+     *        cannot tell the user which of the two happened. Checking the issue
+     *        time here is what separates "expired, here's a resend button" from
+     *        "that code is wrong, try again".
      *
-     * This is a server-side gate: the countdown on the verify page is cosmetic,
-     * and a client that hides or ignores it still cannot spend a stale code.
+     * The countdown on the verify page is cosmetic; a client that hides or
+     * ignores it still cannot spend a stale code.
      */
-    static async verify(email: string, code: string): Promise<AuthResult> {
+    static async verify(email: string, code: string, ip = "unknown"): Promise<AuthResult> {
+        assertCanVerify(email, ip);
+
         const sentAt = await SignUpOtpRepository.findConfirmationSentAt(email);
         const remaining = SignUpOtpRepository.secondsRemaining(sentAt);
 
@@ -110,34 +127,45 @@ export class AuthService {
             throw new OtpExpiredError();
         }
 
+        let session: SupabaseSession;
         try {
-            const session = await gotrue.verifySignUpOtp(email, code);
-            const profile = await ProfileService.ensureProfileForSession(session.user);
-            return { session, profile };
+            session = await gotrue.verifySignUpOtp(email, code);
         } catch (error) {
-            // Inside the window, so GoTrue's `otp_expired` means the digits were
-            // wrong, not that time ran out. Re-word it: the stock message
-            // ("Token has expired or is invalid") would send the user chasing a
-            // resend when the real fix is to retype the code.
-            if (error instanceof ApiError && /expired or is invalid/i.test(error.message)) {
-                throw new BadRequestError("Incorrect verification code. Please check and try again.");
+            if (error instanceof InvalidOtpError) {
+                recordVerifyFailure(email);
+                // Inside the window, so GoTrue's `otp_expired` means the digits
+                // were wrong, not that time ran out. Say so: the generic
+                // "invalid or has expired" would send the user chasing a resend
+                // when the real fix is to retype the code.
+                if (remaining !== null) {
+                    throw new InvalidOtpError("Incorrect verification code. Please check and try again.");
+                }
             }
             throw error;
         }
+
+        recordVerifySuccess(email);
+        const profile = await ProfileService.ensureProfileForSession(session.user);
+        return { session, profile };
     }
 
     /**
-     * Sends a fresh signup OTP and reports the new deadline.
+     * Emails a fresh signup code (the previous one stops working) and reports
+     * the new deadline.
+     *
+     * Two throttles run before a message is spent: the cooldown since Supabase's
+     * own `confirmation_sent_at` (survives restarts and spans server instances),
+     * and the in-process per-email/per-IP budget in lib/auth/otp-guard.ts that
+     * sign-up shares. Supabase enforces its own per-address frequency too, but
+     * its 429 does not distinguish that from the project-wide quota — refusing
+     * here yields an exact wait time and leaves the scarce quota for sends that
+     * will actually go out.
      *
      * The returned `expiresInSeconds` comes from the repository's TTL rather
      * than from a constant in the route or the component, so the countdown the
      * user sees and the window the server enforces cannot drift apart.
      */
-    static async resendSignUpOtp(email: string) {
-        // Throttle before spending a message. Supabase enforces its own
-        // per-address frequency too, but its 429 does not distinguish that from
-        // the project-wide quota — refusing here yields an exact wait time and
-        // leaves the scarce quota for sends that will actually go out.
+    static async resendSignUpOtp(email: string, ip = "unknown") {
         const sentAt = await SignUpOtpRepository.findConfirmationSentAt(email);
         const cooldown = SignUpOtpRepository.cooldownRemaining(sentAt);
 
@@ -146,18 +174,28 @@ export class AuthService {
                 email: maskEmail(email),
                 secondsRemaining: cooldown,
             });
-            throw new ApiError(
+            throw new TooManyRequestsError(
                 `Please wait ${cooldown} seconds before requesting another code.`,
-                429,
+                cooldown
             );
         }
 
+        consumeOtpSend(email, ip);
         await gotrue.resendSignUpOtp(email);
 
         return {
             expiresInSeconds: SignUpOtpRepository.ttlSeconds,
             cooldownSeconds: SignUpOtpRepository.cooldownSeconds,
         };
+    }
+
+    /**
+     * Same as resendSignUpOtp, for /api/auth/resend-code. Supabase answers the
+     * same for unknown or already-verified addresses, so this reveals nothing
+     * about which emails are registered.
+     */
+    static async resendSignUpCode(email: string, ip = "unknown") {
+        await AuthService.resendSignUpOtp(email, ip);
     }
 
     /**

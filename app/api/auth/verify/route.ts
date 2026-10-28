@@ -3,10 +3,12 @@ import { z } from "zod";
 import { validateBody } from "@/lib/http/validate";
 import { AuthService } from "@/services/auth.service";
 import { jsonOk, jsonError } from "@/lib/http/response";
+import { clientIp } from "@/lib/auth/otp-guard";
 
 const verifySchema = z.object({
     email: z.string().trim().pipe(z.email()),
-    code: z.string().trim().min(6),
+    // Supabase emails 6 digits by default; the length is configurable up to 10.
+    code: z.string().trim().regex(/^\d{6,10}$/, "Enter the numeric code from the email"),
 });
 
 /**
@@ -24,7 +26,7 @@ export async function POST(req: NextRequest) {
         const body = await req.json();
         const data = validateBody(verifySchema, body);
 
-        await AuthService.verify(data.email, data.code);
+        await AuthService.verify(data.email, data.code, clientIp(req.headers));
 
         return jsonOk({ success: true, message: "Email verified successfully." });
     } catch (error) {

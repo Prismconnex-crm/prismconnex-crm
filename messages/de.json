@@ -54,7 +54,7 @@
         "terms": "Nutzungsbedingungen",
         "cookies": "Cookie-Richtlinie"
       },
-      "copyright": "Â© 2026 Prismconnex. Alle Rechte vorbehalten.",
+      "copyright": "© 2026 Prismconnex. Alle Rechte vorbehalten.",
       "builtWithPrefix": "Entwickelt mit",
       "builtWithSuffix": "fuer Messeprofis weltweit."
     },
@@ -879,7 +879,8 @@
         "passwordRequired": "Passwort ist erforderlich"
       },
       "status": {
-        "signedOut": "Sie wurden erfolgreich abgemeldet."
+        "signedOut": "Sie wurden erfolgreich abgemeldet.",
+        "verified": "E-Mail bestätigt. Sie können sich jetzt anmelden."
       }
     },
     "signUp": {
@@ -939,7 +940,8 @@
       },
       "actions": {
         "submit": "Bestaetigen",
-        "resend": "Bestätigungscode erneut senden"
+        "resend": "Bestätigungscode erneut senden",
+        "resendIn": "Code erneut senden in {seconds} s"
       },
       "errors": {
         "verify": "Bestaetigung fehlgeschlagen",
@@ -950,6 +952,10 @@
       "expiresIn": "Läuft in {seconds}s ab",
       "notices": {
         "resent": "Ein neuer Bestätigungscode wurde an Ihre E-Mail gesendet."
+      },
+      "status": {
+        "resent": "Ein neuer Code wurde gesendet. Prüfen Sie Ihren Posteingang und Spam-Ordner.",
+        "unverified": "Ihre E-Mail-Adresse ist noch nicht bestätigt. Geben Sie den zugesandten Code ein oder fordern Sie einen neuen an."
       }
     },
     "forgotPassword": {

@@ -4,7 +4,10 @@ import {
     BadRequestError,
     ConflictError,
     EmailDeliveryError,
+    EmailNotConfirmedError,
     InternalServerError,
+    InvalidOtpError,
+    TooManyRequestsError,
     UnauthorizedError,
 } from "@/lib/http/errors";
 import { authDebug, authDebugError, maskEmail, maskToken } from "@/lib/auth/auth-debug";
@@ -29,6 +32,8 @@ export type SupabaseUser = {
     created_at?: string;
     last_sign_in_at?: string | null;
     email_confirmed_at?: string | null;
+    /** Empty on the obfuscated user returned for an already-registered signup. */
+    identities?: unknown[] | null;
     user_metadata?: Record<string, unknown> | null;
     /** Present on GET /user. Only `verified` factors actually gate sign-in. */
     factors?: SupabaseFactor[] | null;
@@ -91,6 +96,15 @@ function extractMessage(body: unknown, fallback: string) {
     return fallback;
 }
 
+/** GoTrue's machine-readable `error_code` (e.g. "otp_expired"), when present. */
+function extractErrorCode(body: unknown): string | undefined {
+    if (body && typeof body === "object") {
+        const value = (body as Record<string, unknown>).error_code;
+        if (typeof value === "string") return value;
+    }
+    return undefined;
+}
+
 async function request<T>(
     path: string,
     init: {
@@ -138,41 +152,27 @@ async function request<T>(
         if (res.status === 401 || /invalid login credentials/i.test(message)) {
             throw new UnauthorizedError("Invalid email or password");
         }
-        if (/email not confirmed/i.test(message)) {
-            throw new UnauthorizedError("Please confirm your email address before signing in");
+        const errorCode = extractErrorCode(json);
+
+        if (errorCode === "email_not_confirmed" || /email not confirmed/i.test(message)) {
+            throw new EmailNotConfirmedError();
         }
 
-        // Supabase's built-in email service is capped at a few messages per
-        // hour for the whole project, and every signup with email confirmation
-        // enabled spends one. Preserve the 429 instead of flattening it into a
-        // generic 400, and say what to do about it — the raw GoTrue text
-        // ("email rate limit exceeded") reads like an application bug.
-        if (res.status === 429) {
-            // GoTrue uses the same 429 for a per-address cooldown ("you can only
-            // request this after 56 seconds") — that one is not the project-wide
-            // quota, so pass its wait time through instead of blaming the quota.
-            const wait = /after (\d+) seconds?/i.exec(message);
-            if (wait) {
-                throw new ApiError(
-                    `Please wait ${wait[1]} seconds before requesting another email for this address.`,
-                    429
-                );
-            }
-            throw new ApiError(
-                "Too many emails have been sent from this Supabase project. " +
-                    "The built-in email service allows only a few per hour — wait and retry, " +
-                    "or configure a custom SMTP provider in the Supabase dashboard.",
-                429
-            );
+        // GoTrue answers a wrong, expired AND already-used OTP identically
+        // (403 otp_expired, "Token has expired or is invalid"), so one message
+        // has to cover all three.
+        if (errorCode === "otp_expired" || /token has expired or is invalid/i.test(message)) {
+            throw new InvalidOtpError();
         }
 
         // GoTrue answers 500 `unexpected_failure` "Error sending confirmation
         // email" / "Error sending recovery email" when its SMTP send fails —
         // bad SMTP credentials, an unverified sender, or the wrong host/port in
-        // the dashboard's SMTP settings. Nothing the user typed is wrong, so say
-        // so instead of passing the mailer's wording through; the exact body is
-        // in the authDebug line above. See docs/SUPABASE_EMAIL_OTP.md.
-        if (res.status >= 500 && /error sending .*email/i.test(message)) {
+        // the dashboard's SMTP settings (the signup is rolled back, so no
+        // half-created user is left behind). Nothing the user typed is wrong,
+        // so say so instead of passing the mailer's wording through; the exact
+        // body is in the authDebug line above. See docs/SUPABASE_EMAIL_OTP.md.
+        if (/error sending .*email/i.test(message)) {
             // Logged unconditionally (authDebug is off in production). GoTrue
             // never returns the SMTP server's own reason; `error_id` is what
             // finds it in Dashboard → Logs → Auth. None of these are secrets.
@@ -188,6 +188,31 @@ async function request<T>(
                 }
             );
             throw new EmailDeliveryError();
+        }
+
+        // GoTrue's per-user cooldown between emails to the same address.
+        const cooldown = /after (\d+) seconds?/i.exec(message);
+        if (res.status === 429 && cooldown) {
+            const seconds = Number(cooldown[1]);
+            throw new TooManyRequestsError(
+                `Please wait ${seconds} seconds before requesting another code.`,
+                seconds
+            );
+        }
+
+        // Supabase's built-in email service is capped at a few messages per
+        // hour for the whole project, and every signup with email confirmation
+        // enabled spends one. Preserve the 429 instead of flattening it into a
+        // generic 400, and say what to do about it — the raw GoTrue text
+        // ("email rate limit exceeded") reads like an application bug.
+        // (The per-address cooldown, which shares this 429, is handled above.)
+        if (res.status === 429) {
+            throw new ApiError(
+                "Too many emails have been sent from this Supabase project. " +
+                    "The built-in email service allows only a few per hour — wait and retry, " +
+                    "or configure a custom SMTP provider in the Supabase dashboard.",
+                429
+            );
         }
 
         if (res.status >= 500) {
@@ -263,17 +288,14 @@ export async function signUp(email: string, password: string, data: SignUpMetada
         return { user: session.user, session };
     }
 
-    const user = result as SupabaseUser & {
-        confirmation_sent_at?: string;
-        identities?: unknown[] | null;
-    };
+    const user = result as SupabaseUser & { confirmation_sent_at?: string };
 
     // An address that already has a confirmed account comes back as 200 with
     // a fabricated id and an empty `identities` array (GoTrue's enumeration
     // protection) and no email is sent. Without this check the user is sent to
     // /auth/verify to wait for a code that never comes. An existing but
     // *unconfirmed* address keeps its identity and gets a fresh code instead.
-    if (Array.isArray(user.identities) && user.identities.length === 0) {
+    if (isExistingAccountSignUp(user)) {
         authDebug("signup address already has a confirmed account", {
             email: maskEmail(email),
         });
@@ -311,6 +333,9 @@ export async function signUp(email: string, password: string, data: SignUpMetada
  * which is exactly what restarts the 90-second window enforced in
  * AuthService.verify — the new deadline is derived from Supabase's own
  * timestamp rather than from anything this app stores.
+ *
+ * Supabase answers 200 whether or not the address belongs to an unconfirmed
+ * user (no enumeration), so a 200 means "queued", not "delivered".
  */
 export async function resendSignUpOtp(email: string) {
     authDebug("POST /resend (type=signup) -> supabase", { email: maskEmail(email) });
@@ -339,6 +364,16 @@ export async function verifySignUpOtp(email: string, token: string) {
         method: "POST",
         body: { type: "signup", email, token },
     });
+}
+
+/**
+ * A signup for an already-registered email gets an obfuscated user back
+ * (enumeration protection): a random id and an empty `identities` array, and
+ * no email is sent. An unconfirmed re-signup returns the real user with its
+ * identity, and Supabase re-sends the code — that case must keep working.
+ */
+export function isExistingAccountSignUp(user: SupabaseUser) {
+    return Array.isArray(user.identities) && user.identities.length === 0;
 }
 
 /** Sends the password-recovery email. */

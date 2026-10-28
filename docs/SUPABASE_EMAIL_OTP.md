@@ -166,7 +166,8 @@ The timestamp check is what separates them:
 | Situation | Response | What the page shows |
 |---|---|---|
 | Code older than 90s | `410 OtpExpiredError` | "Verification code has expired." + **Resend Verification Code** |
-| Within 90s, wrong digits | `400 BadRequestError` | "Incorrect verification code. Please check and try again." |
+| Within 90s, wrong digits | `400 InvalidOtpError` | "Incorrect verification code. Please check and try again." |
+| 5 wrong codes for one email in 15 min | `429 TooManyRequestsError` | "Too many incorrect codes…" (lib/auth/otp-guard.ts); a new code clears it |
 | Within 90s, right digits | `200` | redirect to `/auth/sign-in?verified=true` |
 
 ## Diagnosing "no email arrived"

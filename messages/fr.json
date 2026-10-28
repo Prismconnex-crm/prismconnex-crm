@@ -54,7 +54,7 @@
         "terms": "Conditions d'utilisation",
         "cookies": "Politique relative aux cookies"
       },
-      "copyright": "Â© 2026 Prismconnex. Tous droits reserves.",
+      "copyright": "© 2026 Prismconnex. Tous droits reserves.",
       "builtWithPrefix": "Construit avec",
       "builtWithSuffix": "pour les professionnels des salons du monde entier."
     },
@@ -879,7 +879,8 @@
         "passwordRequired": "Le mot de passe est requis"
       },
       "status": {
-        "signedOut": "Vous avez été déconnecté avec succès."
+        "signedOut": "Vous avez été déconnecté avec succès.",
+        "verified": "E-mail vérifié. Vous pouvez maintenant vous connecter."
       }
     },
     "signUp": {
@@ -939,7 +940,8 @@
       },
       "actions": {
         "submit": "Verifier",
-        "resend": "Renvoyer le code de vérification"
+        "resend": "Renvoyer le code de vérification",
+        "resendIn": "Renvoyer le code dans {seconds} s"
       },
       "errors": {
         "verify": "Verification impossible",
@@ -950,6 +952,10 @@
       "expiresIn": "Expire dans {seconds}s",
       "notices": {
         "resent": "Un nouveau code de vérification a été envoyé à votre adresse e-mail."
+      },
+      "status": {
+        "resent": "Un nouveau code a été envoyé. Vérifiez votre boîte de réception et vos spams.",
+        "unverified": "Votre e-mail n'est pas encore vérifié. Saisissez le code reçu ou demandez-en un nouveau."
       }
     },
     "forgotPassword": {

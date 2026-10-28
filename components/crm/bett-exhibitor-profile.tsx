@@ -70,6 +70,10 @@ type ExhibitorProfile = {
   profileUrl: string | null;
   directoryUrl: string | null;
   description: string | null;
+  descriptionSource: string | null;
+  industry: string | null;
+  industryEvidence: string[];
+  industrySource: string | null;
 };
 
 type CompanyMatch = {
@@ -95,6 +99,8 @@ const TABS = ["Overview", "People", "Events", "Deals", "Activity"] as const;
 type Tab = (typeof TABS)[number];
 
 const NOT_AVAILABLE = "Not available";
+/** descriptionSource value meaning the text is ours, not the company's. */
+const AUTHORED = "authored";
 
 /** Empty string and whitespace count as missing, not just null. */
 function orNotAvailable(value: string | null | undefined): string {
@@ -105,16 +111,6 @@ function orNotAvailable(value: string | null | undefined): string {
 function prettyDomain(url: string | null): string | null {
   if (!url) return null;
   return url.replace(/^https?:\/\/(www\.)?/i, "").replace(/\/+$/, "") || null;
-}
-
-/** Categories are stored lower-case; the UI title-cases them for display. */
-function formatCategory(value: string | null | undefined): string {
-  const trimmed = value?.trim();
-  if (!trimmed) return NOT_AVAILABLE;
-  return trimmed
-    .split(" ")
-    .map((part) => (part === "&" ? "&" : part.charAt(0).toUpperCase() + part.slice(1)))
-    .join(" ");
 }
 
 function initials(name: string): string {
@@ -218,10 +214,11 @@ function Panel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function Field({ label, value }: { label: string; value: string }) {
+/** `title` carries provenance on hover, for fields that were derived rather than imported. */
+function Field({ label, value, title }: { label: string; value: string; title?: string }) {
   const missing = value === NOT_AVAILABLE;
   return (
-    <div>
+    <div title={title}>
       <p className="text-[9px] font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
         {label}
       </p>
@@ -492,9 +489,17 @@ export function BettExhibitorProfile({
                         <p className="mt-1.5 text-[12px] leading-6 text-slate-700 dark:text-slate-300">
                           {exhibitor.description.trim()}
                         </p>
-                        {domain ? (
+                        {/* Where the words came from. "Source: <domain>" used
+                            to show for every row, which would have credited
+                            the company for text it never wrote once we began
+                            filling gaps ourselves. Authored rows say so. */}
+                        {exhibitor.descriptionSource === AUTHORED ? (
+                          <p className="mt-2 text-[10px] italic text-amber-600 dark:text-amber-500/90">
+                            Written by Prismconnex from public information — not the company&rsquo;s own wording.
+                          </p>
+                        ) : exhibitor.descriptionSource ?? domain ? (
                           <p className="mt-2 text-[10px] text-slate-400 dark:text-slate-500">
-                            Source: {domain}
+                            Source: {exhibitor.descriptionSource ?? domain}
                           </p>
                         ) : null}
                       </>
@@ -541,8 +546,22 @@ export function BettExhibitorProfile({
                     <Field label="Employee range" value={orNotAvailable(company.employeeRange)} />
                     <Field label="Headquarters" value={orNotAvailable(company.headquarters)} />
                     <Field label="Region" value={orNotAvailable(company.region)} />
-                    {/* Fifth column, to match the Exhibitor record row above. */}
-                    <Field label="Industry" value={formatCategory(company.category)} />
+                    {/* Fifth column, to match the Exhibitor record row above.
+                        The sector comes from the exhibitor's own website, not
+                        from company.category — every one of these rows was
+                        imported under the bucket "trade show events", which
+                        describes how we got the record rather than what the
+                        company does. Where the site gave no clear answer the
+                        field stays "Not available": a wrong sector would
+                        mislead someone choosing who to meet, and a blank one
+                        only leaves them to look. */}
+                    <Field
+                      label="Industry"
+                      value={exhibitor.industry ?? NOT_AVAILABLE}
+                      title={exhibitor.industry && exhibitor.industryEvidence.length
+                        ? `Classified from ${prettyDomain(exhibitor.industrySource) ?? "the company website"} — matched: ${exhibitor.industryEvidence.join(", ")}`
+                        : undefined}
+                    />
                   </div>
                 ) : (
                   <p className="text-[11px] text-slate-500 dark:text-slate-400">

@@ -54,7 +54,7 @@
         "terms": "Terminos del servicio",
         "cookies": "Politica de cookies"
       },
-      "copyright": "Â© 2026 Prismconnex. Todos los derechos reservados.",
+      "copyright": "© 2026 Prismconnex. Todos los derechos reservados.",
       "builtWithPrefix": "Creado con",
       "builtWithSuffix": "para profesionales de ferias comerciales de todo el mundo."
     },
@@ -879,7 +879,8 @@
         "passwordRequired": "La contraseña es obligatoria"
       },
       "status": {
-        "signedOut": "Has cerrado sesión correctamente."
+        "signedOut": "Has cerrado sesión correctamente.",
+        "verified": "Correo verificado. Ya puedes iniciar sesión."
       }
     },
     "signUp": {
@@ -939,7 +940,8 @@
       },
       "actions": {
         "submit": "Verificar",
-        "resend": "Reenviar código de verificación"
+        "resend": "Reenviar código de verificación",
+        "resendIn": "Reenviar código en {seconds} s"
       },
       "errors": {
         "verify": "No se pudo verificar",
@@ -950,6 +952,10 @@
       "expiresIn": "Caduca en {seconds}s",
       "notices": {
         "resent": "Se ha enviado un nuevo código de verificación a su correo."
+      },
+      "status": {
+        "resent": "Se ha enviado un nuevo código. Revisa tu bandeja de entrada y la carpeta de spam.",
+        "unverified": "Tu correo aún no está verificado. Introduce el código que te enviamos o solicita uno nuevo."
       }
     },
     "forgotPassword": {

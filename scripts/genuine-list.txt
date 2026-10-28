@@ -1,0 +1,2778 @@
+﻿Total companies (excl header): 2411
+Header: Company Name,Domain,Category,Headquarters,Employee Range,Source ID
+
+========================================
+CATEGORY BREAKDOWN
+========================================
+
+
+≡ƒôé Enterprise Tech (519 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   01.AI
+   1Password
+   5ire
+   6Sense
+   9fin
+   AI21 Labs
+   AMI Labs
+   ASAPP
+   Abnormal Security
+   Abridge
+   ActiveCampaign
+   Ada
+   Adept
+   Aibee
+   Airbyte
+   Airtable
+   Aiven
+   Alation
+   Alchemy
+   Aleo
+   Algolia
+   AlphaSense
+   Altana AI
+   Ambience
+   Amperity
+   Anaconda
+   Andalusia Labs
+   Andela
+   Anthropic
+   Anyscale
+   Anysphere
+   Apollo
+   AppDirect
+   Applied Compute
+   AppsFlyer
+   Aptos
+   Aqua Security
+   Arcadia
+   Arctic Wolf Networks
+   Armada
+   Articulate
+   Assort Health
+   Astronomer
+   Attentive
+   Automation Anywhere
+   Aviatrix
+   Awardco
+   Axelar
+   Axiom Math
+   Axonius
+   Axtria
+   Baichuan AI
+   Baseten
+   BeZero
+   Beamery
+   Beisen
+   BetterUp
+   Betterfly
+   Beyond Identity
+   BigID
+   BigPanda
+   BitFury
+   BitSight Technologies
+   Bitmain Technologies
+   Black Forest Labs
+   Black Lake Technologies
+   Black Unicorn Factory
+   Blitzy
+   BlueVoyant
+   Boba
+   Branch
+   Brex
+   Bringg
+   BrowserStack
+   CHEQ
+   Calendly
+   Canva
+   CaptivateIQ
+   Cato Networks
+   Celestia
+   Celestial AI
+   Celonis
+   CertiK
+   Chai Discovery
+   Chainguard
+   Checkr
+   ChinaC.com
+   CircleCI
+   Clari
+   Claroty
+   Clay
+   ClickHouse
+   ClickUp
+   Clio
+   CloudBees
+   Cockroach Labs
+   Cognition
+   Cohere
+   Cohesity
+   Collibra
+   ConsenSys
+   ContentSquare
+   Contentful
+   Contrast Security
+   Copado
+   Coralogix
+   Creatio
+   Cresta
+   Cribl
+   CtrlS
+   Culture Amp
+   Cyberhaven
+   Cyera
+   DT Dream
+   Darwinbox
+   DataRobot
+   DataSnipper
+   Databricks
+   Dataiku
+   Dataminr
+   Decart
+   Deel
+   DeepL
+   DeepSeek
+   Degreed
+   Density
+   DevRev
+   Devo Technology
+   Dialpad
+   Digital Asset
+   Distyl AI
+   Drata
+   Dream Security
+   Dremio
+   DriveNets
+   Druva
+   Dune Analytics
+   EON
+   EcoVadis
+   Eightfold
+   Electric
+   Element Labs
+   ElevenLabs
+   EliseAI
+   Employment Hero
+   Enable
+   Endless
+   Enflame
+   Enter
+   Enveda
+   Envoy
+   Eruditus Executive Education
+   Eve
+   EvenUp
+   Everlaw
+   Exa
+   Expel
+   Factorial
+   Factory
+   Fal
+   FieldAI
+   Filevine
+   Firebolt
+   Fireworks
+   FiveTran
+   Flashbots
+   Flatpay
+   Forter
+   FourKites
+   Framer
+   Freshbooks
+   Front
+   FullStory
+   Fundamental
+   G2
+   GO1
+   Gamma
+   Gem
+   Glean
+   Glia
+   Global Switch
+   Globality
+   Globalization Partners
+   Gong
+   Goodfire
+   Govini
+   Grafana Labs
+   Grow Therapy
+   Guild Education
+   GupShup
+   H2O.ai
+   Hailo
+   Halcyon
+   Halter
+   Handshake
+   Hark
+   Harmattan AI
+   Harmonic
+   Harness
+   Harvey
+   Hasura
+   Helsing
+   Hibob
+   Higgsfield
+   Hightouch
+   Hive
+   HoneyBook
+   Hugging Face
+   Huike Group
+   Huntress
+   Hyperchain
+   ICEYE
+   IGAWorks
+   Icertis
+   Illumio
+   Imbue
+   Immuta
+   Imply Data
+   InMobi
+   Incode Technologies
+   Ineffable Intelligence
+   Inflection AI
+   Infobip
+   Insider
+   Instabase
+   Intercom
+   Invoca
+   Invoca
+   Ionic Digital
+   Ironclad
+   Island
+   Iterable
+   Ivalua
+   Jasper
+   Jeeves
+   Job&Talent
+   JumpCloud
+   JupiterOne
+   Jusfoun Big Data
+   Justworks
+   Kalshi
+   Karat
+   Kaseya
+   Keyfactor
+   Kiteworks
+   Kong
+   Kpler
+   Krutrim
+   LMArena
+   Labs
+   Lambda Labs
+   LangChain
+   Lattice
+   LaunchDarkly
+   LayerZero Labs
+   LeadSquared
+   Legora
+   LiblibAI
+   Lighter
+   Lighthouse
+   Lightmatter
+   Linear
+   Liquid AI
+   Lookout
+   Lovable
+   Lucid Software
+   Luma AI
+   Lusha
+   MEGAZONE
+   MEGVII
+   MOLOCO
+   MURAL
+   Magic Leap
+   MainFunc
+   MaintainX
+   Manner
+   Material Security
+   Matillion
+   Mercor
+   MessageBird
+   Meter
+   Mews
+   MindTickle
+   Minio
+   Miro
+   Mistral AI
+   Mixpanel
+   Modal
+   Modular AI
+   Moka
+   Monte Carlo
+   Morning Consult
+   Mu Sigma
+   Multiverse
+   Mysten Labs
+   Navan
+   Neo4j
+   Nerdio
+   Netlify
+   Netskope
+   Next Silicon
+   Nexthop
+   Nextiva
+   Neysa
+   NinjaOne
+   Nord Security
+   Notion
+   Nova Labs
+   OVH
+   Odoo
+   Odyssey
+   Offchain Labs
+   Omni
+   OneTrust
+   Onebrief
+   OpenAI
+   OpenRouter
+   Optimism
+   Orca Security
+   Origin Quantum
+   OutSystems
+   Outreach
+   Oyster
+   Paddle
+   PaleBlueDot AI
+   PandaDoc
+   Pantheon Systems
+   Panther Labs
+   Papaya Global
+   Parallel
+   Parloa
+   PatSnap
+   Pave
+   Pax8
+   PayFit
+   Payhawk
+   Pendo
+   Pennylane
+   Pentera
+   People.ai
+   PeopleCert
+   Percent
+   Peregrine
+   Perplexity
+   Persona
+   Personio
+   Phenom People
+   Photonic
+   Physical Intelligence
+   PhysicsX
+   Pigment
+   Pleo
+   Polyhedra Network
+   Pomelo Care
+   Poolside
+   Porter
+   Postman
+   Prague Technology
+   Preply
+   Productboard
+   Project Prometheus
+   Project44
+   Prove Identity
+   PsiQuantum
+   Pump
+   Qonto
+   QuEra Computing
+   Quantexa
+   Quantum Metric
+   Quince
+   Qumulo
+   Rain
+   Raise Financial Services
+   Ramp
+   Ramp
+   Randpanda
+   Recursive Superintelligence
+   Redis
+   Redo
+   Reflection AI
+   Reka AI
+   Relativity
+   ReliaQuest
+   Remote
+   Render
+   Replit
+   Resolve AI
+   Retool
+   Rippling
+   Rogo
+   Route
+   Safe Superintelligence
+   Sakana AI
+   Salt Security
+   SambaNova Systems
+   SandboxAQ
+   Sarvam
+   Saviynt
+   Scale
+   Scandit
+   Scribe
+   SeekOut
+   Seekr
+   Seismic
+   Semperis
+   Sendbird
+   Sentry
+   ShareCRM
+   ShopMy
+   SiFive
+   Sierra
+   Sift
+   Sigma Computing
+   Silverfort
+   SingleStore
+   Sisense
+   Slash
+   SmartHR
+   SnapLogic
+   Snorkel AI
+   Snyk
+   Solo.io
+   SonarSource
+   Sourcegraph
+   SparkCognition
+   Speak
+   Spendesk
+   Splashtop
+   Stability AI
+   Staffbase
+   Starburst
+   StarkWare
+   Substack
+   Suno
+   Supabase
+   Swile
+   Synthesia
+   Sysdig
+   TUNGEE
+   Tailscale
+   Talkdesk
+   TalkingData
+   Tanium
+   Tealium
+   Teamworks
+   Teleport
+   Temporal
+   TensTorrent
+   TensorWave
+   Tezign
+   The Brandtech Group
+   The Open Platform
+   Thinking Machines Lab
+   ThoughtSpot
+   Timescale
+   Tines
+   Tipalti
+   Together AI
+   Tongdun Technology
+   Torq
+   Tradeshift
+   Transmit Security
+   TravelPerk
+   Tulip
+   Turing
+   Typeface
+   Unconventional AI
+   Unico
+   Uniphore
+   Unisound
+   Upscale AI
+   Upwind
+   VAST Data
+   Vanta
+   Vantaca
+   Vectra Networks
+   VerbIT
+   Vercel
+   Veriff
+   VideoAmp
+   Visier
+   WTOIP
+   Wasabi
+   Watershed
+   Wayve
+   Webflow
+   Weka
+   Whop
+   Wonderful
+   WorkOS
+   Workato
+   Workhuman
+   World Labs
+   Writer
+   XForcePlus
+   Xiaoe Tech
+   Xpanceo
+   YITU Technology
+   YipitData
+   You.com
+   YugaByte
+   Zama
+   Zapier
+   ZenBusiness
+   Zhipu AI
+   Zhubajie
+   Zip
+   Zyphra
+   airSlate
+   apna
+   commercetools
+   d-Matrix
+   eSentire
+   firmus
+   humansand
+   impact.com
+   n8n
+   nesto
+   o9 Solutions
+
+≡ƒôé Financial Services (230 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   0x
+   Abba Platforms
+   Acorns
+   Addepar
+   Advance Intelligence Group
+   Airwallex
+   Ajaib
+   Akulaku
+   Allica Bank
+   Alloy
+   Alpaca
+   Altruist
+   Anchorage Digital
+   Ascend Money
+   Avant
+   Aven
+   Avenue One
+   Babel Finance
+   BackBase
+   Basis
+   Beacon
+   Betterment
+   BharatPe
+   Bilt Rewards
+   BitPanda
+   Bitso
+   BlockFi
+   Blockchain.com
+   Blockstream
+   Bolt
+   Built
+   Bunq
+   C2FO
+   C6 Bank
+   CAIS
+   CFGI
+   CRED
+   Capitolis
+   Carson Group
+   Carta
+   Cgtz
+   Chainalysis
+   ChargeBee Technologies
+   Checkout.com
+   Chime
+   Chipper Cash
+   Circle
+   Clara
+   Clear Street
+   Clearco
+   Clip
+   CloudWalk
+   CoinDCX
+   CoinList
+   CoinSwitch
+   CoinTracker
+   Corgi
+   Creditas
+   Cross River Bank
+   Curative
+   Current
+   DANA
+   DailyPay
+   DianRong
+   Digital Currency Group
+   Dock
+   DriveWealth
+   EBANX
+   Erebor
+   Esusu
+   FalconX
+   Feedzai
+   Figment
+   Fireblocks
+   FloQast
+   Flow
+   Flutterwave
+   Fundbox
+   Gauntlet Networks
+   GoodLeap
+   Greenlight
+   Greensill
+   Gusto
+   Habi
+   Halan
+   HighRadius
+   HomeLight
+   Huisuanzhang
+   Human Interest
+   Humanity Protocol
+   Imprint
+   InCred
+   Injective
+   Jimu
+   Juniper Square
+   Juspay
+   Keyrock
+   Konfio
+   Kraken
+   KreditBee
+   Kredivo Holdings
+   KuCoin
+   Kushki
+   Ledger
+   Lendable
+   Lessen
+   Lianjia
+   Liquidity
+   Loft
+   Lukka
+   Lunar
+   Lydia
+   M1
+   MGT
+   MX
+   Mambu
+   Masterworks
+   Matrixport
+   Mercury
+   Micro Connect
+   MoMo
+   MobileCoin
+   Modern Treasury
+   Mollie
+   Monad Labs
+   MoneyView
+   Moniepoint
+   Monzo
+   MoonPay
+   N26
+   NIUM
+   National Stock Exchange of India
+   Neon
+   Nirvana
+   NoBroker
+   Numbrs
+   OKX
+   OakNorth Bank
+   OneCard
+   Opay
+   Open
+   Opn
+   Orchard
+   PLACE
+   PPRO
+   Pacaso
+   Paxos
+   Paystand
+   Perfios
+   Phantom
+   Pilot
+   Pine Labs
+   Pipe
+   Plaid
+   Plata
+   Polymarket
+   Public
+   QI Tech
+   Qualia
+   QuintoAndar
+   Rapyd
+   Razorpay
+   Rentberry
+   Revolut
+   Ripple
+   Roofstock
+   Satispay
+   Scalable Capital
+   Scalapay
+   Scroll
+   Side
+   Slice
+   SmartAsset
+   Snapdocs
+   Socure
+   Solaris
+   SpotOn
+   Spotter
+   Starling Bank
+   Stash
+   Stripe
+   SumUp
+   Sunbit
+   Symphony
+   Tabby
+   Talos
+   Tamara
+   TaxBit
+   Taxfix
+   Teya
+   The Bank of London
+   Thought Machine
+   Tide
+   Toss
+   Trade Republic
+   TradingView
+   TransferMate
+   Tresata
+   TrueLayer
+   Trulioo
+   Trumid
+   Uala
+   Uniswap
+   Unit
+   Upgrade
+   Upstox
+   Uzum
+   VTS
+   Varo Bank
+   Vestwell
+   Vise
+   Viva Wallet
+   Wacai
+   Wave
+   Wayflyer
+   WeLab
+   Worldcoin
+   Xendit
+   Yubi
+   ZEPZ
+   Zebec
+   Zero Hash
+   Zeta
+   ZigBang
+   Zilch
+   Zopa
+   eDaili
+   iCapital
+   iTrustCapital
+   stori
+
+≡ƒôé Industrials (215 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   1KMXC
+   1Komma5
+   24M Technology
+   56PINGTAI
+   ABL Space Systems
+   Agile Robots
+   Allen Control Systems
+   Ample
+   Anduril
+   Apex
+   Applied Intuition
+   ArtIn Energy
+   Ascend Elements
+   Astronergy
+   Augury
+   Aurora Solar
+   Axiom Space
+   Ayar Labs
+   B&C Chemical
+   BYTON
+   Banma Network Technologies
+   Base Power
+   Bedrock Robotics
+   Bolt
+   Boom
+   Bordrin Motors
+   BuildOps
+   CHAOS Industries
+   Cabify
+   Cao Cao Mobility
+   CarDekho
+   Carbon
+   CargoX
+   Carro
+   Cars24
+   Carsome
+   Carzone
+   Chipone
+   Cognite
+   Cowboy Space
+   Crusoe
+   DJI Innovations
+   Dexterity
+   Diamond Foundry
+   Divergent 3D
+   Dragos
+   ENGINEAI
+   ENOVATE
+   EcoFlow
+   ElasticRun
+   Electric Hydrogen
+   Enpal
+   Epirus
+   Exotec
+   FLASH
+   Farmers Business Network
+   Figure
+   Firefly Aerospace
+   FlashEx
+   Flexe
+   Flexport
+   FlixMobility
+   Flock Freight
+   Formlabs
+   Forto
+   Fox Ess
+   Frore Systems
+   Fuse Energy
+   G7 Networks
+   Galaxea AI
+   GalaxySpace
+   Gaussian Robotics
+   Gecko Robotics
+   Geek+
+   Generalist
+   Global Eggs
+   Gokin Solar
+   Gradiant
+   Greater Bay Technology
+   HMD Global
+   Hadrian
+   Haomo.AI
+   Helion Energy
+   Hozon Auto
+   Huasun
+   Huolala
+   HyalRoute
+   ISN
+   Icon
+   Impulse Space
+   InDrive
+   InFarm
+   Inari
+   Indigo Ag
+   Infra.Market
+   Inxeption
+   Isar Aerospace
+   JMGO
+   JSW One Platforms
+   Jaguar Microsystems
+   Jetti Resources
+   Juma Peisong
+   K2 Space
+   Kavak
+   Keenon Robotics
+   KoBold Metals
+   LINKERBOT
+   LinkSure Network
+   Loadsmart
+   Locus Robotics
+   Loggi
+   Lyten
+   Mach Industries
+   MatX
+   Material Bank
+   Moglix
+   Momenta
+   Motive
+   Motorway
+   NEURA Robotics
+   Nearfield Instruments
+   Netradyne
+   Nimble
+   Nowports
+   Nuro
+   Nxin
+   OCSiAl
+   OVO Energy
+   OfBusiness
+   Optibus
+   Our Next Energy
+   Ouyeel
+   Palmetto
+   Paxini
+   Periodic Labs
+   Plume
+   Preferred Networks
+   Prometheus
+   Pudu Robotics
+   Quantum Systems
+   Quest Global
+   REEF Technology
+   ROX Motor
+   Radiant
+   Radius Payment Solutions
+   Rapido
+   Rebellion Defense
+   Rebellions
+   Recover
+   Redwood Materials
+   Relativity Space
+   Revolution Precrafted
+   Rhoda AI
+   Ricursive Intelligence
+   SHAREBOT
+   SITECH DEV
+   SOURCE Global
+   SVOLT
+   SafetyCulture
+   Saronic Technologies
+   SemiDrive
+   Sennder
+   Shield AI
+   Shippo
+   Sila
+   Skild AI
+   Skydio
+   Skyroot
+   SmartMore
+   Solugen
+   SouChe Holdings
+   SpaceX
+   Spiber
+   Spinny
+   Spirit AI
+   Star Charge
+   Starcloud
+   Stark
+   Stord
+   StoreDot
+   Substrate
+   Sudu Technology
+   Sunday
+   TELD
+   TERMINUS Technology
+   Tarana Wireless
+   TechMet
+   Tekever
+   Tekion
+   The Boring Company
+   The Bot Company
+   Tridge
+   Turntide Technologies
+   Unitree Robotics
+   Uptake
+   VOI
+   Valar Atomics
+   Vayyar
+   Verkada
+   Via
+   Vista Global
+   VulcanForms
+   Workrise
+   YH Global
+   YQNlink
+   Yimidida
+   Ynsect
+   Youxia Motors
+   Zetwerk
+   Zhiyuan Robot
+   Zipline
+   ZongMu Technology
+   Zum
+   eFishery
+   xsquare
+
+≡ƒôé Consumer & Retail (209 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   58 Daojia
+   ABLY
+   Age of Learning
+   Airalo
+   Ankorstore
+   Apeel Sciences
+   ApplyBoard
+   Apus Group
+   Assembly
+   Augustinus Bader
+   Aura
+   Away
+   Back Market
+   BeiBei
+   Bending Spoons
+   Berlin Brands Group
+   BlaBlaCar
+   BloomReach
+   BrewDog
+   Bucketplace
+   Carousell
+   Cart.com
+   Castore
+   Changingedu
+   Chehaoduo
+   Chief
+   Chobani
+   Choco
+   Cider
+   Cirkul
+   ClassDojo
+   CommerceIQ
+   Course Hero
+   DealShare
+   DeepBlue Technology
+   Deepgram
+   Deliverect
+   Dubizzle Group
+   Dutchie
+   Easyhome
+   FINN
+   Fabric
+   Fabric
+   Faire
+   Fanatics
+   Fetch
+   Flink
+   Flipdish
+   Flock Safety
+   Fresh Life Style Supply Chain Management
+   GOAT
+   GPclub
+   Garner
+   Gelato
+   GetYourGuide
+   Glossier
+   GoStudent
+   Gopuff
+   Gousto
+   Grover
+   GrubMarket
+   Gymshark
+   HAYDON
+   HEYTEA
+   Harry's
+   Hive Box
+   Hopper
+   Hosjoy
+   Hotmart
+   Houzz
+   HuJiang
+   HuiMin
+   ID.me
+   Impossible Foods
+   JOLLY Information Technology
+   JUST Egg
+   JUUL Labs
+   Jiuxian
+   Juanpi
+   Just Salad
+   KK Group
+   Kendra Scott
+   Kitopi
+   Klook
+   KnowBox
+   Kopi Kenangan
+   Koudai
+   Kujiale
+   Kurly
+   L&P Cosmetic
+   LEAD
+   Lamabang
+   Lenskart
+   Licious
+   LifeMiles
+   Liquid Death
+   LivSpace
+   MUSINSA
+   MadeiraMadeira
+   Mafengwo
+   ManoMano
+   Mashgin
+   Matchroom
+   Meicai
+   Mensa Brands
+   Merama
+   Metropolis
+   Mia.com
+   Mirakl
+   Misfits Market
+   Mofang Living
+   Moonshot AI
+   Movile
+   Nature's Fynd
+   Newsela
+   Ninja
+   Ninja Van
+   Nordic Knots
+   NotCo
+   Nothing
+   NuCom Group
+   Nutrabolt
+   Nuvemshop
+   OLIPOP
+   OYO Rooms
+   Olist
+   Omio
+   Outschool
+   Owner
+   PAX
+   Pat McGrath Labs
+   Pet Circle
+   Pharmapacks
+   Pipa Coding
+   Placer.ai
+   Podium
+   Poizon
+   Printful
+   Promasidor Holdings
+   Purplle
+   Quizlet
+   RELEX
+   Rappi
+   Razor
+   Rebel Foods
+   Remarkable
+   Restaurant365
+   Rohlik Group
+   Rokt
+   Rothy's
+   SHEIN
+   Salsify
+   Savage X Fenty
+   SellerX
+   ShipBob
+   Shiprocket
+   Signifyd
+   Skims
+   Snapdeal
+   SpreeAI
+   Standard AI
+   StockX
+   Swiftly
+   TechStyle Fashion Group
+   The Good Glamm Group
+   The Row
+   Thumbtack
+   Traveloka
+   Trax
+   Trendy Group International
+   TuJia
+   Tubatu.com
+   UPSIDE Foods
+   Udaan
+   Unacademy
+   UpGrad
+   Upside
+   VIPKid
+   Vagaro
+   Vedantu
+   Veepee
+   Veho
+   Vestiaire Collective
+   Vinted
+   Vuori
+   WEMAKEPRICE
+   Weee!
+   Wenheyou
+   Whatnot
+   Womai
+   Wonder
+   XiaoZhu
+   Xingsheng Selected
+   Xingyun Group
+   Xpressbees
+   Yello Mobile
+   Yijiupi
+   Yipin Shengxian
+   Yotpo
+   Yuanfudao
+   Yuanqi Senlin
+   Zenoti
+   Zepto
+   Zhuan Zhuan
+   Zihaiguo
+   Ziroom
+   Zuoyebang
+   boAT
+   ezCater
+
+≡ƒôé Healthcare & Life Sciences (128 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Abogen
+   Alan
+   Aledade
+   Alzheon
+   Aragen
+   Athletic Greens
+   Benchling
+   BostonGene
+   BrainCo
+   CMR Surgical
+   Cadence
+   Caidya
+   Calm
+   Cambrian BioPharma
+   Capsule
+   Carbon Health
+   CareBridge
+   Caris
+   Cedar
+   Cerebral
+   Chapter
+   Clarify Health
+   Clipboard Health
+   Collective Health
+   Color
+   Colossal
+   Commure
+   ConcertAI
+   Danggeun Market
+   Dental Monitoring
+   Devoted Health
+   DispatchHealth
+   Doctolib
+   Dxy.cn
+   Eight Slep
+   Elemy
+   EmployerDirect Healthcare
+   Equashield
+   Everly Health
+   Evidation
+   Fiture
+   Flo Health
+   Formation Bio
+   Freenome
+   Gympass
+   Headway
+   HeartFlow
+   Hippocratic AI
+   Honor Technology
+   Huma
+   Incredible Health
+   Innovaccer
+   IntelyCare
+   IntraBio
+   Judi Health
+   Kallyope
+   Kindbody
+   Komodo Health
+   Kry
+   LetsGetChecked
+   Lila Sciences
+   LinkDoc Technology
+   Lyra Health
+   Mammoth Biosciences
+   MasterControl
+   Maven
+   Medable
+   Medlinker
+   MiRus
+   Miaoshou Doctor
+   Midi
+   Modern Health
+   Neko Health
+   Neuralink
+   NewLimit
+   NexHealth
+   Noom
+   Nourish
+   Omada Health
+   OpenEvidence
+   Opentrons
+   OrCam Technologies
+   Orca Bio
+   Orna Therapeutics
+   Otto Bock HealthCare
+   Oura
+   Owkin
+   Papa
+   Pathos
+   PointClickCare
+   Pristyn Care
+   Radiology Partners
+   Redesign Health
+   Reify Health
+   Retro Biosciences
+   Ro
+   Science
+   SheMed
+   ShiftKey
+   Shukun Technology
+   Shulan Health
+   Solace
+   Somatus
+   SonderMind
+   Spectrum Medical
+   Spring Health
+   Strava
+   Sword Health
+   Tala Health
+   Tessera Therapeutics
+   Thyme Care
+   Truveta
+   Unite Us
+   Valgen Medtech
+   VectorBuilder
+   Virta Health
+   Visby Medical
+   Viz.ai
+   We Doctor
+   Wheel
+   Whoop
+   Xaira Therapeutics
+   ZocDoc
+   Zwift
+   cult.fit
+   eMed
+   iCarbonX
+   insitro
+
+≡ƒôé Media & Entertainment (79 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   1047 Games
+   A24 Films
+   Atmosphere
+   Automattic
+   ByteDance
+   Cameo
+   Character.AI
+   Cloudinary
+   Clubhouse
+   Coocaa
+   Cosm
+   Dadi Cinema
+   Dapper Labs
+   Discord
+   DistroKid
+   Domestika
+   Dream11
+   Epic Games
+   Epidemic Sound
+   Flipboard
+   Forte Labs
+   Games24x7
+   Genies
+   Grammarly
+   Immutable
+   Improbable
+   Kajabi
+   Kuaikan Manhua
+   LTK
+   Lightricks
+   LinkTree
+   Luoji Siwei
+   MUBI
+   Magic Eden
+   Maimai
+   MasterClass
+   Meero
+   Merkle Manufactory
+   Minute Media
+   Mobile Premier League
+   Moon Active
+   Mux
+   Mythical Games
+   News Break
+   Niantic
+   ONE
+   OpenSea
+   OpenWeb
+   Patreon
+   PicsArt
+   Playco
+   Qingting FM
+   RIDI
+   Red Ventures
+   Rokid
+   Runway
+   SeatGeek
+   ShareChat
+   Simply
+   Sky Mavis
+   SmartNews
+   Sorare
+   Story Protocol
+   TangoMe
+   The Sandbox
+   Tripledot
+   Unstoppable Domains
+   VerSe Innovation
+   Voodoo
+   Wildlife Studios
+   Wrapbook
+   Xiaohongshu
+   Xiaoice
+   Ximalaya FM
+   Xreal
+   Yidian Zixun
+   Yixia
+   Yuga Labs
+   thatgamecompany
+
+≡ƒôé Commercial Banks (38 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   BOK Financial
+   Bank OZK
+   Bank of America
+   Bank of New York (BNY)
+   Capital One Financial
+   Citigroup
+   Citizens Financial Group
+   Columbia Banking System
+   Cullen/Frost Bankers
+   East West Bancorp
+   Fifth Third Bancorp
+   First Citizens BancShares
+   First Horizon
+   First National of Nebraska
+   Flagstar Bank
+   Goldman Sachs Group
+   Huntington Bancshares
+   JPMorgan Chase
+   KeyCorp
+   M&T Bank
+   Morgan Stanley
+   Northern Trust
+   Old National Bancorp
+   PNC Financial Services Group
+   Pinnacle Financial Partners
+   Popular
+   Regions Financial
+   SouthState Bank
+   State Street
+   Truist Financial
+   U.S. Bancorp
+   UMB Financial
+   Valley National Bancorp
+   Webster Financial
+   Wells Fargo
+   Western Alliance Bancorp.
+   Wintrust Financial
+   Zions Bancorp.
+
+≡ƒôé Utilities: Gas and Electric (33 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   AES
+   Alliant Energy
+   Ameren
+   American Electric Power
+   American Water Works
+   Atmos Energy
+   CMS Energy
+   CenterPoint Energy
+   Consolidated Edison
+   DTE Energy
+   Dominion Energy
+   Duke Energy
+   Edison International
+   Entergy
+   Evergy
+   Eversource Energy
+   Exelon
+   FirstEnergy
+   Hawaiian Electric Industries
+   NextEra Energy
+   NiSource
+   OGE Energy
+   PG&E
+   PPL
+   Pinnacle West Capital
+   Portland General Electric
+   Public Service Enterprise Group
+   Puget Energy
+   Sempra
+   Southern
+   UGI
+   WEC Energy Group
+   Xcel Energy
+
+≡ƒôé Internet Services and Retailing (29 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Airbnb
+   Akamai Technologies
+   Alphabet
+   Amazon
+   Booking Holdings
+   Chewy
+   CoStar Group
+   Compass
+   Coupang
+   DoorDash
+   Ebay
+   Etsy
+   Expedia Group
+   GoDaddy
+   Google (Alphabet)
+   Instacart
+   Lyft
+   Match Group
+   Meta Platforms
+   Okta
+   Opendoor Technologies
+   Pinterest
+   QVC Group
+   Sabre
+   Snap
+   Snowflake
+   Twilio
+   Uber Technologies
+   Wayfair
+
+≡ƒôé Industrial Machinery (29 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Carrier Global
+   Chart Industries
+   Cummins
+   Donaldson
+   Dover
+   ESAB
+   Emerson Electric
+   Flowserve
+   Generac Holdings
+   Honeywell International
+   Hyster-Yale
+   IDEX
+   ITT
+   Illinois Tool Works
+   Ingersoll Rand
+   JBT Marel
+   Lennox International
+   Lincoln Electric Holdings
+   Madison Air Solutions
+   Middleby
+   Mueller Industries
+   Nordson
+   Otis Worldwide
+   Parker-Hannifin
+   Snap-on
+   Stanley Black & Decker
+   Timken
+   Westinghouse Air Brake
+   Xylem
+
+≡ƒôé Medical Products and Equipment (28 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Abbott Laboratories
+   Align Technology
+   Baxter International
+   Becton Dickinson
+   Boston Scientific
+   Cooper Cos.
+   Danaher
+   Dentsply Sirona
+   DexCom
+   Edwards Lifesciences
+   Envista Holdings
+   Exact Sciences
+   GE HealthCare Technologies
+   Globus Medical
+   Hologic
+   IDEXX Laboratories
+   Insulet
+   Intuitive Surgical
+   Medline
+   QuidelOrtho
+   ResMed
+   Revvity
+   Solventum
+   Stryker
+   Teleflex
+   Thermo Fisher Scientific
+   West Pharmaceutical Services
+   Zimmer Biomet Holdings
+
+≡ƒôé Specialty Retailers: Other (28 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   ARKO
+   Academy Sports and Outdoors
+   Advance Auto Parts
+   AutoZone
+   Bath & Body Works
+   Best Buy
+   Casey's General Stores
+   Dick's Sporting Goods
+   Dollar General
+   Dollar Tree
+   EquipmentShare.com
+   FirstCash Holdings
+   Five Below
+   Floor & Decor Holdings
+   GameStop
+   Herc Holdings
+   Home Depot
+   Lowe's
+   Murphy USA
+   O'Reilly Automotive
+   Petco Health and Wellness
+   RH
+   Sally Beauty Holdings
+   Tractor Supply
+   Ulta Beauty
+   United Rentals
+   Upbound Group
+   Williams-Sonoma
+
+≡ƒôé Semiconductors and Other Electronic Components (28 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Advanced Micro Devices
+   Amkor Technology
+   Analog Devices
+   Applied Materials
+   Broadcom
+   Coherent
+   Entegris
+   Intel
+   Jabil
+   KLA
+   Lam Research
+   MKS
+   Marvell Technology
+   Microchip Technology
+   Micron Technology
+   Monolithic Power Systems
+   Nvidia
+   ON Semiconductor
+   Plexus
+   Qnity Electronics
+   Qorvo
+   Qualcomm
+   Sandisk
+   Sanmina
+   Skyworks Solutions
+   Teradyne
+   Texas Instruments
+   Vishay Intertechnology
+
+≡ƒôé Real estate (27 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   AGNC Investment
+   AGNT
+   Alexandria Real Estate Equities
+   American Tower
+   AvalonBay Communities
+   BXP
+   CBRE Group
+   Crown Castle
+   Digital Realty Trust
+   Equinix
+   Equity Residential
+   Extra Space Storage
+   Healthpeak Properties
+   Host Hotels & Resorts
+   Invitation Homes
+   Jones Lang LaSalle
+   Lineage
+   Newmark Group
+   Prologis
+   Public Storage
+   Realty Income
+   Rithm Capital
+   SBA Communications
+   Simon Property Group
+   VICI Properties
+   Ventas
+   Welltower
+
+≡ƒôé Securities (26 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Apollo Global Management
+   Ares Management
+   BGC Group
+   Bitgo Holdings
+   BlackRock
+   Blue Owl Capital
+   CME Group
+   Carlyle Group
+   Cboe Global Markets
+   Charles Schwab
+   Circle Internet Group
+   Coinbase Global
+   Evercore
+   Franklin Resources
+   Galaxy Digital
+   Interactive Brokers Group
+   Intercontinental Exchange
+   Jones Financial (Edward Jones)
+   KKR
+   LPL Financial Holdings
+   Nasdaq
+   Raymond James Financial
+   Robinhood Markets
+   Stifel Financial
+   T. Rowe Price
+   TPG
+
+≡ƒôé Insurance: Property and Casualty (Stock) (25 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   AIG
+   Allstate
+   American Family Insurance Group
+   American Financial Group
+   Assurant
+   Berkshire Hathaway
+   Brown & Brown
+   Cincinnati Financial
+   FM
+   Fidelity National Financial
+   First American Financial
+   Hanover Insurance Group
+   Hartford Insurance Group
+   Kemper
+   Liberty Mutual Insurance Group
+   Loews
+   Markel Group
+   Mercury General
+   Old Republic International
+   Progressive
+   Selective Insurance Group
+   Stewart Information Services
+   Travelers
+   USAA
+   W.R. Berkley
+
+≡ƒôé Diversified Financials (25 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Ally Financial
+   American Express
+   Ameriprise Financial
+   Annaly Capital Management
+   Arthur J. Gallagher
+   Blackstone
+   Corebridge Financial
+   Fannie Mae
+   Freddie Mac
+   H&R Block
+   Icahn Enterprises
+   Jefferies Financial Group
+   Lazard
+   Marsh & McLennan
+   Navient
+   OneMain Holdings
+   PennyMac Financial Services
+   Rocket Companies
+   Ryan Specialty Holdings
+   SLM
+   SoFi Technologies
+   StoneX Group
+   Synchrony
+   Virtu Financial
+   Voya Financial
+
+≡ƒôé Chemicals (24 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   3M
+   Air Products & Chemicals
+   Albemarle
+   Avient
+   CF Industries Holdings
+   Cabot
+   Celanese
+   Chemours
+   Dow
+   DuPont
+   Eastman Chemical
+   Ecolab
+   FMC
+   H.B. Fuller
+   Huntsman
+   International Flavors & Fragrances
+   Mosaic
+   NewMarket
+   Olin
+   PPG Industries
+   RPM International
+   Scotts Miracle-Gro
+   Sherwin-Williams
+   Westlake
+
+≡ƒôé Computer Software (24 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Adobe
+   AppLovin
+   Atlassian
+   Autodesk
+   Cadence Design Systems
+   CoreWeave
+   CrowdStrike Holdings
+   Datadog
+   DocuSign
+   Fortinet
+   Gen Digital
+   HubSpot
+   Intuit
+   Microsoft
+   Oracle
+   PTC
+   Palantir Technologies
+   Roper Technologies
+   SS&C Technologies Holdings
+   Salesforce
+   ServiceNow
+   Synopsys
+   Workday
+   Zoom Communications
+
+≡ƒôé Entertainment (24 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   AMC Entertainment Holdings
+   Cinemark Holdings
+   Electronic Arts
+   Fox
+   Gray Media
+   Liberty Media
+   Live Nation Entertainment
+   Netflix
+   News Corp.
+   Nexstar Media Group
+   Paramount Skydance
+   Playtika Holding
+   Roblox
+   Roku
+   Sinclair
+   Sirius XM Holdings
+   Six Flags Entertainment
+   TEGNA
+   Take-Two Interactive Software
+   TelevisaUnivision
+   Walt Disney
+   Warner Bros. Discovery
+   Warner Music Group
+   iHeartMedia
+
+≡ƒôé Mining, Crude-Oil Production (23 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   APA
+   Antero Resources
+   California Resources
+   Chord Energy
+   ConocoPhillips
+   Continental Resources
+   Core Natural Resources
+   Coterra Energy
+   Crescent Energy
+   Devon Energy
+   Diamondback Energy
+   EOG Resources
+   Expand Energy
+   Freeport-McMoRan
+   Matador Resources
+   Murphy Oil
+   Newmont
+   Occidental Petroleum
+   Ovintiv
+   Peabody Energy
+   Permian Resources
+   Range Resources
+   SM Energy
+
+≡ƒôé Aerospace & Defense (22 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   AAR
+   Axon Enterprise
+   BWX Technologies
+   Boeing
+   Curtiss-Wright
+   GE Aerospace
+   General Dynamics
+   HEICO
+   Howmet Aerospace
+   Huntington Ingalls Industries
+   L3Harris Technologies
+   Lockheed Martin
+   Moog
+   Northrop Grumman
+   Parsons
+   RTX
+   StandardAero
+   Teledyne Technologies
+   Textron
+   TransDigm Group
+   V2X
+   Woodward
+
+≡ƒôé Diversified Outsourcing Services (22 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   ABM Industries
+   ADT
+   Aramark
+   Automatic Data Processing
+   Brink's
+   CBIZ
+   Cintas
+   Conduent
+   Everforth
+   FTI Consulting
+   Insperity
+   Iron Mountain
+   Jacobs Solutions
+   Kelly Services
+   Korn Ferry
+   ManpowerGroup
+   Paychex
+   Robert Half
+   Rollins
+   TriNet Group
+   UL Solutions
+   Vestis
+
+≡ƒôé Insurance (22 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Accelerant
+   Acko General Insurance
+   AgentSync
+   Assured
+   At-Bay
+   BGL Group
+   Branch
+   Cambridge Mobile Telematics
+   Caribou
+   Coalition
+   Extend
+   Kin
+   ManyPets
+   Marshmallow
+   Next Insurance
+   Shift
+   The Zebra
+   Tractable
+   Unqork
+   Zego
+   bolttech
+   wefox
+
+≡ƒôé Financial Data Services (22 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Affirm Holdings
+   Block
+   Bread Financial Holdings
+   Broadridge Financial Solutions
+   Corpay
+   Equifax
+   Euronet Worldwide
+   Fidelity National Information (FIS)
+   Fiserv
+   Global Payments
+   MSCI
+   Mastercard
+   Moody's
+   NCR Atleos
+   PayPal Holdings
+   S&P Global
+   Shift4 Payments
+   Toast
+   TransUnion
+   Verisk Analytics
+   Visa
+   Western Union
+
+≡ƒôé Pharmaceuticals (21 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   AbbVie
+   Alnylam Pharmaceuticals
+   Amgen
+   Amneal Pharmaceuticals
+   BioMarin Pharmaceutical
+   Biogen
+   Bristol-Myers Squibb
+   Elanco Animal Health
+   Eli Lilly
+   Gilead Sciences
+   Incyte
+   Johnson & Johnson
+   Merck
+   Neurocrine Biosciences
+   Organon
+   Pfizer
+   Regeneron Pharmaceuticals
+   United Therapeutics
+   Vertex Pharmaceuticals
+   Viatris
+   Zoetis
+
+≡ƒôé Engineering & Construction (20 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   AECOM
+   APi Group
+   Arcosa
+   Centuri Holdings
+   Comfort Systems USA
+   Construction Partners
+   Dycom Industries
+   EMCOR Group
+   Everus Construction Group
+   Fluor
+   Granite Construction
+   IES Holdings
+   MYR Group
+   MasTec
+   Peter Kiewit Sons'
+   Primoris Services
+   Quanta Services
+   Tetra Tech
+   TopBuild
+   Tutor Perini
+
+≡ƒôé Insurance: Life, Health (stock) (20 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Aflac
+   Brighthouse Financial
+   CNO Financial Group
+   CUNA Mutual Group
+   Equitable Holdings
+   Genworth Financial
+   Globe Life
+   GuideWell Mutual Holding
+   Jackson Financial
+   Lincoln National
+   MetLife
+   NLV Financial
+   Pacific Life
+   Penn Mutual Life Insurance
+   Primerica
+   Principal Financial
+   Prudential Financial
+   Reinsurance Group of America
+   Securian Financial Group
+   Unum Group
+
+≡ƒôé Motor Vehicles & Parts (20 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Allison Transmission Holdings
+   Autoliv
+   BorgWarner
+   Cooper-Standard Holdings
+   Dana
+   Dauch
+   Ford Motor
+   Garrett Motion
+   General Motors
+   Goodyear Tire & Rubber
+   LCI Industries
+   Lear
+   Paccar
+   Patrick Industries
+   Phinia
+   Rivian Automotive
+   Tesla
+   Thor Industries
+   Visteon
+   Winnebago Industries
+
+≡ƒôé Wholesalers: Diversified (18 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Ace Hardware
+   Applied Industrial Technologies
+   BlueLinx Holdings
+   Boise Cascade
+   Core & Main
+   Fastenal
+   Ferguson Enterprises
+   Genuine Parts
+   Gold.com
+   Graybar Electric
+   LKQ
+   MSC Industrial Direct
+   Pool
+   QXO
+   SiteOne Landscape Supply
+   W.W. Grainger
+   WESCO International
+   Watsco
+
+≡ƒôé Hotels, Casinos, Resorts (18 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Boyd Gaming
+   Caesars Entertainment
+   Churchill Downs
+   DraftKings
+   Global Business Travel Group
+   Hilton Grand Vacations
+   Hilton Worldwide Holdings
+   Hyatt Hotels
+   Las Vegas Sands
+   Life Time Group Holdings
+   Light & Wonder
+   MGM Resorts International
+   Marriott International
+   Marriott Vacations Worldwide
+   PENN Entertainment
+   Travel + Leisure
+   Vail Resorts
+   Wynn Resorts
+
+≡ƒôé Information Technology Services (17 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Amentum Holdings
+   Booz Allen Hamilton Holding
+   CACI International
+   CDW
+   Cognizant Technology Solutions
+   Concentrix
+   DXC Technology
+   EPAM Systems
+   Gartner
+   IBM
+   Insight Enterprises
+   KBR
+   Kyndryl Holdings
+   Leidos Holdings
+   Maximus
+   PC Connection
+   Science Applications International
+
+≡ƒôé Electronics, Electrical Equip. (16 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   A.O. Smith
+   Acuity
+   Atkore
+   Belden
+   Corning
+   EnerSys
+   Fortive
+   Hubbell
+   Regal Rexnord
+   Rockwell Automation
+   TTM Technologies
+   Trimble
+   Vertiv Holdings
+   Vontier
+   Whirlpool
+   Zebra Technologies
+
+≡ƒôé Building Materials, Glass (14 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Advanced Drainage Systems
+   Builders FirstSource
+   Carlisle
+   Cornerstone Building Brands
+   Fortune Brands Innovations
+   JELD-WEN Holding
+   Knife River
+   Louisiana-Pacific
+   Martin Marietta Materials
+   MasterBrand
+   Owens Corning
+   Resideo Technologies
+   UFP Industries
+   Vulcan Materials
+
+≡ƒôé Food Consumer Products (14 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Campbell's
+   Conagra Brands
+   Flowers Foods
+   General Mills
+   Hershey
+   Hormel Foods
+   J.M. Smucker
+   Kraft Heinz
+   Lamb Weston Holdings
+   Land O'Lakes
+   McCormick
+   Mondelez International
+   PepsiCo
+   Post Holdings
+
+≡ƒôé Homebuilders (14 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Century Communities
+   D.R. Horton
+   Dream Finders Homes
+   Hovnanian Enterprises
+   Installed Building Products
+   KB Home
+   Lennar
+   M/I Homes
+   Meritage Homes
+   NVR
+   PulteGroup
+   Taylor Morrison Home
+   Toll Brothers
+   Tri Pointe Homes
+
+≡ƒôé Health Care: Medical Facilities (13 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Acadia Healthcare
+   Ardent Health
+   Brookdale Senior Living
+   Community Health Systems
+   DaVita
+   Encompass Health
+   Ensign Group
+   HCA Healthcare
+   PACS Group
+   Select Medical Holdings
+   Surgery Partners
+   Tenet Healthcare
+   Universal Health Services
+
+≡ƒôé Health Care: Pharmacy and Other Services (13 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   AMN Healthcare Services
+   Agilon health
+   Astrana Health
+   BrightSpring Health Services
+   CVS Health
+   Charles River Laboratories Intl.
+   Cigna Group
+   Fortrea Holdings
+   IQVIA Holdings
+   Labcorp Holdings
+   Option Care Health
+   Quest Diagnostics
+   Veeva Systems
+
+≡ƒôé Automotive Retailing, Services (13 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Asbury Automotive Group
+   AutoNation
+   Avis Budget Group
+   Camping World Holdings
+   CarMax
+   Carvana
+   Copart
+   Group 1 Automotive
+   Hertz Global Holdings
+   Lithia Motors
+   Penske Automotive Group
+   Rush Enterprises
+   Sonic Automotive
+
+≡ƒôé Apparel (13 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Carter's
+   Columbia Sportswear
+   Crocs
+   Deckers Outdoor
+   G-III Apparel Group
+   Kontoor Brands
+   Levi Strauss
+   Nike
+   PVH
+   Ralph Lauren
+   Tapestry
+   Under Armour
+   VF
+
+≡ƒôé Metals (12 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   ATI
+   Alcoa
+   Carpenter Technology
+   Cleveland-Cliffs
+   Commercial Metals
+   Kaiser Aluminum
+   Nucor
+   Reliance
+   Ryerson Holding
+   Steel Dynamics
+   Valmont Industries
+   Worthington Steel
+
+≡ƒôé Packaging, Containers (12 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   AptarGroup
+   Avery Dennison
+   Ball
+   Crown Holdings
+   Graphic Packaging Holding
+   Greif
+   International Paper
+   O-I Glass
+   Packaging Corp. of America
+   Sealed Air
+   Silgan Holdings
+   Sonoco Products
+
+≡ƒôé Food Services (12 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Bloomin' Brands
+   Brinker International
+   Cheesecake Factory
+   Chipotle Mexican Grill
+   Cracker Barrel Old Country Store
+   Darden Restaurants
+   Domino's Pizza
+   McDonald's
+   Starbucks
+   Texas Roadhouse
+   Yum Brands
+   Yum China Holdings
+
+≡ƒôé Specialty Retailers: Apparel (11 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Abercrombie & Fitch
+   American Eagle Outfitters
+   Burlington Stores
+   Caleres
+   Designer Brands
+   Gap
+   Lululemon athletica
+   Ross Stores
+   TJX
+   Urban Outfitters
+   Victoria's Secret
+
+≡ƒôé Petroleum Refining (11 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Calumet
+   Chevron
+   CrossAmerica Partners
+   Delek US Holdings
+   Exxon Mobil
+   HF Sinclair
+   Marathon Petroleum
+   PBF Energy
+   Par Pacific Holdings
+   Phillips 66
+   Valero Energy
+
+≡ƒôé Household and Personal Products (11 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Central Garden & Pet
+   Church & Dwight
+   Clorox
+   Colgate-Palmolive
+   Coty
+   Energizer Holdings
+   Est├⌐e Lauder
+   Kenvue
+   Kimberly-Clark
+   Procter & Gamble
+   Spectrum Brands Holdings
+
+≡ƒôé Pipelines (11 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Cheniere Energy
+   Energy Transfer
+   Enterprise Products Partners
+   Kinder Morgan
+   NGL Energy Partners
+   Oneok
+   Plains GP Holdings
+   Targa Resources
+   Venture Global
+   Western Midstream Partners
+   Williams
+
+≡ƒôé Computers, Office Equipment (10 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Apple
+   Dell Technologies
+   Diebold Nixdorf
+   Everpure
+   HP
+   Hewlett Packard Enterprise
+   NetApp
+   Super Micro Computer
+   Western Digital
+   Xerox Holdings
+
+≡ƒôé Energy (10 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Constellation Energy
+   EQT
+   First Solar
+   GE Vernova
+   Global Partners
+   NRG Energy
+   Nextpower
+   Sunrun
+   Vistra
+   World Kinect
+
+≡ƒôé Insurance: Life, Health (Mutual) (10 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Guardian Life Ins. Co. of America
+   Knights of Columbus
+   Massachusetts Mutual Life
+   Medical Mutual of Ohio
+   Mutual of Omaha
+   New York Life Insurance
+   Northwestern Mutual
+   TIAA
+   Thrivent Financial
+   Western & Southern Financial Group
+
+≡ƒôé Airlines (9 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Alaska Air Group
+   American Airlines Group
+   Delta Air Lines
+   Frontier Group Holdings
+   JetBlue Airways
+   SkyWest
+   Southwest Airlines
+   Spirit Aviation Holdings
+   United Airlines Holdings
+
+≡ƒôé Insurance: Property and Casualty (Mutual) (9 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Amica Mutual Insurance
+   Auto-Owners Insurance
+   Country Financial
+   Erie Insurance Group
+   Farmers Insurance Exchange
+   Federated Mutual Insurance
+   Nationwide
+   Sentry Insurance Group
+   State Farm Insurance
+
+≡ƒôé Network and Other Communications Equipment (9 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Amphenol
+   Arista Networks
+   Ciena
+   Cisco Systems
+   F5
+   Motorola Solutions
+   Palo Alto Networks
+   Viasat
+   Vistance Networks
+
+≡ƒôé Food Production (9 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Andersons
+   Archer Daniels Midland
+   CHS
+   Cal-Maine Foods
+   Corteva
+   Darling Ingredients
+   Ingredion
+   Seaboard
+   Tyson Foods
+
+≡ƒôé Trucking, Truck Leasing (9 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   ArcBest
+   J.B. Hunt Transport Services
+   Knight-Swift Transportation Hldgs.
+   Landstar System
+   Old Dominion Freight Line
+   RXO
+   Saia
+   U-Haul Holding
+   Werner Enterprises
+
+≡ƒôé Scientific,Photographic and  Control Equipment (8 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Agilent Technologies
+   Ametek
+   Avantor
+   Bruker
+   Illumina
+   Keysight Technologies
+   Mettler-Toledo International
+   Waters
+
+≡ƒôé Telecommunications (8 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   AT&T
+   Charter Communications
+   Comcast
+   EchoStar
+   Lumen Technologies
+   Optimum Communications
+   Telephone & Data Systems
+   Verizon Communications
+
+≡ƒôé Oil and Gas Equipment, Services (8 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Baker Hughes
+   DNOW
+   Halliburton
+   Helmerich & Payne
+   Liberty Energy
+   NOV
+   Oceaneering International
+   Patterson-UTI Energy
+
+≡ƒôé General Merchandisers (8 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   BJ's Wholesale Club
+   Costco Wholesale
+   Dillard's
+   Kohl's
+   Macy's
+   PriceSmart
+   Target
+   Walmart
+
+≡ƒôé Beverages (8 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Brown-Forman
+   Coca-Cola
+   Coca-Cola Consolidated
+   Constellation Brands
+   Keurig Dr Pepper
+   Molson Coors Beverage
+   Monster Beverage
+   Primo Brands
+
+≡ƒôé Food and Drug Stores (7 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Albertsons
+   Grocery Outlet Holding
+   Ingles Markets
+   Kroger
+   Publix Super Markets
+   Sprouts Farmers Market
+   Weis Markets
+
+≡ƒôé Health Care: Insurance and Managed Care (7 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Alignment Healthcare
+   Centene
+   Elevance Health
+   Humana
+   Molina Healthcare
+   Oscar Health
+   UnitedHealth Group
+
+≡ƒôé Transportation and Logistics (7 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   C.H. Robinson Worldwide
+   Expeditors Intl. of Washington
+   GXO Logistics
+   Hub Group
+   Ryder System
+   Schneider National
+   XPO
+
+≡ƒôé Home Equipment, Furnishings (7 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   HNI
+   Leggett & Platt
+   Masco
+   MillerKnoll
+   Mohawk Industries
+   Newell Brands
+   Somnigroup International
+
+≡ƒôé Wholesalers: Health Care (6 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Accendra Health
+   AdaptHealth
+   Cardinal Health
+   Cencora
+   Henry Schein
+   McKesson
+
+≡ƒôé Construction and Farm Machinery (6 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   AGCO
+   Caterpillar
+   Deere
+   Oshkosh
+   Terex
+   Toro
+
+≡ƒôé Wholesalers: Electronics and Office Equipment (5 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Arrow Electronics
+   Avnet
+   Ingram Micro Holding
+   ScanSource
+   TD Synnex
+
+≡ƒôé Wholesalers: Food and Grocery (5 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Chefs' Warehouse
+   Performance Food Group
+   Sysco
+   US Foods Holding
+   United Natural Foods
+
+≡ƒôé Advertising, marketing (4 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Advantage Solutions
+   Omnicom Group
+   Stagwell
+   Trade Desk
+
+≡ƒôé Transportation Equipment (4 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Brunswick
+   Greenbrier
+   Harley-Davidson
+   Polaris
+
+≡ƒôé Waste Management (4 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Clean Harbors
+   Republic Services
+   Veralto
+   Waste Management
+
+≡ƒôé Forest and Paper Products (4 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Domtar
+   Magnera
+   Sylvamo
+   Weyerhaeuser
+
+≡ƒôé Tobacco (3 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Altria Group
+   Philip Morris International
+   Universal
+
+≡ƒôé Education (3 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Bright Horizons Family Solutions
+   Graham Holdings
+   KinderCare Learning
+
+≡ƒôé Toys, Sporting Goods (3 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Callaway Golf
+   Hasbro
+   Mattel
+
+≡ƒôé Railroads (3 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   CSX
+   Norfolk Southern
+   Union Pacific
+
+≡ƒôé Mail, Package, and Freight Delivery (2 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   FedEx
+   UPS
+
+≡ƒôé information technology & services (2 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   FidensGen Business Solutions Private Limited
+   Sims InfoTech
+
+≡ƒôé Shipping (2 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Kirby
+   Matson
+
+≡ƒôé agriculture (1 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   BigHaat
+
+≡ƒôé real estate (1 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   DS-MAX Properties Private Limited
+
+≡ƒôé Industrial (1 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Etched
+
+≡ƒôé Health (1 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   MindMaze
+
+≡ƒôé Publishing, Printing (1 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   New York Times
+
+≡ƒôé consumer electronics (1 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Samsung India Electronics
+
+≡ƒôé Miscellaneous (1 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Service Corp. International
+
+≡ƒôé Equipment Leasing (1 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Sumisho Air Lease
+
+≡ƒôé West Palm Beach (1 companies)
+ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ
+   Vultr
+
+========================================
+SUMMARY
+========================================
+Total genuine companies: 2411
+Total categories: 88
+
+Category counts:
+    519 | Enterprise Tech
+    230 | Financial Services
+    215 | Industrials
+    209 | Consumer & Retail
+    128 | Healthcare & Life Sciences
+     79 | Media & Entertainment
+     38 | Commercial Banks
+     33 | Utilities: Gas and Electric
+     29 | Internet Services and Retailing
+     29 | Industrial Machinery
+     28 | Medical Products and Equipment
+     28 | Specialty Retailers: Other
+     28 | Semiconductors and Other Electronic Components
+     27 | Real estate
+     26 | Securities
+     25 | Insurance: Property and Casualty (Stock)
+     25 | Diversified Financials
+     24 | Chemicals
+     24 | Computer Software
+     24 | Entertainment
+     23 | Mining, Crude-Oil Production
+     22 | Aerospace & Defense
+     22 | Diversified Outsourcing Services
+     22 | Insurance
+     22 | Financial Data Services
+     21 | Pharmaceuticals
+     20 | Engineering & Construction
+     20 | Insurance: Life, Health (stock)
+     20 | Motor Vehicles & Parts
+     18 | Wholesalers: Diversified
+     18 | Hotels, Casinos, Resorts
+     17 | Information Technology Services
+     16 | Electronics, Electrical Equip.
+     14 | Building Materials, Glass
+     14 | Food Consumer Products
+     14 | Homebuilders
+     13 | Health Care: Medical Facilities
+     13 | Health Care: Pharmacy and Other Services
+     13 | Automotive Retailing, Services
+     13 | Apparel
+     12 | Metals
+     12 | Packaging, Containers
+     12 | Food Services
+     11 | Specialty Retailers: Apparel
+     11 | Petroleum Refining
+     11 | Household and Personal Products
+     11 | Pipelines
+     10 | Computers, Office Equipment
+     10 | Energy
+     10 | Insurance: Life, Health (Mutual)
+      9 | Airlines
+      9 | Insurance: Property and Casualty (Mutual)
+      9 | Network and Other Communications Equipment
+      9 | Food Production
+      9 | Trucking, Truck Leasing
+      8 | Scientific,Photographic and  Control Equipment
+      8 | Telecommunications
+      8 | Oil and Gas Equipment, Services
+      8 | General Merchandisers
+      8 | Beverages
+      7 | Food and Drug Stores
+      7 | Health Care: Insurance and Managed Care
+      7 | Transportation and Logistics
+      7 | Home Equipment, Furnishings
+      6 | Wholesalers: Health Care
+      6 | Construction and Farm Machinery
+      5 | Wholesalers: Electronics and Office Equipment
+      5 | Wholesalers: Food and Grocery
+      4 | Advertising, marketing
+      4 | Transportation Equipment
+      4 | Waste Management
+      4 | Forest and Paper Products
+      3 | Tobacco
+      3 | Education
+      3 | Toys, Sporting Goods
+      3 | Railroads
+      2 | Mail, Package, and Freight Delivery
+      2 | information technology & services
+      2 | Shipping
+      1 | agriculture
+      1 | real estate
+      1 | Industrial
+      1 | Health
+      1 | Publishing, Printing
+      1 | consumer electronics
+      1 | Miscellaneous
+      1 | Equipment Leasing
+      1 | West Palm Beach
