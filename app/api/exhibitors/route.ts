@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db/prisma";
+import { getSessionPayload } from "@/lib/auth/session";
+import { toExhibitorItem } from "@/lib/exhibitors/exhibitor-item";
 
 export const dynamic = "force-dynamic";
 
@@ -8,17 +10,24 @@ const DEFAULT_PAGE_SIZE = 24;
 const MAX_PAGE_SIZE = 96;
 
 type SortKey = "name" | "stand" | "country";
+type SortDir = "asc" | "desc";
 
 function parseSort(value: string | null): SortKey {
   return value === "stand" || value === "country" ? value : "name";
 }
 
-function orderFor(sort: SortKey): Prisma.EventExhibitorOrderByWithRelationInput[] {
-  // Postgres sorts NULLs last on ASC, so exhibitors without a stand/country
-  // fall to the end without needing an explicit nulls clause.
-  if (sort === "stand") return [{ standNumber: "asc" }, { companyName: "asc" }];
-  if (sort === "country") return [{ country: "asc" }, { companyName: "asc" }];
-  return [{ companyName: "asc" }];
+function parseDir(value: string | null): SortDir {
+  return value === "desc" ? "desc" : "asc";
+}
+
+function orderFor(sort: SortKey, dir: SortDir): Prisma.EventExhibitorOrderByWithRelationInput[] {
+  // Stand/country keep NULLs last whichever way they run, so exhibitors without
+  // one never crowd the top of a descending list. `id` breaks ties so pages
+  // never overlap or skip when two exhibitors share a name.
+  const nullsLast = { sort: dir, nulls: "last" as const };
+  if (sort === "stand") return [{ standNumber: nullsLast }, { companyName: "asc" }, { id: "asc" }];
+  if (sort === "country") return [{ country: nullsLast }, { companyName: "asc" }, { id: "asc" }];
+  return [{ companyName: dir }, { id: dir }];
 }
 
 // Exhibitors for one event, read from EventExhibitor. Populated by
@@ -30,11 +39,21 @@ function orderFor(sort: SortKey): Prisma.EventExhibitorOrderByWithRelationInput[
 // Link precedence for the UI: website -> profileUrl (this exhibitor's directory
 // page) -> directoryUrl (the event's directory root).
 //
-// Query params: eventSlug (required), plus optional q / sort / page / pageSize.
+// Signed-in users only: rows can carry a named contact (email, phone, LinkedIn)
+// that a show published to registered visitors, so the list is not handed to
+// anonymous callers. The public Find Shows tab reads /api/find-shows/exhibitors
+// instead. Not tenant-scoped — EventExhibitor is shared reference data, like
+// DiscoveryCompany.
+//
+// Query params: eventSlug (required), plus optional q / sort / dir / page / pageSize.
 // Passing `page` switches the route into paginated mode; without it the whole
 // event is returned as before, so the older list UIs keep working untouched.
 export async function GET(request: Request) {
   try {
+    if (!(await getSessionPayload())) {
+      return NextResponse.json({ error: "Sign in to view exhibitors." }, { status: 401 });
+    }
+
     const { searchParams } = new URL(request.url);
     const eventSlug = searchParams.get("eventSlug")?.trim();
 
@@ -44,6 +63,7 @@ export async function GET(request: Request) {
 
     const q = searchParams.get("q")?.trim() ?? "";
     const sort = parseSort(searchParams.get("sort"));
+    const dir = parseDir(searchParams.get("dir"));
 
     const rawPage = searchParams.get("page");
     const paginated = rawPage !== null;
@@ -71,7 +91,7 @@ export async function GET(request: Request) {
       q ? prisma.eventExhibitor.count({ where: { eventSlug } }) : Promise.resolve(-1),
       prisma.eventExhibitor.findMany({
         where,
-        orderBy: orderFor(sort),
+        orderBy: orderFor(sort, dir),
         ...(paginated ? { skip: (page - 1) * pageSize, take: pageSize } : {}),
       }),
     ]);
@@ -81,27 +101,7 @@ export async function GET(request: Request) {
       where: { eventSlug, NOT: { websiteUrl: null } },
     });
 
-    const items = rows.map((row) => ({
-      id: row.id,
-      name: row.companyName,
-      logoUrl: row.logoUrl,
-      stand: row.standNumber,
-      // Prefer the company's own site; the UI falls back to the source
-      // directory page when there isn't one.
-      website: row.websiteUrl,
-      profileUrl: row.sourceDetailUrl,
-      directoryUrl: row.sourceDirectoryUrl,
-      country: row.country,
-      phone: row.phone,
-      companyLinkedInUrl: row.companyLinkedInUrl,
-      description: row.description,
-      categories: row.categories,
-      firstName: row.firstName,
-      lastName: row.lastName,
-      designation: row.designation,
-      email: row.email,
-      personLinkedInUrl: row.personLinkedInUrl,
-    }));
+    const items = rows.map(toExhibitorItem);
 
     return NextResponse.json({
       eventSlug,
@@ -114,6 +114,7 @@ export async function GET(request: Request) {
       pageSize: paginated ? pageSize : totalCount,
       totalPages: paginated ? Math.max(1, Math.ceil(totalCount / pageSize)) : 1,
       sort,
+      dir,
       q,
       items,
       // Legacy field name kept for the non-paginated callers.

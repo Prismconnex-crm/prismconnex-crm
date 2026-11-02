@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db/prisma";
+import { getSessionPayload } from "@/lib/auth/session";
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +20,8 @@ export const dynamic = "force-dynamic";
  * "ClassVR".
  *
  * Not tenant-scoped, matching /api/exhibitors and /api/companies — both read
- * shared reference data rather than workspace data.
+ * shared reference data rather than workspace data. Signed-in users only, like
+ * /api/exhibitors: the record carries the directory's named contact.
  */
 
 /** Bare host, lower-case, no scheme/www/trailing slash — the shape DiscoveryCompany.domain is stored in. */
@@ -64,6 +66,10 @@ type CompanyMatch = {
 
 export async function GET(_request: Request, { params }: { params: { id: string } }) {
   try {
+    if (!(await getSessionPayload())) {
+      return NextResponse.json({ error: "Sign in to view exhibitors." }, { status: 401 });
+    }
+
     const exhibitor = await prisma.eventExhibitor.findUnique({
       where: { id: params.id },
     });

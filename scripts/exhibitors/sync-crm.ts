@@ -6,6 +6,7 @@
  *   npm run exhibitors:sync-crm -- --all                                        every stored verified list
  *     --write        actually write (without it: a dry run — reads the CRM, writes nothing, ledger untouched)
  *     --batch=25     events per batch (progress is printed after each)
+ *     --insert-only  add missing exhibitors only; never update an existing row (reported as `kept`)
  *
  * Reads only stored records — never searches or crawls. Safe to re-run: rows are keyed by (eventSlug,
  * profile URL), unchanged rows are not touched, nothing is deleted, and an event whose rows came from
@@ -26,6 +27,7 @@ import { prisma } from '@/lib/db/prisma';
 const arg = (name: string) => process.argv.find((value) => value.startsWith(`--${name}=`))?.slice(name.length + 3);
 const has = (name: string) => process.argv.includes(`--${name}`);
 const write = has('write');
+const insertOnly = has('insert-only');
 const batchSize = Math.max(1, Number(arg('batch') ?? 25) || 25);
 
 type Job = { slug: string; record: ExhibitorRecord | null };
@@ -68,26 +70,27 @@ async function main() {
         ? await jobsFor((await listLedger()).map((entry) => entry.slug))
         : await allJobs();
 
-  console.log(`[sync-crm] ${mode}: ${jobs.length} events, ${write ? 'WRITING' : 'dry run (no writes)'}, batches of ${batchSize}`);
+  console.log(`[sync-crm] ${mode}: ${jobs.length} events, ${write ? 'WRITING' : 'dry run (no writes)'}${insertOnly ? ', insert-only' : ''}, batches of ${batchSize}`);
   const counts: Record<SyncStatus, number> = { created: 0, updated: 0, unchanged: 0, 'no-list': 0, conflict: 0, failed: 0 };
-  const rows = { listed: 0, inserted: 0, updated: 0, unchanged: 0 };
+  const rows = { listed: 0, inserted: 0, updated: 0, unchanged: 0, kept: 0 };
   const flagged: EventSyncResult[] = [];
 
   for (let start = 0; start < jobs.length; start += batchSize) {
     for (const { slug, record } of jobs.slice(start, start + batchSize)) {
-      const result = await syncWithRetry(slug, record, prismaExhibitorSyncDb, { dryRun: !write });
+      const result = await syncWithRetry(slug, record, prismaExhibitorSyncDb, { dryRun: !write, insertOnly });
       if (record?.verified?.checkedAt) await recordResult(result, record.verified.checkedAt);
       counts[result.status] += 1;
       rows.listed += result.listed;
       rows.inserted += result.inserted;
       rows.updated += result.updated;
       rows.unchanged += result.unchanged;
+      rows.kept += result.kept ?? 0;
       if (result.status === 'conflict' || result.status === 'failed' || result.status === 'no-list') flagged.push(result);
     }
     console.log(`[sync-crm] ${Math.min(start + batchSize, jobs.length)}/${jobs.length} ${JSON.stringify(counts)}`);
   }
 
-  const summary = { mode, write, at: new Date().toISOString(), events: jobs.length, counts, rows, flagged };
+  const summary = { mode, write, insertOnly, at: new Date().toISOString(), events: jobs.length, counts, rows, flagged };
   const dir = path.join(process.cwd(), 'reports', 'crm-exhibitor-sync');
   await mkdir(dir, { recursive: true });
   const file = path.join(dir, `${mode}${write ? '' : '-dry-run'}.json`);

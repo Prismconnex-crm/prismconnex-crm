@@ -13,6 +13,9 @@
  *  - everything else is CRM-owned and never written here: websiteUrl, country, phone, LinkedIn, categories,
  *    named contacts (enrichment imports and users fill those);
  *  - nothing is deleted: an exhibitor that leaves the public list keeps its CRM row.
+ * With `insertOnly`, existing rows are not touched at all — only exhibitors the CRM lacks are added — so a
+ * directory that has since reassigned a profile page to another company, or moved a stand, cannot overwrite
+ * what the CRM already holds. The refreshes it skipped are reported as `kept`.
  * An event whose rows came from another source (BETT's own importer) is a conflict, logged for review and
  * left alone: the two sources key the same companies by different URLs, so merging would duplicate them.
  */
@@ -89,6 +92,8 @@ export type EventSyncResult = {
   inserted: number;
   updated: number;
   unchanged: number;
+  /** Refreshes an insert-only sync left out, keeping the existing rows as they were. */
+  kept?: number;
   dryRun: boolean;
   reason?: string;
 };
@@ -102,7 +107,7 @@ export async function syncEventExhibitors(
   slug: string,
   record: ExhibitorRecord | null,
   db: ExhibitorSyncDb,
-  { dryRun = false }: { dryRun?: boolean } = {}
+  { dryRun = false, insertOnly = false }: { dryRun?: boolean; insertOnly?: boolean } = {}
 ): Promise<EventSyncResult> {
   const result: EventSyncResult = { slug, status: 'no-list', listed: 0, before: 0, inserted: 0, updated: 0, unchanged: 0, dryRun };
   let rows: CrmExhibitorRow[];
@@ -127,7 +132,9 @@ export async function syncEventExhibitors(
     return { ...result, status: 'conflict', reason: `${existing.length} CRM rows already come from ${others.join(', ')}, not ${platform}; left for review.` };
   }
 
-  const plan = planExhibitorSync(rows, existing);
+  const planned = planExhibitorSync(rows, existing);
+  const plan = insertOnly ? { ...planned, updates: [] } : planned;
+  if (insertOnly && planned.updates.length) result.kept = planned.updates.length;
   result.unchanged = plan.unchanged;
   if (dryRun) {
     result.inserted = plan.inserts.length;
@@ -146,12 +153,12 @@ export async function syncWithRetry(
   slug: string,
   record: ExhibitorRecord | null,
   db: ExhibitorSyncDb,
-  { attempts = 3, delayMs = 1_000, dryRun = false, sleep = (ms: number) => new Promise((done) => setTimeout(done, ms)) } = {}
+  { attempts = 3, delayMs = 1_000, dryRun = false, insertOnly = false, sleep = (ms: number) => new Promise((done) => setTimeout(done, ms)) } = {}
 ): Promise<EventSyncResult & { attempts: number }> {
   let lastError = '';
   for (let attempt = 1; attempt <= attempts; attempt += 1) {
     try {
-      return { ...(await syncEventExhibitors(slug, record, db, { dryRun })), attempts: attempt };
+      return { ...(await syncEventExhibitors(slug, record, db, { dryRun, insertOnly })), attempts: attempt };
     } catch (error) {
       lastError = error instanceof Error ? error.message : String(error);
       if (attempt < attempts) await sleep(delayMs * 2 ** (attempt - 1));

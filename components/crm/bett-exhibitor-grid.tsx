@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowUpDown, ChevronLeft, ChevronRight, ExternalLink, Globe2, MapPin, Search, Users } from "lucide-react";
+import { ArrowDownAZ, ArrowUpDown, ArrowUpZA, ChevronLeft, ChevronRight, ExternalLink, Globe2, MapPin, Search, Users } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Exhibitor } from "@/types/exhibitors";
 
@@ -26,6 +26,7 @@ const DEFAULT_PAGE_SIZE = 24;
 const MAX_PAGE_SIZE = 96;
 
 type SortKey = "name" | "stand" | "country";
+type SortDir = "asc" | "desc";
 
 const SORT_LABELS: Record<SortKey, string> = {
   name: "Name",
@@ -117,6 +118,7 @@ export function BettExhibitorGrid({
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
   const [sort, setSort] = useState<SortKey>("name");
+  const [dir, setDir] = useState<SortDir>("asc");
   const [queryInput, setQueryInput] = useState("");
   const [query, setQuery] = useState("");
   // The URL is only readable on the client, so state is restored after mount and
@@ -129,6 +131,7 @@ export function BettExhibitorGrid({
     setPageSize(readNumberParam(params, "pageSize", DEFAULT_PAGE_SIZE, 1, MAX_PAGE_SIZE));
     const urlSort = params.get("sort");
     if (urlSort === "stand" || urlSort === "country" || urlSort === "name") setSort(urlSort);
+    if (params.get("dir") === "desc") setDir("desc");
     const urlQuery = params.get("q") ?? "";
     setQueryInput(urlQuery);
     setQuery(urlQuery);
@@ -201,8 +204,10 @@ export function BettExhibitorGrid({
     else params.delete("q");
     if (sort !== "name") params.set("sort", sort);
     else params.delete("sort");
+    if (dir === "desc") params.set("dir", dir);
+    else params.delete("dir");
     window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
-  }, [page, pageSize, query, sort, ready]);
+  }, [page, pageSize, query, sort, dir, ready]);
 
   useEffect(() => {
     if (!ready) return;
@@ -214,6 +219,7 @@ export function BettExhibitorGrid({
       page: String(page),
       pageSize: String(pageSize),
       sort,
+      dir,
     });
     if (query) params.set("q", query);
 
@@ -241,7 +247,7 @@ export function BettExhibitorGrid({
     return () => {
       active = false;
     };
-  }, [eventSlug, page, pageSize, query, sort, ready]);
+  }, [eventSlug, page, pageSize, query, sort, dir, ready]);
 
   // Scroll back to the top of the grid on page change, but not on first paint.
   useEffect(() => {
@@ -291,7 +297,8 @@ export function BettExhibitorGrid({
 
         <div className="flex flex-wrap items-center gap-2">
           <div className="relative">
-            <Search className="pointer-events-none absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-slate-400" />
+            {/* z-10: the input's backdrop-blur makes it a stacking context painted over an earlier sibling */}
+            <Search className="pointer-events-none absolute left-3 top-1/2 z-10 size-3.5 -translate-y-1/2 text-slate-400" />
             <input
               value={queryInput}
               onChange={(e) => setQueryInput(e.target.value)}
@@ -309,6 +316,19 @@ export function BettExhibitorGrid({
           >
             <ArrowUpDown className="size-3.5" />
             Sort: {SORT_LABELS[sort]}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setDir((prev) => (prev === "asc" ? "desc" : "asc"));
+              setPage(1);
+            }}
+            aria-label={dir === "asc" ? "Sorted ascending — switch to descending" : "Sorted descending — switch to ascending"}
+            title={dir === "asc" ? "Ascending (A–Z)" : "Descending (Z–A)"}
+            className="flex h-9 items-center gap-1.5 rounded-full border border-slate-200 bg-white/70 px-3 text-[12px] font-bold text-slate-600 backdrop-blur transition-colors hover:border-indigo-300 dark:border-[#22304A] dark:bg-[#111B2E]/70 dark:text-slate-400"
+          >
+            {dir === "asc" ? <ArrowDownAZ className="size-3.5" /> : <ArrowUpZA className="size-3.5" />}
+            {dir === "asc" ? "A–Z" : "Z–A"}
           </button>
           <PageSizeSelect value={pageSize} onChange={changePageSize} />
         </div>

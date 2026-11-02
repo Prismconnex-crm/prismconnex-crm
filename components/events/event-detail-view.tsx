@@ -24,6 +24,7 @@ import { useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { EventMap, googleMapsUrl } from '@/components/crm/event-map';
 import { ExhibitorsPanel } from '@/components/events/exhibitors-panel';
+import { CRM_EXHIBITOR_PARAMS } from '@/lib/exhibitors/crm-return';
 import { EventCompactHero } from '@/components/events/event-compact-hero';
 import { EventVenueOrganizer } from '@/components/events/event-venue-organizer';
 import { EventNotesPanel } from '@/components/events/event-notes-panel';
@@ -132,6 +133,9 @@ export function EventDetailView({ event }: { event: FindShowEvent }) {
             params.delete('pageSize');
             params.delete('q');
             params.delete('sort');
+            params.delete('dir');
+            params.delete(CRM_EXHIBITOR_PARAMS.url);
+            params.delete(CRM_EXHIBITOR_PARAMS.name);
         }
         const search = params.toString();
         window.history.replaceState(null, '', search ? `${window.location.pathname}?${search}` : window.location.pathname);

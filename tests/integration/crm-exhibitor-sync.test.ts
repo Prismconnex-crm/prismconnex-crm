@@ -150,6 +150,18 @@ describe('CRM exhibitor sync: one event', () => {
     expect(db.rows[0]).toMatchObject({ companyName: '360insights Inc.', websiteUrl: 'https://360insights.com', country: 'Canada', email: 'sales@360insights.com' });
   });
 
+  it('insert-only: adds missing exhibitors and leaves every existing row exactly as it was', async () => {
+    const db = fakeDb();
+    await syncEventExhibitors(AAPEX, record([AAPEX], cards), db);
+    const before = db.rows.map((row) => ({ ...row }));
+    // The directory has since handed the first profile page to another company and moved its stand.
+    const changed = [card('26731', 'Another Company Ltd', { booths: ['Z1'] }), ...cards.slice(1), card('3003', 'Continental')];
+    const result = await syncEventExhibitors(AAPEX, record([AAPEX], changed, '2026-10-10T00:00:00.000Z'), db, { insertOnly: true });
+    expect(result).toMatchObject({ status: 'updated', inserted: 1, updated: 0, kept: 1, unchanged: 2 });
+    expect(db.rows).toHaveLength(4);
+    expect(db.rows.slice(0, 3)).toEqual(before);
+  });
+
   it('never deletes: an exhibitor that leaves the public list keeps its CRM row', async () => {
     const db = fakeDb();
     await syncEventExhibitors(AAPEX, record([AAPEX], cards), db);

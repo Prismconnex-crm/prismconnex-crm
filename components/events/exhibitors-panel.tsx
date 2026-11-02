@@ -21,6 +21,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { OFFICIAL_DIALOG_CLASS, OfficialPageView } from "@/components/find-shows/official-page-view";
 import { closedWebsiteViewer, openWebsiteViewer, type WebsiteViewerState } from "@/lib/exhibitors/website-viewer";
 import { exhibitorTabLayout } from "@/lib/exhibitors/tab-layout";
+import { CRM_EXHIBITOR_PARAMS, readReturnedExhibitor, withoutReturnedExhibitor } from "@/lib/exhibitors/crm-return";
 import type { FindShowEvent } from "@/types/find-shows";
 import type { Exhibitor } from "@/types/exhibitors";
 
@@ -46,28 +47,75 @@ function exhibitorLink(ex: Exhibitor) {
  */
 export function ExhibitorsPanel({ event }: { event: FindShowEvent }) {
     const layout = exhibitorTabLayout(event);
-    if (layout.grid === 'bett') {
-        return <BettExhibitorGrid eventSlug={event.slug} expected={EXPECTED_EXHIBITORS[event.name] ?? null} />;
-    }
-    return <EventExhibitorGrid event={event} inAppViewer={layout.inAppViewer} />;
+    return <EventExhibitorGrid event={event} bettProfile={layout.grid === 'bett'} inAppViewer={layout.inAppViewer} />;
 }
 
 /**
- * BETT's card grid for any other event: a card opens this tab's details drawer (BETT's Companies-page profile
- * is BETT's own page). With the in-app viewer (AAPEX), "View detail" / "Open show directory" opens the page
- * inside Prismconnex; otherwise it opens in a new tab as on BETT. The grid stays mounted underneath both, so
- * closing either returns to the same search, sort, page and scroll position.
+ * The exhibitor a public "View details" asked for before sign-in (lib/exhibitors/crm-return.ts): read once
+ * from the address, dropped from it at once so a reload or Back does not reopen it, then resolved to this
+ * event's CRM row. `missing` names an exhibitor this event's CRM list does not hold (yet).
  */
-function EventExhibitorGrid({ event, inAppViewer }: { event: FindShowEvent; inAppViewer: boolean }) {
+function useReturnedExhibitor(eventSlug: string, open: (exhibitor: Exhibitor) => void) {
+    const [missing, setMissing] = useState<string | null>(null);
+    // Read once, not in the effect: the effect strips the address, and a re-run (React Strict Mode runs effects
+    // twice in development) must still know what was asked for. It renders nothing, so the server's null is safe.
+    const [wanted] = useState(() => (typeof window === 'undefined' ? null : readReturnedExhibitor(window.location.search)));
+    useEffect(() => {
+        if (!wanted) return;
+        const { pathname, search } = window.location;
+        window.history.replaceState(window.history.state, '', withoutReturnedExhibitor(pathname, search));
+        const params = new URLSearchParams({ eventSlug });
+        if (wanted.profileUrl) params.set(CRM_EXHIBITOR_PARAMS.url, wanted.profileUrl);
+        if (wanted.name) params.set(CRM_EXHIBITOR_PARAMS.name, wanted.name);
+        let live = true;
+        fetch(`/api/exhibitors/resolve?${params.toString()}`)
+            .then((res) => res.json())
+            .then((json: { exhibitor?: Exhibitor | null }) => {
+                if (!live) return;
+                if (json.exhibitor) open(json.exhibitor);
+                else setMissing(wanted.name ?? 'This exhibitor');
+            })
+            .catch(() => {
+                if (live) setMissing(wanted.name ?? 'This exhibitor');
+            });
+        return () => {
+            live = false;
+        };
+        // Once, for the address the tab was opened with.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [eventSlug]);
+    return { missing, dismissMissing: () => setMissing(null) };
+}
+
+/**
+ * BETT's card grid for every event. A card opens this tab's details drawer — except on BETT, whose cards open
+ * its Companies-page profile (`bettProfile`). With the in-app viewer (AAPEX), "View detail" / "Open show
+ * directory" opens the page inside Prismconnex; otherwise it opens in a new tab as on BETT. The grid stays
+ * mounted underneath both, so closing either returns to the same search, sort, page and scroll position.
+ * An exhibitor asked for from the public page before sign-in opens in the drawer on every event, BETT too,
+ * so the visitor stays on the event they came from.
+ */
+function EventExhibitorGrid({ event, bettProfile, inAppViewer }: { event: FindShowEvent; bettProfile: boolean; inAppViewer: boolean }) {
     const [detail, setDetail] = useState<Exhibitor | null>(null);
     const [viewer, setViewer] = useState<WebsiteViewerState>(closedWebsiteViewer);
     const openViewer = inAppViewer ? (ex: Exhibitor) => setViewer(openWebsiteViewer(ex)) : undefined;
+    const { missing, dismissMissing } = useReturnedExhibitor(event.slug, setDetail);
     return (
         <>
+            {missing ? (
+                <div role="status" className="mb-4 flex items-start justify-between gap-3 rounded-xl border border-amber-300/60 bg-amber-50 px-4 py-3 text-[12px] font-medium text-amber-800 dark:border-amber-400/25 dark:bg-amber-400/10 dark:text-amber-200">
+                    <span>
+                        <strong className="font-black">{missing}</strong> is not in this event&apos;s imported exhibitor list yet, so its details cannot be opened here.
+                    </span>
+                    <button type="button" onClick={dismissMissing} aria-label="Dismiss" className="shrink-0 rounded p-0.5 hover:bg-amber-100 dark:hover:bg-amber-400/10">
+                        <X className="size-3.5" />
+                    </button>
+                </div>
+            ) : null}
             <BettExhibitorGrid
                 eventSlug={event.slug}
                 expected={EXPECTED_EXHIBITORS[event.name] ?? null}
-                onSelect={setDetail}
+                onSelect={bettProfile ? undefined : setDetail}
                 onOpenWebsite={openViewer}
             />
             <ExhibitorDetailPanel

@@ -6,6 +6,7 @@ import { ChevronRight, Globe, Info, Loader2, Lock, MapPin, RotateCw, Search, Sto
 import { ExhibitorDetailDialog, ExhibitorLogo } from './exhibitor-detail-dialog';
 import { OfficialPageDialog, type OfficialPageTarget } from './official-page-view';
 import { signInHrefReturningTo } from '@/lib/auth/return-to';
+import { crmExhibitorDetailsPath } from '@/lib/exhibitors/crm-return';
 import { exhibitorsContextUrl, readExhibitorsContext, withoutExhibitor } from '@/lib/find-shows/exhibitor-return';
 import { EMPTY_EXHIBITORS_MESSAGE, exhibitorsPanelView, type ExhibitorsLoadState } from '@/lib/find-shows/exhibitors-panel-view';
 import {
@@ -114,24 +115,34 @@ function DirectoryView({ slug, directory, onOfficial }: { slug: string; director
   const matches = useMemo(() => filterCards(exhibitors, { query, letter }), [exhibitors, query, letter]);
   useEffect(() => setVisible(PAGE_SIZE), [query, letter]);
 
+  /** This exhibitor's details in the CRM (lib/exhibitors/crm-return.ts), or null when the card cannot make a valid address. */
+  const crmPathFor = (card: ExhibitorCard) =>
+    // A catalogue-search link is shared by many exhibitors, so only the name can identify this one.
+    crmExhibitorDetailsPath(slug, { profileUrl: card.profileKind === 'catalogue-search' ? null : card.profileUrl, name: card.name });
+
   /**
-   * "View details", for any exhibitor of any event: signed-in visitors see the details at once; anyone else
-   * goes through the existing Prismconnex sign-in, which returns to this event with this exhibitor and these
-   * filters, and the details open there. Back or a cancelled sign-in returns to the same list, details closed.
+   * "View details", for any exhibitor of any event, always continues in the CRM — the same event's page, its
+   * Exhibitors tab, this exhibitor's details open: at once for a signed-in visitor, through the existing
+   * Prismconnex sign-in for anyone else. The list's address is kept first, so Back (or a cancelled sign-in)
+   * returns to the same search and letter, details closed. Only a card that cannot make a valid CRM address
+   * keeps the old behaviour: details on this page, after sign-in if needed.
    */
   const openDetails = async (card: ExhibitorCard) => {
-    if (signedIn.current || (await isSignedIn())) {
-      signedIn.current = true;
-      setDetailCard(card);
-      return;
-    }
+    const crm = crmPathFor(card);
     const { pathname, search } = window.location;
     window.history.replaceState(window.history.state, '', exhibitorsContextUrl(pathname, search, { query, letter }));
-    router.push(signInHrefReturningTo(exhibitorsContextUrl(pathname, search, { query, letter, exhibitorId: card.id })));
+    if (signedIn.current || (await isSignedIn())) {
+      signedIn.current = true;
+      if (crm) router.push(crm);
+      else setDetailCard(card);
+      return;
+    }
+    router.push(signInHrefReturningTo(crm ?? exhibitorsContextUrl(pathname, search, { query, letter, exhibitorId: card.id })));
   };
 
-  // Back from sign-in with an exhibitor to open: open it once the session is confirmed, and drop it from the
-  // address so a reload or Back does not reopen it. Without a session (sign-in cancelled) nothing opens.
+  // An address asking for an exhibitor (an older sign-in return, or a shared link): signed in, continue to its
+  // CRM details as "View details" does; signed out, nothing opens. Dropped from the address either way, so a
+  // reload or Back does not ask again.
   useEffect(() => {
     if (!initial.exhibitorId) return;
     const { pathname, search } = window.location;
@@ -140,10 +151,11 @@ function DirectoryView({ slug, directory, onOfficial }: { slug: string; director
     if (!card) return;
     let live = true;
     isSignedIn().then((ok) => {
-      if (live && ok) {
-        signedIn.current = true;
-        setDetailCard(card);
-      }
+      if (!live || !ok) return;
+      signedIn.current = true;
+      const crm = crmPathFor(card);
+      if (crm) router.push(crm);
+      else setDetailCard(card);
     });
     return () => {
       live = false;
