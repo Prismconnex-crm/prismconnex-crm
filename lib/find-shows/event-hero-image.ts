@@ -11,6 +11,7 @@
  *
  * Pure apart from the injectable fetcher, so tests run offline.
  */
+import { createHash } from 'crypto';
 
 /** Banner is max-w-5xl (1024 CSS px) wide; below this a photo visibly softens. */
 export const MIN_HERO_WIDTH = 1200;
@@ -22,7 +23,16 @@ const HEADER_BYTE_LIMIT = 64 * 1024;
 // Organiser sites often redirect two or three times before the event page (AGHA: ~9s).
 const REQUEST_TIMEOUT_MS = 12_000;
 
-export type HeroImage = { url: string; width: number; height: number };
+export type HeroImage = {
+  url: string;
+  width: number;
+  height: number;
+  /**
+   * The file's identity whatever URL serves it (see imageContentKey). Set by
+   * the automatic resolver; hand-verified registry photos don't carry one.
+   */
+  contentKey?: string;
+};
 
 export type HeroFetcher = (
   url: string,
@@ -496,7 +506,19 @@ async function fetchHtml(url: string, fetcher: HeroFetcher) {
  */
 export const HERO_EMBED_REFERER = 'https://www.prismconnex.com/';
 
-async function measureImage(url: string, fetcher: HeroFetcher) {
+/**
+ * One file's identity across hosts: its pixel size plus a SHA-256 of the
+ * bytes read to measure it — the first HEADER_BYTE_LIMIT bytes, or the whole
+ * file when it is smaller. A server that ignores the Range header still gives
+ * the same prefix, since the read stops at the limit. The same photo uploaded
+ * to two co-located shows' sites (Bondexpo and Motek) gets one key under two
+ * URLs; two different photos that happen to share a path or file name don't.
+ */
+export function imageContentKey(bytes: Uint8Array, info: Pick<ImageInfo, 'width' | 'height'>) {
+  return `${info.width}x${info.height}:${createHash('sha256').update(bytes).digest('hex')}`;
+}
+
+async function measureImage(url: string, fetcher: HeroFetcher): Promise<{ info: ImageInfo; contentKey: string } | null> {
   if (!isFetchableUrl(url)) return null;
   try {
     return await withTimeout(async (signal) => {
@@ -512,7 +534,9 @@ async function measureImage(url: string, fetcher: HeroFetcher) {
       if (!response.ok) return null;
       const type = response.headers.get('content-type') ?? '';
       if (type && !/^image\//i.test(type)) return null;
-      return readImageInfo(await readBody(response, HEADER_BYTE_LIMIT));
+      const bytes = await readBody(response, HEADER_BYTE_LIMIT);
+      const info = readImageInfo(bytes);
+      return info ? { info, contentKey: imageContentKey(bytes, info) } : null;
     });
   } catch {
     return null;
@@ -763,8 +787,11 @@ async function firstUsableImage(
       if (measured >= MAX_MEASURED_IMAGES) return null;
       seen.add(url);
       measured += 1;
-      const info = await measureImage(url, fetcher);
-      if (info && isUsableHeroImage(info)) return { url, width: info.width, height: info.height };
+      const measurement = await measureImage(url, fetcher);
+      if (measurement && isUsableHeroImage(measurement.info)) {
+        const { info, contentKey } = measurement;
+        return { url, width: info.width, height: info.height, contentKey };
+      }
     }
   }
   return null;
@@ -893,19 +920,30 @@ export function heroShowKey(name: string) {
  * Which shows each automatically found photo has been resolved for. One photo
  * claimed by two different shows is a shared organiser or co-located-show
  * image — the audit found a "Tech Show Frankfurt" photo on seven London and
- * Paris events — so it is the hero of none of them.
+ * Paris events — so it is the hero of none of them. A key is an image URL or
+ * a content key (see heroImageClaimKeys).
  */
 export function createHeroImageClaims() {
   const showsByImage = new Map<string, Set<string>>();
   return {
-    claim(imageUrl: string, showKey: string) {
-      if (!showsByImage.has(imageUrl)) showsByImage.set(imageUrl, new Set());
-      showsByImage.get(imageUrl)!.add(showKey);
+    claim(imageKey: string, showKey: string) {
+      if (!showsByImage.has(imageKey)) showsByImage.set(imageKey, new Set());
+      showsByImage.get(imageKey)!.add(showKey);
     },
-    isShared(imageUrl: string) {
-      return (showsByImage.get(imageUrl)?.size ?? 0) > 1;
+    isShared(imageKey: string) {
+      return (showsByImage.get(imageKey)?.size ?? 0) > 1;
     },
   };
+}
+
+/**
+ * What an automatic photo is claimed under: its URL, and its content when the
+ * resolver measured it. Either one claimed by two shows makes the photo
+ * shared — the URL still catches a file that was replaced in place, the
+ * content catches the same file on another host.
+ */
+export function heroImageClaimKeys(image: Pick<HeroImage, 'url' | 'contentKey'>) {
+  return image.contentKey ? [image.url, `content:${image.contentKey}`] : [image.url];
 }
 
 /** Host without www — the unit whose home page and default share image are shared. */

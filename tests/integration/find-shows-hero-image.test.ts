@@ -12,8 +12,10 @@ import {
   isMeaningfulImageText,
   isPromotionalImage,
   createHeroImageClaims,
+  heroImageClaimKeys,
   heroShowKey,
   HERO_EMBED_REFERER,
+  imageContentKey,
   isFetchableUrl,
   isLogoLikeUrl,
   isUsableHeroImage,
@@ -181,6 +183,7 @@ describe('find shows hero image', () => {
       url: 'https://fair.test/hall.jpg',
       width: 2400,
       height: 1350,
+      contentKey: imageContentKey(jpegHeader(2400, 1350), { width: 2400, height: 1350 }),
     });
   });
 
@@ -236,6 +239,7 @@ describe('find shows hero image', () => {
       url: 'https://agha.com.au/wp-content/uploads/2025/08/AGHA-MEL25-Turbo360-A9A02726-scaled.jpg',
       width: 2560,
       height: 1707,
+      contentKey: imageContentKey(jpegHeader(2560, 1707), { width: 2560, height: 1707 }),
     });
   });
 
@@ -501,6 +505,55 @@ describe('find shows hero image', () => {
       expect(claims.isShared('https://cdn.test/techshow.jpg')).toBe(false);
       claims.claim('https://cdn.test/techshow.jpg', heroShowKey('CLOUD & CYBER SECURITY EXPO EUROPE - LONDON'));
       expect(claims.isShared('https://cdn.test/techshow.jpg')).toBe(true);
+    });
+
+    describe('content keys — one file whatever host serves it', () => {
+      /** A JPEG larger than the measuring read, filled with bytes that differ by `seed`. */
+      function largeJpeg(width: number, height: number, seed: number, size = 100_000) {
+        const bytes = new Uint8Array(size);
+        bytes.set(jpegHeader(width, height));
+        for (let index = jpegHeader(width, height).length; index < size; index += 1) bytes[index] = (index * 31 + seed * 7) & 0xff;
+        return bytes;
+      }
+      const photoPage = (src: string) => ({ type: 'text/html', body: `<img data-src="${src}" width="2560" alt="Visitors at Prowinter in Bolzano">` });
+
+      async function resolvedKey(site: string, image: string, body: Uint8Array) {
+        const { fetcher } = fakeFetcher({ [site]: photoPage(image), [image]: { type: 'image/jpeg', body } });
+        const resolved = await resolveEventHeroImage(site, { fetcher, event: PROWINTER });
+        expect(resolved?.url).toBe(image);
+        return resolved!.contentKey!;
+      }
+
+      it('gives the same file the same key on two hosts, as Bondexpo and Motek serve one photo', async () => {
+        const photo = largeJpeg(2560, 1097, 1);
+        const bondexpo = await resolvedKey('https://bondexpo.test/', 'https://www.bondexpo.test/wp-content/uploads/2022/06/Motek_2026017.jpg', photo);
+        const motek = await resolvedKey('https://motek.test/', 'https://www.motek.test/wp-content/uploads/2022/06/Motek_2026017.jpg', photo);
+        expect(bondexpo).toMatch(/^2560x1097:[0-9a-f]{64}$/);
+        expect(motek).toBe(bondexpo);
+      });
+
+      it('gives the same key whether the server honours the Range header or sends the whole file', async () => {
+        const photo = largeJpeg(2560, 1097, 1);
+        const whole = await resolvedKey('https://a.test/', 'https://a.test/hall.jpg', photo);
+        const ranged = await resolvedKey('https://b.test/', 'https://b.test/hall.jpg', photo.slice(0, 64 * 1024));
+        expect(ranged).toBe(whole);
+      });
+
+      it('keeps different photos apart even with the same size, path and file name on different hosts', async () => {
+        const one = await resolvedKey('https://one.test/', 'https://one.test/wp-content/uploads/hero.jpg', largeJpeg(2560, 1097, 1));
+        const two = await resolvedKey('https://two.test/', 'https://two.test/wp-content/uploads/hero.jpg', largeJpeg(2560, 1097, 2));
+        expect(two).not.toBe(one);
+      });
+
+      it('includes the pixel size, so equal bytes read for different sizes never match', () => {
+        const bytes = new Uint8Array([1, 2, 3]);
+        expect(imageContentKey(bytes, { width: 2560, height: 1097 })).not.toBe(imageContentKey(bytes, { width: 1920, height: 1080 }));
+      });
+
+      it('claims a measured photo under its URL and its content, and an unmeasured one under its URL only', () => {
+        expect(heroImageClaimKeys({ url: 'https://a.test/hall.jpg', contentKey: '2560x1097:abc' })).toEqual(['https://a.test/hall.jpg', 'content:2560x1097:abc']);
+        expect(heroImageClaimKeys({ url: 'https://a.test/hall.jpg' })).toEqual(['https://a.test/hall.jpg']);
+      });
     });
 
     it('builds profiles from distinctive name words only — not places, generic words or words many shows share', () => {

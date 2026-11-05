@@ -14,7 +14,7 @@
  */
 import registryFile from '../../data/find-shows-hero-images.json';
 import denylistFile from '../../data/find-shows-hero-image-denylist.json';
-import { isFetchableUrl, MIN_HERO_WIDTH, type HeroImage } from './event-hero-image';
+import { heroImageClaimKeys, isFetchableUrl, MIN_HERO_WIDTH, type HeroImage } from './event-hero-image';
 
 export type HeroRegistryEntry = {
   slug: string;
@@ -106,18 +106,20 @@ export function isDeniedHeroImage(imageUrl: string) {
   return deniedImages.has(deniedImageKey(imageUrl));
 }
 
-type HeroImageClaims = { claim(imageUrl: string, showKey: string): void; isShared(imageUrl: string): boolean };
+type HeroImageClaims = { claim(imageKey: string, showKey: string): void; isShared(imageKey: string): boolean };
 
 /**
  * The last check on an automatically found photo before it is shown: never a
- * denylisted image, and never one another show has also resolved to. The
- * claim is recorded first, so when a second show finds the same photo, both
- * fall back to the gradient on their next render.
+ * denylisted image, and never one another show has also resolved to — by URL,
+ * or by content when the same file is served from another host. The claim is
+ * recorded first, so when a second show finds the same photo, both fall back
+ * to the gradient on their next render.
  */
 export function screenAutomaticHeroImage(image: HeroImage | null, showKey: string, claims: HeroImageClaims): HeroImage | null {
   if (!image || isDeniedHeroImage(image.url)) return null;
-  claims.claim(image.url, showKey);
-  return claims.isShared(image.url) ? null : image;
+  const keys = heroImageClaimKeys(image);
+  for (const key of keys) claims.claim(key, showKey);
+  return keys.some((key) => claims.isShared(key)) ? null : image;
 }
 
 /** The verified photo for this event page, or null when it has none. */

@@ -3889,6 +3889,41 @@
    "events": [
     "mondial-de-l-auto-paris-paris-2026-10-12"
    ]
+  },
+  {
+   "imageUrl": "https://drive.ifa-berlin.com/drive/2026/10/_cache/2881eb352f0ce22f6287b285ce64729b_971c932c9418680d4d02a9bc07eb9d02.png.webp",
+   "reason": "Hero image review 2026-11-05: site map / hall plan graphic, not an event photo",
+   "events": [
+    "ifa-berlin-berlin-2026-09-04"
+   ]
+  },
+  {
+   "imageUrl": "https://www.terrapinn-cdn.com/conference/biotechx/img/11.png",
+   "reason": "Hero image review 2026-11-05: BioTechX wordmark on a plain background, logo only",
+   "events": [
+    "biotechx-europe-basel-2026-10-06"
+   ]
+  },
+  {
+   "imageUrl": "https://thecoinconference.com/wp-content/uploads/2022/02/Coins-close-up.jpg",
+   "reason": "Hero image review 2026-11-05: 2022 stock close-up of coins, not the event",
+   "events": [
+    "the-coin-conference-budapest-2026-10-05"
+   ]
+  },
+  {
+   "imageUrl": "https://archibat.ci/wp-content/uploads/2026/10/ARCHIBAT-2027-Visuel-officiel.jpg",
+   "reason": "Hero image review 2026-11-05: promo poster (official 2027 visual with dates and text), not an event photo",
+   "events": [
+    "archibat-abidjan-2027-04-01"
+   ]
+  },
+  {
+   "imageUrl": "https://www.ciof.cn/cache/img/42b7db00b94076a19f64a9068b24f616d1a692f56b5a.jpg",
+   "reason": "Hero image review 2026-11-05: CIOF 2026 promo graphic with text panels, not an event photo",
+   "events": [
+    "ciof-china-international-optics-fair-beijing-2026-09-08"
+   ]
   }
  ]
 }

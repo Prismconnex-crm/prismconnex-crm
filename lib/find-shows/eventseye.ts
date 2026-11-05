@@ -538,7 +538,9 @@ const getCachedHeroImage = unstable_cache(
   },
   // v7: evidence rules tightened after the 2026-10-11 resolver audit (no file-name,
   // schema or share-card matches; embed check); drops v6 picks, incl. removed images.
-  ['find-show-hero-image-v7'],
+  // v8: picks carry a contentKey, so the same file on two hosts (Bondexpo/Motek)
+  // counts as shared; v7 picks have none and would only be compared by URL.
+  ['find-show-hero-image-v8'],
   { revalidate: 60 * 60 * 24 * 7 }
 );
 

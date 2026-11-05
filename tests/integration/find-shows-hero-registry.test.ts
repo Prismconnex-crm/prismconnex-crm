@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import registryFile from '@/data/find-shows-hero-images.json';
 import denylistFile from '@/data/find-shows-hero-image-denylist.json';
-import { createHeroImageClaims } from '@/lib/find-shows/event-hero-image';
+import { createHeroImageClaims, heroShowKey } from '@/lib/find-shows/event-hero-image';
 import { findShowEventsBySlug } from '@/lib/find-shows/catalog';
+import { getFindShowCardCover } from '@/lib/find-shows/card-image-registry';
 import {
   getHeroRegistryEntries,
   getRegisteredHeroImage,
@@ -463,7 +464,6 @@ describe('find shows hero registry', () => {
     const added: [slug: string, label: string, url: string, width: number, height: number, source: string][] = [
       ['bevmx-bangladesh-electric-vehicle-and-mobility-exhibition-dhaka-2026-11-26', 'BEVMX 2024', 'https://savor-bevmx.com/wp-content/uploads/2024/11/MAS5013-2048x1365.jpg', 2048, 1365, 'https://savor-bevmx.com/bevmx-photo-gallery-2024/'],
       ['therapy-expo-birmingham-2026-11-25', 'Therapy Expo 2025', 'https://cdn.asp.events/CLIENT_CloserSt_D86EA381_5056_B739_5482D50A1A831DDD/sites/therapy-expo-2026/media/DSC_2005.jpg', 3000, 2000, 'https://www.therapyshow.co.uk/'],
-      ['thailand-international-mega-fair-riyadh-2026-12-01', 'Thailand Mega Fair 2024', 'https://www.indexcreativevillage.com/wp-content/uploads/2024/12/LINE_ALBUM_ICVEX-Saudi_241120_15.jpg', 2048, 1367, 'https://www.indexcreativevillage.com/thailand-international-mega-fair-2024-riyadh/'],
       ['biofit-marseille-2026-12-10', 'BioFIT 2025', 'https://www.biofit-event.com/wp-content/uploads/2026/02/ZONE-EXPO-2048x1536.jpeg', 2048, 1536, 'https://www.biofit-event.com/previous-editions/'],
       ['aviation-forum-munich-2026-12-14', 'Aviation Forum 2025', 'https://images.squarespace-cdn.com/content/v1/6425b5b0561e830becddd89d/68bbface-499a-4964-a56f-8b2aea2b7235/IPM_Aviation-Forum_Hamburg_Tag-II-0025.jpg?format=2500w', 2500, 1667, 'https://www.aviation-forum.com/'],
       ['the-london-international-horse-show-london-2026-12-17', 'London Horse Show 2025', 'https://b4483412.assetcdn.net/2.0/4483412/wp-content/uploads/horsebreed1-1536x1024.jpg?lossy=2&strip=1&webp=1', 1536, 1024, 'https://londonhorseshow.com/news/common-horse-breeds-explained/'],
@@ -530,6 +530,71 @@ describe('find shows hero registry', () => {
     expect(screenAutomaticHeroImage(null, 'show a', claims)).toBeNull();
   });
 
+  describe('shared photos served from different hosts', () => {
+    // The 2026-11-05 audit: Bondexpo and Motek, co-located in Stuttgart, serve the same
+    // file from their own domains, so the URL-only check showed it on both pages.
+    const contentKey = '2560x1097:5d1f0c3a9e7b2a4c6d8e0f1a3b5c7d9e1f2a4b6c8d0e2f4a6b8c0d2e4f6a8b0c';
+    const bondexpoPhoto = { url: 'https://www.bondexpo-messe.de/wp-content/uploads/2022/06/Motek_2026017-scaled-uai-2560x1097.jpg', width: 2560, height: 1097, contentKey };
+    const motekPhoto = { url: 'https://www.motek-messe.de/wp-content/uploads/2022/06/Motek_2026017-scaled-uai-2560x1097.jpg', width: 2560, height: 1097, contentKey };
+    const bondexpo = heroShowKey('BONDEXPO');
+    const motek = heroShowKey('MOTEK');
+
+    it('shows the Bondexpo/Motek photo on neither page once both shows have resolved it', () => {
+      expect(findShowEventsBySlug['bondexpo-stuttgart-2026-10-06']).toBeDefined();
+      expect(findShowEventsBySlug['motek-stuttgart-2026-10-06']).toBeDefined();
+      const claims = createHeroImageClaims();
+      expect(screenAutomaticHeroImage(bondexpoPhoto, bondexpo, claims)).toEqual(bondexpoPhoto);
+      expect(screenAutomaticHeroImage(motekPhoto, motek, claims)).toBeNull();
+      expect(screenAutomaticHeroImage(bondexpoPhoto, bondexpo, claims)).toBeNull();
+      // Either order.
+      const reversed = createHeroImageClaims();
+      expect(screenAutomaticHeroImage(motekPhoto, motek, reversed)).toEqual(motekPhoto);
+      expect(screenAutomaticHeroImage(bondexpoPhoto, bondexpo, reversed)).toBeNull();
+      expect(screenAutomaticHeroImage(motekPhoto, motek, reversed)).toBeNull();
+      // Neither copy is denylisted: the claims alone keep it off both pages.
+      expect(isDeniedHeroImage(bondexpoPhoto.url)).toBe(false);
+      expect(isDeniedHeroImage(motekPhoto.url)).toBe(false);
+    });
+
+    it('still lets editions and duplicate records of one show share a file across hosts', () => {
+      const claims = createHeroImageClaims();
+      expect(screenAutomaticHeroImage(motekPhoto, heroShowKey('MOTEK'), claims)).toEqual(motekPhoto);
+      expect(screenAutomaticHeroImage(bondexpoPhoto, heroShowKey('MOTEK 2027'), claims)).toEqual(bondexpoPhoto);
+      expect(screenAutomaticHeroImage(motekPhoto, heroShowKey('Motek'), claims)).toEqual(motekPhoto);
+    });
+
+    it('does not treat different files as shared because their path or file name matches', () => {
+      const claims = createHeroImageClaims();
+      const one = { url: 'https://one.test/wp-content/uploads/hero.jpg', width: 2560, height: 1097, contentKey: '2560x1097:aaaa' };
+      const two = { url: 'https://two.test/wp-content/uploads/hero.jpg', width: 2560, height: 1097, contentKey: '2560x1097:bbbb' };
+      expect(screenAutomaticHeroImage(one, heroShowKey('SHOW ONE'), claims)).toEqual(one);
+      expect(screenAutomaticHeroImage(two, heroShowKey('SHOW TWO'), claims)).toEqual(two);
+      expect(screenAutomaticHeroImage(one, heroShowKey('SHOW ONE'), claims)).toEqual(one);
+    });
+
+    it('still catches one URL for two shows when the file behind it changed between their lookups', () => {
+      const claims = createHeroImageClaims();
+      const before = { url: 'https://organiser.test/hero.jpg', width: 2000, height: 1200, contentKey: '2000x1200:old' };
+      const after = { ...before, contentKey: '2000x1200:new' };
+      expect(screenAutomaticHeroImage(before, heroShowKey('SHOW ONE'), claims)).toEqual(before);
+      expect(screenAutomaticHeroImage(after, heroShowKey('SHOW TWO'), claims)).toBeNull();
+    });
+
+    it('still matches by URL a photo resolved without a content key', () => {
+      const claims = createHeroImageClaims();
+      const keyed = { url: 'https://organiser.test/hall.jpg', width: 2000, height: 1200, contentKey: '2000x1200:abc' };
+      const unkeyed = { url: 'https://organiser.test/hall.jpg', width: 2000, height: 1200 };
+      expect(screenAutomaticHeroImage(unkeyed, heroShowKey('SHOW ONE'), claims)).toEqual(unkeyed);
+      expect(screenAutomaticHeroImage(keyed, heroShowKey('SHOW TWO'), claims)).toBeNull();
+    });
+
+    it('leaves hand-verified registry photos out of the claims entirely', () => {
+      // getFindShowHeroImage returns a registry photo before any claim is made, so a
+      // verified photo is never hidden by an automatic pick that shares its file.
+      for (const entry of getHeroRegistryEntries()) expect(getRegisteredHeroImage(entry.slug), entry.slug).not.toHaveProperty('contentKey');
+    });
+  });
+
   it('keeps denying a signed CDN image after the CDN re-signs its URL', () => {
     // SIDO Lyon's denied product render came back on the live page under a fresh daily
     // signature: the file is the same, only Expires/Signature changed.
@@ -547,6 +612,28 @@ describe('find shows hero registry', () => {
   it('denies the Mondial de l’Auto brand product image the resolver fell through to', () => {
     expect(isDeniedHeroImage('https://mondial.paris/wp-content/uploads/salons-pms/2026/10/Deepal_Model_page_1824x2156_SKD_1_c907a9137f-e1791367234724.png')).toBe(true);
     expect(isDeniedHeroImage('https://mondial.paris/wp-content/uploads/salons-pms/2026/10/Aito-Paris-Motor-Show.png')).toBe(true);
+  });
+
+  it('denies the automatic picks the 2026-11-05 hero review found wrong, so those pages fall back to the gradient', () => {
+    const denied: [slug: string, url: string][] = [
+      ['ifa-berlin-berlin-2026-09-04', 'https://drive.ifa-berlin.com/drive/2026/10/_cache/2881eb352f0ce22f6287b285ce64729b_971c932c9418680d4d02a9bc07eb9d02.png.webp'],
+      ['biotechx-europe-basel-2026-10-06', 'https://www.terrapinn-cdn.com/conference/biotechx/img/11.png'],
+      ['the-coin-conference-budapest-2026-10-05', 'https://thecoinconference.com/wp-content/uploads/2022/02/Coins-close-up.jpg'],
+      ['archibat-abidjan-2027-04-01', 'https://archibat.ci/wp-content/uploads/2026/10/ARCHIBAT-2027-Visuel-officiel.jpg'],
+      ['ciof-china-international-optics-fair-beijing-2026-09-08', 'https://www.ciof.cn/cache/img/42b7db00b94076a19f64a9068b24f616d1a692f56b5a.jpg'],
+    ];
+    for (const [slug, url] of denied) {
+      expect(findShowEventsBySlug[slug], slug).toBeDefined();
+      expect(isDeniedHeroImage(url), slug).toBe(true);
+      expect(screenAutomaticHeroImage({ url, width: 2048, height: 853 }, slug, createHeroImageClaims()), slug).toBeNull();
+      // Nothing ahead of the automatic resolver gives these events an image, so the banner keeps its gradient.
+      expect(getRegisteredHeroImage(slug), slug).toBeNull();
+      expect(getFindShowCardCover(slug), slug).toBeNull();
+    }
+    // BONDEXPO's photo is the organizer's own, published on the Bondexpo site for the co-located Motek/Bondexpo
+    // floor; it was not confirmed wrong, so neither copy is denied.
+    expect(isDeniedHeroImage('https://www.bondexpo-messe.de/wp-content/uploads/2022/06/Motek_2026017-scaled-uai-2560x1097.jpg')).toBe(false);
+    expect(isDeniedHeroImage('https://www.motek-messe.de/wp-content/uploads/2022/06/Motek_2026017-scaled-uai-2560x1097.jpg')).toBe(false);
   });
 
   it('keeps every denylist entry a valid URL with a recorded reason, and no registry photo on it', () => {
