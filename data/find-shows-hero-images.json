@@ -2595,6 +2595,51 @@
       "previousEdition": true,
       "editionLabel": "AMBERIF 2026",
       "verifiedOn": "2026-10-13"
+    },
+    {
+      "slug": "ifa-berlin-berlin-2026-09-04",
+      "eventName": "IFA BERLIN",
+      "catalogStartDate": "2026-09-04",
+      "status": "verified",
+      "imageUrl": "https://drive.ifa-berlin.com/drive/2026/09/_cache/f8d3f199c95e7f38ab37e2ae6101ef95_e62abf4c9bb88c809a0803a8e4cbf11b.jpg",
+      "width": 1600,
+      "height": 1069,
+      "sourcePageUrl": "https://www.ifa-berlin.com/galleries",
+      "attribution": "Official IFA Berlin galleries page, in the gallery 'IFA 2026 - IFA DAY 2' (the catalog edition, 4 September 2026 onwards). Visitors crowd the hall entrance under IFA banners.",
+      "editionYear": 2026,
+      "previousEdition": false,
+      "editionLabel": "",
+      "verifiedOn": "2026-11-05"
+    },
+    {
+      "slug": "biotechx-europe-basel-2026-10-06",
+      "eventName": "BIOTECHX EUROPE",
+      "catalogStartDate": "2026-10-06",
+      "status": "verified",
+      "imageUrl": "https://live.staticflickr.com/65535/55616050012_d539a18cbc_h.jpg",
+      "width": 1600,
+      "height": 900,
+      "sourcePageUrl": "https://www.terrapinn.com/conference/biotechx/2026-Photos.stm",
+      "attribution": "Organiser (Terrapinn) page 'BIOTECHX 2026 PHOTOS', which embeds this Flickr photo titled 'BioTechX 2026'; 'BioTechX 2026' is projected on the lit Messe Basel facade as attendees arrive. The catalog edition is 6 October 2026.",
+      "editionYear": 2026,
+      "previousEdition": false,
+      "editionLabel": "",
+      "verifiedOn": "2026-11-05"
+    },
+    {
+      "slug": "ecomexpo-vilnius-2026-10-09",
+      "eventName": "ECOMEXPO",
+      "catalogStartDate": "2026-10-09",
+      "status": "verified",
+      "imageUrl": "https://ecomexpo.eu/assets/media/2026-audience-1600.jpg",
+      "width": 1600,
+      "height": 1066,
+      "sourcePageUrl": "https://ecomexpo.eu/",
+      "attribution": "Official EcomExpo site, image alt 'A full room at EcomExpo 2026' in the section 'On stage in 2026' (the catalog edition, 9 October 2026). A single audience photo, replacing the automatic recap collage.",
+      "editionYear": 2026,
+      "previousEdition": false,
+      "editionLabel": "",
+      "verifiedOn": "2026-11-05"
     }
   ]
 }

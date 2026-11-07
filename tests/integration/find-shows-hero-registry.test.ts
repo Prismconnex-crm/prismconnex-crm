@@ -530,6 +530,30 @@ describe('find shows hero registry', () => {
     expect(screenAutomaticHeroImage(null, 'show a', claims)).toBeNull();
   });
 
+  it('adds the current-edition photos verified in the 2026-11-05 candidates review', () => {
+    // Each year comes from a dated gallery, a hand-written caption or text visible in the photo.
+    // Fakuma's candidate was not added: its "Fakuma 2024 042 scaled uai" alt only echoes the file
+    // name, which the batch-1 rule never accepts (it stays in the held list above).
+    const added: [slug: string, url: string, width: number, height: number, source: string][] = [
+      ['ifa-berlin-berlin-2026-09-04', 'https://drive.ifa-berlin.com/drive/2026/09/_cache/f8d3f199c95e7f38ab37e2ae6101ef95_e62abf4c9bb88c809a0803a8e4cbf11b.jpg', 1600, 1069, 'https://www.ifa-berlin.com/galleries'],
+      ['biotechx-europe-basel-2026-10-06', 'https://live.staticflickr.com/65535/55616050012_d539a18cbc_h.jpg', 1600, 900, 'https://www.terrapinn.com/conference/biotechx/2026-Photos.stm'],
+      ['ecomexpo-vilnius-2026-10-09', 'https://ecomexpo.eu/assets/media/2026-audience-1600.jpg', 1600, 1066, 'https://ecomexpo.eu/'],
+    ];
+    for (const [slug, url, width, height, source] of added) {
+      const event = findShowEventsBySlug[slug];
+      expect(event, slug).toBeDefined();
+      expect(getRegisteredHeroImage(slug), slug).toEqual({ url, width, height });
+      const entry = getHeroRegistryEntries().find((candidate) => candidate.slug === slug)!;
+      expect(entry, slug).toMatchObject({ eventName: event.name, catalogStartDate: event.startDate, sourcePageUrl: source, verifiedOn: '2026-11-05' });
+      expect(entry).toMatchObject({ previousEdition: false, editionLabel: '', editionYear: Number(entry.catalogStartDate.slice(0, 4)) });
+      expect(entry.attribution, slug).toContain(String(entry.editionYear));
+      // No reviewed cover outranks the photo, it is not denylisted, and no other entry uses it.
+      expect(getFindShowCardCover(slug), slug).toBeNull();
+      expect(isDeniedHeroImage(url), slug).toBe(false);
+      expect(getHeroRegistryEntries().filter((candidate) => candidate.imageUrl === url), slug).toHaveLength(1);
+    }
+  });
+
   describe('shared photos served from different hosts', () => {
     // The 2026-11-05 audit: Bondexpo and Motek, co-located in Stuttgart, serve the same
     // file from their own domains, so the URL-only check showed it on both pages.
@@ -626,9 +650,12 @@ describe('find shows hero registry', () => {
       expect(findShowEventsBySlug[slug], slug).toBeDefined();
       expect(isDeniedHeroImage(url), slug).toBe(true);
       expect(screenAutomaticHeroImage({ url, width: 2048, height: 853 }, slug, createHeroImageClaims()), slug).toBeNull();
-      // Nothing ahead of the automatic resolver gives these events an image, so the banner keeps its gradient.
-      expect(getRegisteredHeroImage(slug), slug).toBeNull();
       expect(getFindShowCardCover(slug), slug).toBeNull();
+      // IFA and BioTechX have since been given verified photos (the 2026-11-05 candidates review), never the
+      // denied pick; the others have nothing ahead of the automatic resolver, so their banner keeps the gradient.
+      const registered = getRegisteredHeroImage(slug);
+      if (['ifa-berlin-berlin-2026-09-04', 'biotechx-europe-basel-2026-10-06'].includes(slug)) expect(registered?.url, slug).not.toBe(url);
+      else expect(registered, slug).toBeNull();
     }
     // BONDEXPO's photo is the organizer's own, published on the Bondexpo site for the co-located Motek/Bondexpo
     // floor; it was not confirmed wrong, so neither copy is denied.

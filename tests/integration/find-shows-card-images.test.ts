@@ -12,6 +12,7 @@ import {
   heroCoverBandBottom,
   type CardImageEntry,
 } from '@/lib/find-shows/card-image-registry';
+import { getRegisteredHeroImage } from '@/lib/find-shows/hero-image-registry';
 
 const PUBLIC_DIR = path.join(__dirname, '..', '..', 'public');
 
@@ -64,7 +65,24 @@ describe('find shows card images', () => {
   it('gives every Argentina event a verified image or the fallback', () => {
     expect(argentinaEvents).toHaveLength(21);
     for (const event of argentinaEvents) {
-      expect(getFindShowCardCover(event.slug), event.slug).not.toBeNull();
+      // A reviewed cover (or its fallback), or a hand-verified hero photo the banner shows instead.
+      expect(getFindShowCardCover(event.slug) ?? getRegisteredHeroImage(event.slug), event.slug).not.toBeNull();
+    }
+  });
+
+  it('shows Argenplás its verified 2024 show-floor photo, not the logo cover that hid it', () => {
+    // The 2026-11-05 review: the reviewed logo cover outranked the hand-verified photo.
+    const slug = 'argenplas-buenos-aires-2026-11-03';
+    expect(getFindShowCardCover(slug)).toBeNull();
+    expect(getRegisteredHeroImage(slug)).toEqual({
+      url: 'https://www.argenplas.com.ar/wp-content/uploads/2026/04/DSC_2207.jpg',
+      width: 2000,
+      height: 1335,
+      previousEditionLabel: 'Argenplás 2024',
+    });
+    // The other Argentina logo covers are unchanged.
+    for (const other of ['emitex-buenos-aires-2027-06-01', 'lartc-buenos-aires-2026-09-08']) {
+      expect(getFindShowCardCover(other), other).toMatchObject({ status: 'image', kind: 'logo' });
     }
   });
 
