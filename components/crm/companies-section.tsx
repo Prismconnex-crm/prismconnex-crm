@@ -32,6 +32,7 @@ import { CompaniesAiSearch } from "@/components/companies/companies-ai-search";
 import { FilterChips } from "@/components/search/filter-chips";
 import { EventCatalogPanel } from "@/components/crm/event-catalog-panel";
 import { BettExhibitorProfile } from "@/components/crm/bett-exhibitor-profile";
+import { CompanyProfile } from "@/components/crm/company-profile";
 import { isBettExhibitorCompany } from "@/lib/exhibitors/bett";
 import type { EventFilters, EventResult } from "@/models/event-query";
 import {
@@ -678,12 +679,25 @@ export function CompaniesSection() {
    * exhibitor card links through. Null for every ordinary visit.
    */
   const [bettExhibitorId, setBettExhibitorId] = useState<string | null>(null);
+  /**
+   * Set when the URL carries ?companyId=<id> — how an ordinary catalog row
+   * links through to its own profile. Null for every list view.
+   */
+  const [profileCompanyId, setProfileCompanyId] = useState<string | null>(null);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    setBettExhibitorId(
-      params.get("source") === "bett" ? params.get("exhibitorId")?.trim() || null : null
-    );
+    // Re-read on every history change, not just on mount: Back from a profile
+    // is a popstate, and without this the section would stay on the profile.
+    const readParams = () => {
+      const params = new URLSearchParams(window.location.search);
+      setBettExhibitorId(
+        params.get("source") === "bett" ? params.get("exhibitorId")?.trim() || null : null
+      );
+      setProfileCompanyId(params.get("companyId")?.trim() || null);
+    };
+    readParams();
+    window.addEventListener("popstate", readParams);
+    return () => window.removeEventListener("popstate", readParams);
   }, []);
 
   const [companies, setCompanies] = useState<Company[]>([]);
@@ -1381,6 +1395,22 @@ export function CompaniesSection() {
         }
       }
 
+      // Every other company gets the same profile treatment, at
+      // /app/companies/<slug>?companyId=<id>. Routing rather than flipping
+      // local state means the profile survives a refresh and can be shared.
+      if (company) {
+        const slug =
+          company.name
+            .toLowerCase()
+            .normalize("NFKD")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "") || "company";
+        setSelectedCompanyId(id);
+        setProfileCompanyId(id);
+        router.push(`/app/companies/${slug}?companyId=${encodeURIComponent(id)}`);
+        return;
+      }
+
       setSelectedCompanyId(id);
       setIsDetailView(true);
     },
@@ -1399,6 +1429,29 @@ export function CompaniesSection() {
         <BettExhibitorProfile
           exhibitorId={bettExhibitorId}
           onBack={() => router.push("/app/companies")}
+        />
+      </div>
+    );
+  }
+
+  // An ordinary catalog company, same treatment. The row the table already
+  // holds is handed down so the profile paints without a round trip; a
+  // refresh arrives with no list loaded and the profile fetches by id.
+  if (profileCompanyId) {
+    const known =
+      companies.find((row) => row.id === profileCompanyId) ??
+      savedCompanies.find((row) => row.id === profileCompanyId) ??
+      null;
+    return (
+      <div className="space-y-5 max-w-[1600px] mx-auto pb-10">
+        <CompanyProfile
+          companyId={profileCompanyId}
+          initialCompany={known}
+          onBack={() => {
+            setProfileCompanyId(null);
+            setIsDetailView(false);
+            router.push("/app/companies");
+          }}
         />
       </div>
     );
