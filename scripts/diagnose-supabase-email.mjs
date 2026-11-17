@@ -50,7 +50,8 @@ function readEnvFile(path) {
     }
 }
 
-const fileEnv = readEnvFile(".env");
+// Same precedence as Next.js: real environment > .env.local > .env.
+const fileEnv = { ...readEnvFile(".env"), ...readEnvFile(".env.local") };
 const env = { ...fileEnv, ...process.env };
 
 function maskEmail(email) {

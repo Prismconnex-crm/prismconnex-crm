@@ -10,6 +10,7 @@ import {
     TooManyRequestsError,
     UnauthorizedError,
 } from "@/lib/http/errors";
+import { getSupabaseConfig, isSupabaseConfigured } from "@/lib/supabase/config";
 import { authDebug, authDebugError, maskEmail, maskToken } from "@/lib/auth/auth-debug";
 
 /**
@@ -63,25 +64,15 @@ export type SignUpMetadata = {
     phone?: string;
 };
 
+// Validated in one place (lib/supabase/config.ts) so Auth and Storage can never
+// disagree about variable names or what counts as "configured", and a missing
+// value surfaces as a readable message rather than a raw upstream error.
 function config() {
-    const url = process.env.SUPABASE_URL;
-    const anonKey = process.env.SUPABASE_ANON_KEY;
-
-    // Guard with a readable message. The previous Cognito implementation passed
-    // an empty clientId straight through to AWS, which surfaced as a raw
-    // "2 validation errors detected: Value '' at 'clientId' failed to satisfy
-    // constraint" response to the end user.
-    if (!url || !anonKey) {
-        throw new InternalServerError(
-            "Supabase Auth is not configured. Set SUPABASE_URL and SUPABASE_ANON_KEY in .env."
-        );
-    }
-
-    return { url: url.replace(/\/$/, ""), anonKey };
+    return getSupabaseConfig("Auth");
 }
 
 export function isSupabaseAuthConfigured() {
-    return Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_ANON_KEY);
+    return isSupabaseConfigured();
 }
 
 /** GoTrue error bodies vary by version; pull a usable message out of any shape. */

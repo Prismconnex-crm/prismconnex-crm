@@ -45,7 +45,8 @@ function readEnvFile(path) {
     }
 }
 
-const env = { ...readEnvFile(".env"), ...process.env };
+// Same precedence as Next.js: real environment > .env.local > .env.
+const env = { ...readEnvFile(".env"), ...readEnvFile(".env.local"), ...process.env };
 
 // Prisma reads process.env, not this object. Next.js loads .env for us when the
 // app boots; a bare `node` process does not, and without this the script would

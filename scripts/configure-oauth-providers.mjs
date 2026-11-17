@@ -61,10 +61,10 @@ function fail(message) {
     throw new SetupError(message);
 }
 
-function readEnvFile() {
+function readEnvFile(path) {
     try {
         return Object.fromEntries(
-            readFileSync(".env", "utf8")
+            readFileSync(path, "utf8")
                 .split("\n")
                 .filter((line) => /^[A-Z_]+=/.test(line))
                 .map((line) => {
@@ -80,7 +80,8 @@ function readEnvFile() {
     }
 }
 
-const fileEnv = readEnvFile();
+// Same precedence as Next.js: real environment > .env.local > .env.
+const fileEnv = { ...readEnvFile(".env"), ...readEnvFile(".env.local") };
 const env = (key) => process.env[key] || fileEnv[key];
 
 /** Reads what the app itself reads, using the anon key. No management token needed. */
@@ -145,7 +146,7 @@ async function managementRequest(method, path, body, projectRef) {
 
 async function main() {
     const supabaseUrl = env("SUPABASE_URL");
-    if (!supabaseUrl) fail("SUPABASE_URL is not set (checked the environment and .env).");
+    if (!supabaseUrl) fail("SUPABASE_URL is not set (checked the environment, .env.local and .env).");
 
     /** The project ref is the subdomain: https://<ref>.supabase.co */
     const projectRef = new URL(supabaseUrl).hostname.split(".")[0];
