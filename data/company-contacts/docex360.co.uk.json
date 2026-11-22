@@ -1,0 +1,126 @@
+{
+  "domain": "docex360.co.uk",
+  "source": "Docex contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Kiri Hewitt",
+      "company": "Docex360",
+      "jobTitle": "Client Success Manager",
+      "email": null,
+      "mobile": "44 1403 338608",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ben Hall",
+      "company": "Docex360",
+      "jobTitle": "Owner/Director Customer Experience Evangelist",
+      "email": null,
+      "mobile": "44 1403 338608",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ben Coughlan",
+      "company": "Docex360",
+      "jobTitle": "Director - Owner",
+      "email": null,
+      "mobile": "44 1403 338608",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Georgie May",
+      "company": "Docex360",
+      "jobTitle": "Coordinator",
+      "email": null,
+      "mobile": "44 1403 338608",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Robert Morrison",
+      "company": "Docex360",
+      "jobTitle": "Senior Field Service Engineer",
+      "email": null,
+      "mobile": "44 1403 338608",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aaron Maltby",
+      "company": "Docex360",
+      "jobTitle": "Senior Field Engineer",
+      "email": null,
+      "mobile": "44 1403 338608",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lewis Ramsay",
+      "company": "Docex360",
+      "jobTitle": "Help Desk Team Lead",
+      "email": null,
+      "mobile": "44 1403 338608",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alice Raith",
+      "company": "Docex360",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": "44 1403 338608",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vincent Ball",
+      "company": "Docex360",
+      "jobTitle": "IT Technician",
+      "email": null,
+      "mobile": "44 1403 338608",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rachel Boycott",
+      "company": "Docex360",
+      "jobTitle": "Marketing Executive",
+      "email": null,
+      "mobile": "44 1403 338608",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Oscar Rawlings",
+      "company": "Docex360",
+      "jobTitle": "IT Sales Executive",
+      "email": null,
+      "mobile": "44 1403 338608",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jack Nye",
+      "company": "Docex360",
+      "jobTitle": "Telephone Sales Executive",
+      "email": null,
+      "mobile": "44 1403 338608",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

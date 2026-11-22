@@ -1,0 +1,756 @@
+{
+  "domain": "comprotechnologies.com",
+  "source": "Compro_Technologies.xlsx (rows 76-100 repeat rows 51-75 and were skipped; Ravi Ranjan row was shifted one column — title split at a comma — and realigned by hand)",
+  "contacts": [
+    {
+      "fullName": "Sejal Mathur",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aditi Kapur",
+      "company": "Compro Technologies",
+      "jobTitle": "Engineering Lead",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anurag Kumar",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shubham Kant",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ajay Singh Tomar",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rajbeer Singh",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Niharika Budhiraja",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shubham Saini",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Purnima Sharma",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Engineering Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ajay Mathur",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tushar Kumar",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sushil Arora",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Project Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vani Sharma",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mayank Taparia",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Engineering Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kshitij Pandey",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Simon Ryan",
+      "company": "Compro Technologies",
+      "jobTitle": "Consultant Compro Technologies",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Depender Kumar Soni",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sambhav Gupta",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Avnish Singh",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Saiyam Sachdeva",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rakesh Firoda",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aakash Raturi",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Varnik Gupta",
+      "company": "Compro Technologies",
+      "jobTitle": "SDE",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Madhusudan Mishra",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Engineering Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anant Chauhan",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Abhishek Sirari",
+      "company": "Compro Technologies",
+      "jobTitle": "Engineering Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chakshu Jawa",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jasdeep Singh",
+      "company": "Compro Technologies",
+      "jobTitle": "Engineering Lead",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Apoorva Sharma",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Manoj Saini",
+      "company": "Compro Technologies",
+      "jobTitle": "Engineering Lead",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Manav Manocha",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Engineering Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vimal Mishra",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Delivery Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gaurav Chaddha",
+      "company": "Compro Technologies",
+      "jobTitle": "Vice President",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shivam Singh",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pawandeep Singh",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Engineering Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ravin Minocha",
+      "company": "Compro Technologies",
+      "jobTitle": "VP Technology & Engineering",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vishal Kumar",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Manpreet Singh",
+      "company": "Compro Technologies",
+      "jobTitle": "Engineering Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sahil Malik",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Divyansh Goel",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nidhi Suri",
+      "company": "Compro Technologies",
+      "jobTitle": "HR Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Megha Malik",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Quality Assurance Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ankur Sharma",
+      "company": "Compro Technologies",
+      "jobTitle": "Quality Assurance Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Manit Rustagi",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rishav Kumar",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jancy Varghese",
+      "company": "Compro Technologies",
+      "jobTitle": "General Manager - HR / Admin",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Manish Mehta",
+      "company": "Compro Technologies",
+      "jobTitle": "VP - Cloud Solutions",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gautam Yadav",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ravi Ranjan",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Manager - Visual Design, Graphics & UI/UX",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sidharth Jain",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aman Sahota",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rahul Kalra",
+      "company": "Compro Technologies",
+      "jobTitle": "Project Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Naman Gupta",
+      "company": "Compro Technologies",
+      "jobTitle": "SDE Intern",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nimit Jain",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nikhil Aggarwal",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Engineering Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yugal Vashishth",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aviral Juyal",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pratham Gupta",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shreyash Kumar Sahoo",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jyoti Chaubey",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Cloud Operations Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Akshit Kansal",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kunal Chawla",
+      "company": "Compro Technologies",
+      "jobTitle": "Business Development Consultant",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Asad Mahmood",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Samyak Jain",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paras Jain",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rounak Ranjan",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lavish Mehta",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Quality Assurance Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amrit Gaur",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Prerna Jain",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sarthak Goyal",
+      "company": "Compro Technologies",
+      "jobTitle": "Software Engineer Intern",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Harsh Jain",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Er Sneha Goel",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ankita Garg",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Project Manager",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ayush Mehan",
+      "company": "Compro Technologies",
+      "jobTitle": "Associate Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yashi Jain",
+      "company": "Compro Technologies",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 11 42011900",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "domain": "cosafe.com",
+  "source": "cosafe_technology.xlsx",
+  "contacts": [
+    {
+      "fullName": "Jonas Strandell",
+      "company": "Cosafe Technology",
+      "jobTitle": "CMO",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Johannes Sjöberg",
+      "company": "Cosafe Technology",
+      "jobTitle": "Staff Software Engineer",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nathalie Bakircioglu Eriksson",
+      "company": "Cosafe Technology",
+      "jobTitle": "VP Product",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Henrik Hussfelt",
+      "company": "Cosafe Technology",
+      "jobTitle": "Chief Technology Officer",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andreas Olsson",
+      "company": "Cosafe Technology",
+      "jobTitle": "Key Account Manager",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jacob Mattsson",
+      "company": "Cosafe Technology",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Ling",
+      "company": "Cosafe Technology",
+      "jobTitle": "Key Account Manager",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Arsany Ayad",
+      "company": "Cosafe Technology",
+      "jobTitle": "Säkerhetssamordnare",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matilda Bergman",
+      "company": "Cosafe Technology",
+      "jobTitle": "Finance and HR manager",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anton Johansson",
+      "company": "Cosafe Technology",
+      "jobTitle": "VP of Engineering",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andreas Aronsson",
+      "company": "Cosafe Technology",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Valerio Romano",
+      "company": "Cosafe Technology",
+      "jobTitle": "Head of Business Development & GTM",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Piotr Dżaluk",
+      "company": "Cosafe Technology",
+      "jobTitle": "React Native / web React / Node.js full stack",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hugo Gårdman Roots",
+      "company": "Cosafe Technology",
+      "jobTitle": "Account manager",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonas Waerner",
+      "company": "Cosafe Technology",
+      "jobTitle": "CFO & CISO",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Delshad Khatoun",
+      "company": "Cosafe Technology",
+      "jobTitle": "Director",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Erik Olofsson",
+      "company": "Cosafe Technology",
+      "jobTitle": "Full Stack Engineer",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ahmad Khalil",
+      "company": "Cosafe Technology",
+      "jobTitle": "Software Engineer 2B",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jacqueline Kelly Hunt",
+      "company": "Cosafe Technology",
+      "jobTitle": "QA Engineer",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Estonia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Linda Östman",
+      "company": "Cosafe Technology",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Brazil",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Iryna Mizernyk",
+      "company": "Cosafe Technology",
+      "jobTitle": "Quality Assurance Manager",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Julia Södermark",
+      "company": "Cosafe Technology",
+      "jobTitle": "Customer sucess",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aigars Baks",
+      "company": "Cosafe Technology",
+      "jobTitle": "Security Engineer / Senior Technical Support",
+      "email": null,
+      "mobile": "46 840 940 020",
+      "country": "Latvia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

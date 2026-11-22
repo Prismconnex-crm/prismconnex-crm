@@ -1,0 +1,376 @@
+{
+  "domain": "geckoengage.com",
+  "source": "Gecko_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Jonny Richardson",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Head of Artificial Intelligence",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Fields",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Conferences and Events Marketing Specialist",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Neil Jordan",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Chief Operating Officer",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Charlotte Hughes",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Security & Compliance Manager",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonny Urquhart",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Head of Customer Success",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Scott Beresford",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Senior Customer Success Executive",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rachel Westwater",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Engineering Manager",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jon Quayle",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Chief Revenue Officer (CRO)",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Scott Johnston",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Financial Controller",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amanda Williamson",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Malcolm Christie",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Head of Product Development",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dayl Cannon",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Customer Success Executive",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amy Gallacher",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Senior Product Manager",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Scott Carmichael",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Lead Developer (JavaScript)",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jon Robinson",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Deanna Lamb",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Francis Kershaw",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sebastian Duarte",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Head of Partner Success",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tamieka Flannigan",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Customer Success Executive",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amy Preville",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Marketing Lead",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Charlie Adams",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Head of Partner Success",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paul Reid",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Head of Engineering",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonathan Atkinson-White",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Customer Success Executive",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ruth Walker Assoc Cipd",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Head of People",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chris Gibson",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "UK Sales Manager",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jamie Crampton",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Senior Account Executive - United States of America",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Martin Bolton Macdonald",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Lead Software Engineer",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cheryl Sloan",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "VP of Product",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Liam Young",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Senior Product Designer",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michelle Smith",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Senior Implementation Manger",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daniel Oraca",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bea Fairfax",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Customer Success Executive",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonny Carter",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Charlotte Francis",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Steven Murphy",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "QA Engineer",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kevin Carling",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Retired",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Luisana Castañeda",
+      "company": "Gecko | AI-Powered Student Engagement Platform",
+      "jobTitle": "Lavaplatos",
+      "email": null,
+      "mobile": "44 131 541 2296",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "domain": "actionmats.co.uk",
+  "source": "none yet — 'Action Mats Limited.csv' (2026-11-12) contained Acer contacts, so it was not imported. Re-run scripts/import-company-contacts-xlsx.mjs with a real export to fill this list.",
+  "contacts": []
+}

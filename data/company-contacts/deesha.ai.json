@@ -1,0 +1,46 @@
+{
+  "domain": "deesha.ai",
+  "source": "Deesha.xlsx",
+  "contacts": [
+    {
+      "fullName": "Nidhi Sharma",
+      "company": "Deesha",
+      "jobTitle": "Advisor",
+      "email": null,
+      "mobile": null,
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amy Martin Amima",
+      "company": "Deesha",
+      "jobTitle": "Product and Education Data Lead",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kb Thapa",
+      "company": "Deesha",
+      "jobTitle": "Digital Marketing Intern",
+      "email": null,
+      "mobile": null,
+      "country": "Nepal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nidhi Sharma",
+      "company": "Deesha",
+      "jobTitle": "Advisor, consultant",
+      "email": null,
+      "mobile": null,
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

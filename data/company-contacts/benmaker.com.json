@@ -1,0 +1,116 @@
+{
+  "domain": "benmaker.com",
+  "source": "BenMaker_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Sait Korkmaztürk",
+      "company": "BenMaker",
+      "jobTitle": "Üretim Sefi",
+      "email": null,
+      "mobile": "90 224 504 15 97",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Recep Ayaz",
+      "company": "BenMaker",
+      "jobTitle": "Purchasing Chief",
+      "email": null,
+      "mobile": "90 224 504 15 97",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Efe Karakman",
+      "company": "BenMaker",
+      "jobTitle": "Head of Sales and Marketing",
+      "email": null,
+      "mobile": "90 224 504 15 97",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vildan Özten",
+      "company": "BenMaker",
+      "jobTitle": "Company Manager",
+      "email": null,
+      "mobile": "90 224 504 15 97",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Enes Cebe",
+      "company": "BenMaker",
+      "jobTitle": "Production Engineer",
+      "email": null,
+      "mobile": "90 224 504 15 97",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yuksel Cetin",
+      "company": "BenMaker",
+      "jobTitle": "Training Coordinator",
+      "email": null,
+      "mobile": "90 224 504 15 97",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yüksel Çetin",
+      "company": "BenMaker",
+      "jobTitle": "Eğitim Koordinatörü",
+      "email": null,
+      "mobile": "90 224 504 15 97",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yunus Emre Kucuk",
+      "company": "BenMaker",
+      "jobTitle": "Üretim formeni",
+      "email": null,
+      "mobile": "90 224 504 15 97",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ömer Çetin",
+      "company": "BenMaker",
+      "jobTitle": "Satış Sorumlusu",
+      "email": null,
+      "mobile": "90 224 504 15 97",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Şencan Topcu",
+      "company": "BenMaker",
+      "jobTitle": "AR-GE",
+      "email": null,
+      "mobile": "90 224 504 15 97",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Meltem Yıldız Sevinç",
+      "company": "BenMaker",
+      "jobTitle": "Satış Sorumlusu",
+      "email": null,
+      "mobile": "90 224 504 15 97",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

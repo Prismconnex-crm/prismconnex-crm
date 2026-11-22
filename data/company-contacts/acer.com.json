@@ -1,0 +1,256 @@
+{
+  "domain": "acer.com",
+  "source": "acer.csv",
+  "contacts": [
+    {
+      "fullName": "Theresa Coronel Fuchs",
+      "company": "Acer",
+      "jobTitle": "Marketing Communications Manager",
+      "email": "theresa.fuchs@acer.com",
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": "https://www.linkedin.com/in/tcfuchs",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Paul Knepper",
+      "company": "Acer",
+      "jobTitle": "Engineer",
+      "email": "paul.knepper@acer.com",
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": "https://www.linkedin.com/in/paul-knepper-34403b8",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Germano Couy",
+      "company": "Acer",
+      "jobTitle": "Co President Americas",
+      "email": "germano.couy@acer.com",
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": "https://www.linkedin.com/in/germano-couy-54022517",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Jeremi Rybak",
+      "company": "Acer",
+      "jobTitle": "Head of Marketing",
+      "email": "jeremi.rybak@acer.com",
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": "https://www.linkedin.com/in/jeremi-rybak-2021323b",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Cindy Dijkmans",
+      "company": "Acer",
+      "jobTitle": "Distribution Account Manager",
+      "email": "cindy.dijkmans@acer.com",
+      "mobile": null,
+      "country": "Netherlands",
+      "personLinkedInUrl": "https://www.linkedin.com/in/cdijkmans",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Rock Kuan",
+      "company": "Acer",
+      "jobTitle": "Senior Product Manager",
+      "email": "rock.kuan@acer.com",
+      "mobile": null,
+      "country": "Taiwan",
+      "personLinkedInUrl": "https://www.linkedin.com/in/rock-kuan-33511365",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Nikola Bakula",
+      "company": "Acer",
+      "jobTitle": "Regional Sales Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Croatia",
+      "personLinkedInUrl": "https://www.linkedin.com/in/nikola-bakula-700b16133",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Karim Ouahioune",
+      "company": "Acer",
+      "jobTitle": "South Europe Marketing & Communication Director",
+      "email": "karim.ouahioune@acer.com",
+      "mobile": null,
+      "country": "France",
+      "personLinkedInUrl": "https://www.linkedin.com/in/karim-ouahioune-482304a",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Henrik Frydahl",
+      "company": "Acer",
+      "jobTitle": "Nordic Country Manager",
+      "email": "henrik.frydahl@acer.com",
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/henrik-frydahl-9a5962",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Nick Loftus",
+      "company": "Acer",
+      "jobTitle": "Business Manager Commercial Monitors and Projectors",
+      "email": "nick.loftus@acer.com",
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": "https://www.linkedin.com/in/ndwloftus",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Gloria Shyu",
+      "company": "Acer",
+      "jobTitle": "Fulfillment Manager",
+      "email": "gloria.shyu@acer.com",
+      "mobile": null,
+      "country": "Brazil",
+      "personLinkedInUrl": "https://www.linkedin.com/in/gloriashyu",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Sarah Jackson",
+      "company": "Acer",
+      "jobTitle": "E-Commerce Category Manager",
+      "email": "sarah.jackson@acer.com",
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": "https://www.linkedin.com/in/sarahlouisejackson",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Gabriele Mangolini",
+      "company": "Acer",
+      "jobTitle": "Senior EMEA Business Manager Commercial Notebooks",
+      "email": "gabriele.mangolini@acer.com",
+      "mobile": null,
+      "country": "Switzerland",
+      "personLinkedInUrl": "https://www.linkedin.com/in/gabrielemangolini",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Subhasish Choudhury",
+      "company": "Acer",
+      "jobTitle": "National Product Manager",
+      "email": "subhasish.choudhury@acer.com",
+      "mobile": null,
+      "country": "India",
+      "personLinkedInUrl": "https://www.linkedin.com/in/subhasish-choudhury-2a82a522",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Chris Evans",
+      "company": "Acer",
+      "jobTitle": "New Business Development Manager for EMEA",
+      "email": "chris.evans@acer.com",
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": "https://www.linkedin.com/in/chrisev1968",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Sema Yıldız",
+      "company": "Acer",
+      "jobTitle": "Marketing Manager",
+      "email": "sema.yildiz@acer.com",
+      "mobile": null,
+      "country": "Turkey",
+      "personLinkedInUrl": "https://www.linkedin.com/in/sema-yıldız-üner-37651a16",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Arianna Laura Timeto",
+      "company": "Acer",
+      "jobTitle": "Marketing Head Italy & Greece",
+      "email": "arianna.timeto@acer.com",
+      "mobile": null,
+      "country": "Italy",
+      "personLinkedInUrl": "https://www.linkedin.com/in/arianna-laura-timeto",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Michael Zufferey",
+      "company": "Acer",
+      "jobTitle": "Senior Business Systems Analyst",
+      "email": "michael.zufferey@acer.com",
+      "mobile": null,
+      "country": "Switzerland",
+      "personLinkedInUrl": "https://www.linkedin.com/in/michael-zufferey",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Bieke Lok",
+      "company": "Acer",
+      "jobTitle": "Account manager Belux (KAM)",
+      "email": "bieke.lok@acer.com",
+      "mobile": null,
+      "country": "Belgium",
+      "personLinkedInUrl": "https://www.linkedin.com/in/bieke-lok-34a2281b",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Luca Bendazzoli",
+      "company": "Acer",
+      "jobTitle": "Head of Product and Business | South Europe (France, Iberia, Italy, Greece)",
+      "email": "luca.bendazzoli@acer.com",
+      "mobile": null,
+      "country": "Italy",
+      "personLinkedInUrl": "https://www.linkedin.com/in/luca-bendazzoli-84490389",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Riccardo Bernasconi",
+      "company": "Acer",
+      "jobTitle": "EMEA Supply Chain Director",
+      "email": "riccardo.bernasconi@acer.com",
+      "mobile": null,
+      "country": "Switzerland",
+      "personLinkedInUrl": "https://www.linkedin.com/in/riccardo-bernasconi-2402871a",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Lauren Maree Eyre",
+      "company": "Acer",
+      "jobTitle": "Marketing And Public Relations Specialist",
+      "email": "lauren.eyre@acer.com",
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": "https://www.linkedin.com/in/laurenmareeeyre",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Jamie Samuel",
+      "company": "Acer",
+      "jobTitle": "Sr. Business Manager",
+      "email": "jamie.samuel@acer.com",
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": "https://www.linkedin.com/in/jamie-samuel",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Renny Kristanti",
+      "company": "Acer",
+      "jobTitle": "Partner Manager",
+      "email": "renny.kristanti@acer.com",
+      "mobile": null,
+      "country": "Indonesia",
+      "personLinkedInUrl": "https://www.linkedin.com/in/renny-kristanti-11107310",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    },
+    {
+      "fullName": "Doug Dizgun",
+      "company": "Acer",
+      "jobTitle": "Retail Sales Manager",
+      "email": "doug.dizgun@acer.com",
+      "mobile": null,
+      "country": "Canada",
+      "personLinkedInUrl": "https://www.linkedin.com/in/dougdizgun",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/acer"
+    }
+  ]
+}

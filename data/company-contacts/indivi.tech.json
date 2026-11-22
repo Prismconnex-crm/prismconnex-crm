@@ -1,0 +1,136 @@
+{
+  "domain": "indivi.tech",
+  "source": "indivitech_new_contacts.csv",
+  "contacts": [
+    {
+      "fullName": "Ece Bilgenur Demir",
+      "company": "indivitech",
+      "jobTitle": "EdTech Sales Specialist",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mert Bag",
+      "company": "indivitech",
+      "jobTitle": "Full Stack Web Developer",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hasan Koca",
+      "company": "indivitech",
+      "jobTitle": "Vice President Business Strategy",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gamze Berberoğlu",
+      "company": "indivitech",
+      "jobTitle": "Full Stack Developer",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yusuf Altuntaş",
+      "company": "indivitech",
+      "jobTitle": "Jr. Data Scientist",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bugra Naim Acar",
+      "company": "indivitech",
+      "jobTitle": "Educational Technology Analyst & Developer",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emre Çiçekel",
+      "company": "indivitech",
+      "jobTitle": "Ön Uç Geliştirici",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Eda Özdemir",
+      "company": "indivitech",
+      "jobTitle": "Product associate",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Erhan Özden",
+      "company": "indivitech",
+      "jobTitle": "İndivitech",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Miralp Tiryaki",
+      "company": "indivitech",
+      "jobTitle": "User Experience Designer",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Defne Ulker",
+      "company": "indivitech",
+      "jobTitle": "Business Analyst",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Defne Ülker",
+      "company": "indivitech",
+      "jobTitle": "Advertising Coordinator",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Onur Ertas",
+      "company": "indivitech",
+      "jobTitle": "Junior php developer",
+      "email": null,
+      "mobile": "90 539 843 77 54",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

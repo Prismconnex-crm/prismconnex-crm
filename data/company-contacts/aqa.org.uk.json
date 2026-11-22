@@ -1,0 +1,96 @@
+{
+  "domain": "aqa.org.uk",
+  "source": "AQA_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Oliver Drapper",
+      "company": "AQA",
+      "jobTitle": "Workplace Office Manager",
+      "email": null,
+      "mobile": "44 161 696 5995",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Chester",
+      "company": "AQA",
+      "jobTitle": "Key Account Manager",
+      "email": null,
+      "mobile": "44 161 696 5995",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kevin Yet Fong Cheung",
+      "company": "AQA",
+      "jobTitle": "Head of Assessment Research, Technology and Implementation",
+      "email": null,
+      "mobile": "44 161 696 5995",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonny Mills",
+      "company": "AQA",
+      "jobTitle": "Recruitment Lead",
+      "email": null,
+      "mobile": "44 161 696 5995",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Robin Kelly",
+      "company": "AQA",
+      "jobTitle": "Operations Manager (Data Control)",
+      "email": null,
+      "mobile": "44 161 696 5995",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kate Wilson",
+      "company": "AQA",
+      "jobTitle": "Senior Manager Marketing Operations",
+      "email": null,
+      "mobile": "44 161 696 5995",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stuart Ogden",
+      "company": "AQA",
+      "jobTitle": "Head of Enterprise Services",
+      "email": null,
+      "mobile": "44 161 696 5995",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Simon Collins",
+      "company": "AQA",
+      "jobTitle": "Head of Service Delivery",
+      "email": null,
+      "mobile": "44 161 696 5995",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rachel Buckle",
+      "company": "AQA",
+      "jobTitle": "Digital Marketing Manager",
+      "email": null,
+      "mobile": "44 161 696 5995",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

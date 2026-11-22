@@ -1,0 +1,106 @@
+{
+  "domain": "infento.com",
+  "source": "infento_new_contacts.csv",
+  "contacts": [
+    {
+      "fullName": "Sander Letema",
+      "company": "Infento",
+      "jobTitle": "Co Founder",
+      "email": null,
+      "mobile": "31 20 261 64 50",
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jurriën Dijkstra",
+      "company": "Infento",
+      "jobTitle": "Industrial Design Engineer",
+      "email": null,
+      "mobile": "31 20 261 64 50",
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Maximiliaan Morres",
+      "company": "Infento",
+      "jobTitle": "Lead Education",
+      "email": null,
+      "mobile": "31 20 261 64 50",
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Xavier De Rosamel",
+      "company": "Infento",
+      "jobTitle": "Head of Marketing",
+      "email": null,
+      "mobile": "31 20 261 64 50",
+      "country": "Italy",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Twan Wildeboer",
+      "company": null,
+      "jobTitle": null,
+      "email": null,
+      "mobile": "31 20 261 64 50",
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Olga Catarau",
+      "company": "Infento",
+      "jobTitle": "Head of Purchasing & Supply Chain",
+      "email": null,
+      "mobile": "31 20 261 64 50",
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andreas Edl",
+      "company": "Infento",
+      "jobTitle": "Studerende",
+      "email": null,
+      "mobile": "31 20 261 64 50",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kaja Kazafura",
+      "company": "Infento",
+      "jobTitle": "Production Floor Manager",
+      "email": null,
+      "mobile": "31 20 261 64 50",
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Manuel Schmidt",
+      "company": "Infento",
+      "jobTitle": "Lehrling",
+      "email": null,
+      "mobile": "31 20 261 64 50",
+      "country": "Austria",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Deepak Kumar",
+      "company": "Infento",
+      "jobTitle": "Business System Analyst",
+      "email": null,
+      "mobile": "31 20 261 64 50",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

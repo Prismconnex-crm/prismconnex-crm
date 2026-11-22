@@ -1,0 +1,36 @@
+{
+  "domain": "edusofx.com",
+  "source": "EduSofx_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Hatem Sallam",
+      "company": "EduSofx",
+      "jobTitle": "Co-Founder and CEO",
+      "email": null,
+      "mobile": null,
+      "country": "United Arab Emirates",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ahmed Tolba",
+      "company": "EduSofx",
+      "jobTitle": "Partner & Director of Partnerships & PMO",
+      "email": null,
+      "mobile": null,
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Islam Shaalan",
+      "company": "EduSofx",
+      "jobTitle": "Co-founder & Product Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Canada",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

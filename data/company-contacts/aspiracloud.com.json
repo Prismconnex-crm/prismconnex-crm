@@ -1,0 +1,86 @@
+{
+  "domain": "aspiracloud.com",
+  "source": "AspiraCloud_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Chris Mckinley",
+      "company": "AspiraCloud",
+      "jobTitle": "CTO",
+      "email": null,
+      "mobile": "44 24 7697 0550",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adrian Edgar",
+      "company": "AspiraCloud",
+      "jobTitle": "Chief Executive Officer",
+      "email": null,
+      "mobile": "44 24 7697 0550",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Patrick Boughton",
+      "company": "AspiraCloud",
+      "jobTitle": "Head of Business Development",
+      "email": null,
+      "mobile": "44 24 7697 0550",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rachel Matthews",
+      "company": "AspiraCloud",
+      "jobTitle": "Cloud Support Engineer",
+      "email": null,
+      "mobile": "44 24 7697 0550",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mariska Karagiannakis",
+      "company": "AspiraCloud",
+      "jobTitle": "IT Support Technician",
+      "email": null,
+      "mobile": "44 24 7697 0550",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Luke Parry",
+      "company": "AspiraCloud",
+      "jobTitle": "Head of Education",
+      "email": null,
+      "mobile": "44 24 7697 0550",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gill Payne",
+      "company": "AspiraCloud",
+      "jobTitle": "Office Administration Manager",
+      "email": null,
+      "mobile": "44 24 7697 0550",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daniel Watkiss",
+      "company": "AspiraCloud",
+      "jobTitle": "Customer Empowerment Lead",
+      "email": null,
+      "mobile": "44 24 7697 0550",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

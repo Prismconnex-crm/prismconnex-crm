@@ -1,0 +1,1006 @@
+{
+  "domain": "clever.com",
+  "source": "Clever_contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Darcy Grabski",
+      "company": "Clever",
+      "jobTitle": "Senior Strategic Projects & Proposal Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Talia Stryker",
+      "company": "Clever",
+      "jobTitle": "Senior Enterprise Customer Success Manager- Big Districts",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ken Smith",
+      "company": "Clever",
+      "jobTitle": "Sales and Onboarding Engineer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Layth Ramatala",
+      "company": "Clever",
+      "jobTitle": "Renewal Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michaela Milo",
+      "company": "Clever",
+      "jobTitle": "Senior Customer Lifecycle Marketing Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Martina Costagliola",
+      "company": "Clever",
+      "jobTitle": "Principal Software Engineer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alyssa Cubello",
+      "company": "Clever",
+      "jobTitle": "Head of Product Marketing",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vamsi Chunduru",
+      "company": "Clever",
+      "jobTitle": "Engineering Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nick Friebel",
+      "company": "Clever",
+      "jobTitle": "Senior Product Designer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Natasha Inniss",
+      "company": "Clever",
+      "jobTitle": "Enterprise Customer Success Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tina You",
+      "company": "Clever",
+      "jobTitle": "Principal Customer Success Manager (Enterprise)",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Trent Matthews",
+      "company": "Clever",
+      "jobTitle": "Director of Customer Support & Consulting Services",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Trupti Sardesai",
+      "company": "Clever",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Genevieve Herry",
+      "company": "Clever",
+      "jobTitle": "Principal Enterprise Customer Success Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Irene Che",
+      "company": "Clever",
+      "jobTitle": "Director of Finance",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dominic Garcia",
+      "company": "Clever",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Karina Osorio",
+      "company": "Clever",
+      "jobTitle": "Sales Engineer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jennifer Pluma",
+      "company": "Clever",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Devyn Lackner",
+      "company": "Clever",
+      "jobTitle": "Principal Product Marketing Manager - Team Lead (cybersecurity)",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Victoria Crow Dog",
+      "company": "Clever",
+      "jobTitle": "Senior Engineering Manager, Integrations Engineering",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Justin Long",
+      "company": "Clever",
+      "jobTitle": "Enterprise Account Executive - Application Partnerships",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Schuyler Lauder",
+      "company": "Clever",
+      "jobTitle": "Account Executive",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrew Marine",
+      "company": "Clever",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jessica Humphrey",
+      "company": "Clever",
+      "jobTitle": "Senior Talent Acquisition Coordinator",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Patricia Henriquez",
+      "company": "Clever",
+      "jobTitle": "Senior Manager - Mid-District Customer Success",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Monica Delia",
+      "company": "Clever",
+      "jobTitle": "Senior Enterprise Account Executive",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kenton Lu",
+      "company": "Clever",
+      "jobTitle": "Senior Accountant",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Wei Shelley Xue",
+      "company": "Clever",
+      "jobTitle": "Growth Marketing Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tim Mcginn",
+      "company": "Clever",
+      "jobTitle": "Senior Sales Engineer – Technical Presales & Solutions Design",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jeff Carlson",
+      "company": "Clever",
+      "jobTitle": "Head of Education Strategy & Advocacy",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Brea Mosley",
+      "company": "Clever",
+      "jobTitle": "Director of Brand Marketing and Communications",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Luther Banner",
+      "company": "Clever",
+      "jobTitle": "Senior Engineering Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michael Villanti",
+      "company": "Clever",
+      "jobTitle": "Senior Account Executive",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rachel Mitrano",
+      "company": "Clever",
+      "jobTitle": "Senior Product Designer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jennifer Kampf",
+      "company": "Clever",
+      "jobTitle": "Head of Talent Acquisition",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dominic Via",
+      "company": "Clever",
+      "jobTitle": "VP of Sales",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Syeda Maheen Qadri",
+      "company": "Clever",
+      "jobTitle": "Senior Employee Experience Coordinator",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Monique Champagne",
+      "company": "Clever",
+      "jobTitle": "Senior Manager, Enterprise Customer Success Team",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jamie Reffell",
+      "company": "Clever",
+      "jobTitle": "Chief Product Officer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrew Harrison",
+      "company": "Clever",
+      "jobTitle": "Principal Enterprise Customer Success Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Evelyn Wong",
+      "company": "Clever",
+      "jobTitle": "Senior Internal Communications Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Swadhyaya Kumar",
+      "company": "Clever",
+      "jobTitle": "Senior Software Engineer - Platform and Infrastructure",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nicholas Klima",
+      "company": "Clever",
+      "jobTitle": "Senior Customer Success Manager - International",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Wendy Yu",
+      "company": "Clever",
+      "jobTitle": "Head of Legal and Privacy",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aerin Bowers",
+      "company": "Clever",
+      "jobTitle": "Senior International Account Executive",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "Canada",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kelly Stuckey",
+      "company": "Clever",
+      "jobTitle": "Senior Brand Designer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Puja Gubbi",
+      "company": "Clever",
+      "jobTitle": "Software Engineering Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anthony Fumagalli",
+      "company": "Clever",
+      "jobTitle": "Senior Engineering Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Audrey Cevallos",
+      "company": "Clever",
+      "jobTitle": "Technical Recruiter",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Johnny Chen",
+      "company": "Clever",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Brendan Horgan",
+      "company": "Clever",
+      "jobTitle": "Principal Sales and Customer Success Operations Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lindsay Foglio",
+      "company": "Clever",
+      "jobTitle": "Account Executive",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Phillip J. Mikula",
+      "company": "Clever",
+      "jobTitle": "Chief Revenue Officer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anne Murguia",
+      "company": "Clever",
+      "jobTitle": "Chief Sales and Marketing Officer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tristan Thornburgh",
+      "company": "Clever",
+      "jobTitle": "Senior Product Marketing Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lauren Raulerson",
+      "company": "Clever",
+      "jobTitle": "Director of Customer Success - Districts",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Casey Schlotter",
+      "company": "Clever",
+      "jobTitle": "Engineering Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zeynep Tuna",
+      "company": "Clever",
+      "jobTitle": "Software Engineer II",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Melisa Bebchik",
+      "company": "Clever",
+      "jobTitle": "Senior Customer Success Operations Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Liza Pemstein",
+      "company": "Clever",
+      "jobTitle": "Sr. International Operations Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kristina Cruz",
+      "company": "Clever",
+      "jobTitle": "Principal Customer Success Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Janell Mathews",
+      "company": "Clever",
+      "jobTitle": "Senior Technical Account Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ariel Zhu",
+      "company": "Clever",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Irene Shao",
+      "company": "Clever",
+      "jobTitle": "Sr. Product Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Peter Burgess",
+      "company": "Clever",
+      "jobTitle": "Senior Account Executive",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Debora Micael",
+      "company": "Clever",
+      "jobTitle": "Senior CSM Strategic Partnerships",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jenya Kovalevich",
+      "company": "Clever",
+      "jobTitle": "Engineering Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zarin Sultana",
+      "company": "Clever",
+      "jobTitle": "Customer Success Manager at Clever Inc.",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Neal Pascua",
+      "company": "Clever",
+      "jobTitle": "Events Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Robinson",
+      "company": "Clever",
+      "jobTitle": "Principal Strategic Partnerships Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dana Fletcher",
+      "company": "Clever",
+      "jobTitle": "Manager of Application Success",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mary Shepherd",
+      "company": "Clever",
+      "jobTitle": "Sr. People Program Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tara Mathis",
+      "company": "Clever",
+      "jobTitle": "Senior Account Executive, District Partnerships",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ayo Ijidakinro",
+      "company": "Clever",
+      "jobTitle": "Software Engineering Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amelia Jones",
+      "company": "Clever",
+      "jobTitle": "Senior Director of Product Engineering",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Becky George",
+      "company": "Clever",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jana Hart",
+      "company": "Clever",
+      "jobTitle": "Senior Engineering Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Erin Bilbrey",
+      "company": "Clever",
+      "jobTitle": "Senior Editorial & Communications Strategist",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Justine Edrozo",
+      "company": "Clever",
+      "jobTitle": "Senior Product Designer, District Integrations",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sarah Ann Koval",
+      "company": "Clever",
+      "jobTitle": "Customer Marketing Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Timo Pelz",
+      "company": "Clever",
+      "jobTitle": "VP of Marketing",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Debbie Roberts",
+      "company": "Clever",
+      "jobTitle": "Senior Product Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kate Schaff",
+      "company": "Clever",
+      "jobTitle": "Vice President, Strategy & Operations",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joelle Barrios",
+      "company": "Clever",
+      "jobTitle": "Director of People",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Claire Kozlowski",
+      "company": "Clever",
+      "jobTitle": "Senior Growth Marketing Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zach Gladnick",
+      "company": "Clever",
+      "jobTitle": "Senior Account Executive",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bhagya Sodem",
+      "company": "Clever",
+      "jobTitle": "Head of Customer Support, Services, Customer Education & Sales Engineering",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Negasi",
+      "company": "Clever",
+      "jobTitle": "Software Engineer II",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tashi Bordenave",
+      "company": "Clever",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mirna Reagan",
+      "company": "Clever",
+      "jobTitle": "Senior Sales Enablement Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Febin Bellamy",
+      "company": "Clever",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emily Bleibel",
+      "company": "Clever",
+      "jobTitle": "Senior Customer Success Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vanessa Monscourt",
+      "company": "Clever",
+      "jobTitle": "Consultante en développement commercial",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Danielle Windley",
+      "company": "Clever",
+      "jobTitle": "Principal Customer Success Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shannen Lam",
+      "company": "Clever",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alexx Webb",
+      "company": "Clever",
+      "jobTitle": "Senior Product Analyst",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Maddie Bustamante",
+      "company": "Clever",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "John Teague",
+      "company": "Clever",
+      "jobTitle": "Executive Assistant",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Derek Devine",
+      "company": "Clever",
+      "jobTitle": "Director of International Markets",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "Ireland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Quinn Fusting",
+      "company": "Clever",
+      "jobTitle": "Senior Product Marketing Manager",
+      "email": null,
+      "mobile": "1 877 578 5672",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

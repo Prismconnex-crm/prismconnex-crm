@@ -1,0 +1,16 @@
+{
+  "domain": "intel.com",
+  "source": "intel_contacts.csv",
+  "contacts": [
+    {
+      "fullName": "Priya Iyer",
+      "company": "Intel Corporation-US",
+      "jobTitle": "Principal Engineer - Product Security Incident Response",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "domain": "classroomscreen.com",
+  "source": "Classroomscreen_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Heleanne Rusthoven",
+      "company": "Classroomscreen",
+      "jobTitle": "Creative Designer",
+      "email": null,
+      "mobile": null,
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sebastiaan De Vries",
+      "company": "Classroomscreen",
+      "jobTitle": "Full Stack Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Laurens Koppers",
+      "company": "Classroomscreen",
+      "jobTitle": "Founder / CEO",
+      "email": null,
+      "mobile": null,
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Wouter De Wild",
+      "company": "Classroomscreen",
+      "jobTitle": "Freelance Software Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alice Whitting",
+      "company": "Classroomscreen",
+      "jobTitle": "Brand and Community Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sherilyn Caudle",
+      "company": "Classroomscreen",
+      "jobTitle": "Help Desk Officer",
+      "email": null,
+      "mobile": null,
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michel Hulst",
+      "company": "Classroomscreen",
+      "jobTitle": "Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pavel Stoev",
+      "company": "Classroomscreen",
+      "jobTitle": "Accounts Receivable Assistant",
+      "email": null,
+      "mobile": null,
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

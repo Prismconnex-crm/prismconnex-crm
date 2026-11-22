@@ -1,0 +1,256 @@
+{
+  "domain": "blocksi.net",
+  "source": "Blocksi.xlsx (no header row, two rows per person — normalised to CSV first)",
+  "contacts": [
+    {
+      "fullName": "Jonathan Powell",
+      "company": "Blocksi Inc",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amanda Lyles",
+      "company": "Blocksi Inc",
+      "jobTitle": "Account Executive",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jack Byrne",
+      "company": "Blocksi Inc",
+      "jobTitle": "Account Executive",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ernest Dixon",
+      "company": "Blocksi Inc",
+      "jobTitle": "Director of Customer Success",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tony Paduano",
+      "company": "Blocksi Inc",
+      "jobTitle": "Technical Support Engineer",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Catherine Tate",
+      "company": "Blocksi Inc",
+      "jobTitle": "Sales Engineer",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joseph Smith",
+      "company": "Blocksi Inc",
+      "jobTitle": "Support Engineering Team Lead",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jesse Demar",
+      "company": "Blocksi Inc",
+      "jobTitle": "Sales Engineer",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kendall Freeman",
+      "company": "Blocksi Inc",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michael Chesnutt",
+      "company": "Blocksi Inc",
+      "jobTitle": "Technical Support and Deployment Engineer",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Fuad Bahou",
+      "company": "Blocksi Inc",
+      "jobTitle": "CEO",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sandra Rice",
+      "company": "Blocksi Inc",
+      "jobTitle": "Sales Manager",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nika Najvirt",
+      "company": "Blocksi Inc",
+      "jobTitle": "VP of Legal",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zdravko Brdarovski",
+      "company": "Blocksi Inc",
+      "jobTitle": "Full-Stack Developer | Quality Assurance Tester | Cloud Monitoring Analyst",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "Slovenia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Abdelkarim Azzaz",
+      "company": "Blocksi Inc",
+      "jobTitle": "Data Scientist",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Firas Gacha",
+      "company": "Blocksi Inc",
+      "jobTitle": "Full stack software developer",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Omar Boufeloussen",
+      "company": "Blocksi Inc",
+      "jobTitle": "Data Scientist",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paul Schiltgen",
+      "company": "Blocksi Inc",
+      "jobTitle": "VP of Sales",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Benida Mekic",
+      "company": "Blocksi Inc",
+      "jobTitle": "Product Marketing Manager",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "Slovenia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Milena Jandric",
+      "company": "Blocksi Inc",
+      "jobTitle": "UX Designer",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "Slovenia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Luka Mlinarič Fekonja",
+      "company": "Blocksi Inc",
+      "jobTitle": "Full-Stack Software Engineer",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "Slovenia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Azur Mujezinovic",
+      "company": "Blocksi Inc",
+      "jobTitle": "Information Technology System Engineer",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "Slovenia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stefan Pasinechki",
+      "company": "Blocksi Inc",
+      "jobTitle": "Sales & CRM Administrator",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "Slovenia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Spela Gortnar",
+      "company": "Blocksi Inc",
+      "jobTitle": "Educational Technology Specialist",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dmytro Chyzhovych",
+      "company": "Blocksi Inc",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "1 877 693 4822",
+      "country": "Finland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

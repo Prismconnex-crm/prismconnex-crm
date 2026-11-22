@@ -1,0 +1,16 @@
+{
+  "domain": "everybodycounts.org.uk",
+  "source": "Everybody_Counts_Limited_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Christian Fuller",
+      "company": "Everybody Counts Limited",
+      "jobTitle": "Counselor advocate",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

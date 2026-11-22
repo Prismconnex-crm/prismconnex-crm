@@ -1,0 +1,26 @@
+{
+  "domain": "eduflix.com",
+  "source": "Eduflix_Contacts.csv",
+  "contacts": [
+    {
+      "fullName": "Lina Lindqvist",
+      "company": "Eduflix",
+      "jobTitle": "Innehållsproducent",
+      "email": null,
+      "mobile": null,
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kerry Neary Simpkins",
+      "company": "Eduflix",
+      "jobTitle": "Sales Manager UK",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

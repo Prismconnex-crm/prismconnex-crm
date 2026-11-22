@@ -1,0 +1,166 @@
+{
+  "domain": "anton.app",
+  "source": "ANTON_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Keira Shoup",
+      "company": "ANTON",
+      "jobTitle": "International Growth Student Assistant",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Annie Zidek",
+      "company": "ANTON",
+      "jobTitle": "International Growth Student Assistant",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vitor Abreu",
+      "company": "ANTON",
+      "jobTitle": "Content Creator",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lea Petrenz",
+      "company": "ANTON",
+      "jobTitle": "Chief of Staff",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ollie Goldstone",
+      "company": "ANTON",
+      "jobTitle": "UK Content Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Natali Reis Cordeiro",
+      "company": "ANTON",
+      "jobTitle": "Content Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Benjamin Tenopala Carmona",
+      "company": "ANTON",
+      "jobTitle": "Educational content creator",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cynthia Tapia Silva",
+      "company": "ANTON",
+      "jobTitle": "Creadora de contenido educativo",
+      "email": null,
+      "mobile": null,
+      "country": "Ecuador",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nhân Trương",
+      "company": "ANTON",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Felix Breßler",
+      "company": "ANTON",
+      "jobTitle": "Content-Produzent",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jacob Glanville",
+      "company": "ANTON",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonas Osterkorn",
+      "company": "ANTON",
+      "jobTitle": "Werkstudent",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dipl.-Ing. Vincent Fraass",
+      "company": "ANTON",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emma Kimmell",
+      "company": "ANTON",
+      "jobTitle": "Content Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Grace O'Hare",
+      "company": "ANTON",
+      "jobTitle": "Content Author",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rieke Sommerfeld",
+      "company": "ANTON",
+      "jobTitle": "Content Creator",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

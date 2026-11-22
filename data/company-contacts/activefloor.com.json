@@ -1,0 +1,256 @@
+{
+  "domain": "activefloor.com",
+  "source": "ActiveFloor.csv",
+  "contacts": [
+    {
+      "fullName": "Julia Lindsay Correll Emborg",
+      "company": "ActiveFloor",
+      "jobTitle": "Marketingspecialist",
+      "email": "je@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/juliaemborg",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Thomas Sassersson",
+      "company": "ActiveFloor",
+      "jobTitle": "Nordic Sales Manager",
+      "email": "ts@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Sweden",
+      "personLinkedInUrl": "https://www.linkedin.com/in/thomassassersson",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Sally Blank",
+      "company": "ActiveFloor",
+      "jobTitle": "Channel Manager - USA",
+      "email": "sally@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "United States",
+      "personLinkedInUrl": "https://www.linkedin.com/in/sally-blank-b202745",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Abby Smith",
+      "company": "ActiveFloor",
+      "jobTitle": "K12 Educational Specialist",
+      "email": "aj@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "United States",
+      "personLinkedInUrl": "https://www.linkedin.com/in/abbylynnsmith",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Dan Aplin Activefloor",
+      "company": "ActiveFloor",
+      "jobTitle": "UK Business Lead",
+      "email": "da@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "United Kingdom",
+      "personLinkedInUrl": "https://www.linkedin.com/in/danaplin",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Emilia Antal",
+      "company": "ActiveFloor",
+      "jobTitle": "Software Developer",
+      "email": "ea@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/emilia-antal-38483261",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Thomas Sørensen",
+      "company": "ActiveFloor",
+      "jobTitle": "Software Developer",
+      "email": "ts@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/thomas-sørensen-942aa716b",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Anita Nielsen",
+      "company": "ActiveFloor",
+      "jobTitle": "Grafiker",
+      "email": "an@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/anita-nielsen-2b880960",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Alan Mcdonald",
+      "company": "ActiveFloor",
+      "jobTitle": "Technical Support Specialist",
+      "email": "alan@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "United States",
+      "personLinkedInUrl": "https://www.linkedin.com/in/alan-mcdonald-86099a179",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Simone Sommer Würtz",
+      "company": "ActiveFloor",
+      "jobTitle": "Creative Director",
+      "email": "simone@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/simonewurtz",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Thomas Troels Christensen",
+      "company": "ActiveFloor",
+      "jobTitle": "AV-tekniker",
+      "email": "ttc@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/thomas-troels-christensen-aa4258101",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "René Juncher Michelsen",
+      "company": "ActiveFloor",
+      "jobTitle": "Key Account Manager",
+      "email": null,
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/dkrene",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Michael Vejgaard Jensen",
+      "company": "ActiveFloor",
+      "jobTitle": "Hardware product developer",
+      "email": "mvj@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/michael-vejgaard-jensen-24578975",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Henriette Krighaar Rasmussen",
+      "company": "ActiveFloor",
+      "jobTitle": "Financial Controller",
+      "email": "hr@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/henriette-krighaar-rasmussen-018b9555",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Helle Jahn",
+      "company": "ActiveFloor",
+      "jobTitle": "Regnskabsassistent",
+      "email": "hj@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/helle-jahn-850253189",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Anja Karina Hansen",
+      "company": "ActiveFloor",
+      "jobTitle": "Redaktør",
+      "email": "akh@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/anja-karina-hansen-59433a198",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Louise Würtz",
+      "company": "ActiveFloor",
+      "jobTitle": "Customer Success Manager",
+      "email": "lw@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/louise-würtz-09a25187",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Andreas Jensen",
+      "company": "ActiveFloor",
+      "jobTitle": "Softwareudvikler",
+      "email": "aj@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/andreas-jensen-86758698",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Peter O Johnsen",
+      "company": "ActiveFloor",
+      "jobTitle": "Warehouse Logistics Manager",
+      "email": "peter@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/peter-o-johnsen-60b2b9a1",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Daniel Jallov",
+      "company": "ActiveFloor",
+      "jobTitle": "Software and game developer",
+      "email": "dj@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/danieljallov",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Marc Petersen",
+      "company": "ActiveFloor",
+      "jobTitle": "Sales Consultant",
+      "email": "mp@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/marc-petersen-88a855331",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Kasper Nielsen",
+      "company": "ActiveFloor",
+      "jobTitle": "Quality Control Manager",
+      "email": "kn@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/kasper-nielsen-8ab693235",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Alan Mcdonald",
+      "company": "ActiveFloor",
+      "jobTitle": "Computer Support Specialist",
+      "email": "alan@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "United States",
+      "personLinkedInUrl": "https://www.linkedin.com/in/alan-mcdonald-739866274",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Kasper Duncker Würtz",
+      "company": "ActiveFloor",
+      "jobTitle": "Chief Operating Officer",
+      "email": "kd@activefloor.com",
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/kasper-duncker-würtz-24563670",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    },
+    {
+      "fullName": "Casper Bræmer",
+      "company": "ActiveFloor",
+      "jobTitle": "Research And Development Manager",
+      "email": null,
+      "mobile": "45 30 70 07 29",
+      "country": "Denmark",
+      "personLinkedInUrl": "https://www.linkedin.com/in/casper-bræmer-73966b295",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/activefloorglobal"
+    }
+  ]
+}

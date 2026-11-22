@@ -1,0 +1,26 @@
+{
+  "domain": "indota.com",
+  "source": "indota_new_contacts.csv",
+  "contacts": [
+    {
+      "fullName": "Yeria Cerón Mendoza",
+      "company": "Indota",
+      "jobTitle": "Sales & marketing - European / South American market",
+      "email": null,
+      "mobile": "31 592 201 351",
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "冉 王",
+      "company": "Indota",
+      "jobTitle": "Marketing Staff",
+      "email": null,
+      "mobile": "31 592 201 351",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

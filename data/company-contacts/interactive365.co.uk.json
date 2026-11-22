@@ -1,0 +1,36 @@
+{
+  "domain": "interactive365.co.uk",
+  "source": "interactive365_contacts.csv",
+  "contacts": [
+    {
+      "fullName": "George Spree",
+      "company": "Interactive365",
+      "jobTitle": "Sales & Product Manager",
+      "email": null,
+      "mobile": "44 20 3621 4714",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Deniss Dmitrijev",
+      "company": "Interactive365",
+      "jobTitle": "Director",
+      "email": null,
+      "mobile": "44 20 3621 4714",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alexandra Chichko",
+      "company": "Interactive365",
+      "jobTitle": "Technical Manager",
+      "email": null,
+      "mobile": "44 20 3621 4714",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

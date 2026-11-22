@@ -1,0 +1,1006 @@
+{
+  "domain": "classera.com",
+  "source": "Classera_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Ahmad Farhan",
+      "company": "Classera",
+      "jobTitle": "VP of Product",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohammad Temraz",
+      "company": "Classera",
+      "jobTitle": "VP of Engineering",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Manal Saleh",
+      "company": "Classera",
+      "jobTitle": "Senior Supervisor Partner Success",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohammad Almadani",
+      "company": "Classera",
+      "jobTitle": "Founder, Chairman & CEO",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yasser Sallah",
+      "company": "Classera",
+      "jobTitle": "Partner success Education Sector Manager central & Sothern",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hisham Basiony",
+      "company": "Classera",
+      "jobTitle": "Support Manager in Classera at Ministry of Education Oman Project",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bilal Ali",
+      "company": "Classera",
+      "jobTitle": "Senior Data Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Abdullah Babtain",
+      "company": "Classera",
+      "jobTitle": "Senior Account Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yacoub Al-Tamimi",
+      "company": "Classera",
+      "jobTitle": "Graphics Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Fawad Khan",
+      "company": "Classera",
+      "jobTitle": "Senior Business Development Consultant",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Islam A. Elgamal",
+      "company": "Classera",
+      "jobTitle": "Business Development Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohammad Khanfar",
+      "company": "Classera",
+      "jobTitle": "Senior Data Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hisham Hassan",
+      "company": "Classera",
+      "jobTitle": "Technical Team Lead",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Loai Lababneh",
+      "company": "Classera",
+      "jobTitle": "Mid-Senior Software Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ibad Ur Rehman Ahmed",
+      "company": "Classera",
+      "jobTitle": "Senior Vice President, Monetization",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Fatma Al Refaie",
+      "company": "Classera",
+      "jobTitle": "Sr. Business Development Consultant",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Walaa Alahmad",
+      "company": "Classera",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ahmed Ghzaly",
+      "company": "Classera",
+      "jobTitle": "GCC Partner Success Director",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jermein Elgammal",
+      "company": "Classera",
+      "jobTitle": "Operations and Excellence Director - CFD",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ahmed Crimly",
+      "company": "Classera",
+      "jobTitle": "Senior Business Development Consultant",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sa' Shaheen سائد شاهين",
+      "company": "Classera",
+      "jobTitle": "Senior Technical Support Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Huthaifa Yousef",
+      "company": "Classera",
+      "jobTitle": "Team Lead Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohammad Mallisho",
+      "company": "Classera",
+      "jobTitle": "Business Development Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohammad Yasin",
+      "company": "Classera",
+      "jobTitle": "Senior iOS Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mosab Al Moghrabi",
+      "company": "Classera",
+      "jobTitle": "Mid-Senior Software Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Faisal Khan",
+      "company": "Classera",
+      "jobTitle": "Business Development Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tariq Hassan Khan",
+      "company": "Classera",
+      "jobTitle": "CFO",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohammed Arda",
+      "company": "Classera",
+      "jobTitle": "Senior Business Development Consultant",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Qatar",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hafedh Abidi",
+      "company": "Classera",
+      "jobTitle": "Senior Business Development Consultant - Education Sector",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Qatar",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mona Farouk",
+      "company": "Classera",
+      "jobTitle": "Marketing Director | MEA & APAC",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohammad Alashmawi",
+      "company": "Classera",
+      "jobTitle": "Co-Founder & Chief of Venture Builder",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mai Mohsen",
+      "company": "Classera",
+      "jobTitle": "Senior Pre-Sales Consultant MENA Region",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hamzah Hourani",
+      "company": "Classera",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Asim Khattab",
+      "company": "Classera",
+      "jobTitle": "Mid-Senior Software Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Osama Rawashdeh",
+      "company": "Classera",
+      "jobTitle": "iOS Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ahmad Abu Saleem",
+      "company": "Classera",
+      "jobTitle": "Partner Success Activation Lead",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ashraf Fadeel",
+      "company": "Classera",
+      "jobTitle": "PR Director",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mada Alghamdi",
+      "company": "Classera",
+      "jobTitle": "Project Manager – EdTech Implementation & Strategic Activation",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Waleed Tubail",
+      "company": "Classera",
+      "jobTitle": "Business Development Consultant",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Oman",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohammad Yousef",
+      "company": "Classera",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ahmad Sawalha",
+      "company": "Classera",
+      "jobTitle": "Senior VR/AR Developer and Designer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aya Hawari",
+      "company": "Classera",
+      "jobTitle": "Mid-Senior Software Developer II",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Islam A. Elgamal",
+      "company": "Classera",
+      "jobTitle": "Regional Business Development Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Taher Abdelhamid",
+      "company": "Classera",
+      "jobTitle": "Business Development Consultant",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zobida Abujaber",
+      "company": "Classera",
+      "jobTitle": "Product Owner",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shrouk Tarek",
+      "company": "Classera",
+      "jobTitle": "Partner Success Supervisor",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sulaiman Alhubays",
+      "company": "Classera",
+      "jobTitle": "Business Development Specialist",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tajwar Hashimi",
+      "company": "Classera",
+      "jobTitle": "Business Finance Consultant",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Pakistan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adel Tawalbeh",
+      "company": "Classera",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Marah Qauqzeh",
+      "company": "Classera",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yazeed Afaneh",
+      "company": "Classera",
+      "jobTitle": "Software Engineer iOS",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rahma Shahba",
+      "company": "Classera",
+      "jobTitle": "Software QA Test Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ismail Mehyar",
+      "company": "Classera",
+      "jobTitle": "Senior Product Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Abdallah Malkawi",
+      "company": "Classera",
+      "jobTitle": "Mid-Senior Software Engineer I",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ayush Anand",
+      "company": "Classera",
+      "jobTitle": "Campus Ambassador",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Duaa Abu-Rumman",
+      "company": "Classera",
+      "jobTitle": "Senior Android Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohammad Ghonaimat",
+      "company": "Classera",
+      "jobTitle": "Mid-Senior DevOps Engineer ||",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Leena Sarhan",
+      "company": "Classera",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ahmed Khan",
+      "company": "Classera",
+      "jobTitle": "Senior Vice President of the Classera Family (HR)",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Wael Ameen",
+      "company": "Classera",
+      "jobTitle": "Partner Success Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rana Ali",
+      "company": "Classera",
+      "jobTitle": "Sales Operations Analyst",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Soha Abozaid",
+      "company": "Classera",
+      "jobTitle": "Marketing Program Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hany Al Fayoumy",
+      "company": "Classera",
+      "jobTitle": "Head of partner/customer success Department",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bayan Hasan",
+      "company": "Classera",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hanan Fayad",
+      "company": "Classera",
+      "jobTitle": "C-Reality(AR technolgy) Activation Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Moataz Hussein",
+      "company": "Classera",
+      "jobTitle": "Vice President Legal",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohammad Abulebbeh",
+      "company": "Classera",
+      "jobTitle": "Technical Team Lead",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Omar Lotfy",
+      "company": "Classera",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mayar Eraki",
+      "company": "Classera",
+      "jobTitle": "Oprations supervioser",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Suhaib Khater",
+      "company": "Classera",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Qatar",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amr Essam",
+      "company": "Classera",
+      "jobTitle": "Regional Business Development & partnership Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rahaf Hazaymih",
+      "company": "Classera",
+      "jobTitle": "Artificial Intelligence Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohamed Tarek",
+      "company": "Classera",
+      "jobTitle": "Full-stack Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nada Mohamed",
+      "company": "Classera",
+      "jobTitle": "Software Quality Control Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ahmed Alaraby",
+      "company": "Classera",
+      "jobTitle": "Business Development Manager - GCC",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hamza Aboras",
+      "company": "Classera",
+      "jobTitle": "Development Team Lead",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Abanob Gamal",
+      "company": "Classera",
+      "jobTitle": "Accounting Manager - Monetization",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nourhan Elsewefy",
+      "company": "Classera",
+      "jobTitle": "Activation Supervisor at Classera",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohammed Baaysharah",
+      "company": "Classera",
+      "jobTitle": "CSR Director",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mohammad Daas",
+      "company": "Classera",
+      "jobTitle": "UI/UX Design Director",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Abdullah Jarrar",
+      "company": "Classera",
+      "jobTitle": "Sr Product Owner",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Habiba Helmy",
+      "company": "Classera",
+      "jobTitle": "Team Leader SDR",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Abdallah Hassan",
+      "company": "Classera",
+      "jobTitle": "Data & AI Architect",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Osama Sabri",
+      "company": "Classera",
+      "jobTitle": "AI team lead",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hamza Gharaibeh",
+      "company": "Classera",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Eyad Jafar",
+      "company": "Classera",
+      "jobTitle": "Mid Backend Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mahmoud Gomaa",
+      "company": "Classera",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jebril Mejdalwi",
+      "company": "Classera",
+      "jobTitle": "Mid Level Backend Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Jordan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Inas Sobhy",
+      "company": "Classera",
+      "jobTitle": "Government Partnerships Director - Global",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ahmed Abdelfattah Hegazi",
+      "company": "Classera",
+      "jobTitle": "Sr.Finance Director",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aya Suliman",
+      "company": "Classera",
+      "jobTitle": "Software Quality Control Engineer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yaser Alqahtany",
+      "company": "Classera",
+      "jobTitle": "General Manager – Government Relations & Key Accounts",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rana Ehab",
+      "company": "Classera",
+      "jobTitle": "Marketing Communications Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tawfik Attia",
+      "company": "Classera",
+      "jobTitle": "Partner Success Deputy Manager - Western Region",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hossam Hassan",
+      "company": "Classera",
+      "jobTitle": "Regional Operations Manager",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Laith Ali",
+      "company": "Classera",
+      "jobTitle": "Web Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emad Raafat",
+      "company": "Classera",
+      "jobTitle": "Senior Odoo developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mariam Ali",
+      "company": "Classera",
+      "jobTitle": "Performance Management Specialist",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Abanoub Magdy",
+      "company": "Classera",
+      "jobTitle": "Python Odoo Developer",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shereef Metwally Mba And M.Sc",
+      "company": "Classera",
+      "jobTitle": "Telecom and Key Partnerships Director",
+      "email": null,
+      "mobile": "1 414 687-5892",
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

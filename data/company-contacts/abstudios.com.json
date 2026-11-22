@@ -1,0 +1,96 @@
+{
+  "domain": "abstudios.com",
+  "source": "AB Studios.xlsx",
+  "contacts": [
+    {
+      "fullName": "Zoe Kurtz",
+      "company": "Studios",
+      "jobTitle": "Director of Sales and Marketing",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrew Willett",
+      "company": "Studios",
+      "jobTitle": "Strategic Partnerships",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Brian Heaton",
+      "company": "Studios",
+      "jobTitle": "President",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nia Ricks",
+      "company": "Studios",
+      "jobTitle": "Content & Quality Assurance Specialist",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sean Schleifer",
+      "company": "Studios",
+      "jobTitle": "Innovative Media Producer",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Elizabeth Lecompte",
+      "company": "Studios",
+      "jobTitle": "Director of Product",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ryan Varela",
+      "company": "Studios",
+      "jobTitle": "Customer Success",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rt Ferrell",
+      "company": "Studios",
+      "jobTitle": "Director of Creative Content",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chelsea Young",
+      "company": "Studios",
+      "jobTitle": "Instructional Designer",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db/prisma";
 import { getSessionPayload } from "@/lib/auth/session";
+import { alwaysShowContactIcons, getCompanyContacts } from "@/lib/companies/company-contacts";
 
 export const dynamic = "force-dynamic";
 
@@ -142,6 +143,11 @@ export async function GET(_request: Request, { params }: { params: { id: string 
         industryEvidence: exhibitor.industryEvidence,
         industrySource: exhibitor.industrySource,
       },
+      // Imported contact list for this company (People table), or null when
+      // none was imported — the profile then shows the directory contact card.
+      contacts: getCompanyContacts(domain, exhibitor),
+      // Show LinkedIn + paper-plane on every row, inert where no URL exists.
+      contactIconsAlways: alwaysShowContactIcons(domain, exhibitor.companyName),
       company,
       matchedBy: company ? (domain && company.domain?.toLowerCase() === domain ? "domain" : "name") : null,
     });

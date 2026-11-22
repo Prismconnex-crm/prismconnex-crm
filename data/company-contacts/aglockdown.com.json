@@ -1,0 +1,26 @@
+{
+  "domain": "aglockdown.com",
+  "source": "Ag Lockdown.csv",
+  "contacts": [
+    {
+      "fullName": "Tony Foote",
+      "company": "Ag Lockdown",
+      "jobTitle": "Managing Director",
+      "email": "tony.foote@aglockdown.com",
+      "mobile": "44 203 518 7212",
+      "country": "United Kingdom",
+      "personLinkedInUrl": "https://www.linkedin.com/in/tony-foote-184406b",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/aglockdown"
+    },
+    {
+      "fullName": "Tim Sagar",
+      "company": "Ag Lockdown",
+      "jobTitle": "Non Executive Director",
+      "email": "tim.sagar@aglockdown.com",
+      "mobile": "44 203 518 7212",
+      "country": "United States",
+      "personLinkedInUrl": "https://www.linkedin.com/in/timsagar",
+      "companyLinkedInUrl": "https://www.linkedin.com/company/aglockdown"
+    }
+  ]
+}

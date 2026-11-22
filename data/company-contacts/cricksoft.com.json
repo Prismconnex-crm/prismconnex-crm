@@ -1,0 +1,426 @@
+{
+  "domain": "cricksoft.com",
+  "source": "Crick_Software.xlsx",
+  "contacts": [
+    {
+      "fullName": "Kyle Odierno",
+      "company": "Crick Software",
+      "jobTitle": "Education Sales Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Neil Andrew",
+      "company": "Crick Software",
+      "jobTitle": "Managing Director - US & International",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Francesca Salusbury",
+      "company": "Crick Software",
+      "jobTitle": "Education Sales Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jess Boulter",
+      "company": "Crick Software",
+      "jobTitle": "Education Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alyssa Dimaio",
+      "company": "Crick Software",
+      "jobTitle": "Educational Sales Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bridget Griffiths",
+      "company": "Crick Software",
+      "jobTitle": "Content Manager",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hannah Fernandez Mcquiggan",
+      "company": "Crick Software",
+      "jobTitle": "Sales Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carolyn Knowles",
+      "company": "Crick Software",
+      "jobTitle": "Senior Education Sales Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrew Cumming",
+      "company": "Crick Software",
+      "jobTitle": "Senior Education Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kelly Magner",
+      "company": "Crick Software",
+      "jobTitle": "Customer Experience Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Katy Preston",
+      "company": "Crick Software",
+      "jobTitle": "Customer Service Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "John Crick",
+      "company": "Crick Software",
+      "jobTitle": "CEO",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Phil Hackett",
+      "company": "Crick Software",
+      "jobTitle": "Technical Services Manager",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Toni Caggiano-Carpenter",
+      "company": "Crick Software",
+      "jobTitle": "US Sales Manager",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Siobhan Butel",
+      "company": "Crick Software",
+      "jobTitle": "Strategic Head of CX and Marketing",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lina Howarth",
+      "company": "Crick Software",
+      "jobTitle": "Chief Executive Officer",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lauren Harvey",
+      "company": "Crick Software",
+      "jobTitle": "Junior Marketing Executive",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gemma Dean",
+      "company": "Crick Software",
+      "jobTitle": "UK Customer Experience Manager",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Katie Fitch",
+      "company": "Crick Software",
+      "jobTitle": "Senior Education Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Natasha Cross",
+      "company": "Crick Software",
+      "jobTitle": "Customer Engagement Team Leader",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "John Crick",
+      "company": "Crick Software",
+      "jobTitle": "Founder & Chairman",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adam Whatling",
+      "company": "Crick Software",
+      "jobTitle": "Digital Content Designer",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Siân Rice",
+      "company": "Crick Software",
+      "jobTitle": "Interim UK Customer Experience Manager",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Beverley Anderson",
+      "company": "Crick Software",
+      "jobTitle": "Marketing Team",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Roger Macey",
+      "company": "Crick Software",
+      "jobTitle": "Technical Projects Analyst",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joseph Owen",
+      "company": "Crick Software",
+      "jobTitle": "Education Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "James Stryjek",
+      "company": "Crick Software",
+      "jobTitle": "Project Manager",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cameron Sadler",
+      "company": "Crick Software",
+      "jobTitle": "Lead Software Developer",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ellen Waddington",
+      "company": "Crick Software",
+      "jobTitle": "Head of Finance and Admin",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cath Wilson",
+      "company": "Crick Software",
+      "jobTitle": "Education Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Max Ryan",
+      "company": "Crick Software",
+      "jobTitle": "Technical Development Analyst",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ben Willis",
+      "company": "Crick Software",
+      "jobTitle": "Project Coordinator",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jo Gibbins",
+      "company": "Crick Software",
+      "jobTitle": "Curriculum Manager",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Loreen Nicolai",
+      "company": "Crick Software",
+      "jobTitle": "Customer Engagement Administrator",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "John Bullock",
+      "company": "Crick Software",
+      "jobTitle": "Graphic Designer",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rhiannon Davies",
+      "company": "Crick Software",
+      "jobTitle": "Education Sales Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tracy G.",
+      "company": "Crick Software",
+      "jobTitle": "Marketing Executive",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rosie Sheach",
+      "company": "Crick Software",
+      "jobTitle": "Educational Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emma Parker",
+      "company": "Crick Software",
+      "jobTitle": "Educational Consultant",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Maria Chartres",
+      "company": "Crick Software",
+      "jobTitle": "Administrator",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tania Johnston",
+      "company": "Crick Software",
+      "jobTitle": "Curriculum Specialist",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Deborah Livingstone",
+      "company": "Crick Software",
+      "jobTitle": "Accounts Administrator",
+      "email": null,
+      "mobile": "44 1604 671691",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "domain": "data-harvest.co.uk",
+  "source": "Data_Harvest_Group.xlsx",
+  "contacts": [
+    {
+      "fullName": "Nick Brown",
+      "company": "Data Harvest Group",
+      "jobTitle": "Technical Director",
+      "email": null,
+      "mobile": "44 1525 373666",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lee Grahame",
+      "company": "Data Harvest Group",
+      "jobTitle": "Managing Director",
+      "email": null,
+      "mobile": "44 1525 373666",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ben Collins",
+      "company": "Data Harvest Group",
+      "jobTitle": "Repair & Test Technician",
+      "email": null,
+      "mobile": "44 1525 373666",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Connie Lwichi",
+      "company": "Data Harvest Group",
+      "jobTitle": "Post Harvest Assistant Manager",
+      "email": null,
+      "mobile": "44 1525 373666",
+      "country": "Kenya",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Neil Morgan",
+      "company": "Data Harvest Group",
+      "jobTitle": "Quality Assurance and Production Support Engineer",
+      "email": null,
+      "mobile": "44 1525 373666",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes Yes",
+      "company": "Data Harvest Group",
+      "jobTitle": "Owner",
+      "email": null,
+      "mobile": "44 1525 373666",
+      "country": "Canada",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

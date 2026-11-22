@@ -1,0 +1,366 @@
+{
+  "domain": "i-screammedia.com",
+  "source": "i_Scream_Media_Contacts.csv",
+  "contacts": [
+    {
+      "fullName": "Chris Kihwan Lee",
+      "company": "i-Scream Media",
+      "jobTitle": "부장",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "John Kee",
+      "company": "i-Scream Media",
+      "jobTitle": "Head of Global Business",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Unchun Yang",
+      "company": "i-Scream Media",
+      "jobTitle": "Senior AI/ML Research Engineer",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "건희 Geonhee 조",
+      "company": "i-Scream Media",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Young-June Ro",
+      "company": "i-Scream Media",
+      "jobTitle": "Executive / HR & Administrator Team",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yikyu Ha",
+      "company": "i-Scream Media",
+      "jobTitle": "GP Business Stratgey / Business Development",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Taiyoon Lee",
+      "company": "i-Scream Media",
+      "jobTitle": "Executive Director / CCO",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joanna Yein Song",
+      "company": "i-Scream Media",
+      "jobTitle": "Global Service Architect",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Han Brownsoo",
+      "company": "i-Scream Media",
+      "jobTitle": "iOS 앱 개발자",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "종목 박",
+      "company": "i-Scream Media",
+      "jobTitle": "CTO",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hailey Jung",
+      "company": "i-Scream Media",
+      "jobTitle": "Brand Manager",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lee Justin",
+      "company": "i-Scream Media",
+      "jobTitle": "Proud Biz. CTO",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Min Gyeong Jang",
+      "company": "i-Scream Media",
+      "jobTitle": "Content Planner",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Minkyung J.",
+      "company": "i-Scream Media",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shawn Jeong",
+      "company": "i-Scream Media",
+      "jobTitle": "Team Lead Manager",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yoonsung Jeong",
+      "company": "i-Scream Media",
+      "jobTitle": "Staff | NS Team",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "세찬 오",
+      "company": "i-Scream Media",
+      "jobTitle": "인사총무팀(HR & Administration Team) / 팀원(Manager)",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Moonkyung Kim",
+      "company": "i-Scream Media",
+      "jobTitle": "UI/UX designer",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Seongouk Hong",
+      "company": "i-Scream Media",
+      "jobTitle": "과장",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonggil Kim",
+      "company": "i-Scream Media",
+      "jobTitle": "Senior Managing Director",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Seunghwan Yeo",
+      "company": "i-Scream Media",
+      "jobTitle": "Director of Strategic Planning, Deputy Head",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daehwan Han",
+      "company": "i-Scream Media",
+      "jobTitle": "소프트웨어 엔지니어",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "규환 고",
+      "company": "i-Scream Media",
+      "jobTitle": "본부장",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Claire Lee",
+      "company": "i-Scream Media",
+      "jobTitle": "Service Operations Manager",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Choi",
+      "company": "i-Scream Media",
+      "jobTitle": "Deputy Manager",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aeri Kim",
+      "company": "i-Scream Media",
+      "jobTitle": "Business Development Specialist",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sung Cho",
+      "company": "i-Scream Media",
+      "jobTitle": "과장",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Seungwoo Seo",
+      "company": "i-Scream Media",
+      "jobTitle": "풀스택 엔지니어",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Songyi Lee",
+      "company": "i-Scream Media",
+      "jobTitle": "Deputy Manager (대리)",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Liz Lee",
+      "company": "i-Scream Media",
+      "jobTitle": "Senior Designer",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tommie Won",
+      "company": "i-Scream Media",
+      "jobTitle": "전산관리자",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "창배 김",
+      "company": "i-Scream Media",
+      "jobTitle": "Back End Developer",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yuri Shim",
+      "company": "i-Scream Media",
+      "jobTitle": "Assistant Manager",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jenny Kang",
+      "company": "i-Scream Media",
+      "jobTitle": "Service Planner",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "다영 김",
+      "company": "i-Scream Media",
+      "jobTitle": "사원",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Heo Juhwan",
+      "company": "i-Scream Media",
+      "jobTitle": "Chief Executive Officer",
+      "email": null,
+      "mobile": "+82-2-3440-2300",
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

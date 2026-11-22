@@ -1,0 +1,56 @@
+{
+  "domain": "ict-direct.co.uk",
+  "source": "ict_direct_contacts.csv",
+  "contacts": [
+    {
+      "fullName": "Dave Foulks",
+      "company": "ICT Direct - Refurbished Computer Hardware",
+      "jobTitle": null,
+      "email": null,
+      "mobile": "44 1254 820 980",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tom Peterson",
+      "company": "ICT Direct - Refurbished Computer Hardware",
+      "jobTitle": "Sales Director",
+      "email": null,
+      "mobile": "44 1254 820 980",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Declan Cavanagh",
+      "company": "ICT Direct - Refurbished Computer Hardware",
+      "jobTitle": "Sales Account Manager",
+      "email": null,
+      "mobile": "44 1254 820 980",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joe Nickson",
+      "company": "ICT Direct - Refurbished Computer Hardware",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": "44 1254 820 980",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Talhah Bahadur",
+      "company": "ICT Direct - Refurbished Computer Hardware",
+      "jobTitle": "Sales Account Manager",
+      "email": null,
+      "mobile": "44 1254 820 980",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

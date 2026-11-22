@@ -1,0 +1,36 @@
+{
+  "domain": "dilyclass.com",
+  "source": "dily-contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Atakan Uyduran",
+      "company": "Dily",
+      "jobTitle": "Co-Founder & CEO",
+      "email": null,
+      "mobile": null,
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Eda Çakır",
+      "company": "Dily",
+      "jobTitle": "Business Development Intern",
+      "email": null,
+      "mobile": null,
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kerem Akşahin",
+      "company": "Dily",
+      "jobTitle": "Proje Yönetimi Stajyeri",
+      "email": null,
+      "mobile": null,
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

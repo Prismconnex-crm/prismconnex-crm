@@ -1,0 +1,506 @@
+{
+  "domain": "eset.com",
+  "source": "ESET_UK_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Alexander Stoyanov",
+      "company": "Eset Uk",
+      "jobTitle": "Strategic MSP Partner Account Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Hall",
+      "company": "Eset Uk",
+      "jobTitle": "Enterprise Sales Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Henry Graham",
+      "company": "Eset Uk",
+      "jobTitle": "Cyber Security Account Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Heather Catchpole",
+      "company": "Eset Uk",
+      "jobTitle": "Head of HR",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lidija Basic",
+      "company": "Eset Uk",
+      "jobTitle": "Head of Field Operations at ESET UK",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nathan Holmes",
+      "company": "Eset Uk",
+      "jobTitle": "Enterprise Business Development Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alexis Bush-Walker",
+      "company": "Eset Uk",
+      "jobTitle": "Strategic Account Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Cluett",
+      "company": "Eset Uk",
+      "jobTitle": "ESET Partner",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Magdalena Quinn",
+      "company": "Eset Uk",
+      "jobTitle": "Channel Marketing Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Steve Connolly",
+      "company": "Eset Uk",
+      "jobTitle": "Head of Enterprise, MSP and Channel Marketing",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paige Taylor",
+      "company": "Eset Uk",
+      "jobTitle": "Strategic Channel Account Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark James",
+      "company": "Eset Uk",
+      "jobTitle": "Head of Partner and Customer Management",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hannah Ballard",
+      "company": "Eset Uk",
+      "jobTitle": "Key Account Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Darren Roberts",
+      "company": "Eset Uk",
+      "jobTitle": "Senior Cyber Security Consultant",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Steve Galliers",
+      "company": "Eset Uk",
+      "jobTitle": "Partner Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carlo Giuliano",
+      "company": "Eset Uk",
+      "jobTitle": "MSP Sales Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aimee Pardey",
+      "company": "Eset Uk",
+      "jobTitle": "PR and Communications Specialist",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jade Sessions",
+      "company": "Eset Uk",
+      "jobTitle": "Customer Service Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aimee Parker",
+      "company": "Eset Uk",
+      "jobTitle": "Senior Demand Generation Specialist",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emily Twigg",
+      "company": "Eset Uk",
+      "jobTitle": "Channel Account Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alex Bryson",
+      "company": "Eset Uk",
+      "jobTitle": "Senior Technical Sales Engineer",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gavin Upshall",
+      "company": "Eset Uk",
+      "jobTitle": "Head of Finance and Business Operations",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emma Lorains",
+      "company": "Eset Uk",
+      "jobTitle": "HR Advisor",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gareth Billett",
+      "company": "Eset Uk",
+      "jobTitle": "Technical Engineer III",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ellis Fearon",
+      "company": "Eset Uk",
+      "jobTitle": "Partner Account Manager II",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Egita Jirgensone",
+      "company": "Eset Uk",
+      "jobTitle": "Office Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alex Smith",
+      "company": "Eset Uk",
+      "jobTitle": "Technical Customer Care Engineer",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gabriel Le Roux",
+      "company": "Eset Uk",
+      "jobTitle": "Enterprise Sales Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cristiana Wright",
+      "company": "Eset Uk",
+      "jobTitle": "UK Digital Business Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ben Hunter",
+      "company": "Eset Uk",
+      "jobTitle": "Inside Partner Account Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daniel Downer",
+      "company": "Eset Uk",
+      "jobTitle": "Channel Account Manager (Retail, Etail and OEM)",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hayley Loader",
+      "company": "Eset Uk",
+      "jobTitle": "Channel Partnerships Sales Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matt Knell",
+      "company": "Eset Uk",
+      "jobTitle": "UK Country Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shane Lychlander",
+      "company": "Eset Uk",
+      "jobTitle": "Senior Key Account Manager for Corporate Solutions",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Laura Gale",
+      "company": "Eset Uk",
+      "jobTitle": "Channel Sales Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anwar Beroual",
+      "company": "Eset Uk",
+      "jobTitle": "Enterprise Account Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nicky Kilburn",
+      "company": "Eset Uk",
+      "jobTitle": "Director of Channel Partnerships",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kieran Abretti",
+      "company": "Eset Uk",
+      "jobTitle": "MSP Business Development Representative",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matt Newnham",
+      "company": "Eset Uk",
+      "jobTitle": "Mid Market - Key Account Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chris Rye",
+      "company": "Eset Uk",
+      "jobTitle": "MSP Account Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Harrison-Lloyd Craigie",
+      "company": "Eset Uk",
+      "jobTitle": "Senior cyber security consultant",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jack Potter",
+      "company": "Eset Uk",
+      "jobTitle": "Key Account Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Megan Watkins",
+      "company": "Eset Uk",
+      "jobTitle": "Marketing Operations Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bjorn Danneman",
+      "company": "Eset Uk",
+      "jobTitle": "Technical Support Engineer",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adrian Mlodzik",
+      "company": "Eset Uk",
+      "jobTitle": "Technical Engineer",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ella Barker",
+      "company": "Eset Uk",
+      "jobTitle": "Customer Advisor",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aimee Samways",
+      "company": "Eset Uk",
+      "jobTitle": "Customer Service Representative",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lesley Bailey",
+      "company": "Eset Uk",
+      "jobTitle": "Credit Controller",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Luke Wood",
+      "company": "Eset Uk",
+      "jobTitle": "Account manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hayley Ovenden",
+      "company": "Eset Uk",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": "44 1202 405 405",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

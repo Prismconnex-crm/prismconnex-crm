@@ -1,0 +1,256 @@
+{
+  "domain": "avocor.com",
+  "source": "Avocor_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Michael Reichart",
+      "company": "Avocor",
+      "jobTitle": "Channel Sales Manager",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "William Crenshaw",
+      "company": "Avocor",
+      "jobTitle": "Regional Sales Manager - US Central",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Melodee Bray",
+      "company": "Avocor",
+      "jobTitle": "Director of Finance",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anders Simonsen",
+      "company": "Avocor",
+      "jobTitle": "Sales Manager Nordic, Norway, Sweden, Denmark and Finland",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amy Buchanan",
+      "company": "Avocor",
+      "jobTitle": "Regional Sales Manager - West",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Theodore Miller",
+      "company": "Avocor",
+      "jobTitle": "Technical Sales Engineer",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dana Corey",
+      "company": "Avocor",
+      "jobTitle": "SVP & GM",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dan Richardson",
+      "company": "Avocor",
+      "jobTitle": "Sales Operations Manager EMEA",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kim Carpenter",
+      "company": "Avocor",
+      "jobTitle": "Executive Assistant & Office Manager",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Christian Cooper",
+      "company": "Avocor",
+      "jobTitle": "Regional Sales Manager - Southeast, TOLA and Mexico",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shreya Shetty",
+      "company": "Avocor",
+      "jobTitle": "Field Sales Champion",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Catherine Bartrum",
+      "company": "Avocor",
+      "jobTitle": "Internal Account Manager",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Keith Sawyer",
+      "company": "Avocor",
+      "jobTitle": "Sr. Sales Operations Coordinator",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jacob Elliott",
+      "company": "Avocor",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paul Wilson",
+      "company": "Avocor",
+      "jobTitle": "Director Of Finance And Operations EMEA",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sheryl Mccormack",
+      "company": "Avocor",
+      "jobTitle": "Accounting and Payroll Specialist",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joey Viera",
+      "company": "Avocor",
+      "jobTitle": "Technical Service Engineer",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sarah Large",
+      "company": "Avocor",
+      "jobTitle": "Credit Manager",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Krystine Risola",
+      "company": "Avocor",
+      "jobTitle": "Channel Marketing Manager",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Darryl O'Brien",
+      "company": "Avocor",
+      "jobTitle": "Regional Sales Manager",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nick Gamble",
+      "company": "Avocor",
+      "jobTitle": "Business Development Manager",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rohit Ak",
+      "company": "Avocor",
+      "jobTitle": "Director Of Sales - India and Middle East",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Will Masson",
+      "company": "Avocor",
+      "jobTitle": "Internal Sales Manager",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Natalie Harris-Briggs",
+      "company": "Avocor",
+      "jobTitle": "Vice President Marketing",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Patrick Graff",
+      "company": "Avocor",
+      "jobTitle": "Global Channel Partner Lead",
+      "email": null,
+      "mobile": "44 333 300 3457",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

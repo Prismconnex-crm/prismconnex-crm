@@ -1,0 +1,46 @@
+{
+  "domain": "globisens.net",
+  "source": "Globalsense_Contacts.csv",
+  "contacts": [
+    {
+      "fullName": "Steven Morrison",
+      "company": "Globalsense",
+      "jobTitle": "IT Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "South Africa",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ying Xuan Guo",
+      "company": "Globalsense",
+      "jobTitle": "UI Designer",
+      "email": null,
+      "mobile": null,
+      "country": "Taiwan",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrea Bosch",
+      "company": "Globalsense",
+      "jobTitle": "Chief Executive Officer",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Steven Morrison",
+      "company": "Globalsense",
+      "jobTitle": "Globalsense",
+      "email": null,
+      "mobile": null,
+      "country": "South Africa",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

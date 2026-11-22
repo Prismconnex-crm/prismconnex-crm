@@ -17,6 +17,8 @@ import {
   User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { CompanyContact } from "@/lib/companies/company-contacts";
+import { CompanyPeopleTable } from "@/components/crm/company-people-table";
 
 /**
  * Company profile for a BETT exhibitor.
@@ -91,6 +93,10 @@ type CompanyMatch = {
 
 type ProfileResponse = {
   exhibitor: ExhibitorProfile;
+  /** Imported contact list (People table); null keeps the directory contact card. */
+  contacts?: CompanyContact[] | null;
+  /** Show the LinkedIn + paper-plane pair on every row, inert where no URL exists. */
+  contactIconsAlways?: boolean;
   company: CompanyMatch | null;
   matchedBy: "domain" | "name" | null;
 };
@@ -573,7 +579,9 @@ export function BettExhibitorProfile({
           ) : null}
 
           {activeTab === "People" ? (
-            contactName || exhibitor.designation || exhibitor.email ? (
+            data.contacts && data.contacts.length > 0 ? (
+              <CompanyPeopleTable contacts={data.contacts} alwaysShowIcons={data.contactIconsAlways} />
+            ) : contactName || exhibitor.designation || exhibitor.email ? (
               <Panel>
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                   <div className="flex items-start gap-3">

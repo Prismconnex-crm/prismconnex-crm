@@ -1,0 +1,16 @@
+{
+  "domain": "aitutoring.me",
+  "source": "AITutoring_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Stephen Kinsey",
+      "company": "AITutoring.me",
+      "jobTitle": "Chief Technology Officer",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}
