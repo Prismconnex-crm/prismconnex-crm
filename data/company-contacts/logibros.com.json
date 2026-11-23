@@ -1,0 +1,96 @@
+{
+  "domain": "logibros.com",
+  "source": "LOGIBROTHERS_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Sangmin Albert No",
+      "company": "LOGIBROTHERS",
+      "jobTitle": "Founder & CEO",
+      "email": null,
+      "mobile": null,
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sunghwan Choi",
+      "company": "LOGIBROTHERS",
+      "jobTitle": "Co-Founder & CTO",
+      "email": null,
+      "mobile": null,
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Banseok Suh",
+      "company": "LOGIBROTHERS",
+      "jobTitle": "Back End Developer",
+      "email": null,
+      "mobile": null,
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "부민 김",
+      "company": "LOGIBROTHERS",
+      "jobTitle": "Software Programmer",
+      "email": null,
+      "mobile": null,
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "다형 이",
+      "company": "LOGIBROTHERS",
+      "jobTitle": "팀원",
+      "email": null,
+      "mobile": null,
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "현영 배",
+      "company": "LOGIBROTHERS",
+      "jobTitle": "Team Lead",
+      "email": null,
+      "mobile": null,
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "유리 서",
+      "company": "LOGIBROTHERS",
+      "jobTitle": "디자이너",
+      "email": null,
+      "mobile": null,
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "주혁 이",
+      "company": "LOGIBROTHERS",
+      "jobTitle": "백엔드 개발자",
+      "email": null,
+      "mobile": null,
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "관석 박",
+      "company": "LOGIBROTHERS",
+      "jobTitle": "사업개발팀장",
+      "email": null,
+      "mobile": null,
+      "country": "South Korea",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

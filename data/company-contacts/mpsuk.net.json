@@ -1,0 +1,176 @@
+{
+  "domain": "mpsuk.net",
+  "source": "mps.csv (Tom Critchley row was shifted — title split at a comma — and realigned by hand)",
+  "contacts": [
+    {
+      "fullName": "Leo Devenish",
+      "company": "MPS UK Group",
+      "jobTitle": "Business Development Manager",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dave Rankin",
+      "company": "MPS UK Group",
+      "jobTitle": "IT Business Development Manager",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Owain Sparrow",
+      "company": "MPS UK Group",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Phil Eames",
+      "company": "MPS UK Group",
+      "jobTitle": "Sales",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Antony Devenish",
+      "company": "MPS UK Group",
+      "jobTitle": "Director",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Graham Gee",
+      "company": "MPS UK Group",
+      "jobTitle": "Regional Manager",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Genella Carroll-Cosslett",
+      "company": "MPS UK Group",
+      "jobTitle": "FF&E specialist",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Leroy Thewlis",
+      "company": "MPS UK Group",
+      "jobTitle": "Business Development Manager",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tom Critchley",
+      "company": "MPS UK Group",
+      "jobTitle": "Purchasing, Procurement & IT",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jenny Foulkes",
+      "company": "MPS UK Group",
+      "jobTitle": "Internal Account Manager - Ministry of Furniture",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Marie Allerton Ridge",
+      "company": "MPS UK Group",
+      "jobTitle": "Customer Service/ Sales",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Katherine Hackett",
+      "company": "MPS UK Group",
+      "jobTitle": "Sales",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gerard White",
+      "company": "MPS UK Group",
+      "jobTitle": "Warehouse",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Symonds",
+      "company": "MPS UK Group",
+      "jobTitle": "Detective",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ankit Kumar",
+      "company": "MPS UK Group",
+      "jobTitle": "Private",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Love Heera",
+      "company": "MPS UK Group",
+      "jobTitle": "Sales Manager",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Giovanni Robelli",
+      "company": "MPS UK Group",
+      "jobTitle": "head of banking operations",
+      "email": null,
+      "mobile": "44 800 999 6066",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

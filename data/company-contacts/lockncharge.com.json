@@ -1,0 +1,336 @@
+{
+  "domain": "lockncharge.com",
+  "source": "LocknCharge_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Scott Markham",
+      "company": "LocknCharge",
+      "jobTitle": "Vice President of Sales",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Christopher Moy",
+      "company": "LocknCharge",
+      "jobTitle": "Director, Strategic Partnerships",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tyler Oren",
+      "company": "LocknCharge",
+      "jobTitle": "Sales & Business Development Lead",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jessie Parsons",
+      "company": "LocknCharge",
+      "jobTitle": "Sales Executive - UK & Ireland",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pierre Eynard-Machet",
+      "company": "LocknCharge",
+      "jobTitle": "Sales Manager Southern Europe",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Heather Symdon",
+      "company": "LocknCharge",
+      "jobTitle": "Customer Success Director",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matt Battista",
+      "company": "LocknCharge",
+      "jobTitle": "Account Executive",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Savannah Waller Viljoen",
+      "company": "LocknCharge",
+      "jobTitle": "Event Manager",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Erik Danson",
+      "company": "LocknCharge",
+      "jobTitle": "Account Executive, SLED & Enterprise",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jennifer Lichtie",
+      "company": "LocknCharge",
+      "jobTitle": "Vice President Global Marketing",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Will Mcavoy",
+      "company": "LocknCharge",
+      "jobTitle": "Public Sector Account Executive",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dennis Hay",
+      "company": "LocknCharge",
+      "jobTitle": "Technical Sales Engineer",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ellie Friesen",
+      "company": "LocknCharge",
+      "jobTitle": "Head of Product",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Marian Freeman",
+      "company": "LocknCharge",
+      "jobTitle": "Revenue Operations Manager",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ajay Lamb",
+      "company": "LocknCharge",
+      "jobTitle": "Technical Sales Engineer",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ignatius Thien",
+      "company": "LocknCharge",
+      "jobTitle": "Senior Software Developer",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrew Suhatam",
+      "company": "LocknCharge",
+      "jobTitle": "Engineering Team Lead",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sandrine Moseley",
+      "company": "LocknCharge",
+      "jobTitle": "Sales Support Executive (France)",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kristin Tanner",
+      "company": "LocknCharge",
+      "jobTitle": "General Manager - North America",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nikki Burrell",
+      "company": "LocknCharge",
+      "jobTitle": "Sales Support Specialist",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emily Lund",
+      "company": "LocknCharge",
+      "jobTitle": "Accounting Supervisor",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jason Zelhofer",
+      "company": "LocknCharge",
+      "jobTitle": "Support Manager",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Eddy",
+      "company": "LocknCharge",
+      "jobTitle": "Chief Technology Officer",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Craig Foster",
+      "company": "LocknCharge",
+      "jobTitle": "European Sales Director",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vilmos Kecskemethy",
+      "company": "LocknCharge",
+      "jobTitle": "Channel Account Manager",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Harden",
+      "company": "LocknCharge",
+      "jobTitle": "Support and Operations Manager - EMEIA",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stephan Van Blerk",
+      "company": "LocknCharge",
+      "jobTitle": "Head of Engineering",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stephanie Derbas",
+      "company": "LocknCharge",
+      "jobTitle": "Sales Administrator",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Leo Watson",
+      "company": "LocknCharge",
+      "jobTitle": "Senior Software Developer",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nick Steenson",
+      "company": "LocknCharge",
+      "jobTitle": "Technical Support Specialist",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "New Zealand",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Prashanth Santhirakumaran",
+      "company": "LocknCharge",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Caite Leifer",
+      "company": "LocknCharge",
+      "jobTitle": "Customer Support Specialist",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jason Zelhofer",
+      "company": "LocknCharge",
+      "jobTitle": "Customer Service Support Manager",
+      "email": null,
+      "mobile": "44 208 441 4107",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

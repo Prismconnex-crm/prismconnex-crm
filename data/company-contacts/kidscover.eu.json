@@ -1,0 +1,16 @@
+{
+  "domain": "kidscover.eu",
+  "source": "KidsCover_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Albert Picardal",
+      "company": "KidsCover",
+      "jobTitle": "eCommerce Operations & Customer Support Specialist",
+      "email": null,
+      "mobile": "31 70 820 1040",
+      "country": "Philippines",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "domain": "markus.tech",
+  "source": "Markus_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Oliver Hill",
+      "company": "Markus",
+      "jobTitle": "Co-Founder & AI Lead",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Hyde",
+      "company": "Markus",
+      "jobTitle": "Co-Founder",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

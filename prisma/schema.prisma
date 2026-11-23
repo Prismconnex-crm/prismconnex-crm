@@ -437,6 +437,40 @@ model EventExhibitor {
   @@index([eventSlug, nameKey])
 }
 
+// People imported from an external provider (Prospeo first) for one exhibitor,
+// shown on that exhibitor's People tab. One row per person per exhibitor per
+// source: (exhibitorId, source, externalId) is unique, so re-running an import
+// updates rather than duplicates. Emails/mobiles are stored only when the
+// provider actually revealed them; their *Status columns keep what the provider
+// said (e.g. VERIFIED / UNAVAILABLE) so "not revealed" and "none" stay distinct.
+model ExhibitorContact {
+  id                 String   @id @default(cuid())
+  exhibitorId        String // -> EventExhibitor.id
+  source             String // e.g. "prospeo"
+  externalId         String? // provider's person id (Prospeo person_id)
+  linkedinKey        String? // normalised LinkedIn /in/<slug>, fallback match key
+  fullName           String
+  personLinkedInUrl  String?
+  companyName        String?
+  companyLinkedInUrl String?
+  jobTitle           String?
+  email              String?
+  emailStatus        String?
+  mobile             String?
+  mobileStatus       String?
+  country            String?
+  city               String?
+  seniority          String?
+  industry           String?
+  companySize        Int?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@unique([exhibitorId, source, externalId])
+  @@index([exhibitorId])
+  @@index([exhibitorId, linkedinKey])
+}
+
 // Employee/contact records for a DiscoveryCompany, shown in the People page's
 // employee-detail card. Doubles as the enrichment cache: rows can be entered
 // manually (verified first-party data) or written once by a provider lookup so

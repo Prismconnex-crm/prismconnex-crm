@@ -1498,6 +1498,181 @@ describe("company contacts", () => {
     });
   });
 
+  describe("2026-11-23 batch of 26 companies", () => {
+    const batch: Array<{ domain: string; count: number; first: string; company: string; mobile: string | null }> = [
+      { domain: "iris.co.uk", count: 15, first: "Bradley Allen", company: "IRIS Education", mobile: "44 344 815 5555" },
+      { domain: "ixl.com", count: 100, first: "Ainsley Cunningham", company: "IXL Learning", mobile: "1 855 255-8800" },
+      { domain: "jamf.com", count: 100, first: "Kyle Burns", company: "Jamf", mobile: "44 20 4572 655" },
+      { domain: "jpik.com", count: 31, first: "Bruno Nunes", company: "jp.ik", mobile: "351 229 993 900" },
+      { domain: "kahoot.com", count: 100, first: "Leanne Abrahamsson", company: "Kahoot!", mobile: null },
+      { domain: "kamiapp.com", count: 100, first: "Randi Ahrndt", company: "Kami", mobile: null },
+      { domain: "kidscover.eu", count: 1, first: "Albert Picardal", company: "KidsCover", mobile: "31 70 820 1040" },
+      { domain: "lapsafe.com", count: 27, first: "Daisy Linihan", company: "LapSafe", mobile: "44 1787 226 16" },
+      { domain: "lightspeedsystems.com", count: 100, first: "Mandy Gorena", company: "Lightspeed Systems", mobile: "44 20 4534 5200" },
+      { domain: "littlegreenbutton.com", count: 9, first: "Joe Frary", company: "Little Green Button", mobile: "44 1263 888365" },
+      { domain: "locker.co.uk", count: 2, first: "Doug Leach", company: "Locker Technology Limited", mobile: "44 844 549 9500" },
+      { domain: "lockncharge.com", count: 33, first: "Scott Markham", company: "LocknCharge", mobile: "44 208 441 4107" },
+      { domain: "logibros.com", count: 9, first: "Sangmin Albert No", company: "LOGIBROTHERS", mobile: null },
+      { domain: "loudwater.io", count: 3, first: "Lance Karpelowsky", company: "Loudwater Trade and Finance Limited", mobile: null },
+      { domain: "lynxnetworks.co.uk", count: 24, first: "Phil Doherty", company: "Lynx Networks ltd", mobile: "44 1908 633833" },
+      { domain: "why.lyreco.com", count: 100, first: "Olivier Tassan", company: "Lyreco France", mobile: "44 8000 85 85 85" },
+      { domain: "madlen.io", count: 10, first: "Ece Yalçın", company: "Madlen", mobile: "90 545 542 0511" },
+      { domain: "markus.tech", count: 2, first: "Oliver Hill", company: "Markus", mobile: null },
+      { domain: "mooka.ie", count: 3, first: "Suzanne Gannon", company: "Mooka Media", mobile: "353 74 970 6715" },
+      { domain: "mozaweb.com", count: 76, first: "Ildikó Török", company: "Mozaik Education", mobile: null },
+      { domain: "mpsuk.net", count: 17, first: "Leo Devenish", company: "MPS UK Group", mobile: "44 800 999 6066" },
+      { domain: "mrswordsmith.com", count: 37, first: "Shirleigh Humphreys", company: "Mrs Wordsmith", mobile: "44 303 123 1113" },
+      { domain: "net-ctrl.co.uk", count: 2, first: "George Bugg", company: "Net-Ctrl", mobile: "44 1473 281 211" },
+      { domain: "netsupportsoftware.com", count: 50, first: "Tom Cairns", company: "NetSupport", mobile: "44 1778 382270" },
+      { domain: "netsweeper.com", count: 46, first: "John A Robb", company: "Netsweeper", mobile: "1 519-772-0889" },
+      { domain: "nutkase", count: 12, first: "Ross H. Page", company: "NutKase Accessories", mobile: null },
+    ];
+
+    it.each(batch)("$domain: $count stored contacts in sheet order, own company only, own mobile rule", async (entry) => {
+      const stored = (await import(`@/data/company-contacts/${entry.domain}.json`)).default as {
+        contacts: Array<{ fullName: string; company: string | null; mobile: string | null }>;
+      };
+      expect(stored.contacts).toHaveLength(entry.count);
+      expect(stored.contacts[0].fullName).toBe(entry.first);
+      expect(stored.contacts.every((c) => c.company === entry.company)).toBe(true);
+      if (entry.mobile) {
+        expect(stored.contacts.every((c) => c.mobile === entry.mobile)).toBe(true);
+        expect(getCompanyContacts(entry.domain)!.every((c) => c.mobile === entry.mobile)).toBe(true);
+      } else {
+        expect(stored.contacts.every((c) => c.mobile === null)).toBe(true);
+      }
+      expect(alwaysShowContactIcons(entry.domain)).toBe(true);
+    });
+
+    it("never carries one company's mobile number into another company", () => {
+      const numbers = batch.filter((b) => b.mobile).map((b) => [b.domain, b.mobile] as const);
+      for (const { domain } of batch) {
+        const contacts = getCompanyContacts(domain)!;
+        for (const [owner, number] of numbers) {
+          if (owner !== domain) expect(contacts.some((c) => c.mobile === number)).toBe(false);
+        }
+      }
+    });
+
+    it("finds NutKase by name (no website on its BETT record)", () => {
+      const empty = { firstName: null, lastName: null, designation: null, email: null, phone: null, country: null, personLinkedInUrl: null, companyLinkedInUrl: null };
+      expect(getCompanyContacts(null, { companyName: "NutKase", ...empty })!).toHaveLength(12);
+      expect(alwaysShowContactIcons(null, "NutKase")).toBe(true);
+    });
+
+    it("keeps combined files apart and realigns MPS's shifted row", () => {
+      const sweeper = getCompanyContacts("netsweeper.com")!.map((c) => c.fullName);
+      const support = getCompanyContacts("netsupportsoftware.com")!.map((c) => c.fullName);
+      const nut = getCompanyContacts(null, {
+        companyName: "NutKase", firstName: null, lastName: null, designation: null, email: null, phone: null,
+        country: null, personLinkedInUrl: null, companyLinkedInUrl: null,
+      })!.map((c) => c.fullName);
+      expect(sweeper.filter((n) => support.includes(n))).toEqual([]);
+      expect(nut.filter((n) => sweeper.includes(n) || support.includes(n))).toEqual([]);
+      expect(getCompanyContacts("mpsuk.net")!.find((c) => c.fullName === "Tom Critchley")).toMatchObject({
+        jobTitle: "Purchasing, Procurement & IT",
+        email: null,
+        country: "United Kingdom",
+      });
+    });
+
+    it("merges LogiBrothers' directory contact (SangMin Albert) into the sheet's Sangmin Albert No", () => {
+      const contacts = getCompanyContacts("logibros.com", {
+        companyName: "LogiBrothers", firstName: "SangMin", lastName: "Albert", designation: "Founder & CEO",
+        email: "albert@logibros.com", phone: null, country: "South Korea",
+        personLinkedInUrl: "https://kr.linkedin.com/in/sangmin-albert-no",
+        companyLinkedInUrl: "https://www.linkedin.com/company/logibrothers/",
+      })!;
+      expect(contacts).toHaveLength(9);
+      expect(contacts[0]).toMatchObject({ fullName: "Sangmin Albert No", email: "albert@logibros.com" });
+    });
+  });
+
+  describe("2026-11-23 six companies from All_6_Companies_Contacts.csv", () => {
+    const six = [
+      { domain: "okulyo.com", count: 7, first: "Emre Cekic", company: "Okulyo", mobile: "+90 850 307 7242" },
+      { domain: "tp-link.com", count: 99, first: "Alessandro Casiraghi", company: "Omada by TP-Link Italia", mobile: "+44 345 147 0017" },
+      { domain: "openlms.net", count: 99, first: "James Smith", company: "Open LMS", mobile: null },
+      { domain: "padlet.com", count: 67, first: "Bryan Chong", company: "Padlet", mobile: null },
+      { domain: "paperly.education", count: 16, first: "Natalie Nguyen", company: "Paperly", mobile: "+61 1300 472 737" },
+      { domain: "parentpay.com", count: 100, first: "Jay Payne", company: "ParentPay Group", mobile: null },
+    ];
+
+    it.each(six)("$domain: $count contacts of $company only, in CSV order, own mobile rule", async (entry) => {
+      const stored = (await import(`@/data/company-contacts/${entry.domain}.json`)).default as {
+        contacts: Array<{ fullName: string; company: string | null; mobile: string | null }>;
+      };
+      expect(stored.contacts).toHaveLength(entry.count);
+      expect(stored.contacts[0].fullName).toBe(entry.first);
+      expect(stored.contacts.every((c) => c.company === entry.company)).toBe(true);
+      // No row repeated exactly (Open LMS has two names with two different titles each — kept).
+      expect(new Set(stored.contacts.map((c) => JSON.stringify(c))).size).toBe(entry.count);
+      if (entry.mobile) {
+        expect(getCompanyContacts(entry.domain)!.every((c) => c.mobile === entry.mobile)).toBe(true);
+      } else {
+        expect(stored.contacts.every((c) => c.mobile === null)).toBe(true);
+      }
+      expect(alwaysShowContactIcons(entry.domain)).toBe(true);
+    });
+
+    it("accounts for every one of the CSV's 406 rows", () => {
+      // 388 imported + 18 exact repeat rows skipped (Paperly 16, Omada 1, Open LMS 1) = 406.
+      const imported = six.reduce((n, s) => n + getCompanyContacts(s.domain)!.length, 0);
+      expect(imported).toBe(388);
+      expect(imported + 16 + 1 + 1).toBe(406);
+    });
+
+    it("never carries one company's number into another", () => {
+      const numbers = six.filter((s) => s.mobile).map((s) => [s.domain, s.mobile] as const);
+      for (const { domain } of six) {
+        const contacts = getCompanyContacts(domain)!;
+        for (const [owner, number] of numbers) {
+          if (owner !== domain) expect(contacts.some((c) => c.mobile === number)).toBe(false);
+        }
+      }
+    });
+  });
+
+  describe("2026-11-23 companies from all8companies.csv", () => {
+    const five = [
+      { domain: "pearltrees.com", count: 50, first: "Patrice Lamothe", company: "Pearltrees", mobile: "+33 143 489 462" },
+      { domain: "phlow.academy", count: 1, first: "Paul Dunne", company: "Phlow Academy", mobile: null },
+      { domain: "phonelocker.com", count: 4, first: "Frankie Wilson", company: "Phone Locker®", mobile: "+44 203 161 8121" },
+      { domain: "redboxvr.com", count: 6, first: "James Hill", company: "RedboxVR", mobile: "+44 1253 804802" },
+      { domain: "revoducate.matrixlms.com", count: 1, first: "Moshe Facler", company: "REVODUCATE", mobile: null },
+    ];
+
+    it.each(five)("$domain: $count contacts of $company only, own mobile rule", async (entry) => {
+      const stored = (await import(`@/data/company-contacts/${entry.domain}.json`)).default as {
+        contacts: Array<{ fullName: string; company: string | null; mobile: string | null }>;
+      };
+      expect(stored.contacts).toHaveLength(entry.count);
+      expect(stored.contacts[0].fullName).toBe(entry.first);
+      expect(stored.contacts.every((c) => c.company === entry.company)).toBe(true);
+      if (entry.mobile) expect(getCompanyContacts(entry.domain)!.every((c) => c.mobile === entry.mobile)).toBe(true);
+      else expect(stored.contacts.every((c) => c.mobile === null)).toBe(true);
+      expect(alwaysShowContactIcons(entry.domain)).toBe(true);
+    });
+
+    it("finds Phlow Academy and REVODUCATE from their BETT websites (path / subdomain)", () => {
+      const empty = { firstName: null, lastName: null, designation: null, email: null, phone: null, country: null, personLinkedInUrl: null, companyLinkedInUrl: null };
+      // BETT website https://www.phlow.academy/contact → domain phlow.academy
+      expect(getCompanyContacts("phlow.academy", { companyName: "Phlow Academy", ...empty })!).toHaveLength(1);
+      // REVODUCATE's directory contact (Moshe FACLER) is the sheet's Moshe Facler — merged, not added.
+      const rev = getCompanyContacts("revoducate.matrixlms.com", {
+        ...empty, companyName: "REVODUCATE", firstName: "Moshe", lastName: "FACLER", designation: "Founder & CEO",
+        email: "moshe@revoducate.com", personLinkedInUrl: "https://www.linkedin.com/in/dr-moshe-facler-ph-d-7644172bb/",
+        companyLinkedInUrl: "https://www.linkedin.com/company/revoducate",
+      })!;
+      expect(rev).toHaveLength(1);
+      expect(rev[0]).toMatchObject({ email: "moshe@revoducate.com", mobile: null });
+    });
+
+    it("does not attach 'Prowise Solutions Inc' (IT staffing) to the Prowise exhibitor", () => {
+      expect(getCompanyContacts("prowise.com")).toBeNull();
+    });
+  });
+
   it("returns null for companies without an imported list", () => {
     expect(getCompanyContacts("example-no-list.com")).toBeNull();
     expect(getCompanyContacts(null)).toBeNull();

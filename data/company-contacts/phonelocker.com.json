@@ -1,0 +1,46 @@
+{
+  "domain": "phonelocker.com",
+  "source": "all8companies.csv",
+  "contacts": [
+    {
+      "fullName": "Frankie Wilson",
+      "company": "Phone Locker®",
+      "jobTitle": "Project Coordinator - EMEA & Canada",
+      "email": null,
+      "mobile": "+44 203 161 8121",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amy Brazewell",
+      "company": "Phone Locker®",
+      "jobTitle": "Marketing And Public Relations Manager",
+      "email": null,
+      "mobile": "+44 203 161 8121",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Balázs Zsigó",
+      "company": "Phone Locker®",
+      "jobTitle": "Sales Manager",
+      "email": null,
+      "mobile": "+44 203 161 8121",
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dániel Zsigó",
+      "company": "Phone Locker®",
+      "jobTitle": "Marketing Assistant",
+      "email": null,
+      "mobile": "+44 203 161 8121",
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

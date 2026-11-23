@@ -1,0 +1,126 @@
+{
+  "domain": "nutkase",
+  "source": "nutkuse.csv",
+  "contacts": [
+    {
+      "fullName": "Ross H. Page",
+      "company": "NutKase Accessories",
+      "jobTitle": "Chief Executive Officer & Co - Founder",
+      "email": null,
+      "mobile": null,
+      "country": "Italy",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bill Portin",
+      "company": "NutKase Accessories",
+      "jobTitle": "Chief Revenue Officer (CRO)",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bill Bassett",
+      "company": "NutKase Accessories",
+      "jobTitle": "Territory Manager",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sean Bearth",
+      "company": "NutKase Accessories",
+      "jobTitle": "Territory Manager",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Angel Gonzalez",
+      "company": "NutKase Accessories",
+      "jobTitle": "Director of Sales - East",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amelia Portin",
+      "company": "NutKase Accessories",
+      "jobTitle": "Product Marketing & Demand Generation Lead",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Leo Shortland",
+      "company": "NutKase Accessories",
+      "jobTitle": "Chief Operating Officer",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Stephany",
+      "company": "NutKase Accessories",
+      "jobTitle": "Sales Director- West",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carlo Alberto Fucilli",
+      "company": "NutKase Accessories",
+      "jobTitle": "Finance Director",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ludovica Calò",
+      "company": "NutKase Accessories",
+      "jobTitle": "Business Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Italy",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Marcella Machado",
+      "company": "NutKase Accessories",
+      "jobTitle": "Sales Operations Specialist",
+      "email": null,
+      "mobile": null,
+      "country": "Italy",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Charlie Dempsey",
+      "company": "NutKase Accessories",
+      "jobTitle": "Sales Operations Analyst",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

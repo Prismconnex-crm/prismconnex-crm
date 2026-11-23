@@ -19,6 +19,7 @@ import {
 import { cn } from "@/lib/utils";
 import type { CompanyContact } from "@/lib/companies/company-contacts";
 import { CompanyPeopleTable } from "@/components/crm/company-people-table";
+import { ProspeoImportPanel } from "@/components/crm/prospeo-import-panel";
 
 /**
  * Company profile for a BETT exhibitor.
@@ -97,6 +98,8 @@ type ProfileResponse = {
   contacts?: CompanyContact[] | null;
   /** Show the LinkedIn + paper-plane pair on every row, inert where no URL exists. */
   contactIconsAlways?: boolean;
+  /** Prospeo pilot: show the fetch/review/import panel on the People tab. */
+  prospeoEnabled?: boolean;
   company: CompanyMatch | null;
   matchedBy: "domain" | "name" | null;
 };
@@ -254,8 +257,10 @@ export function BettExhibitorProfile({
   const [logoFailed, setLogoFailed] = useState(false);
   const router = useRouter();
 
-  const load = useCallback(async () => {
-    setLoading(true);
+  // `silent` refreshes the data in place (after a Prospeo import) instead of
+  // swapping the page for the spinner, so the panel keeps its import summary.
+  const load = useCallback(async (silent = false) => {
+    if (!silent) setLoading(true);
     setError(null);
     try {
       const response = await fetch(`/api/exhibitors/${encodeURIComponent(exhibitorId)}`);
@@ -576,6 +581,10 @@ export function BettExhibitorProfile({
                 )}
               </Panel>
             </div>
+          ) : null}
+
+          {activeTab === "People" && data.prospeoEnabled ? (
+            <ProspeoImportPanel exhibitorId={exhibitor.id} onImported={() => void load(true)} />
           ) : null}
 
           {activeTab === "People" ? (

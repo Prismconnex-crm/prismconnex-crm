@@ -1,0 +1,316 @@
+{
+  "domain": "jpik.com",
+  "source": "jp_ik_Contacts.csv",
+  "contacts": [
+    {
+      "fullName": "Bruno Nunes",
+      "company": "jp.ik",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nelson Pereira",
+      "company": "jp.ik",
+      "jobTitle": "Regional Business Manager",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "André Baptista",
+      "company": "jp.ik",
+      "jobTitle": "Purchasing Manager",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "João Ferreira",
+      "company": "jp.ik",
+      "jobTitle": "Technical Architect",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Eduardo Cunha",
+      "company": "jp.ik",
+      "jobTitle": "Head of Project Management",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nelson Oliveira",
+      "company": "jp.ik",
+      "jobTitle": "Head of Area – Customer Service",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nick Broda",
+      "company": "jp.ik",
+      "jobTitle": "Regional Business Manager",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ricardo Machado",
+      "company": "jp.ik",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andreia Rocha",
+      "company": "jp.ik",
+      "jobTitle": "Gerente de negócios",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Letícia Moreira",
+      "company": "jp.ik",
+      "jobTitle": "Designer gráfico",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carlos Barbosa",
+      "company": "jp.ik",
+      "jobTitle": "Regional Business Manager",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Helder Chaves",
+      "company": "jp.ik",
+      "jobTitle": "Administrador de sistema",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Agostinho Carvalho",
+      "company": "jp.ik",
+      "jobTitle": "Development Specialist",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Maria Inês Mendes",
+      "company": "jp.ik",
+      "jobTitle": "Especialista Pedagógica",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Filipa Duarte",
+      "company": "jp.ik",
+      "jobTitle": "Business Analyst",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nuno Loureiro",
+      "company": "jp.ik",
+      "jobTitle": "Business Manager",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rui Dias",
+      "company": "jp.ik",
+      "jobTitle": "HW Development Specialist",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jorge Castilho Sá Couto",
+      "company": "jp.ik",
+      "jobTitle": "Product and Solutions Director",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anita Sá Couto",
+      "company": "jp.ik",
+      "jobTitle": "Brand Manager",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sérgio Fernandes",
+      "company": "jp.ik",
+      "jobTitle": "Production Support Specialist | Software Developer",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nuno Medeiros",
+      "company": "jp.ik",
+      "jobTitle": "Senior Regional Sales Manager",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hugo Quadrado",
+      "company": "jp.ik",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Miguel Silva",
+      "company": "jp.ik",
+      "jobTitle": "Customer Support Services Technician",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Maria Giestas",
+      "company": "jp.ik",
+      "jobTitle": "Gestor de projecto",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jose Rafael",
+      "company": "jp.ik",
+      "jobTitle": "Planejador de produção",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pedro Miguel Sousa",
+      "company": "jp.ik",
+      "jobTitle": "Product Certification Specialist",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Judite Meirinho",
+      "company": "jp.ik",
+      "jobTitle": "QES Internee",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Manuela Martins",
+      "company": "jp.ik",
+      "jobTitle": "Bid & Proposal Manager Public Sector",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ana Rita Garcia",
+      "company": "jp.ik",
+      "jobTitle": "Designer",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ana Simões",
+      "company": "jp.ik",
+      "jobTitle": "Commercial Manager",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "José Henrique Do Nascimento",
+      "company": "jp.ik",
+      "jobTitle": "Operador de produção",
+      "email": null,
+      "mobile": "351 229 993 900",
+      "country": "Portugal",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

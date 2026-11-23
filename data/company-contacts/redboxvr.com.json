@@ -1,0 +1,66 @@
+{
+  "domain": "redboxvr.com",
+  "source": "all8companies.csv",
+  "contacts": [
+    {
+      "fullName": "James Hill",
+      "company": "RedboxVR",
+      "jobTitle": "Digital Marketing Executive",
+      "email": null,
+      "mobile": "+44 1253 804802",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Natasha Dawn Hall",
+      "company": "RedboxVR",
+      "jobTitle": "Human Resources Manager",
+      "email": null,
+      "mobile": "+44 1253 804802",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mike Abate",
+      "company": "RedboxVR",
+      "jobTitle": "Sales Specialist - Immersive Technologies",
+      "email": null,
+      "mobile": "+44 1253 804802",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sean Jones",
+      "company": "RedboxVR",
+      "jobTitle": "Head of Production and Support",
+      "email": null,
+      "mobile": "+44 1253 804802",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Maighread Mercer",
+      "company": "RedboxVR",
+      "jobTitle": "Accounts Payable Administrator",
+      "email": null,
+      "mobile": "+44 1253 804802",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jakub Kosiec",
+      "company": "RedboxVR",
+      "jobTitle": "Trainee VR technician",
+      "email": null,
+      "mobile": "+44 1253 804802",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

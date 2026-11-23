@@ -1,0 +1,1006 @@
+{
+  "domain": "kahoot.com",
+  "source": "Kahoot_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Leanne Abrahamsson",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Customer Success Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pekka Peura",
+      "company": "Kahoot!",
+      "jobTitle": "Professional Development Expert",
+      "email": null,
+      "mobile": null,
+      "country": "Finland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kristiina Ois",
+      "company": "Kahoot!",
+      "jobTitle": "Sales & Customer Success Operation Controller",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hannah Herey",
+      "company": "Kahoot!",
+      "jobTitle": "Commercial Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alejandro Viquez",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Communications Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonas Greve",
+      "company": "Kahoot!",
+      "jobTitle": "Director Customer Content",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Elizabeth Dionasari",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Product Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonatan Saraiva",
+      "company": "Kahoot!",
+      "jobTitle": "Sr Account Executive LATAM",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rita Awad",
+      "company": "Kahoot!",
+      "jobTitle": "Enterprise Account Executive",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Maria Meinich Bjørnstad",
+      "company": "Kahoot!",
+      "jobTitle": "HR Business Partner",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Keller",
+      "company": "Kahoot!",
+      "jobTitle": "Commercial Campaign Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kelly Whybrow",
+      "company": "Kahoot!",
+      "jobTitle": "Team Lead, Marketing Communications",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mateusz Wanat",
+      "company": "Kahoot!",
+      "jobTitle": "Senior iOS Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Galilea Morales",
+      "company": "Kahoot!",
+      "jobTitle": "Manger, Enterprise Sales - North America & LATAM",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Luján Fernández",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Manager, Global Events",
+      "email": null,
+      "mobile": null,
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carmel Casey",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Test Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Raven Jones",
+      "company": "Kahoot!",
+      "jobTitle": "Enterprise Account Executive",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Steffen Kongstoft",
+      "company": "Kahoot!",
+      "jobTitle": "Global Director, Customer Success",
+      "email": null,
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joshua Scoggin",
+      "company": "Kahoot!",
+      "jobTitle": "Manager, EDU Americas",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mauricio Malo",
+      "company": "Kahoot!",
+      "jobTitle": "Design Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Oskar Kosowski",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Frontend Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carlos Robledo Puertas",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Product Designer",
+      "email": null,
+      "mobile": null,
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sofie Thorleifsson",
+      "company": "Kahoot!",
+      "jobTitle": "Corporate Project Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kristin Liiksaar",
+      "company": "Kahoot!",
+      "jobTitle": "People Operations Specialist",
+      "email": null,
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kacper Aniołek",
+      "company": "Kahoot!",
+      "jobTitle": "Backend developer",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrew Chartrand",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Manager, Enterprise Sales",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kasia Sajko-Nienhuis",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Product Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jan Steinar Kvilesjø",
+      "company": "Kahoot!",
+      "jobTitle": "Chief Technology Officer",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Libaan Youssef",
+      "company": "Kahoot!",
+      "jobTitle": "Growth Operations Lead",
+      "email": null,
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ernesto Rodriguez",
+      "company": "Kahoot!",
+      "jobTitle": "Account Executive-Education",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Liza Lutsyk",
+      "company": "Kahoot!",
+      "jobTitle": "Operations Manager, Poland",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stine Strandvik",
+      "company": "Kahoot!",
+      "jobTitle": "Growth Marketing Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Hopkins",
+      "company": "Kahoot!",
+      "jobTitle": "Communication Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Irma Horvath",
+      "company": "Kahoot!",
+      "jobTitle": "Head of Learning and Development",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paola Guillen",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Product Designer",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joe Belfiore",
+      "company": "Kahoot!",
+      "jobTitle": "Vice Chairman of the Board",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Robyn Schwarz",
+      "company": "Kahoot!",
+      "jobTitle": "Solutions Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Heidi Larsen",
+      "company": "Kahoot!",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zain Khataw",
+      "company": "Kahoot!",
+      "jobTitle": "Account Executive",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kennedie Fischetti",
+      "company": "Kahoot!",
+      "jobTitle": "Account Executive - Higher Education",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "James Holder",
+      "company": "Kahoot!",
+      "jobTitle": "Account Executive K-12 & Higher Ed (APAC)",
+      "email": null,
+      "mobile": null,
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Connor Archer",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Account Executive, Enterprise Accounts",
+      "email": null,
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "William Gray",
+      "company": "Kahoot!",
+      "jobTitle": "Account Executive, Kahoot! at Work",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anne Ramberg Hauso",
+      "company": "Kahoot!",
+      "jobTitle": "Project Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anthony Dicecco",
+      "company": "Kahoot!",
+      "jobTitle": "Director of Finance",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Elizabeth Kleive",
+      "company": "Kahoot!",
+      "jobTitle": "Chief Experience Officer",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zhiyu Luo",
+      "company": "Kahoot!",
+      "jobTitle": "CTO",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Katti Margrethe Lundesgaard",
+      "company": "Kahoot!",
+      "jobTitle": "Sales Executive",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Artur Gryglicki",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shervin Fashkhami",
+      "company": "Kahoot!",
+      "jobTitle": "Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Orsolya Albert",
+      "company": "Kahoot!",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Natallia Klepik",
+      "company": "Kahoot!",
+      "jobTitle": "QA Tester",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sigurd Ringstad",
+      "company": "Kahoot!",
+      "jobTitle": "Business Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Juliet Lisa Chargois",
+      "company": "Kahoot!",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Susanne Hagem",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Human Resources Business Partner",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Deniz Hansen Cartilli",
+      "company": "Kahoot!",
+      "jobTitle": "Vice President of Sales, EMEA",
+      "email": null,
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Manjit Sahoo",
+      "company": "Kahoot!",
+      "jobTitle": "iOS Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rune Lohre",
+      "company": "Kahoot!",
+      "jobTitle": "Operations Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carlos Llera",
+      "company": "Kahoot!",
+      "jobTitle": "Frontend Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Marcus Johansson",
+      "company": "Kahoot!",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Harry Gustave",
+      "company": "Kahoot!",
+      "jobTitle": "Solution Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Majd Othman",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Account Executive - Large Enterprises",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mariajosé Balboa",
+      "company": "Kahoot!",
+      "jobTitle": "Online & Automation Team Lead",
+      "email": null,
+      "mobile": null,
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Janayn Evans-Irem",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Channel Sales Manager",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Frederik Cordes",
+      "company": "Kahoot!",
+      "jobTitle": "General Manager & Chief Product Officer — Drops",
+      "email": null,
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Marta Rozanska",
+      "company": "Kahoot!",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Steffen Thomsen Jensen",
+      "company": "Kahoot!",
+      "jobTitle": "Sales Operations Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Susanne Gustavsen",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Frontend Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Milou Carolei",
+      "company": "Kahoot!",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Willmott",
+      "company": "Kahoot!",
+      "jobTitle": "VP Commercial, Asia-Pacific",
+      "email": null,
+      "mobile": null,
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sam Vestby-Clarke",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ana Maria Lega",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Account Executive",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jovana Varadjanin",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Frontend Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tonje Fyen Eidevik",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Sales Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anders Nielsen",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Key Account Executive - Kahoot! At Work, Actimo, & Motimate",
+      "email": null,
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aron Hill",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Manager of Customer Success",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amer Hussain",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Revenue Analyst",
+      "email": null,
+      "mobile": null,
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Samantha Danielson",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Account Manager, Enterprise Sales",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Payton Goolsby",
+      "company": "Kahoot!",
+      "jobTitle": "Commercial Project Manager",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carla Carsenzuola",
+      "company": "Kahoot!",
+      "jobTitle": "Vice President Human Resources",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Grete Eline Brunsvig",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Product Counsel",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Liz Crawford",
+      "company": "Kahoot!",
+      "jobTitle": "Sr. Director, Global Education",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Patrycja Kondziołka",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Billing&Subscriptions Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bartłomiej Tórz",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Backend Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chloe Decker",
+      "company": "Kahoot!",
+      "jobTitle": "Account Executive EDU Higher Ed",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Elliot Batt",
+      "company": "Kahoot!",
+      "jobTitle": "Sales Development Representative - Edu and Ent (ANZ)",
+      "email": null,
+      "mobile": null,
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Erin Sollesnes",
+      "company": "Kahoot!",
+      "jobTitle": "Account Executive EMEA - SME",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Julio Santana",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Backend Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mia Legner",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Account Executive",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Valeriia Lupynos",
+      "company": "Kahoot!",
+      "jobTitle": "Content Creator Specialist",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Therese Gunnarsen",
+      "company": "Kahoot!",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emilie Wirenfeldt Møller",
+      "company": "Kahoot!",
+      "jobTitle": "Procurement and Office Management assistant",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paulina Łazorko",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Product Designer",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dominik Muzyka",
+      "company": "Kahoot!",
+      "jobTitle": "Frontend Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "María De Los Milagros Álvarez Cañedo",
+      "company": "Kahoot!",
+      "jobTitle": "Product Marketing Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Thomas Laycock",
+      "company": "Kahoot!",
+      "jobTitle": "Inbound Sales Representative",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Agata Gans",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Customer and Sales Support Specialist",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paweł Głosz",
+      "company": "Kahoot!",
+      "jobTitle": "Senior Frontend Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Poland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Caroline Årsvold",
+      "company": "Kahoot!",
+      "jobTitle": "Content Operations Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rik Munckhof",
+      "company": "Kahoot!",
+      "jobTitle": "Director of Design",
+      "email": null,
+      "mobile": null,
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

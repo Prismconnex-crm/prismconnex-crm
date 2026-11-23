@@ -1,0 +1,276 @@
+{
+  "domain": "lapsafe.com",
+  "source": "LapSafe_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Daisy Linihan",
+      "company": "LapSafe",
+      "jobTitle": "Events & Social Media Executive",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michelle Knox",
+      "company": "LapSafe",
+      "jobTitle": "Senior Account Manager",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Exley",
+      "company": "LapSafe",
+      "jobTitle": "Business Development Director",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rob Tanner",
+      "company": "LapSafe",
+      "jobTitle": "Locker Solutions Specialist",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Josh Yeates",
+      "company": "LapSafe",
+      "jobTitle": "Product Designer",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dexter Harrison",
+      "company": "LapSafe",
+      "jobTitle": "Technical Lead",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tracy King",
+      "company": "LapSafe",
+      "jobTitle": "Graphic Designer",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Natalie Edwards",
+      "company": "LapSafe",
+      "jobTitle": "Finance Manager",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "James Davis",
+      "company": "LapSafe",
+      "jobTitle": "Quality Assurance Analyst",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Simon Crees",
+      "company": "LapSafe",
+      "jobTitle": "Production engineer",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jamie Crathern",
+      "company": "LapSafe",
+      "jobTitle": "Sales Manager",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Grant Bristow",
+      "company": "LapSafe",
+      "jobTitle": "National Account Manager",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mike Kilby",
+      "company": "LapSafe",
+      "jobTitle": "Senior Account Manager",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kyle Chart",
+      "company": "LapSafe",
+      "jobTitle": "Junior Full-stack Developer",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ben Macdonald",
+      "company": "LapSafe",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Saunders",
+      "company": "LapSafe",
+      "jobTitle": "After Sales Diplomat Technical Support Co-ordinator",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kyle Chaplin",
+      "company": "LapSafe",
+      "jobTitle": "Production Supervisor",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Martha Evans",
+      "company": "LapSafe",
+      "jobTitle": "Marketing Manager",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Annette Youngman",
+      "company": "LapSafe",
+      "jobTitle": "Credit Manager",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tony Cox",
+      "company": "LapSafe",
+      "jobTitle": "Production and Systems",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jamie Crathern",
+      "company": "LapSafe",
+      "jobTitle": "account manager",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kyle Chaplin",
+      "company": "LapSafe",
+      "jobTitle": "Production Manager",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emma Carlin",
+      "company": "LapSafe",
+      "jobTitle": "National Sales Manager",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anthony Edwards",
+      "company": "LapSafe",
+      "jobTitle": "Service Engineer",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carmela Esposito",
+      "company": "LapSafe",
+      "jobTitle": "DIRIGENTE",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "Italy",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pedro Almeida",
+      "company": "LapSafe",
+      "jobTitle": "Delivery Driver",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lucy Steal",
+      "company": "LapSafe",
+      "jobTitle": "trainee",
+      "email": null,
+      "mobile": "44 1787 226 16",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

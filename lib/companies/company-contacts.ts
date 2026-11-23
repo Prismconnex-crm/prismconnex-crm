@@ -68,6 +68,47 @@ import indota from "@/data/company-contacts/indota.com.json";
 import infento from "@/data/company-contacts/infento.com.json";
 import intel from "@/data/company-contacts/intel.com.json";
 import interactive365 from "@/data/company-contacts/interactive365.co.uk.json";
+// 2026-11-23 batch of 26 (owner's order).
+import irisEducation from "@/data/company-contacts/iris.co.uk.json";
+import ixl from "@/data/company-contacts/ixl.com.json";
+import jamf from "@/data/company-contacts/jamf.com.json";
+import jpik from "@/data/company-contacts/jpik.com.json";
+import kahoot from "@/data/company-contacts/kahoot.com.json";
+import kami from "@/data/company-contacts/kamiapp.com.json";
+import kidsCover from "@/data/company-contacts/kidscover.eu.json";
+import lapSafe from "@/data/company-contacts/lapsafe.com.json";
+import lightspeed from "@/data/company-contacts/lightspeedsystems.com.json";
+import littleGreenButton from "@/data/company-contacts/littlegreenbutton.com.json";
+import locker from "@/data/company-contacts/locker.co.uk.json";
+import locknCharge from "@/data/company-contacts/lockncharge.com.json";
+import logiBrothers from "@/data/company-contacts/logibros.com.json";
+import loudwater from "@/data/company-contacts/loudwater.io.json";
+import lynxNetworks from "@/data/company-contacts/lynxnetworks.co.uk.json";
+import lyreco from "@/data/company-contacts/why.lyreco.com.json";
+import madlen from "@/data/company-contacts/madlen.io.json";
+import markus from "@/data/company-contacts/markus.tech.json";
+import mooka from "@/data/company-contacts/mooka.ie.json";
+import mozaik from "@/data/company-contacts/mozaweb.com.json";
+import mps from "@/data/company-contacts/mpsuk.net.json";
+import mrsWordsmith from "@/data/company-contacts/mrswordsmith.com.json";
+import netCtrl from "@/data/company-contacts/net-ctrl.co.uk.json";
+import netSupport from "@/data/company-contacts/netsupportsoftware.com.json";
+import netsweeper from "@/data/company-contacts/netsweeper.com.json";
+import nutKase from "@/data/company-contacts/nutkase.json";
+// 2026-11-23 six companies split from All_6_Companies_Contacts.csv (--only-company each).
+import okulyo from "@/data/company-contacts/okulyo.com.json";
+import omadaTpLink from "@/data/company-contacts/tp-link.com.json";
+import openLms from "@/data/company-contacts/openlms.net.json";
+import padlet from "@/data/company-contacts/padlet.com.json";
+import paperly from "@/data/company-contacts/paperly.education.json";
+import parentPay from "@/data/company-contacts/parentpay.com.json";
+// 2026-11-23 from all8companies.csv (--only-company each). "Prowise Solutions Inc" rows
+// NOT imported: a US/Indian IT-staffing firm, not the Prowise (prowise.com) exhibitor.
+import pearltrees from "@/data/company-contacts/pearltrees.com.json";
+import phlowAcademy from "@/data/company-contacts/phlow.academy.json";
+import phoneLocker from "@/data/company-contacts/phonelocker.com.json";
+import redboxVr from "@/data/company-contacts/redboxvr.com.json";
+import revoducate from "@/data/company-contacts/revoducate.matrixlms.com.json";
 import communityPlaythings from "@/data/company-contacts/communityplaythings.co.uk.json";
 
 export type CompanyContact = {
@@ -81,6 +122,13 @@ export type CompanyContact = {
   companyLinkedInUrl: string | null;
   /** Telegram / messaging link, only when a source actually provides one. */
   messagingUrl?: string | null;
+  /**
+   * Provider-reported availability when the value itself was not revealed
+   * (Prospeo: VERIFIED / UNAVAILABLE). Lets the table say "Not revealed"
+   * instead of "-" for a verified email or mobile that exists but is not shown.
+   */
+  emailStatus?: string | null;
+  mobileStatus?: string | null;
 };
 
 type ContactFile = { domain: string; source: string; contacts: CompanyContact[] };
@@ -156,6 +204,45 @@ const CONTACT_FILES: Record<string, ContactFile> = {
   [intel.domain]: intel as ContactFile,
   // Imported with --only-company: the sheet also lists an Intel employee.
   [interactive365.domain]: interactive365 as ContactFile,
+  // 2026-11-23 batch. Imported with --only-company: netsupport/netsweeper/nutkase
+  // (combined files). MPS: Tom Critchley's shifted row hand-realigned.
+  [irisEducation.domain]: irisEducation as ContactFile,
+  [ixl.domain]: ixl as ContactFile,
+  [jamf.domain]: jamf as ContactFile,
+  [jpik.domain]: jpik as ContactFile,
+  [kahoot.domain]: kahoot as ContactFile,
+  [kami.domain]: kami as ContactFile,
+  [kidsCover.domain]: kidsCover as ContactFile,
+  [lapSafe.domain]: lapSafe as ContactFile,
+  [lightspeed.domain]: lightspeed as ContactFile,
+  [littleGreenButton.domain]: littleGreenButton as ContactFile,
+  [locker.domain]: locker as ContactFile,
+  [locknCharge.domain]: locknCharge as ContactFile,
+  [logiBrothers.domain]: logiBrothers as ContactFile,
+  [loudwater.domain]: loudwater as ContactFile,
+  [lynxNetworks.domain]: lynxNetworks as ContactFile,
+  [lyreco.domain]: lyreco as ContactFile,
+  [madlen.domain]: madlen as ContactFile,
+  [markus.domain]: markus as ContactFile,
+  [mooka.domain]: mooka as ContactFile,
+  [mozaik.domain]: mozaik as ContactFile,
+  [mps.domain]: mps as ContactFile,
+  [mrsWordsmith.domain]: mrsWordsmith as ContactFile,
+  [netCtrl.domain]: netCtrl as ContactFile,
+  [netSupport.domain]: netSupport as ContactFile,
+  [netsweeper.domain]: netsweeper as ContactFile,
+  [nutKase.domain]: nutKase as ContactFile,
+  [okulyo.domain]: okulyo as ContactFile,
+  [omadaTpLink.domain]: omadaTpLink as ContactFile,
+  [openLms.domain]: openLms as ContactFile,
+  [padlet.domain]: padlet as ContactFile,
+  [paperly.domain]: paperly as ContactFile,
+  [parentPay.domain]: parentPay as ContactFile,
+  [pearltrees.domain]: pearltrees as ContactFile,
+  [phlowAcademy.domain]: phlowAcademy as ContactFile,
+  [phoneLocker.domain]: phoneLocker as ContactFile,
+  [redboxVr.domain]: redboxVr as ContactFile,
+  [revoducate.domain]: revoducate as ContactFile,
 };
 
 /**
@@ -164,7 +251,7 @@ const CONTACT_FILES: Record<string, ContactFile> = {
  * contacts that have a real email. Nothing is sent automatically; contacts
  * without an email keep the inert button.
  */
-const PAPER_PLANE_MAILTO = new Set(["briskteaching.com"]);
+const PAPER_PLANE_MAILTO = new Set(["briskteaching.com", "iris.co.uk"]);
 
 /**
  * Company name shown on every contact row, replacing the sheet's value — used
@@ -280,6 +367,35 @@ const MOBILE_OVERRIDES: Record<string, string> = {
   // 2026-11-22 master list: first shared number for these two (also stored in the JSON).
   "4matrixcloud.com": "44 203 475 4463",
   "edpuzzle.com": "1 650 336 4934",
+  // 2026-11-23 batch — owner-supplied (also stored via --mobile). Jamf, LapSafe and
+  // MPS differ by a digit from their BETT directory phones (flagged to the owner).
+  "iris.co.uk": "44 344 815 5555",
+  "ixl.com": "1 855 255-8800",
+  "jamf.com": "44 20 4572 655",
+  "jpik.com": "351 229 993 900",
+  "kidscover.eu": "31 70 820 1040",
+  "lapsafe.com": "44 1787 226 16",
+  "lightspeedsystems.com": "44 20 4534 5200",
+  "littlegreenbutton.com": "44 1263 888365",
+  "locker.co.uk": "44 844 549 9500",
+  "lockncharge.com": "44 208 441 4107",
+  "lynxnetworks.co.uk": "44 1908 633833",
+  "why.lyreco.com": "44 8000 85 85 85",
+  "madlen.io": "90 545 542 0511",
+  "mooka.ie": "353 74 970 6715",
+  "mpsuk.net": "44 800 999 6066",
+  "mrswordsmith.com": "44 303 123 1113",
+  "net-ctrl.co.uk": "44 1473 281 211",
+  "netsupportsoftware.com": "44 1778 382270",
+  "netsweeper.com": "1 519-772-0889",
+  // 2026-11-23 six-company CSV — owner-supplied, match the BETT directory phones.
+  "okulyo.com": "+90 850 307 7242",
+  "tp-link.com": "+44 345 147 0017",
+  "paperly.education": "+61 1300 472 737",
+  // 2026-11-23 all8companies.csv — owner-supplied, match the BETT directory phones.
+  "pearltrees.com": "+33 143 489 462",
+  "phonelocker.com": "+44 203 161 8121",
+  "redboxvr.com": "+44 1253 804802",
 };
 
 /** The show directory's own named contact, as stored on EventExhibitor. */
@@ -305,6 +421,8 @@ const nameKey = (name: string) =>
  */
 const NAME_FALLBACKS: Record<string, string> = {
   [nameKey("AITutoring.me")]: "aitutoring.me",
+  // BETT lists NutKase with no website.
+  [nameKey("NutKase")]: "nutkase",
 };
 
 const blank = (value: string | null | undefined) => !value || !value.trim();
@@ -426,6 +544,44 @@ const ALWAYS_SHOW_CONTACT_ICONS = new Set([
   "infento.com",
   "intel.com",
   "interactive365.co.uk",
+  // Prospeo pilot (contacts come from the ExhibitorContact table, not a file).
+  "iris.co.uk",
+  "ixl.com",
+  "jamf.com",
+  "jpik.com",
+  "kahoot.com",
+  "kamiapp.com",
+  "kidscover.eu",
+  "lapsafe.com",
+  "lightspeedsystems.com",
+  "littlegreenbutton.com",
+  "locker.co.uk",
+  "lockncharge.com",
+  "logibros.com",
+  "loudwater.io",
+  "lynxnetworks.co.uk",
+  "why.lyreco.com",
+  "madlen.io",
+  "markus.tech",
+  "mooka.ie",
+  "mozaweb.com",
+  "mpsuk.net",
+  "mrswordsmith.com",
+  "net-ctrl.co.uk",
+  "netsupportsoftware.com",
+  "netsweeper.com",
+  "nutkase",
+  "okulyo.com",
+  "tp-link.com",
+  "openlms.net",
+  "padlet.com",
+  "paperly.education",
+  "parentpay.com",
+  "pearltrees.com",
+  "phlow.academy",
+  "phonelocker.com",
+  "redboxvr.com",
+  "revoducate.matrixlms.com",
 ]);
 
 export function alwaysShowContactIcons(domain: string | null, companyName?: string | null): boolean {
@@ -445,15 +601,30 @@ export function alwaysShowContactIcons(domain: string | null, companyName?: stri
  */
 export function getCompanyContacts(
   domain: string | null,
-  directory?: DirectoryContact | null
+  directory?: DirectoryContact | null,
+  /**
+   * Contacts stored elsewhere (e.g. Prospeo imports in the ExhibitorContact
+   * table), appended after the file's list. A person already in the file —
+   * same LinkedIn profile, else same name — is not added twice.
+   */
+  extraContacts: CompanyContact[] = []
 ): CompanyContact[] | null {
-  const key = resolveContactKey(domain, directory?.companyName);
+  const key = resolveContactKey(domain, directory?.companyName) ?? (extraContacts.length ? domain?.toLowerCase() ?? null : null);
   if (!key) return null;
   const file = CONTACT_FILES[key];
-  if (!file) return null;
+  if (!file && extraContacts.length === 0) return null;
   domain = key;
 
-  const contacts = file.contacts.map((contact) => ({ ...contact }));
+  const contacts = (file?.contacts ?? []).map((contact) => ({ ...contact }));
+  for (const extra of extraContacts) {
+    const extraLinkedIn = linkedInKey(extra.personLinkedInUrl);
+    const already = contacts.some(
+      (contact) =>
+        (extraLinkedIn && linkedInKey(contact.personLinkedInUrl) === extraLinkedIn) ||
+        nameKey(contact.fullName) === nameKey(extra.fullName)
+    );
+    if (!already) contacts.push({ ...extra });
+  }
   const companyLinkedIn = directory?.companyLinkedInUrl?.trim() || null;
 
   const directoryName = [directory?.firstName, directory?.lastName]

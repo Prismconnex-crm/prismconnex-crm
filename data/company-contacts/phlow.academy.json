@@ -1,0 +1,16 @@
+{
+  "domain": "phlow.academy",
+  "source": "all8companies.csv",
+  "contacts": [
+    {
+      "fullName": "Paul Dunne",
+      "company": "Phlow Academy",
+      "jobTitle": "Founder",
+      "email": null,
+      "mobile": null,
+      "country": "Ireland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

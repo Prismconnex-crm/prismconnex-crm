@@ -1,0 +1,76 @@
+{
+  "domain": "okulyo.com",
+  "source": "All_6_Companies_Contacts.csv",
+  "contacts": [
+    {
+      "fullName": "Emre Cekic",
+      "company": "Okulyo",
+      "jobTitle": "Co-Founder at Okulyo",
+      "email": null,
+      "mobile": "+90 850 307 7242",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gökhan Sarikaya",
+      "company": "Okulyo",
+      "jobTitle": "Chief Executive Officer",
+      "email": null,
+      "mobile": "+90 850 307 7242",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Eyüp Can G.",
+      "company": "Okulyo",
+      "jobTitle": "Full Stack Developer",
+      "email": null,
+      "mobile": "+90 850 307 7242",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mert Dayıoğlu",
+      "company": "Okulyo",
+      "jobTitle": "Sales And Marketing Manager",
+      "email": null,
+      "mobile": "+90 850 307 7242",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Melek İ",
+      "company": "Okulyo",
+      "jobTitle": "Yazılım Teknik Destek",
+      "email": null,
+      "mobile": "+90 850 307 7242",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bedri̇ Çeki̇Ç",
+      "company": "Okulyo",
+      "jobTitle": "İdari İşler Müdürü",
+      "email": null,
+      "mobile": "+90 850 307 7242",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Günay Alsancak",
+      "company": "Okulyo",
+      "jobTitle": "Teknik Servis",
+      "email": null,
+      "mobile": "+90 850 307 7242",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

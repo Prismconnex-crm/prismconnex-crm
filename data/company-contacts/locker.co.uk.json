@@ -1,0 +1,26 @@
+{
+  "domain": "locker.co.uk",
+  "source": "Locker_Technology_Limited_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Doug Leach",
+      "company": "Locker Technology Limited",
+      "jobTitle": "Technical Director",
+      "email": null,
+      "mobile": "44 844 549 9500",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Angela Thompson",
+      "company": "Locker Technology Limited",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "44 844 549 9500",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

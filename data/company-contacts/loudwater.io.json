@@ -1,0 +1,36 @@
+{
+  "domain": "loudwater.io",
+  "source": "Loudwater_Trade_and_Finance_Limited_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Lance Karpelowsky",
+      "company": "Loudwater Trade and Finance Limited",
+      "jobTitle": "Buyer",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Steve Teh",
+      "company": "Loudwater Trade and Finance Limited",
+      "jobTitle": "Financial Controller",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chouslibrary Taiwan",
+      "company": "Loudwater Trade and Finance Limited",
+      "jobTitle": "Officer",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

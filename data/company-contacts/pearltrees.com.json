@@ -1,0 +1,506 @@
+{
+  "domain": "pearltrees.com",
+  "source": "all8companies.csv",
+  "contacts": [
+    {
+      "fullName": "Patrice Lamothe",
+      "company": "Pearltrees",
+      "jobTitle": "CEO & Co-Founder",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ludovic Compagnon",
+      "company": "Pearltrees",
+      "jobTitle": "Project Manager - Operations",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Liam Orlhac",
+      "company": "Pearltrees",
+      "jobTitle": "Responsable implémentation plateforme - Région Occitanie",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mathis Dechaume",
+      "company": "Pearltrees",
+      "jobTitle": "CSM",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anas Regragui",
+      "company": "Pearltrees",
+      "jobTitle": "Senior Project Manager",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Camille Sevalle",
+      "company": "Pearltrees",
+      "jobTitle": "Junior Customer Success Manager",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ulysse Morel",
+      "company": "Pearltrees",
+      "jobTitle": "Senior Business Developper",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Morgane Soreau",
+      "company": "Pearltrees",
+      "jobTitle": "Head of Marketing",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hedi Nouri",
+      "company": "Pearltrees",
+      "jobTitle": "Chief Financial Officer",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Thibault Aymer",
+      "company": "Pearltrees",
+      "jobTitle": "Chef de pôle implémentation",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cindy Hua",
+      "company": "Pearltrees",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alix Barnaud",
+      "company": "Pearltrees",
+      "jobTitle": "Senior Business Developer",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bilal Manssouri",
+      "company": "Pearltrees",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Marie Lemaire",
+      "company": "Pearltrees",
+      "jobTitle": "Business Developer",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Roxane Allani",
+      "company": "Pearltrees",
+      "jobTitle": "Head of Sales - Secondary schools",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jean-Baptiste Moussa",
+      "company": "Pearltrees",
+      "jobTitle": "AI Engineer",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Elie Vinot",
+      "company": "Pearltrees",
+      "jobTitle": "Directeur-adjoint, en charge du Développement",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paul Figueiredo",
+      "company": "Pearltrees",
+      "jobTitle": "Business developper",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Maximilien Prat",
+      "company": "Pearltrees",
+      "jobTitle": "Senior Customer Success Manager",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joséphine Quentel",
+      "company": "Pearltrees",
+      "jobTitle": "Project manager - Operations",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Brice Le Grignou",
+      "company": "Pearltrees",
+      "jobTitle": "Directeur adjoint R&D",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pierre Guittet",
+      "company": "Pearltrees",
+      "jobTitle": "Chef de pôle - Implémentations spéciales",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Grégoire Lambert",
+      "company": "Pearltrees",
+      "jobTitle": "Directeur Opérations et Produit",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Béchara Fayad",
+      "company": "Pearltrees",
+      "jobTitle": "Chef de Projet",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jeanne Ozanne",
+      "company": "Pearltrees",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mathias Lepoutre",
+      "company": "Pearltrees",
+      "jobTitle": "Directeur technique adjoint",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aurèle Moniot",
+      "company": "Pearltrees",
+      "jobTitle": "Deputy Director - Product & Public Affairs",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pierre De Barbentane",
+      "company": "Pearltrees",
+      "jobTitle": "Customer success manager",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jules Le Prince",
+      "company": "Pearltrees",
+      "jobTitle": "Customer success manager senior",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paul Belin",
+      "company": "Pearltrees",
+      "jobTitle": "Senior Software Engineering",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chloe Niterbuhl",
+      "company": "Pearltrees",
+      "jobTitle": "Chef de pôle Opérations",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "William Faujour",
+      "company": "Pearltrees",
+      "jobTitle": "Deputy Director of Operations & Product",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sébastien Huot",
+      "company": "Pearltrees",
+      "jobTitle": "Lead AI Engineer",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Thomas Kefalas",
+      "company": "Pearltrees",
+      "jobTitle": "Chef de Pôle Implémentation",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Francois Secherre",
+      "company": "Pearltrees",
+      "jobTitle": "Backend team lead",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Victor Fournier",
+      "company": "Pearltrees",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Thierry Bécart",
+      "company": "Pearltrees",
+      "jobTitle": "Ingénieur R&D logiciels",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tom Caumartin",
+      "company": "Pearltrees",
+      "jobTitle": "Business Developper",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Filippo Stefano Matarazzo",
+      "company": "Pearltrees",
+      "jobTitle": "Art Director",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "Italy",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Samuel Tissier",
+      "company": "Pearltrees",
+      "jobTitle": "AD",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alexis Lauthier",
+      "company": "Pearltrees",
+      "jobTitle": "Server team lead, software architect",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Fabien Gasparini",
+      "company": "Pearltrees",
+      "jobTitle": "Chargé D'éducation",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Claire De La Rochefoucauld",
+      "company": "Pearltrees",
+      "jobTitle": "Directrice adjointe en charge de l'éditorial",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nathan Mainguy",
+      "company": "Pearltrees",
+      "jobTitle": "Operations",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Marin Moringue",
+      "company": "Pearltrees",
+      "jobTitle": "Junior Operations",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Xinran Zhao",
+      "company": "Pearltrees",
+      "jobTitle": "Product Manager AI & Data",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "New Zealand",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Elie Abi Char",
+      "company": "Pearltrees",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ayrton De Amorim Freitas",
+      "company": "Pearltrees",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yohann Domenech",
+      "company": "Pearltrees",
+      "jobTitle": "Concepteur pédagogique",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vishal Kumar",
+      "company": "Pearltrees",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "+33 143 489 462",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

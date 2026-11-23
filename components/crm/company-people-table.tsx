@@ -61,6 +61,25 @@ function Empty() {
   return <span className="text-slate-400 dark:text-slate-500">{EMPTY}</span>;
 }
 
+/**
+ * Empty email/mobile cell. When a provider says the value exists but it was not
+ * revealed (Prospeo status VERIFIED), say so instead of "-", so "not revealed"
+ * and "none" are never confused. Rows without a status behave as before.
+ */
+function Unrevealed({ status, kind }: { status?: string | null; kind: "email" | "mobile" }) {
+  if (status?.toUpperCase() === "VERIFIED") {
+    return (
+      <span
+        className="text-[12px] italic text-slate-400 dark:text-slate-500"
+        title={`A verified ${kind} exists in Prospeo but has not been revealed (revealing costs Prospeo credits).`}
+      >
+        Not revealed
+      </span>
+    );
+  }
+  return <Empty />;
+}
+
 function LinkedInButton({ url, label }: { url: string; label: string; brand?: boolean }) {
   return (
     <a
@@ -189,7 +208,7 @@ export function CompanyPeopleTable({
                       {contact.email}
                     </a>
                   ) : (
-                    <Empty />
+                    <Unrevealed status={contact.emailStatus} kind="email" />
                   )}
                 </td>
                 <td className={CELL}>
@@ -201,7 +220,7 @@ export function CompanyPeopleTable({
                       {contact.mobile}
                     </a>
                   ) : (
-                    <Empty />
+                    <Unrevealed status={contact.mobileStatus} kind="mobile" />
                   )}
                 </td>
                 <td className={CELL}>{contact.country ?? <Empty />}</td>

@@ -1,0 +1,376 @@
+{
+  "domain": "mrswordsmith.com",
+  "source": "mrs wordsmith.csv",
+  "contacts": [
+    {
+      "fullName": "Shirleigh Humphreys",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Social Media Manager",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pierre Lagrange",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "CEO",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kaci Parcell",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Marketing Executive",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonathan Jensen",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Lead Game Designer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yi Xu Gamescom",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Senior Marketing Manager",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Martin Malmer",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Game UI / UX Designer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dani Saunders",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Finance Manager",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Theis Mahal",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Sound Designer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonas Halver",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Core Game Designer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lise Andersen Bohr",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Analytics Engineer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Evan Simpson",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Lead Full Stack Data Scientist",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kasper Middelboe Petersen",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Chief Technology Officer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Luis Pardo",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Head of Marketing",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Norbert Kozari",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michael Fonsholt",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Lead 3D Artist",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gizette Edis",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Freelance Writer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Canada",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Johnny Myhre Mikkelsen",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Game Programmer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Martin Skytte Kristensen",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Lead Engineer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rochelle Mcclymont",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Curriculum/E-Learning Consultant",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stacey Mcclurg",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Head of HR and Business Operations",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anja Pedersen",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "3D Artist",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rebecca Da Silva",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Senior Writer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daniel Permutt",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Art Director",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jamie Møller Christensen",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Game Programmer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Damjan Derdić",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Game Engineer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Sweden",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michala Gjøl",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Level Designer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "James Hall",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joanna Jackson",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Schools Lead",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tarun M.",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "AI Content Designer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alper Eminefendi",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Softwareingeniør",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Norway",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gina Chen",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Full-stack Developer",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Thomas Qvist Krüger",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Senior Data Analyst",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Denmark",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Becca Lett",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "US Partnerships Executive",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Morren",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Digital Marketing Manager",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Brazil",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daniella Blejer",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Member of the Advisory Board",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Mexico",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Fabrice Gourdel",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Art Director",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ana Tovkun",
+      "company": "Mrs Wordsmith",
+      "jobTitle": "Game Artist",
+      "email": null,
+      "mobile": "44 303 123 1113",
+      "country": "Bulgaria",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

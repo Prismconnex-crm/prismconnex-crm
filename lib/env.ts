@@ -36,6 +36,10 @@ const envSchema = z.object({
     // Absent = /api/companies/ask returns 503 and the UI falls back to
     // plain company prefix search.
     ANTHROPIC_API_KEY: z.string().optional(),
+
+    // Prospeo — People Search for exhibitor People tabs (lib/prospeo/).
+    // Server-side only; absent = the Prospeo routes return 503.
+    PROSPEO_API_KEY: z.string().optional(),
 });
 
 export const env = envSchema.parse({
@@ -50,4 +54,5 @@ export const env = envSchema.parse({
     AWS_REGION: process.env.AWS_REGION,
     AWS_S3_BUCKET: process.env.AWS_S3_BUCKET,
     ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
+    PROSPEO_API_KEY: process.env.PROSPEO_API_KEY,
 });

@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db/prisma";
 import { getSessionPayload } from "@/lib/auth/session";
-import { alwaysShowContactIcons, getCompanyContacts } from "@/lib/companies/company-contacts";
+import { alwaysShowContactIcons, getCompanyContacts, type CompanyContact } from "@/lib/companies/company-contacts";
+import { prospeoTargetFor } from "@/lib/prospeo/pilot";
+import { listProspeoContacts } from "@/lib/prospeo/service";
 
 export const dynamic = "force-dynamic";
 
@@ -116,6 +118,22 @@ export async function GET(_request: Request, { params }: { params: { id: string 
       }
     }
 
+    // Imported Prospeo people (pilot exhibitors only; other exhibitors skip the query).
+    const prospeoContacts: CompanyContact[] = prospeoTargetFor(exhibitor.id)
+      ? (await listProspeoContacts(exhibitor.id)).map((row) => ({
+          fullName: row.fullName ?? "",
+          company: row.companyName,
+          jobTitle: row.jobTitle,
+          email: row.email,
+          mobile: row.mobile,
+          country: row.country,
+          personLinkedInUrl: row.personLinkedInUrl,
+          companyLinkedInUrl: row.companyLinkedInUrl,
+          emailStatus: row.emailStatus,
+          mobileStatus: row.mobileStatus,
+        }))
+      : [];
+
     return NextResponse.json({
       exhibitor: {
         id: exhibitor.id,
@@ -145,7 +163,9 @@ export async function GET(_request: Request, { params }: { params: { id: string 
       },
       // Imported contact list for this company (People table), or null when
       // none was imported — the profile then shows the directory contact card.
-      contacts: getCompanyContacts(domain, exhibitor),
+      contacts: getCompanyContacts(domain, exhibitor, prospeoContacts),
+      // Prospeo pilot: the People tab offers "Fetch from Prospeo" only here.
+      prospeoEnabled: !!prospeoTargetFor(exhibitor.id),
       // Show LinkedIn + paper-plane on every row, inert where no URL exists.
       contactIconsAlways: alwaysShowContactIcons(domain, exhibitor.companyName),
       company,

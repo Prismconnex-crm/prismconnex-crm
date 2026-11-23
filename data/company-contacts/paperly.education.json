@@ -1,0 +1,166 @@
+{
+  "domain": "paperly.education",
+  "source": "All_6_Companies_Contacts.csv",
+  "contacts": [
+    {
+      "fullName": "Natalie Nguyen",
+      "company": "Paperly",
+      "jobTitle": "Product Owner",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alexia Milojevic",
+      "company": "Paperly",
+      "jobTitle": "Junior UX Designer",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jay Kaneriya",
+      "company": "Paperly",
+      "jobTitle": "Senior Web Application Developer",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jak Tidman",
+      "company": "Paperly",
+      "jobTitle": "Co-Founder & Chief Operating Officer",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bipin Patel",
+      "company": "Paperly",
+      "jobTitle": "Project Manager",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Scott Jarvis",
+      "company": "Paperly",
+      "jobTitle": "Implementation Specialist",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michael Saunders",
+      "company": "Paperly",
+      "jobTitle": "Growth Development Executive",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Aldous",
+      "company": "Paperly",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Patrick Connolly",
+      "company": "Paperly",
+      "jobTitle": "Client Manager",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrew Auxilio",
+      "company": "Paperly",
+      "jobTitle": "Senior Full Stack Software Engineer",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Em Gulliver",
+      "company": "Paperly",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Federica Raso",
+      "company": "Paperly",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mandy Wong",
+      "company": "Paperly",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daniel Dawson",
+      "company": "Paperly",
+      "jobTitle": "Founder",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ruben Groves",
+      "company": "Paperly",
+      "jobTitle": "Junior Product Owner",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chamath Milleniya",
+      "company": "Paperly",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "+61 1300 472 737",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

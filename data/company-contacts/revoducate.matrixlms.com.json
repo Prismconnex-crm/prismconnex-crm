@@ -1,0 +1,16 @@
+{
+  "domain": "revoducate.matrixlms.com",
+  "source": "all8companies.csv",
+  "contacts": [
+    {
+      "fullName": "Moshe Facler",
+      "company": "REVODUCATE",
+      "jobTitle": "Founder & CEO",
+      "email": null,
+      "mobile": null,
+      "country": "Israel",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

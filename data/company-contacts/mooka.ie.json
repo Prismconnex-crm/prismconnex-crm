@@ -1,0 +1,36 @@
+{
+  "domain": "mooka.ie",
+  "source": "mooka.csv",
+  "contacts": [
+    {
+      "fullName": "Suzanne Gannon",
+      "company": "Mooka Media",
+      "jobTitle": "Design Lead",
+      "email": null,
+      "mobile": "353 74 970 6715",
+      "country": "Ireland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alycia Kearney",
+      "company": "Mooka Media",
+      "jobTitle": "Content Lead",
+      "email": null,
+      "mobile": "353 74 970 6715",
+      "country": "Ireland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Charlotte Molloy",
+      "company": "Mooka Media",
+      "jobTitle": "UX | UI Designer",
+      "email": null,
+      "mobile": "353 74 970 6715",
+      "country": "Ireland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

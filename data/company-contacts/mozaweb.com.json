@@ -1,0 +1,766 @@
+{
+  "domain": "mozaweb.com",
+  "source": "mozaik.csv",
+  "contacts": [
+    {
+      "fullName": "Ildikó Török",
+      "company": "Mozaik Education",
+      "jobTitle": "Business Development Director",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Peter Torok",
+      "company": "Mozaik Education",
+      "jobTitle": "Deputy CEO",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Balázs Török",
+      "company": "Mozaik Education",
+      "jobTitle": "Machine Learning Project Leader",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Laura Tashman",
+      "company": "Mozaik Education",
+      "jobTitle": "International sales accosiate",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Maxim Chigrin",
+      "company": "Mozaik Education",
+      "jobTitle": "International Business Development Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zsolt Nagyistván",
+      "company": "Mozaik Education",
+      "jobTitle": "Sales Representative",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bettina Szabó",
+      "company": "Mozaik Education",
+      "jobTitle": "Software Test Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Basic",
+      "company": "Mozaik Education",
+      "jobTitle": "Software Tester",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tibor Borbás",
+      "company": "Mozaik Education",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Boglarka Solymosy",
+      "company": "Mozaik Education",
+      "jobTitle": "Textbook Editor and Business Development Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Norbert Ormándi",
+      "company": "Mozaik Education",
+      "jobTitle": "Machine Learning Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "János Trauer",
+      "company": "Mozaik Education",
+      "jobTitle": "Evaluation and Assessment Specialist, Digital Educational Content Editor",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Erika Szabó",
+      "company": "Mozaik Education",
+      "jobTitle": "Graphic Illustrator",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Violetta Csépe",
+      "company": "Mozaik Education",
+      "jobTitle": "Graphic designer, webdesign",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zsolt Duzmath",
+      "company": "Mozaik Education",
+      "jobTitle": "Chief Technology Officer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zoltán Török",
+      "company": "Mozaik Education",
+      "jobTitle": "CEO",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Medovárszki György",
+      "company": "Mozaik Education",
+      "jobTitle": "CEO",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gabriella Eszik",
+      "company": "Mozaik Education",
+      "jobTitle": "Publishing Editor",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tamás Vetstein",
+      "company": "Mozaik Education",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Réka Baricza",
+      "company": "Mozaik Education",
+      "jobTitle": "Graphic Designer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zsuzsa László",
+      "company": "Mozaik Education",
+      "jobTitle": "Sales Associate",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kunstár Andrea",
+      "company": "Mozaik Education",
+      "jobTitle": "Publishing Director",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Máté Gardi",
+      "company": "Mozaik Education",
+      "jobTitle": "Translator and interpreter",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Attila Török",
+      "company": "Mozaik Education",
+      "jobTitle": "Senior Frontend Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alexander Pushkin",
+      "company": "Mozaik Education",
+      "jobTitle": "International Sales Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mozaik Kiadó",
+      "company": "Mozaik Education",
+      "jobTitle": "Business Partnership",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anett Frolyo",
+      "company": "Mozaik Education",
+      "jobTitle": "International Relations Associate",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Márton Bozsó",
+      "company": "Mozaik Education",
+      "jobTitle": "digital content editor, photographer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "István Hallai Seiler",
+      "company": "Mozaik Education",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Svilena Dimitrova",
+      "company": "Mozaik Education",
+      "jobTitle": "Research Project Assistant, Voiceover",
+      "email": null,
+      "mobile": null,
+      "country": "Bulgaria",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gálea Patrik",
+      "company": "Mozaik Education",
+      "jobTitle": "Full Stack Web Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "László Tímár",
+      "company": "Mozaik Education",
+      "jobTitle": "Senior Unity Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bálint Schrettner",
+      "company": "Mozaik Education",
+      "jobTitle": "Full Stack Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Richárd Jámbor",
+      "company": "Mozaik Education",
+      "jobTitle": "Junior Software Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Silvia Papp",
+      "company": "Mozaik Education",
+      "jobTitle": "publisher's reader",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Grezsa Krisztián",
+      "company": "Mozaik Education",
+      "jobTitle": "Senior Software Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Máté Ágoston",
+      "company": "Mozaik Education",
+      "jobTitle": "Web Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Richárd Lengyel",
+      "company": "Mozaik Education",
+      "jobTitle": "System Administrator",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gábor Rácz",
+      "company": "Mozaik Education",
+      "jobTitle": "Programmer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andreea Ştefan",
+      "company": "Mozaik Education",
+      "jobTitle": "Consultant",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ildikó Tapasztó",
+      "company": "Mozaik Education",
+      "jobTitle": "International Relations Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Márk Sun",
+      "company": "Mozaik Education",
+      "jobTitle": "PHP Web Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bozsik Katalin",
+      "company": "Mozaik Education",
+      "jobTitle": "Methodology Expert, Editor",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Agnes Farkas",
+      "company": "Mozaik Education",
+      "jobTitle": "Technical Editor",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Péter Haraszti",
+      "company": "Mozaik Education",
+      "jobTitle": "2D Graphic Designer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Erika Földvári",
+      "company": "Mozaik Education",
+      "jobTitle": "Author",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Szabó Viktor",
+      "company": "Mozaik Education",
+      "jobTitle": "Programmer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anna Borbás",
+      "company": "Mozaik Education",
+      "jobTitle": "Assistant",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Varju Tamás",
+      "company": "Mozaik Education",
+      "jobTitle": "Web Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tajti Richard",
+      "company": "Mozaik Education",
+      "jobTitle": "Junior Software Engineer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bence Illés",
+      "company": "Mozaik Education",
+      "jobTitle": "Publishing Editor",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Boglarka Solymosy",
+      "company": "Mozaik Education",
+      "jobTitle": "rights manager",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Iman Faisal",
+      "company": "Mozaik Education",
+      "jobTitle": "Distributor",
+      "email": null,
+      "mobile": null,
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ágota Gonda",
+      "company": "Mozaik Education",
+      "jobTitle": "Translator",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nikolett Jancsovics",
+      "company": "Mozaik Education",
+      "jobTitle": "Russian and English Translator",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Beáta Szabó",
+      "company": "Mozaik Education",
+      "jobTitle": "Translator",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Priscilla Lopes",
+      "company": "Mozaik Education",
+      "jobTitle": "Translator",
+      "email": null,
+      "mobile": null,
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alexandra Horváth",
+      "company": "Mozaik Education",
+      "jobTitle": "PHP Web Developer, Project Manager",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Angel Hristov",
+      "company": "Mozaik Education",
+      "jobTitle": "Freelance Proofreader",
+      "email": null,
+      "mobile": null,
+      "country": "Bulgaria",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Grace Pham",
+      "company": "Mozaik Education",
+      "jobTitle": "Official Distributor",
+      "email": null,
+      "mobile": null,
+      "country": "Vietnam",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tahani Adel",
+      "company": "Mozaik Education",
+      "jobTitle": "Mozaik ICT Expert at GIMPEX Learning Technologies",
+      "email": null,
+      "mobile": null,
+      "country": "Egypt",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Badam Ariya",
+      "company": "Mozaik Education",
+      "jobTitle": "Proofreader",
+      "email": null,
+      "mobile": null,
+      "country": "Mongolia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gabriella Daroczi Ak",
+      "company": "Mozaik Education",
+      "jobTitle": "foreign language editor and project manager",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gabor Dosa",
+      "company": "Mozaik Education",
+      "jobTitle": "3D Artist",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrea Sipos",
+      "company": "Mozaik Education",
+      "jobTitle": "French Translator",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sándor Viktor Falusi",
+      "company": "Mozaik Education",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Savita Chandra",
+      "company": "Mozaik Education",
+      "jobTitle": "teacher",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ante Stupalo",
+      "company": "Mozaik Education",
+      "jobTitle": "službenik",
+      "email": null,
+      "mobile": null,
+      "country": "Croatia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daria Kopylova",
+      "company": "Mozaik Education",
+      "jobTitle": "Designer",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zsuzsa Bodó",
+      "company": "Mozaik Education",
+      "jobTitle": "Assistant Editor",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adam F",
+      "company": "Mozaik Education",
+      "jobTitle": "K-12 education",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kata Mester",
+      "company": "Mozaik Education",
+      "jobTitle": "illustrator",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrea Magonyné Czink",
+      "company": "Mozaik Education",
+      "jobTitle": "Szakmai lektor és feladatíró: tanulmányi verseny anyanyelv, irodalom és történelem tárgyakból",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ahazmi Alhazmi",
+      "company": "Mozaik Education",
+      "jobTitle": "teacher",
+      "email": null,
+      "mobile": null,
+      "country": "Saudi Arabia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zsolt Moza",
+      "company": "Mozaik Education",
+      "jobTitle": "Sales Representative",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Любовь Gross",
+      "company": "Mozaik Education",
+      "jobTitle": "Schulbegleiterin",
+      "email": null,
+      "mobile": null,
+      "country": "Germany",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

@@ -59,8 +59,22 @@ describe("company people table icons", () => {
     // Contact LinkedIn is the official LinkedIn blue on both rows.
     expect(revealed[0]).toContain("text-[#0A66C2]");
     expect(hidden[0]).toContain("text-[#0A66C2]");
+    // No status → "-"; this table has no emailStatus, so no "Not revealed" text.
+    expect(html).not.toContain("Not revealed");
     // The linked row is still a real link; the other is not.
     expect(html).toContain('href="https://www.linkedin.com/in/revealed-person"');
     expect(html).toContain('aria-disabled="true"');
+  });
+
+  it("says 'Not revealed' for a verified-but-unrevealed email/mobile and '-' for unavailable", () => {
+    const html = renderToStaticMarkup(
+      <CompanyPeopleTable
+        contacts={[{ ...base, fullName: "Prospeo Person", emailStatus: "VERIFIED", mobileStatus: "UNAVAILABLE" }]}
+      />
+    );
+    const cells = Array.from(html.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g), (m) => m[1]);
+    expect(cells[5]).toContain("Not revealed"); // Email ID
+    expect(cells[6]).not.toContain("Not revealed"); // Mobile Number
+    expect(cells[6]).toContain("-");
   });
 });

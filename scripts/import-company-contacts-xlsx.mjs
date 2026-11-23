@@ -51,7 +51,7 @@ const PLACEHOLDERS = new Set([
 ]);
 
 const HEADER_ALIASES = {
-  fullName: ['full name', 'name'],
+  fullName: ['full name', 'name', 'person name'],
   company: ['company', 'company name'],
   jobTitle: ['job title', 'title', 'designation'],
   email: ['email', 'email id', 'email address'],

@@ -1,0 +1,26 @@
+{
+  "domain": "net-ctrl.co.uk",
+  "source": "net.ctrl.csv",
+  "contacts": [
+    {
+      "fullName": "George Bugg",
+      "company": "Net-Ctrl",
+      "jobTitle": "Technical Sales Specialist",
+      "email": null,
+      "mobile": "44 1473 281 211",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kirsty Osborne",
+      "company": "Net-Ctrl",
+      "jobTitle": "Office Administrator",
+      "email": null,
+      "mobile": "44 1473 281 211",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

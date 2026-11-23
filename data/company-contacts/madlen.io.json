@@ -1,0 +1,106 @@
+{
+  "domain": "madlen.io",
+  "source": "Madlen_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Ece Yalçın",
+      "company": "Madlen",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": "90 545 542 0511",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Murat Angin",
+      "company": "Madlen",
+      "jobTitle": "Co-Founder",
+      "email": null,
+      "mobile": "90 545 542 0511",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ata Ozkaya",
+      "company": "Madlen",
+      "jobTitle": "Founder",
+      "email": null,
+      "mobile": "90 545 542 0511",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adalet Veyis Turgut",
+      "company": "Madlen",
+      "jobTitle": "Co-Founder",
+      "email": null,
+      "mobile": "90 545 542 0511",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Berru Karakaş Taşkıran",
+      "company": "Madlen",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "90 545 542 0511",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sıla Çalcalı",
+      "company": "Madlen",
+      "jobTitle": "Growth Intern",
+      "email": null,
+      "mobile": "90 545 542 0511",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zeynep Şahin",
+      "company": "Madlen",
+      "jobTitle": "Creative Content Lead",
+      "email": null,
+      "mobile": "90 545 542 0511",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anıl Yavuz",
+      "company": "Madlen",
+      "jobTitle": "Marketing Intern - Growth Team",
+      "email": null,
+      "mobile": "90 545 542 0511",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mert Özkul",
+      "company": "Madlen",
+      "jobTitle": "Product Developer",
+      "email": null,
+      "mobile": "90 545 542 0511",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Doğukan Enes Velioğlu",
+      "company": "Madlen",
+      "jobTitle": "Growth Hacker",
+      "email": null,
+      "mobile": "90 545 542 0511",
+      "country": "Turkey",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}
