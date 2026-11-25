@@ -15,12 +15,12 @@ import {
     Users,
     X,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { BettExhibitorGrid } from "@/components/crm/bett-exhibitor-grid";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { OFFICIAL_DIALOG_CLASS, OfficialPageView } from "@/components/find-shows/official-page-view";
 import { closedWebsiteViewer, openWebsiteViewer, type WebsiteViewerState } from "@/lib/exhibitors/website-viewer";
 import { exhibitorTabLayout } from "@/lib/exhibitors/tab-layout";
+import { exhibitorCardAction, exhibitorOfficialWebsite } from "@/lib/exhibitors/card-links";
 import { CRM_EXHIBITOR_PARAMS, readReturnedExhibitor, withoutReturnedExhibitor } from "@/lib/exhibitors/crm-return";
 import type { FindShowEvent } from "@/types/find-shows";
 import type { Exhibitor } from "@/types/exhibitors";
@@ -35,11 +35,6 @@ import type { Exhibitor } from "@/types/exhibitors";
 export const EXPECTED_EXHIBITORS: Record<string, number> = {
     'BETT SHOW': 316,
 };
-
-/** website -> this exhibitor's directory page -> the event's directory root. */
-function exhibitorLink(ex: Exhibitor) {
-    return ex.website || ex.profileUrl || ex.directoryUrl || undefined;
-}
 
 /**
  * Exhibitors tab. Reads the event's imported exhibitors from /api/exhibitors (see lib/exhibitors/crm-sync.ts
@@ -160,7 +155,8 @@ function WebsiteViewerDialog({ eventSlug, viewer, onClose }: { eventSlug: string
 /**
  * Details drawer for one exhibitor. Shows every enriched column the sheet
  * carries; anything the source left blank is rendered as "Not published" rather
- * than guessed at.
+ * than guessed at — except the official website, which is simply left blank
+ * (lib/exhibitors/card-links.ts), as on the card.
  */
 function ExhibitorDetailPanel({
     exhibitor,
@@ -191,14 +187,16 @@ function ExhibitorDetailPanel({
         };
     }, [exhibitor, onClose]);
 
-    const groups: { title: string; rows: { label: string; value: string | null | undefined; href?: string | null; icon: typeof Globe2 }[] }[] = exhibitor
+    const website = exhibitor ? exhibitorOfficialWebsite(exhibitor) : null;
+    const action = exhibitor ? exhibitorCardAction(exhibitor) : null;
+    const groups: { title: string; rows: { label: string; value: string | null | undefined; href?: string | null; icon: typeof Globe2; blankWhenMissing?: boolean }[] }[] = exhibitor
         ? [
               {
                   title: 'Company',
                   rows: [
                       { label: 'Exhibitor name', value: exhibitor.name, icon: Building2 },
                       { label: 'Stand number', value: exhibitor.stand, icon: MapPin },
-                      { label: 'Official website', value: exhibitor.website?.replace(/^https?:\/\/(www\.)?/, ''), href: exhibitor.website, icon: Globe2 },
+                      { label: 'Official website', value: website?.replace(/^https?:\/\/(www\.)?/, ''), href: website, icon: Globe2, blankWhenMissing: true },
                       { label: 'Country', value: exhibitor.country, icon: Globe2 },
                       { label: 'Contact number', value: exhibitor.phone, href: exhibitor.phone ? `tel:${exhibitor.phone.replace(/\s+/g, '')}` : null, icon: Phone },
                       { label: 'Company LinkedIn', value: exhibitor.companyLinkedInUrl?.replace(/^https?:\/\/(www\.)?linkedin\.com\//, 'linkedin.com/'), href: exhibitor.companyLinkedInUrl, icon: Linkedin },
@@ -281,36 +279,33 @@ function ExhibitorDetailPanel({
                                                 {exhibitor.country}
                                             </span>
                                         ) : null}
-                                        <span className={cn(
-                                            'rounded-full border px-2.5 py-0.5 text-[11px] font-bold',
-                                            exhibitor.website
-                                                ? 'border-emerald-300/60 bg-emerald-50 text-emerald-700 dark:border-emerald-400/25 dark:bg-emerald-400/10 dark:text-emerald-300'
-                                                : 'border-slate-200 bg-slate-50 text-slate-500 dark:border-[#22304A] dark:bg-[#111B2E] dark:text-slate-400'
-                                        )}>
-                                            {exhibitor.website ? 'Official site' : 'Directory only'}
-                                        </span>
+                                        {website ? (
+                                            <span className="rounded-full border border-emerald-300/60 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-bold text-emerald-700 dark:border-emerald-400/25 dark:bg-emerald-400/10 dark:text-emerald-300">
+                                                Official site
+                                            </span>
+                                        ) : null}
                                     </div>
                                 </div>
                             </div>
 
-                            {onOpenWebsite ? (
+                            {!action ? null : onOpenWebsite ? (
                                 <button
                                     type="button"
                                     onClick={() => onOpenWebsite(exhibitor)}
                                     className={`w-full ${DETAIL_CTA_CLASS}`}
                                 >
                                     <ExternalLink className="size-4 transition-transform group-hover/cta:translate-x-0.5 motion-reduce:transition-none" />
-                                    {exhibitor.website ? 'Visit website' : 'Open show directory'}
+                                    {website ? 'Visit website' : action.label}
                                 </button>
                             ) : (
                                 <a
-                                    href={exhibitorLink(exhibitor)}
+                                    href={action.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className={DETAIL_CTA_CLASS}
                                 >
                                     <ExternalLink className="size-4 transition-transform group-hover/cta:translate-x-0.5 motion-reduce:transition-none" />
-                                    {exhibitor.website ? 'Visit website' : 'Open show directory'}
+                                    {website ? 'Visit website' : action.label}
                                 </a>
                             )}
                         </header>
@@ -360,7 +355,7 @@ function ExhibitorDetailPanel({
                                                         ) : (
                                                             <span className="break-words">{row.value}</span>
                                                         )
-                                                    ) : (
+                                                    ) : row.blankWhenMissing ? null : (
                                                         <span className="text-[11.5px] font-medium italic text-slate-400 dark:text-slate-500">Not published</span>
                                                     )}
                                                 </dd>

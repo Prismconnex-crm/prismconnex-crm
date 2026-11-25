@@ -12,7 +12,7 @@
 // (f-black-hat-usa-22381-1.html -> /s/black-hat-usa-22381-1.gif), so no
 // per-event request is needed.
 //
-// Usage: node scripts/import-eventseye-calendar.mjs [--out FILE] [--limit-pages N]
+// Usage: node scripts/import-eventseye-calendar.mjs [--out FILE] [--limit-pages N] [--window "July 2027..December 2027"]
 
 import { writeFileSync } from "fs";
 import path from "path";
@@ -30,11 +30,32 @@ const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 
 const MONTHS = ["january","february","march","april","may","june","july","august","september","october","november","december"];
 
-// Target window: August 2026 through July 2027.
-const TARGET = new Set([
-  "August 2026","September 2026","October 2026","November 2026","December 2026",
-  "January 2027","February 2027","March 2027","April 2027","May 2027","June 2027","July 2027",
-]);
+// Target window: August 2026 through July 2027 by default, or
+// --window "July 2027..December 2027" (inclusive month-years).
+const windowArg = args.indexOf("--window");
+function monthRange(spec) {
+  const [from, to] = spec.split("..").map((s) => s.trim());
+  const parse = (s) => {
+    const [m, y] = s.split(/\s+/);
+    const idx = MONTHS.indexOf(m.toLowerCase());
+    if (idx < 0 || !/^\d{4}$/.test(y)) throw new Error(`--window: bad month-year "${s}"`);
+    return Number(y) * 12 + idx;
+  };
+  const out = [];
+  for (let n = parse(from); n <= parse(to); n++) {
+    const name = MONTHS[n % 12];
+    out.push(`${name[0].toUpperCase()}${name.slice(1)} ${Math.floor(n / 12)}`);
+  }
+  return out;
+}
+const TARGET = new Set(
+  windowArg !== -1
+    ? monthRange(args[windowArg + 1])
+    : [
+        "August 2026","September 2026","October 2026","November 2026","December 2026",
+        "January 2027","February 2027","March 2027","April 2027","May 2027","June 2027","July 2027",
+      ]
+);
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 

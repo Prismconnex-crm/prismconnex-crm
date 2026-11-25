@@ -9,7 +9,8 @@
 // individual categories from name + description at load time, so changing the
 // taxonomy never requires rebuilding this seed.
 //
-// Usage: node scripts/build-find-shows-seed.mjs [--in FILE] [--out FILE]
+// Usage: node scripts/build-find-shows-seed.mjs [--in FILE] [--out FILE] [--append]
+//   --append adds the --in rows to the existing seed instead of rebuilding it (see the end of this file).
 
 import { readFileSync, writeFileSync, copyFileSync, existsSync } from "fs";
 import path from "path";
@@ -21,6 +22,7 @@ const inArg = args.indexOf("--in");
 const outArg = args.indexOf("--out");
 const IN = inArg !== -1 ? args[inArg + 1] : path.join(ROOT, "data", "eventseye-2026-2027.json");
 const OUT = outArg !== -1 ? args[outArg + 1] : path.join(ROOT, "data", "find-shows-seed.json");
+const APPEND = args.includes("--append");
 
 // Legacy buckets only — see the header comment.
 const CATEGORY_RULES = [
@@ -116,17 +118,33 @@ const records = source.map((raw) => {
   };
 });
 
-// Keep a one-time backup of the previous seed before overwriting.
-if (existsSync(OUT)) {
-  const backup = OUT.replace(/\.json$/, ".backup.json");
-  if (!existsSync(backup)) {
-    copyFileSync(OUT, backup);
-    console.log(`[seed] backed up previous seed -> ${path.basename(backup)}`);
+if (APPEND) {
+  // --append: add the --in rows after the existing seed, leaving every existing record exactly as it is
+  // (the seed carries hand edits a full rebuild would lose). The --in file is expected to be pre-screened
+  // by scripts/select-eventseye-additions.mjs; as a last guard, a row whose eventseye URL is already in
+  // the seed for the same month-year is not appended twice.
+  const existing = JSON.parse(readFileSync(OUT, "utf8"));
+  const present = new Set(existing.map((r) => `${r.eventseyeUrl}::${r.monthYear}`));
+  const fresh = records.filter((r) => !present.has(`${r.eventseyeUrl}::${r.monthYear}`));
+  writeFileSync(OUT, JSON.stringify([...existing, ...fresh], null, 2), "utf8");
+  console.log(
+    `[seed] appended ${fresh.length.toLocaleString()} records (${(records.length - fresh.length).toLocaleString()} already present) ` +
+      `to ${existing.length.toLocaleString()} existing -> ${(existing.length + fresh.length).toLocaleString()} in ${OUT}`
+  );
+  records.splice(0, records.length, ...fresh);
+} else {
+  // Keep a one-time backup of the previous seed before overwriting.
+  if (existsSync(OUT)) {
+    const backup = OUT.replace(/\.json$/, ".backup.json");
+    if (!existsSync(backup)) {
+      copyFileSync(OUT, backup);
+      console.log(`[seed] backed up previous seed -> ${path.basename(backup)}`);
+    }
   }
-}
 
-writeFileSync(OUT, JSON.stringify(records, null, 2), "utf8");
-console.log(`[seed] wrote ${records.length.toLocaleString()} records -> ${OUT}`);
+  writeFileSync(OUT, JSON.stringify(records, null, 2), "utf8");
+  console.log(`[seed] wrote ${records.length.toLocaleString()} records -> ${OUT}`);
+}
 
 const byCat = new Map();
 records.forEach((r) => byCat.set(r.categories[0], (byCat.get(r.categories[0]) ?? 0) + 1));

@@ -309,7 +309,7 @@ export async function discoverExhibitors(target: EditionTarget, options: Exhibit
     }
   }
   const post = retryingPoster(options.poster ?? httpPoster, options.retryDelayMs);
-  const context = { target, fetcher, post, site, pages };
+  const context = { target, fetcher, post, site, pages, now };
 
   const candidates = await Promise.all(
     leads.map(async (lead): Promise<Candidate & { adapter: Lead['adapter'] }> => {

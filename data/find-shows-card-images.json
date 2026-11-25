@@ -289,6 +289,14 @@
       "previousEdition": true,
       "editionLabel": "Past edition",
       "verifiedOn": "2026-10-24"
+    },
+    {
+      "slug": "envase-alimentek-buenos-aires-2027-09-14",
+      "eventName": "ENVASE - ALIMENTEK",
+      "catalogStartDate": "2027-09-14",
+      "status": "no-official-image",
+      "reason": "The official site (envase.org, branded ENVASE 2027) carries only a \"2027\" text graphic, an abstract wave background and sponsor logos; no show-floor photo or other image tied to the event was found.",
+      "verifiedOn": "2026-11-18"
     }
   ]
 }

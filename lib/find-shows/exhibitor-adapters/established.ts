@@ -17,6 +17,11 @@ import {
   swapcardPage,
   yearIn,
   yearInShowCode,
+  isFutureEdition,
+  rxDirectoryYears,
+  undatedFutureListReason,
+  NOT_THIS_EDITIONS_LIST,
+  PREVIOUS_DIRECTORY_TITLE,
   type ExhibitorCard,
   type ExhibitorSource,
   type MapYourShowRef,
@@ -78,7 +83,27 @@ export const mapYourShowAdapter: ExhibitorAdapter = {
 };
 
 /** What an RX lead points to: an edition page's settings, or a site's edition homes to follow. */
-type RxLead = (RxRef & { kind?: 'edition'; titles: string[] }) | { kind: 'hub'; urls: string[]; foundOn: string };
+type RxLead = (RxRef & { kind?: 'edition'; titles: string[]; pageTitle?: string | null }) | { kind: 'hub'; urls: string[]; foundOn: string };
+
+/** A page's `<title>`, decoded and on one line. */
+function pageTitleOf(html: string) {
+  const raw = html.match(/<title[^>]*>([^<]*)<\/title>/i)?.[1];
+  return raw ? raw.replace(/&#39;|&apos;/g, "'").replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim() : null;
+}
+
+/** Whether two addresses are the same page (host and path; "….html.html" repaired like the settings are). */
+function samePage(a: string, b: string | null) {
+  if (!b) return false;
+  try {
+    const key = (url: string) => {
+      const parsed = new URL(url);
+      return `${parsed.host.toLowerCase()}${parsed.pathname.replace(/(\.html)+$/i, '').replace(/\/$/, '').toLowerCase()}`;
+    };
+    return key(a) === key(b);
+  } catch {
+    return false;
+  }
+}
 
 /**
  * The name an RX edition is shown by. An edition RX still names by an earlier date ("FIBO - 16/04/2026" for the
@@ -94,7 +119,11 @@ export function rxEditionName(name: string, year: number | null) {
  * One RX edition's exhibitors, checked against the catalog event: its dates
  * and venue, then which of its shows the event is (see ./rx-editions.ts).
  */
-async function resolveRxEdition(ref: RxRef, titles: string[], { target, fetcher }: Pick<AdapterContext, 'target' | 'fetcher'>): Promise<Candidate> {
+async function resolveRxEdition(
+  ref: RxRef & { pageTitle?: string | null },
+  titles: string[],
+  { target, fetcher, now }: Pick<AdapterContext, 'target' | 'fetcher' | 'now'>
+): Promise<Candidate> {
   const { settings } = ref;
   // Some shows leave the edition unnamed or name it by id, others in Japanese: the dates and location then identify it.
   const named = Boolean(settings.eventEditionName) && !/^eve-[0-9a-f-]+$/i.test(settings.eventEditionName);
@@ -111,6 +140,25 @@ async function resolveRxEdition(ref: RxRef, titles: string[], { target, fetcher 
     : null;
   if (!named && !settings.startDate) return rejected('rx', label, directoryUrl, 'the edition states neither its name nor its dates');
 
+  // RX moves an edition's dates to the next show before its directory: the dates above say which show the site
+  // advertises, not whose exhibitors the index holds. The directory's own records must not name an earlier year
+  // (Manufacturing World Osaka's 2027 dates over "/search/2026mdk1008/", titled "Previous Exhibitor Directory (2026)").
+  const targetYear = Number(target.startDate.slice(0, 4));
+  const directoryTitle = ref.pageTitle && samePage(ref.foundOn, settings.publicDirectoryUrl) ? ref.pageTitle : null;
+  if (directoryTitle && PREVIOUS_DIRECTORY_TITLE.test(directoryTitle)) {
+    return rejected('rx', label, directoryUrl, `the directory is titled "${directoryTitle}" — ${NOT_THIS_EDITIONS_LIST}`);
+  }
+  const directoryYears = rxDirectoryYears({
+    editionName: settings.eventEditionName,
+    urls: [settings.publicDirectoryUrl, settings.publicDetailsUrlFormat, settings.protectedDetailsUrlFormat],
+    directoryTitle,
+  });
+  const earlier = directoryYears.filter((year) => year < targetYear);
+  if (earlier.length) {
+    return rejected('rx', label, directoryUrl, `the directory is the ${earlier[0]} edition's (its name, address or title says ${earlier[0]}), not ${targetYear}'s — ${NOT_THIS_EDITIONS_LIST}`);
+  }
+  const dated = directoryYears.includes(targetYear);
+
   const facets = (await readJson(fetcher, rxFacetUrl(settings, COMPONENT_FACETS))) as { facets?: Record<string, Record<string, number>> };
   const match = matchShow(target, rxComponents(facets.facets), [...(latin ? [settings.eventEditionName] : []), ...titles], !named || Boolean(nameCheck?.ok));
   if (match.kind === 'none') return rejected('rx', label, directoryUrl, match.reason);
@@ -124,6 +172,11 @@ async function resolveRxEdition(ref: RxRef, titles: string[], { target, fetcher 
     if (page + 1 >= Number(json.nbPages ?? 1)) break;
   }
   const cards = rxCards({ hits }, settings) ?? [];
+  // An undated list a year out is most likely the show just held (WTM London's, the week after it closed). An empty
+  // directory claims no exhibitors, so it may still say "none yet".
+  if (cards.length && !dated && isFutureEdition(target, now)) {
+    return rejected('rx', label, directoryUrl, undatedFutureListReason(target, `"${label}"'s directory`));
+  }
   const loginRequired = !settings.publicDetailsUrlFormat && Boolean(settings.protectedDetailsUrlFormat);
   const source: ExhibitorSource = {
     platform: 'rx',
@@ -158,7 +211,7 @@ export const rxAdapter: ExhibitorAdapter = {
               // first must not hide the other.
               key: `rx:${ref.settings.eventEditionId}${ref.settings.location && NON_LATIN.test(ref.settings.location) ? ':local' : ''}`,
               foundOn: ref.foundOn,
-              data: { ...ref, kind: 'edition', titles: editionTitles(page.html, page.url) } as RxLead,
+              data: { ...ref, kind: 'edition', titles: editionTitles(page.html, page.url), pageTitle: pageTitleOf(page.html) } as RxLead,
             },
           ]
         : []

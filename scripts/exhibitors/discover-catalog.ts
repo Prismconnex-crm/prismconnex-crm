@@ -9,7 +9,8 @@
  *   npm run exhibitors:discover -- --report      # only rebuild the report from stored results
  *
  * Options: --concurrency=8 (editions at once; never two on one official site),
- * --limit=N, --slug=a,b (just these events), --refresh (search settled editions
+ * --limit=N, --slug=a,b (just these events), --upcoming (only editions with a catalog event starting today or
+ * later — past shows are left as stored), --refresh (search settled editions
  * again), --since=ISO (re-search results stored before this time; defaults to
  * the first run's start, so results from older adapter versions are refreshed
  * once), --max-attempts=3 (per edition, for temporary failures),
@@ -72,6 +73,9 @@ const EDITION_TIMEOUT_MS = option('edition-timeout-ms', 600_000);
 const REFRESH = args.has('refresh');
 const REPORT_ONLY = args.has('report');
 const SLUGS = args.get('slug')?.split(',').filter(Boolean) ?? null;
+const UPCOMING = args.has('upcoming');
+/** Today's date as the catalog writes start dates (YYYY-MM-DD), for --upcoming. */
+const TODAY = new Date().toISOString().slice(0, 10);
 const REPORT_DIR = path.join(process.cwd(), 'reports', 'exhibitors');
 const STATE_FILE = path.join(REPORT_DIR, 'state.json');
 
@@ -503,8 +507,9 @@ async function main() {
   await saveState(state);
   if (REPORT_ONLY) return writeReport(all, state);
   const since = args.get('since') ?? state.startedAt;
-  const scope = SLUGS ? all.filter((edition) => edition.events.some((event) => SLUGS.includes(event.slug))) : all;
-  console.log(`${all.length} editions (${findShowEvents.length} catalog events); re-searching results stored before ${since}.`);
+  const bySlug = SLUGS ? all.filter((edition) => edition.events.some((event) => SLUGS.includes(event.slug))) : all;
+  const scope = UPCOMING ? bySlug.filter((edition) => edition.events.some((event) => event.startDate >= TODAY)) : bySlug;
+  console.log(`${all.length} editions (${findShowEvents.length} catalog events); ${scope.length} in scope${UPCOMING ? ` (upcoming from ${TODAY})` : ''}; re-searching results stored before ${since}.`);
 
   const pending = async () => {
     const out: Edition[] = [];

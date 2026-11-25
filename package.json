@@ -18,7 +18,8 @@
     "floor-plans:discover": "node scripts/floor-plans/run.mjs",
     "event-timings:discover": "node scripts/event-timings/run.mjs",
     "exhibitors:discover": "node scripts/exhibitors/run.mjs",
-    "exhibitors:sync-crm": "node scripts/exhibitors/sync-crm.mjs"
+    "exhibitors:sync-crm": "node scripts/exhibitors/sync-crm.mjs",
+    "exhibitors:directories": "node scripts/exhibitors/directories-report.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.115.0",

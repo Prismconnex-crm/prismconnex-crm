@@ -359,16 +359,7 @@ export function HowToReachView({ info, onRetry }: { info: TravelInfo; onRetry?: 
       {info.notices.map((notice) => (
         <Unavailable key={notice}>{notice}</Unavailable>
       ))}
-      {info.retryable && onRetry ? (
-        <button
-          type="button"
-          onClick={onRetry}
-          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 dark:border-white/[0.1] dark:text-slate-200 dark:hover:border-indigo-400/40 dark:hover:bg-indigo-500/10 dark:hover:text-indigo-300"
-        >
-          <RotateCw className="size-3.5" />
-          Try again
-        </button>
-      ) : null}
+      {info.retryable && onRetry ? <RetryButton onClick={onRetry} /> : null}
 
       <div className="space-y-2.5">
         {sections.map((section) => (
@@ -390,17 +381,35 @@ export function HowToReachView({ info, onRetry }: { info: TravelInfo; onRetry?: 
   );
 }
 
+function RetryButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 dark:border-white/[0.1] dark:text-slate-200 dark:hover:border-indigo-400/40 dark:hover:bg-indigo-500/10 dark:hover:text-indigo-300"
+    >
+      <RotateCw className="size-3.5" />
+      Try again
+    </button>
+  );
+}
+
 /**
  * The Nearby Hotels tab: the hotel groups that used to sit in the How to Reach
  * accordion, rendered from the same `info` — 5, 4, 3 star, then unrated.
+ * With no hotels, the lookup's own notices say why (venue not pinned, search
+ * temporarily down) instead of a bare "unavailable", with Try again when a
+ * retry could fill it.
  */
-export function NearbyHotelsView({ info }: { info: TravelInfo }) {
+export function NearbyHotelsView({ info, onRetry }: { info: TravelInfo; onRetry?: () => void }) {
   const venue = info.venue;
   const unratedHotels = info.hotels.filter((hotel) => !hotel.stars);
 
   return (
     <div className="space-y-5">
-      {info.hotels.length ? (
+      {!info.hotels.length && info.notices.length ? (
+        info.notices.map((notice) => <Unavailable key={notice}>{notice}</Unavailable>)
+      ) : info.hotels.length ? (
         <div className="space-y-5">
           {STAR_GROUPS.map((stars) => (
             <HotelGroup
@@ -415,6 +424,7 @@ export function NearbyHotelsView({ info }: { info: TravelInfo }) {
       ) : (
         <Unavailable />
       )}
+      {!info.hotels.length && info.retryable && onRetry ? <RetryButton onClick={onRetry} /> : null}
 
       {info.attribution.length ? <Sources sources={info.attribution} prefix="Map data" /> : null}
     </div>
@@ -493,14 +503,7 @@ function TravelPanel({
     return (
       <div className="space-y-3">
         <Unavailable>Travel information could not be loaded. Please try again shortly.</Unavailable>
-        <button
-          type="button"
-          onClick={retry}
-          className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 transition-colors hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 dark:border-white/[0.1] dark:text-slate-200 dark:hover:border-indigo-400/40 dark:hover:bg-indigo-500/10 dark:hover:text-indigo-300"
-        >
-          <RotateCw className="size-3.5" />
-          Try again
-        </button>
+        <RetryButton onClick={retry} />
       </div>
     );
   }
@@ -520,7 +523,7 @@ export function HowToReachPanel({ slug }: { slug: string }) {
 export function NearbyHotelsPanel({ slug }: { slug: string }) {
   return (
     <TravelPanel slug={slug} loadingLabel="Finding hotels near the venue…">
-      {(info) => <NearbyHotelsView info={info} />}
+      {(info, retry) => <NearbyHotelsView info={info} onRetry={retry} />}
     </TravelPanel>
   );
 }

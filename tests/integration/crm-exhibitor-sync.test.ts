@@ -278,6 +278,15 @@ describe('CRM exhibitor sync: automatic (future lists)', () => {
     expect(db.rows).toHaveLength(3);
   });
 
+  it('never syncs a hand-verified reference event, even when on, and leaves its ledger alone', async () => {
+    const db = fakeDb();
+    const twinOfReference = 'queue-reference-twin-2026-11-03';
+    const results = await queueCrmExhibitorSync(record([AAPEX, twinOfReference], cards, '2026-10-09T06:00:00.000Z'), { enabled: true, db, log: () => {} });
+    expect(results.map((result) => result.slug)).toEqual([twinOfReference]);
+    expect(db.rows.every((row) => row.eventSlug === twinOfReference)).toBe(true);
+    expect(await readLedgerEntry(AAPEX)).toBeNull();
+  });
+
   it('a list that cannot be keyed is recorded as skipped with its reason, not synced, until a newer list arrives', async () => {
     const slug = 'queue-skipped-2026-11-01';
     const shared = 'https://www.example-fair.com/catalogue';

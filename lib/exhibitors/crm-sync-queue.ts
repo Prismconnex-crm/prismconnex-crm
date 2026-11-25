@@ -11,6 +11,7 @@
 import type { ExhibitorRecord } from '@/lib/find-shows/exhibitor-resolver';
 import { syncWithRetry, type ExhibitorSyncDb } from './crm-sync';
 import { markPending, recordResult } from './crm-sync-ledger';
+import { isReferenceExhibitorEvent } from './reference-events';
 
 export function crmExhibitorSyncEnabled(env: Record<string, string | undefined> = process.env) {
   return env.CRM_EXHIBITOR_SYNC === 'on';
@@ -32,6 +33,11 @@ export async function queueCrmExhibitorSync(
   const results = [];
   for (const slug of record.edition.slugs) {
     try {
+      // Hand-verified reference events are never synced automatically (lib/exhibitors/reference-events.ts).
+      if (isReferenceExhibitorEvent(slug)) {
+        log({ slug, status: 'skipped', reason: 'reference event — rows are maintained by hand' });
+        continue;
+      }
       await markPending(slug, list.checkedAt);
       if (!enabled) {
         log({ slug, status: 'pending', reason: 'CRM_EXHIBITOR_SYNC is off' });

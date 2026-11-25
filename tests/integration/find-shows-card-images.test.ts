@@ -63,7 +63,7 @@ describe('find shows card images', () => {
   });
 
   it('gives every Argentina event a verified image or the fallback', () => {
-    expect(argentinaEvents).toHaveLength(21);
+    expect(argentinaEvents).toHaveLength(22);
     for (const event of argentinaEvents) {
       // A reviewed cover (or its fallback), or a hand-verified hero photo the banner shows instead.
       expect(getFindShowCardCover(event.slug) ?? getRegisteredHeroImage(event.slug), event.slug).not.toBeNull();

@@ -292,6 +292,59 @@ export const ANOTHER_EDITION = 'it may be another edition of the show';
 export const NOT_THIS_EDITIONS_LIST = 'not this edition’s exhibitor list';
 export const isAnotherEdition = (reason: string) => reason.includes(ANOTHER_EDITION) || reason.includes(NOT_THIS_EDITIONS_LIST);
 
+/**
+ * How far ahead an edition may start for a directory that does not name its year to be taken as that edition's.
+ * Organizers move a site's dates on to the next show as soon as one ends, while the list underneath stays the
+ * show just held (WTM London, Dentistry Show London and RX Japan's "Previous Exhibitor Directory" all did, a year
+ * out). Within half a year of the show, the previous edition is long over and an undated list is this one's.
+ */
+export const UNDATED_LIST_LEAD_DAYS = 183;
+
+/** Whether the edition is far enough off that only a directory naming its year can be its list. */
+export function isFutureEdition(target: Pick<EditionTarget, 'startDate'>, now: Date | number = Date.now()) {
+  const start = Date.parse(target.startDate);
+  return !Number.isNaN(start) && start - Number(now) > UNDATED_LIST_LEAD_DAYS * DAY_MS;
+}
+
+/** The verdict for an undated directory of a future edition: an announced date names the next show, not the list. */
+export function undatedFutureListReason(target: Pick<EditionTarget, 'startDate'>, what: string) {
+  const year = target.startDate.slice(0, 4);
+  return `${what} does not say it is for ${year}, and the ${year} edition is more than six months away — it may still be the previous edition's list; ${NOT_THIS_EDITIONS_LIST}`;
+}
+
+/**
+ * Years an RX edition's own records give its directory: the edition's name (also a Japanese one, "ものづくり ワールド
+ * [大阪] - Manufacturing World Osaka 2026"), the edition code in the directory's address
+ * ("/search/2026mdk1008/directory.html") and the title of the directory page itself ("Previous Exhibitor Directory
+ * (2026)", "2026 Exhibitor List"). Not the site's dates: RX moves those to the next edition before the list.
+ */
+export function rxDirectoryYears(evidence: { editionName: string; urls: (string | null | undefined)[]; directoryTitle?: string | null }): number[] {
+  const years = new Set<number>();
+  const add = (text: string) => {
+    for (const match of Array.from(text.matchAll(/(?:^|[^\d])(20\d{2})(?!\d)/g))) years.add(Number(match[1]));
+  };
+  add(evidence.editionName);
+  if (evidence.directoryTitle) add(evidence.directoryTitle);
+  for (const url of evidence.urls) {
+    if (!url) continue;
+    let segments: string[] = [];
+    try {
+      segments = new URL(url).pathname.split('/');
+    } catch {
+      continue;
+    }
+    // An edition code: a year followed by the show's letters ("2026mdk1008", "2026ijta26").
+    for (const segment of segments) {
+      const code = segment.match(/^(20\d{2})[a-z][a-z0-9-]*$/i);
+      if (code) years.add(Number(code[1]));
+    }
+  }
+  return Array.from(years);
+}
+
+/** A directory page RX titles as an earlier edition's: "Previous Exhibitor Directory", "Past Exhibitors". */
+export const PREVIOUS_DIRECTORY_TITLE = /\b(?:previous|past|former|last year'?s?)\s+(?:edition'?s?\s+)?exhibitors?\b/i;
+
 /** Regions a show's name can be qualified by ("IAAPA Expo Europe", "CPHI Middle East", "Big 5 Africa"). */
 const REGIONS = [
   'europe', 'euro', 'eurasia', 'asia', 'africa', 'america', 'americas', 'latam', 'oceania', 'caribbean', 'nordic', 'nordics',

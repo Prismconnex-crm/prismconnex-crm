@@ -13,18 +13,19 @@
 // crawl-delay directive; this still paces requests and is resumable.
 //
 // Usage:
-//   node scripts/enrich-event-websites.mjs [--limit N] [--delay-ms 300]
+//   node scripts/enrich-event-websites.mjs [--in FILE] [--limit N] [--delay-ms 300]
 
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SOURCE = path.join(ROOT, "data", "eventseye-2026-2027.json");
+const DEFAULT_SOURCE = path.join(ROOT, "data", "eventseye-2026-2027.json");
 const OUT = path.join(ROOT, "data", "event-contacts.json");
 
 const args = process.argv.slice(2);
 const flag = (n, d) => { const i = args.indexOf(n); return i !== -1 ? args[i + 1] : d; };
+const SOURCE = flag("--in", DEFAULT_SOURCE);
 const LIMIT = Number(flag("--limit", "0")) || Infinity;
 const DELAY_MS = Number(flag("--delay-ms", "300"));
 

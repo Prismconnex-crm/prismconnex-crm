@@ -21,6 +21,8 @@ export type AdapterContext = {
   site: string;
   /** The official pages already read, so an adapter need not fetch them again. */
   pages: OfficialPage[];
+  /** When the search runs: an edition more than six months off needs a directory naming its year (isFutureEdition). */
+  now?: Date;
 };
 
 /** Something an adapter spotted on an official page: enough to read the directory later. */

@@ -19,7 +19,7 @@
  */
 import { cityTermsFor, extractLinks, normalize, siteKey } from '../floor-plan';
 import { ancestors, descendants, isChrome, parseHtml, textOf, type HtmlNode } from '../html-tree';
-import { ANOTHER_EDITION, NOT_THIS_EDITIONS_LIST, judgeEdition, notADescription, placeQualifiers, shortDescription, type EditionTarget, type ExhibitorCard, type ExhibitorSource, type ProfileAccess } from '../exhibitors';
+import { ANOTHER_EDITION, NOT_THIS_EDITIONS_LIST, isFutureEdition, judgeEdition, undatedFutureListReason, notADescription, placeQualifiers, shortDescription, type EditionTarget, type ExhibitorCard, type ExhibitorSource, type ProfileAccess } from '../exhibitors';
 import { HTML_ACCEPT, PAGE_LIMIT, Unreachable, isOk, readHtml, rejected, type ExhibitorAdapter, type OfficialPage } from './types';
 
 const MIN_CARDS = 8;
@@ -118,7 +118,16 @@ export type DirectoryPage = {
   nextPages: string[];
   /** The profile link pattern the cards share. */
   pattern: string;
+  /**
+   * Per profile URL, the words naming the images that several cards share — a badge such as the Start Your Own
+   * Business Expo logo ("SYOB-square-320.jpg" → syob, square) — which a combined list of co-located shows uses
+   * to say whose exhibitor a card is (see splitByShowBadge).
+   */
+  marks: Record<string, string[]>;
 };
+
+/** An image in this many cards or more is the page's badge or decoration, never one company's logo. */
+const SHARED_IMAGE_CARDS = 3;
 
 /**
  * The exhibitor cards a list page shows: the largest group of links to one
@@ -178,19 +187,33 @@ export function extractDirectoryPage(html: string, pageUrl: string, site: string
     }
   }
 
-  const cards: ExhibitorCard[] = [];
-  const seenNames = new Set<string>();
-  for (const [url, nodes] of Array.from(best.links.entries())) {
+  const holders = Array.from(best.links.entries()).map(([url, nodes]) => {
     let card: HtmlNode = nodes[0];
     for (const holder of ancestors(nodes[0])) {
       if ((owners.get(holder)?.size ?? 0) > 1 || holder.tag === '#root' || holder.tag === 'body') break;
       card = holder;
     }
+    return { url, nodes, card, imgs: [card, ...descendants(card)].filter((node) => node.tag === 'img') };
+  });
+  // Images several cards share: a co-located show's badge, an icon, a stock placeholder.
+  const imageCards = new Map<string, number>();
+  for (const { imgs } of holders) {
+    for (const src of Array.from(new Set(imgs.map((img) => img.attrs.src ?? '').filter(Boolean)))) imageCards.set(src, (imageCards.get(src) ?? 0) + 1);
+  }
+  const shared = (img: HtmlNode) => (imageCards.get(img.attrs.src ?? '') ?? 0) >= SHARED_IMAGE_CARDS;
+
+  const cards: ExhibitorCard[] = [];
+  const marks: Record<string, string[]> = {};
+  const seenNames = new Set<string>();
+  for (const { url, nodes, card, imgs: allImgs } of holders) {
     // The innermost element naming the card: "exhibitor_listing_title" also holds the dates, its <h3> only the name;
     // "titre", "brand", "enseigne" name it on French/Italian sites, beside separate category, stand and address lines.
-    const isNaming = (node: HtmlNode) => /^h[1-6]$/.test(node.tag) || NAME_CLASS.test(node.attrs.class ?? '');
+    // Only an element with a name in it: a badge <img class="company-video-icon"> matches "company" but says
+    // nothing, and choosing it left the whole card's text ("Levella Promotions Promotional Items Stand E27") as the name.
+    const isNaming = (node: HtmlNode) => (/^h[1-6]$/.test(node.tag) || NAME_CLASS.test(node.attrs.class ?? '')) && usableName(cleanName(textOf(node)));
     const heading = descendants(card).find((node) => isNaming(node) && !descendants(node).some((inner) => inner !== node && isNaming(inner)));
-    const imgs = [card, ...descendants(card)].filter((node) => node.tag === 'img');
+    const imgs = allImgs.filter((img) => !shared(img));
+    const badges = allImgs.filter(shared);
     const names = [
       heading ? textOf(heading) : '',
       ...nodes.map((node) => cleanName(textOf(node))),
@@ -232,6 +255,11 @@ export function extractDirectoryPage(html: string, pageUrl: string, site: string
       profileUrl: url,
       access: 'public',
     });
+    const words = badges.flatMap((img) => {
+      const file = decodeURIComponent((img.attrs.src ?? '').split(/[?#]/)[0].split('/').pop() ?? '').replace(/\.\w+$/, '');
+      return normalize(`${file.replace(/[-_.]+/g, ' ')} ${img.attrs.alt ?? ''}`).split(' ');
+    });
+    if (words.length) marks[url] = Array.from(new Set(words.filter(Boolean)));
   }
   if (cards.length < minCards) return null;
   if (cards.filter((card) => INFO_PAGE.test(card.name)).length >= Math.max(2, cards.length / 4)) return null;
@@ -249,7 +277,45 @@ export function extractDirectoryPage(html: string, pageUrl: string, site: string
         })
     )
   );
-  return { cards, nextPages, pattern: best.key };
+  return { cards, nextPages, pattern: best.key, marks };
+}
+
+/** Words that never make a show's initials: the kind of event and joiners. "START YOUR OWN BUSINESS EXPO" → syob. */
+const INITIALS_SKIP = new Set(['expo', 'exhibition', 'show', 'fair', 'trade', 'the', 'and', 'of', 'for', 'international']);
+
+/** A show's initials, without its city: "START YOUR OWN BUSINESS EXPO - MELBOURNE" (Melbourne) → "syob". */
+export function showInitials(name: string, city: string): string {
+  const places = new Set(cityTermsFor(city).flatMap((term) => term.split(' ')));
+  return normalize(name)
+    .split(' ')
+    .filter((word) => word && !INITIALS_SKIP.has(word) && !places.has(word) && !/^\d+$/.test(word))
+    .map((word) => word[0])
+    .join('');
+}
+
+/**
+ * One show's exhibitors from a combined list of co-located shows that badges each card with its show. The
+ * Franchising Expo's Melbourne directory lists both of its shows and marks the Start Your Own Business Expo's
+ * exhibitors with that expo's logo ("SYOB-square-320.jpg"): the SYOB expo gets the badged cards, the
+ * Franchising Expo the others. A list whose shared images name no show (an icon, a placeholder) is left whole.
+ */
+export function splitByShowBadge(
+  target: Pick<EditionTarget, 'name' | 'city' | 'coLocated'>,
+  cards: ExhibitorCard[],
+  marks: Record<string, string[]>
+): { cards: ExhibitorCard[]; split: null | { show: string; badged: boolean } } {
+  const badgedBy = (initials: string) => initials.length >= 3 && cards.some((card) => (marks[card.profileUrl] ?? []).includes(initials));
+  const own = showInitials(target.name, target.city);
+  if (badgedBy(own)) {
+    return { cards: cards.filter((card) => (marks[card.profileUrl] ?? []).includes(own)), split: { show: target.name, badged: true } };
+  }
+  for (const show of target.coLocated ?? []) {
+    const other = showInitials(show.name, target.city);
+    if (other !== own && badgedBy(other)) {
+      return { cards: cards.filter((card) => !(marks[card.profileUrl] ?? []).includes(other)), split: { show: show.name, badged: false } };
+    }
+  }
+  return { cards, split: null };
 }
 
 /** The headline parts of a page that say which edition it is for: title, headings, address. */
@@ -341,6 +407,13 @@ export function notListPage(url: string): string | null {
   return null;
 }
 
+/**
+ * Pages of guidance for exhibitors rather than a list of them, by title or address: "Ausstellerinformationen",
+ * "Praktische informatie exposant", "Exhibitor information", "Infos exposants", "Exhibitor manual".
+ */
+const EXHIBITOR_INFO_PAGE =
+  /aussteller[\s-]*(?:informationen|info|service)|(?:praktische[\s-]+)?informatie[\s-]+(?:voor[\s-]+)?(?:exposant|standhouder)|exhibitor[\s-]+(?:information|info|services?|manual|resources|kit|hub|faqs?)\b|information[\s-]+for[\s-]+exhibitors|infos?[\s-]+(?:pratiques[\s-]+)?exposants?|espace[\s-]+exposants?|area[\s-]+espositori|informaci[oó]n[\s-]+(?:para[\s-]+)?expositores/i;
+
 /** Pages that sell stands rather than list exhibitors: "/become-an-exhibitor/", "/aussteller-werden", "/devenir-exposant/". */
 const SALES_PAGE = /^(?:become-an?-exhibitor|why-exhibit|exhibit-with-us|book-a-(?:stand|booth)|aussteller-werden|devenir-exposant|diventa-espositore|hazte-expositor)$/i;
 /** Cards under these sections are a show's partners or speakers, not its exhibitors. */
@@ -370,6 +443,20 @@ export function notExhibitorLinks(cards: { name: string; profileUrl: string }[])
       return false;
     }
   });
+  // "Volles Haus beim Fest für den Kunststoff: Die 30. Fakuma ist eröffnet!" at "/specials/volles-haus-beim-fest-…/":
+  // headlines with addresses to match. A company's name or address is rarely six words long; both together, never.
+  const articles = cards.filter((card) => {
+    let slug = '';
+    try {
+      slug = decodeURIComponent(new URL(card.profileUrl).pathname.split('/').filter(Boolean).pop() ?? '').replace(/\.\w+$/, '');
+    } catch {
+      return false;
+    }
+    return slug.split(/[-_]/).filter(Boolean).length >= 7 && card.name.trim().split(/\s+/).length >= 6;
+  });
+  if (articles.length >= cards.length / 2) {
+    return `the links are articles (${articles.slice(0, 2).map((card) => `"${card.name}"`).join(', ')}), not exhibitors — ${NOT_THIS_EDITIONS_LIST}`;
+  }
   const section = cards.filter((card) => NOT_EXHIBITOR_SECTION.test(card.profileUrl));
   if (section.length >= cards.length / 2) return `the links are the show's partners or speakers, not exhibitors — ${NOT_THIS_EDITIONS_LIST}`;
   if (filters.length >= cards.length / 2 || new Set([...sitePages, ...filters]).size >= cards.length / 2) {
@@ -388,16 +475,35 @@ export function notExhibitorLinks(cards: { name: string; profileUrl: string }[])
  * same show in other cities, the list must name this stop, or announce this
  * stop's dates and no other stop's.
  */
-export function judgeOrganizerPage(target: EditionTarget, identity: string, fullText: string, host?: string): { ok: boolean; reason: string } {
+export function judgeOrganizerPage(
+  target: EditionTarget,
+  identity: string,
+  fullText: string,
+  host?: string,
+  now: Date | number = Date.now()
+): { ok: boolean; reason: string } {
   const year = Number(target.startDate.slice(0, 4));
   // "Past Exhibitors", ".../previous-event-2026/", "List of exhibitors 2026" for the 2027 edition: an earlier edition's list.
   if (PAST_LIST.test(identity)) return { ok: false, reason: `the page lists past exhibitors — ${NOT_THIS_EDITIONS_LIST}` };
+  // "Ausstellerinformationen" (Fakuma), "Praktische informatie exposant" (Camperbeurs): the organizer's guidance for
+  // exhibitors — deadlines, build-up, news — whose links are no exhibitors.
+  const [title] = identity.split(' | ');
+  const address = identity.split(' | ').pop() ?? '';
+  if (EXHIBITOR_INFO_PAGE.test(title) || EXHIBITOR_INFO_PAGE.test(address.split('/').filter(Boolean).pop() ?? '')) {
+    return { ok: false, reason: `the page is information for exhibitors ("${title.trim()}"), not the exhibitor list — ${NOT_THIS_EDITIONS_LIST}` };
+  }
   const tied = listYears(identity);
   const listYear = tied.includes(year) ? null : tied.find((value) => value < year);
   if (listYear) return { ok: false, reason: `the list is headed ${listYear}’s exhibitors, not ${year}’s — ${NOT_THIS_EDITIONS_LIST}` };
   const headlineYears = Array.from(identity.matchAll(/(?:^|[^\d])(20\d{2})(?!\d)/g)).map((match) => Number(match[1]));
   if (headlineYears.length && !headlineYears.includes(year)) {
     return { ok: false, reason: `the list is headed ${headlineYears[0]}, not ${year}` };
+  }
+  // A year out, the dates a page header announces are the next show's whatever the list below it holds (Dentistry
+  // Show London's "1-2 October 2027" over the 2026 exhibitors): only a headline or address naming the year counts
+  // ("/expos/melbourne-2027/exhibitors"). Nearer the show, the previous edition is long over and they are trusted.
+  if (!headlineYears.includes(year) && isFutureEdition(target, now)) {
+    return { ok: false, reason: undatedFutureListReason(target, 'the list’s headline') };
   }
   const stated = statedStartDates(fullText.slice(0, 200_000));
   if (stated.length) {
@@ -474,7 +580,7 @@ export function hasScriptPager(html: string) {
  * is an exhibitor-list address, its title or heading says "exhibitor list/directory", and it names
  * this edition — its headline year, or the show dates it announces. Otherwise null.
  */
-export function verifiedListPage(target: EditionTarget, html: string, url: string): string | null {
+export function verifiedListPage(target: EditionTarget, html: string, url: string, now: Date | number = Date.now()): string | null {
   if (!LIST_PAGE.test(new URL(url).pathname) && !/exhibitor/i.test(new URL(url).host)) return null;
   const identity = pageIdentity(html, url);
   const title = identity.split(' | ')[0].trim();
@@ -485,7 +591,7 @@ export function verifiedListPage(target: EditionTarget, html: string, url: strin
   const datesMatch = stated.length > 0 && Math.abs(Date.parse(stated[0]) - Date.parse(target.startDate)) / DAY_MS <= (target.approximate ? 45 : 7);
   const yearMatch = headlineYears.length > 0 && headlineYears.every((value) => value === year);
   if (!yearMatch && !datesMatch) return null;
-  if (!judgeOrganizerPage(target, identity, textOf(parseHtml(html)), hostOf(url)).ok) return null;
+  if (!judgeOrganizerPage(target, identity, textOf(parseHtml(html)), hostOf(url), now).ok) return null;
   // "Fi Europe 2026 Exhibitor List" → "Fi Europe 2026": the edition, not the page's name.
   const edition = title.replace(/\s*[-–|:]?\s*(?:exhibitors?[ -]?(?:list|directory|catalog(?:ue)?|index)|list of exhibitors)\s*$/i, '').trim();
   if (!/(?:^|[^\d])20\d{2}(?!\d)/.test(edition)) return `${target.name} ${year}`;
@@ -536,7 +642,7 @@ export const organizerDirectoryAdapter: ExhibitorAdapter = {
   detect: (page, { site }) =>
     listPageLinks(page, site).map((url) => ({ adapter: 'organizer-directory' as const, key: `org:${url.replace(/\/$/, '')}`, foundOn: page.url, data: url })),
 
-  async resolve(lead, { target, fetcher, site }) {
+  async resolve(lead, { target, fetcher, site, now }) {
     const listUrl = lead.data as string;
     const first = await readHtml(fetcher, listUrl);
     if (!isOk(first.status)) {
@@ -546,7 +652,7 @@ export const organizerDirectoryAdapter: ExhibitorAdapter = {
     const parsed = extractDirectoryPage(first.html, first.url, site);
     if (!parsed) {
       // The edition's own list page, drawn by a script we cannot read: worth a link, never "no exhibitors".
-      const link = verifiedListPage(target, first.html, first.url);
+      const link = verifiedListPage(target, first.html, first.url, now);
       if (link) {
         return {
           kind: 'link',
@@ -556,7 +662,7 @@ export const organizerDirectoryAdapter: ExhibitorAdapter = {
       return rejected('organizer-directory', listUrl, first.url, 'the page shows no exhibitor list');
     }
     const identity = pageIdentity(first.html, first.url);
-    const verdict = judgeOrganizerPage(target, identity, textOf(parseHtml(first.html)), hostOf(first.url));
+    const verdict = judgeOrganizerPage(target, identity, textOf(parseHtml(first.html)), hostOf(first.url), now);
     // A page titled only "Exhibitor list" is named by the edition it was verified as.
     const title = identity.split(' | ')[0].trim();
     const label = /(?:^|[^\d])20\d{2}(?!\d)/.test(title) ? title : `${target.name} ${target.startDate.slice(0, 4)}`;
@@ -565,6 +671,7 @@ export const organizerDirectoryAdapter: ExhibitorAdapter = {
     if (notList) return rejected('organizer-directory', label, first.url, notList);
 
     const cards = new Map(parsed.cards.map((card) => [card.profileUrl, card]));
+    const marks: Record<string, string[]> = { ...parsed.marks };
     // Later pages in page order; a pager links only nearby pages, so each page read may add more.
     const pageNumber = (url: string) => Number(url.match(/(?:[?&](?:page|p|paged|pg|pagenum)=|\/page\/)(\d+)/)?.[1] ?? 0);
     const queue = [...parsed.nextPages];
@@ -587,6 +694,7 @@ export const organizerDirectoryAdapter: ExhibitorAdapter = {
       const before = cards.size;
       if (more && more.pattern === parsed.pattern) {
         for (const card of more.cards) if (!cards.has(card.profileUrl)) cards.set(card.profileUrl, card);
+        Object.assign(marks, more.marks);
         for (const url of more.nextPages) if (!visited.has(url)) queue.push(url);
       }
       // A pager also links the page already read ("?page=1"): skip it, stop after two pages add nothing.
@@ -594,10 +702,13 @@ export const organizerDirectoryAdapter: ExhibitorAdapter = {
       if (stale >= 2) break;
     }
 
-    const list = Array.from(cards.values());
+    const all = Array.from(cards.values());
     // Judged on every page read: the pager's own "First Page" / "Next Page" links often come in from the later pages.
-    const notExhibitors = notExhibitorLinks(list);
+    const notExhibitors = notExhibitorLinks(all);
     if (notExhibitors) return rejected('organizer-directory', label, first.url, notExhibitors);
+    // A combined list of co-located shows that badges each card with its show: this show's cards only.
+    const { cards: list, split } = splitByShowBadge(target, all, marks);
+    if (!list.length) return rejected('organizer-directory', label, first.url, `the combined list badges none of its exhibitors as ${target.name}'s`);
     const access = await profileAccess(list[0].profileUrl, fetcher);
     const loginRequired = access === 'login-required';
     const source: ExhibitorSource = {
@@ -609,7 +720,8 @@ export const organizerDirectoryAdapter: ExhibitorAdapter = {
       foundOn: lead.foundOn,
     };
     const total = statedTotal(first.html);
-    const statedMore = total && total > list.length ? total : null;
+    // A stated total counts the combined list, not one show's share of it.
+    const statedMore = !split && total && total > list.length ? total : null;
     return {
       kind: 'list',
       source,
