@@ -502,6 +502,8 @@ function ExhibitorCard({
             src={exhibitor.logoUrl}
             alt={`${exhibitor.name} logo`}
             loading="lazy"
+            // Logos are hot-linked from each show's directory; many refuse a foreign Referer (403), so send none.
+            referrerPolicy="no-referrer"
             className="max-h-[76px] max-w-[86%] object-contain p-2 transition-transform duration-300 group-hover:scale-105"
             onError={() => setLogoFailed(true)}
           />

@@ -10,19 +10,19 @@ describe('CRM Exhibitors tab layout', () => {
     expect(exhibitorTabLayout(findShowEventsBySlug[BETT])).toEqual({ grid: 'bett', inAppViewer: false });
   });
 
-  it('AAPEX gets the shared event grid with the in-app website viewer', () => {
-    expect(exhibitorTabLayout(findShowEventsBySlug[AAPEX])).toEqual({ grid: 'event', inAppViewer: true });
+  it('AAPEX cards open the Companies profile, with the in-app website viewer', () => {
+    expect(exhibitorTabLayout(findShowEventsBySlug[AAPEX])).toEqual({ grid: 'bett', inAppViewer: true });
   });
 
-  it('every other catalog event gets the same shared grid, without the viewer', () => {
+  it('every other catalog event opens the Companies profile too, without the viewer', () => {
     const others = Object.values(findShowEventsBySlug).filter((event) => event.slug !== AAPEX && event.name !== 'BETT SHOW');
     expect(others.length).toBeGreaterThan(11_000);
     const layouts = new Set(others.map((event) => JSON.stringify(exhibitorTabLayout(event))));
-    expect(Array.from(layouts)).toEqual([JSON.stringify({ grid: 'event', inAppViewer: false })]);
+    expect(Array.from(layouts)).toEqual([JSON.stringify({ grid: 'bett', inAppViewer: false })]);
   });
 
   it("chooses the viewer by AAPEX's slug, so another AAPEX edition keeps external links", () => {
-    expect(exhibitorTabLayout({ name: 'AAPEX', slug: 'aapex-las-vegas-nv-2027-11-02' })).toEqual({ grid: 'event', inAppViewer: false });
+    expect(exhibitorTabLayout({ name: 'AAPEX', slug: 'aapex-las-vegas-nv-2027-11-02' })).toEqual({ grid: 'bett', inAppViewer: false });
   });
 
   it('the catalog AAPEX record carries the real AAPEX details the header shows', () => {

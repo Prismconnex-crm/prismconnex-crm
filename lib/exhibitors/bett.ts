@@ -16,6 +16,30 @@ export function isBettExhibitorCompany(tags: string[] | string | null | undefine
   return list.some((tag) => tag.trim().toLowerCase() === BETT_IMPORT_TAG.toLowerCase());
 }
 
+/**
+ * Tag on every company row copied from any event's exhibitor list by
+ * scripts/exhibitors/import-to-companies.ts — what that import's --revert matches.
+ */
+export const TRADE_SHOW_EXHIBITOR_TAG = "Trade Show Exhibitor";
+
+/**
+ * Prefix of the tag naming the exact EventExhibitor row a company was copied from
+ * ("exhibitor:<id>"). A company can exhibit at several shows, so a domain/name
+ * lookup could open the wrong show's record; the id cannot.
+ */
+export const EXHIBITOR_ID_TAG_PREFIX = "exhibitor:";
+
+/** The EventExhibitor id a company row was imported from, or null. */
+export function exhibitorIdFromTags(tags: string[] | string | null | undefined): string | null {
+  if (!tags) return null;
+  const list = Array.isArray(tags) ? tags : tags.split(",");
+  for (const tag of list) {
+    const t = tag.trim();
+    if (t.toLowerCase().startsWith(EXHIBITOR_ID_TAG_PREFIX)) return t.slice(EXHIBITOR_ID_TAG_PREFIX.length).trim() || null;
+  }
+  return null;
+}
+
 /** Bare host — the shape DiscoveryCompany.domain is stored in. */
 export function bareDomain(url: string | null | undefined): string | null {
   if (!url) return null;

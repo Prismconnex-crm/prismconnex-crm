@@ -4,6 +4,7 @@ import { getSessionPayload } from "@/lib/auth/session";
 import { alwaysShowContactIcons, getCompanyContacts, type CompanyContact } from "@/lib/companies/company-contacts";
 import { prospeoTargetFor } from "@/lib/prospeo/pilot";
 import { listProspeoContacts } from "@/lib/prospeo/service";
+import { findShowEventsBySlug } from "@/lib/find-shows/catalog";
 
 export const dynamic = "force-dynamic";
 
@@ -52,6 +53,30 @@ function normalizeName(name: string): string {
     .replace(NAME_SUFFIXES, " ")
     .replace(/[^a-z0-9]+/g, "")
     .trim();
+}
+
+const BETT_SLUG = "bett-show-london-2027-01-20";
+
+/**
+ * The show this exhibitor record belongs to, as the profile's trade-show banner,
+ * exhibitor record and Events tab state it. Read from the Find Shows catalog by
+ * slug, so every event's exhibitors get their own show rather than BETT's.
+ * BETT keeps its established wording ("BETT 2027", bettshow.com).
+ */
+function eventSummary(slug: string, directoryUrl: string | null) {
+  const exhibitorsHref = `/app/events/${slug}?tab=Exhibitors&page=1&pageSize=24`;
+  if (slug === BETT_SLUG) {
+    return { slug, label: "BETT 2027", location: "London, United Kingdom", dates: "20 - 22 Jan 2027", directoryDomain: "bettshow.com", exhibitorsHref };
+  }
+  const event = findShowEventsBySlug[slug];
+  const directoryDomain = domainOf(directoryUrl) ?? domainOf(event?.website ?? null);
+  if (!event) {
+    return { slug, label: null, location: null, dates: null, directoryDomain, exhibitorsHref };
+  }
+  const year = event.startDate?.slice(0, 4);
+  const label = year && !event.name.includes(year) ? `${event.name} ${year}` : event.name;
+  const location = [event.city, event.country && event.country !== "Unknown" ? event.country : null].filter(Boolean).join(", ") || null;
+  return { slug, label, location, dates: event.displayDate || null, directoryDomain, exhibitorsHref };
 }
 
 type CompanyMatch = {
@@ -135,6 +160,7 @@ export async function GET(_request: Request, { params }: { params: { id: string 
       : [];
 
     return NextResponse.json({
+      event: eventSummary(exhibitor.eventSlug, exhibitor.sourceDirectoryUrl),
       exhibitor: {
         id: exhibitor.id,
         eventSlug: exhibitor.eventSlug,

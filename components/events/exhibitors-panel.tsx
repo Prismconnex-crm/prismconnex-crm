@@ -391,6 +391,7 @@ function ExhibitorLogoMark({ name, logoUrl }: { name: string; logoUrl: string | 
             <img
                 src={logoUrl}
                 alt={`${name} logo`}
+                referrerPolicy="no-referrer"
                 className="size-full object-contain"
                 onError={() => setFailed(true)}
             />

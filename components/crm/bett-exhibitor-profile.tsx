@@ -92,7 +92,18 @@ type CompanyMatch = {
   tags: string | null;
 };
 
+/** The show the record belongs to, from the Find Shows catalog (/api/exhibitors/[id]). */
+type EventSummary = {
+  slug: string;
+  label: string | null;
+  location: string | null;
+  dates: string | null;
+  directoryDomain: string | null;
+  exhibitorsHref: string;
+};
+
 type ProfileResponse = {
+  event?: EventSummary;
   exhibitor: ExhibitorProfile;
   /** Imported contact list (People table); null keeps the directory contact card. */
   contacts?: CompanyContact[] | null;
@@ -314,6 +325,11 @@ export function BettExhibitorProfile({
   }
 
   const { exhibitor, company } = data;
+  // The record's own show. The BETT constants remain only as the fallback for a response without `event`.
+  const eventLabel = data.event?.label ?? EVENT_LABEL;
+  const eventPlace = data.event ? [data.event.location, data.event.dates].filter(Boolean) : [EVENT_LOCATION, EVENT_DATES];
+  const directoryDomain = data.event ? data.event.directoryDomain : BETT_DIRECTORY_DOMAIN;
+  const exhibitorsHref = data.event?.exhibitorsHref ?? EXHIBITORS_LIST_HREF;
   const domain = prettyDomain(exhibitor.website);
   const contactName = [exhibitor.firstName, exhibitor.lastName].filter(Boolean).join(" ");
   // The show's own country is the only location the directory publishes; the
@@ -437,7 +453,8 @@ export function BettExhibitorProfile({
               Trade show presence
             </p>
             <p className="mt-0.5 text-[12px] font-medium text-slate-900 dark:text-white">
-              Exhibiting at {EVENT_LABEL} — {EVENT_LOCATION}, {EVENT_DATES}
+              Exhibiting at {eventLabel}
+              {eventPlace.length ? ` — ${eventPlace.join(", ")}` : ""}
               {exhibitor.stand ? `, stand ${exhibitor.stand}` : ""}.
             </p>
           </div>
@@ -497,7 +514,7 @@ export function BettExhibitorProfile({
                     </p>
                     {exhibitor.description?.trim() ? (
                       <>
-                        <p className="mt-1.5 text-[12px] leading-6 text-slate-700 dark:text-slate-300">
+                        <p className="mt-1.5 whitespace-pre-line text-[12px] leading-6 text-slate-700 dark:text-slate-300">
                           {exhibitor.description.trim()}
                         </p>
                         {/* Where the words came from. "Source: <domain>" used
@@ -528,17 +545,17 @@ export function BettExhibitorProfile({
                   Exhibitor record
                 </p>
                 <div className="grid grid-cols-2 items-end gap-x-4 gap-y-3 md:grid-cols-5">
-                  <Field label="Show" value={EVENT_LABEL} />
+                  <Field label="Show" value={orNotAvailable(eventLabel)} />
                   <Field label="Stand" value={orNotAvailable(exhibitor.stand)} />
                   <Field label="Country" value={orNotAvailable(exhibitor.country)} />
                   {/* The source directory, not the exhibitor's own domain —
                       this row describes the BETT record. The company's real
                       website stays a live link in the header. */}
-                  <Field label="Official website" value={BETT_DIRECTORY_DOMAIN} />
+                  <Field label="Official website" value={orNotAvailable(directoryDomain)} />
                   <div className="flex justify-start md:justify-end">
                     <button
                       type="button"
-                      onClick={() => router.push(EXHIBITORS_LIST_HREF)}
+                      onClick={() => router.push(exhibitorsHref)}
                       className="h-9 whitespace-nowrap rounded-[8px] bg-indigo-600 px-4 text-[13px] font-semibold text-white shadow-sm transition-colors hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-400"
                     >
                       View Other Exhibitors
@@ -568,10 +585,22 @@ export function BettExhibitorProfile({
                         only leaves them to look. */}
                     <Field
                       label="Industry"
-                      value={exhibitor.industry ?? NOT_AVAILABLE}
-                      title={exhibitor.industry && exhibitor.industryEvidence.length
-                        ? `Classified from ${prettyDomain(exhibitor.industrySource) ?? "the company website"} — matched: ${exhibitor.industryEvidence.join(", ")}`
-                        : undefined}
+                      // "show-category": the company's own text decided nothing, so this is the sector of the
+                      // show it exhibits at — labelled, never passed off as the company's own classification.
+                      value={
+                        !exhibitor.industry
+                          ? NOT_AVAILABLE
+                          : exhibitor.industrySource === "show-category"
+                            ? `${exhibitor.industry} (show sector)`
+                            : exhibitor.industry
+                      }
+                      title={
+                        !exhibitor.industry || !exhibitor.industryEvidence.length
+                          ? undefined
+                          : exhibitor.industrySource === "show-category"
+                            ? `Sector of the show this company ${exhibitor.industryEvidence[0]} — its own website gave no clear answer`
+                            : `Classified from ${prettyDomain(exhibitor.industrySource?.replace(/^own-text:?/, "") || null) ?? "the company's own text"} — matched: ${exhibitor.industryEvidence.join(", ")}`
+                      }
                     />
                   </div>
                 ) : (
@@ -664,10 +693,10 @@ export function BettExhibitorProfile({
                   </div>
                   <div>
                     <p className="text-[13px] font-semibold text-slate-900 dark:text-white">
-                      {EVENT_LABEL}
+                      {eventLabel}
                     </p>
                     <p className="mt-0.5 text-[11px] text-slate-600 dark:text-slate-300">
-                      {EVENT_LOCATION} · {EVENT_DATES}
+                      {eventPlace.join(" · ")}
                       {exhibitor.stand ? ` · Stand ${exhibitor.stand}` : ""}
                     </p>
                   </div>

@@ -13,7 +13,11 @@ export type ExhibitorTabLayout = { grid: 'bett' | 'event'; inAppViewer: boolean 
 /** Events, by name, with BETT's Companies-page profile. */
 const BETT_GRID_EVENTS = new Set(['BETT SHOW']);
 
+/**
+ * Every event's exhibitors are now Companies-page companies too (scripts/exhibitors/import-to-companies.ts), and
+ * the profile reads its show from the catalog, so every card opens that profile exactly as BETT's does.
+ */
 export function exhibitorTabLayout(event: { name: string; slug: string }): ExhibitorTabLayout {
   if (BETT_GRID_EVENTS.has(event.name)) return { grid: 'bett', inAppViewer: false };
-  return { grid: 'event', inAppViewer: usesInAppWebsiteViewer(event.slug) };
+  return { grid: 'bett', inAppViewer: usesInAppWebsiteViewer(event.slug) };
 }

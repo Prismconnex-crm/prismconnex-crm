@@ -33,7 +33,7 @@ import { FilterChips } from "@/components/search/filter-chips";
 import { EventCatalogPanel } from "@/components/crm/event-catalog-panel";
 import { BettExhibitorProfile } from "@/components/crm/bett-exhibitor-profile";
 import { CompanyProfile } from "@/components/crm/company-profile";
-import { isBettExhibitorCompany } from "@/lib/exhibitors/bett";
+import { exhibitorIdFromTags, isBettExhibitorCompany } from "@/lib/exhibitors/bett";
 import type { EventFilters, EventResult } from "@/models/event-query";
 import {
   COMPANY_CATEGORIES,
@@ -105,6 +105,8 @@ type Company = {
   events: CompanyEvent[];
   deals: CompanyDeal[];
   activity: CompanyActivity[];
+  /** EventExhibitor this row was copied from (trade-show exhibitor import); its profile opens instead. */
+  exhibitorId?: string | null;
 };
 
 // Website link with a search-fallback: link straight to the real domain when it
@@ -1368,6 +1370,20 @@ export function CompaniesSection() {
   const openCompany = useCallback(
     async (id: string) => {
       const company = companies.find((row) => row.id === id) ?? savedCompanies.find((row) => row.id === id);
+
+      // Rows imported from any event's exhibitor list name their exact exhibitor
+      // record in a tag, so they open its profile with no lookup round trip.
+      const taggedExhibitorId = company ? company.exhibitorId ?? exhibitorIdFromTags(company.tags) : null;
+      if (company && taggedExhibitorId) {
+        const slug =
+          company.name
+            .toLowerCase()
+            .normalize("NFKD")
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "") || "exhibitor";
+        router.push(`/app/companies/${slug}?source=bett&exhibitorId=${encodeURIComponent(taggedExhibitorId)}`);
+        return;
+      }
 
       if (company && isBettExhibitorCompany(company.tags)) {
         try {

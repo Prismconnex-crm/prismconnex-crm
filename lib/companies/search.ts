@@ -103,9 +103,17 @@ export function parseLimit(value: string | null) {
 }
 
 export function formatCompany(row: CompanyRow) {
+  // Rows copied from an event's exhibitor list carry "exhibitor:<id>" naming
+  // their EventExhibitor record. It is returned as its own field and kept out of
+  // the visible tag chips. Their names are real directory names, so the seeded
+  // trailing-number strip below must not touch them ("Studio 54").
+  const allTags = splitList(row.tags);
+  const exhibitorTag = allTags.find((tag) => tag.toLowerCase().startsWith('exhibitor:'));
+  const exhibitorId = exhibitorTag ? exhibitorTag.slice('exhibitor:'.length).trim() || null : null;
   return {
     ...row,
-    name: row.name.replace(/\s+\d+$/, ''),
+    name: exhibitorId ? row.name : row.name.replace(/\s+\d+$/, ''),
+    exhibitorId,
     category: row.category ?? '',
     description: row.description ?? '',
     domain: row.domain ?? '',
@@ -117,7 +125,7 @@ export function formatCompany(row: CompanyRow) {
     revenueRange: row.revenueRange ?? '',
     engagementScore: row.engagementScore ?? 0,
     trustSignals: row.trustSignals ?? '',
-    tags: splitList(row.tags),
+    tags: exhibitorTag ? allTags.filter((tag) => tag !== exhibitorTag) : allTags,
     email: row.email ?? '',
     phone: row.phone ?? '',
     highlights: splitList(row.highlights),
