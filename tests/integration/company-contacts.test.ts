@@ -1673,6 +1673,219 @@ describe("company contacts", () => {
     });
   });
 
+  describe("2026-11-24 companies from company_contacts.xlsx", () => {
+    const seven = [
+      { domain: "pasco.com", count: 99, first: "Kate Hay", company: "PASCO scientific", mobile: "1 800-772-8700" },
+      { domain: "pwdsupplies.co.uk", count: 23, first: "Neil Lavender", company: "PWD Supplies", mobile: "44 800 999 5683" },
+      { domain: "robopack.com", count: 11, first: "Clint Williams", company: "Robopack", mobile: "45 70 22 11 55" },
+      { domain: "schoolai.com", count: 100, first: "Katherine Picarde", company: "SchoolAI", mobile: "1 801-396-0051" },
+      { domain: "schoolbusnet.eu", count: 10, first: "Panagiotis Vasileiou", company: "SchoolBusNet", mobile: "30 2109622633" },
+      { domain: "schoolsbroadband.co.uk", count: 2, first: "Jo Jerome", company: "Schools Broadband", mobile: "44 1133 222 333" },
+      { domain: "screenbeam.com", count: 45, first: "Kenneth Crosley", company: "ScreenBeam", mobile: "1 800 752 7820" },
+    ];
+
+    it.each(seven)("$domain: $count contacts of $company, own mobile", async (entry) => {
+      const stored = (await import(`@/data/company-contacts/${entry.domain}.json`)).default as {
+        contacts: Array<{ fullName: string; company: string | null; mobile: string | null }>;
+      };
+      expect(stored.contacts).toHaveLength(entry.count);
+      expect(stored.contacts[0].fullName).toBe(entry.first);
+      expect(stored.contacts.every((c) => c.company === entry.company)).toBe(true);
+      expect(getCompanyContacts(entry.domain)!.every((c) => c.mobile === entry.mobile)).toBe(true);
+      expect(alwaysShowContactIcons(entry.domain)).toBe(true);
+    });
+
+    it("keeps PWD Supplies to its UK staff, without the Public Works Department rows", () => {
+      const pwd = getCompanyContacts("pwdsupplies.co.uk")!;
+      expect(pwd.every((c) => c.country === "United Kingdom")).toBe(true);
+      expect(pwd.some((c) => /pwd|government|peon/i.test(c.jobTitle ?? ""))).toBe(false);
+    });
+
+    it("opens a mailto from the paper-plane where an email exists (directory contact)", () => {
+      const contacts = getCompanyContacts("pwdsupplies.co.uk", {
+        companyName: "PWD Supplies", firstName: "Pete", lastName: "Forbes", designation: "Marketing Manager",
+        email: "peteforbes@pwdsupplies.co.uk", phone: "44 800 999 5683", country: "United Kingdom",
+        personLinkedInUrl: "https://www.linkedin.com/in/pete-forbes-b732bb184",
+        companyLinkedInUrl: "https://www.linkedin.com/company/pwd-supplies/",
+      })!;
+      expect(contacts).toHaveLength(23);
+      expect(contacts.find((c) => c.fullName === "Pete Forbes")).toMatchObject({
+        email: "peteforbes@pwdsupplies.co.uk",
+        messagingUrl: "mailto:peteforbes@pwdsupplies.co.uk",
+      });
+      // No email → no invented destination.
+      expect(contacts.filter((c) => c.fullName !== "Pete Forbes").every((c) => !c.messagingUrl)).toBe(true);
+    });
+
+    it("does not attach the retail 'Purple' rows to the Purple (WiFi) exhibitor", () => {
+      const empty = { firstName: null, lastName: null, designation: null, email: null, phone: null, country: null, personLinkedInUrl: null, companyLinkedInUrl: null };
+      expect(getCompanyContacts(null, { companyName: "Purple", ...empty })).toBeNull();
+    });
+  });
+
+  describe("2026-11-24 companies from new_contacts_only.xlsx", () => {
+    const ten = [
+      { domain: "securly.com", count: 100, first: "Jenni Handley", company: "Securly", mobile: "44 808 164 9773" },
+      { domain: "seesaw.com", count: 100, company: "Seesaw Learning", mobile: "1 855 673 3729" },
+      { domain: "sendient.ai", count: 19, company: "Sendient", mobile: "44 1926 811777" },
+      { domain: "signinapp.com", count: 43, company: "Sign In App | Visitor Management and Employee Sign In", mobile: "44 333 016 3551" },
+      { domain: "simplyhealth", count: 100, company: "Simplyhealth", mobile: null },
+      { domain: "skolaris.net", count: 5, company: "Skolaris", mobile: "420 777 267 735" },
+      { domain: "skolon.com", count: 4, company: "Skolon UK", mobile: null },
+      { domain: "surpass.com", count: 96, company: "Surpass Assessment", mobile: "44 1274 203 250" },
+      { domain: "switch4schools.com.au", count: 6, company: "Switch4Schools", mobile: "61 7 3186 9417" },
+      { domain: "switchshop.co.uk", count: 68, company: "Switchshop Limited", mobile: "44 1438 831870" },
+    ];
+
+    it.each(ten)("$domain: $count contacts, own company only, own mobile rule, icons + mailto on", async (entry) => {
+      const stored = (await import(`@/data/company-contacts/${entry.domain}.json`)).default as {
+        contacts: Array<{ fullName: string; company: string | null; mobile: string | null }>;
+      };
+      expect(stored.contacts).toHaveLength(entry.count);
+      const blankAllowed = entry.domain === "securly.com" ? 1 : 0;
+      expect(stored.contacts.filter((c) => c.company !== entry.company)).toHaveLength(blankAllowed);
+      if (entry.mobile) expect(getCompanyContacts(entry.domain)!.every((c) => c.mobile === entry.mobile)).toBe(true);
+      else expect(stored.contacts.every((c) => c.mobile === null)).toBe(true);
+      expect(alwaysShowContactIcons(entry.domain)).toBe(true);
+    });
+
+    it("accounts for all 541 rows and puts Portia Hines (Company '-') under Securly only", () => {
+      expect(ten.reduce((n, t) => n + t.count, 0)).toBe(541);
+      const holders = ten.filter((t) => getCompanyContacts(t.domain)!.some((c) => c.fullName === "Portia Hines"));
+      expect(holders.map((t) => t.domain)).toEqual(["securly.com"]);
+    });
+
+    it("finds Simplyhealth by exact name and wires mailto for directory emails", () => {
+      const empty = { firstName: null, lastName: null, designation: null, email: null, phone: null, country: null, personLinkedInUrl: null, companyLinkedInUrl: null };
+      expect(getCompanyContacts(null, { companyName: "Simplyhealth", ...empty })!).toHaveLength(100);
+      const securly = getCompanyContacts("securly.com", {
+        companyName: "Securly", firstName: "Ronnie", lastName: "Fraser", designation: "Sales Director, EMEA",
+        email: "ronnie@securly.com", phone: "44 808 164 9773", country: "United Kingdom",
+        personLinkedInUrl: "https://uk.linkedin.com/in/ronniefraser", companyLinkedInUrl: "https://www.linkedin.com/company/securly/",
+      })!;
+      expect(securly.find((c) => c.fullName === "Ronnie Fraser")).toMatchObject({
+        email: "ronnie@securly.com",
+        messagingUrl: "mailto:ronnie@securly.com",
+        personLinkedInUrl: "https://uk.linkedin.com/in/ronniefraser",
+      });
+    });
+  });
+
+  describe("2026-11-24 five-company workbook (Teachers Talk Radio … TOP Marks)", () => {
+    const empty = { firstName: null, lastName: null, designation: null, email: null, phone: null, country: null, personLinkedInUrl: null, companyLinkedInUrl: null };
+
+    it("imports Teachers Talk Radio (by name), TET (UK only), The Education Space and Toddle with the right mobiles", () => {
+      const ttr = getCompanyContacts(null, { companyName: "Teachers Talk Radio", ...empty })!;
+      expect(ttr).toHaveLength(6);
+      expect(ttr.every((c) => c.mobile === null && c.company === "Teachers Talk Radio")).toBe(true);
+
+      const tet = getCompanyContacts("tet.co.uk")!;
+      expect(tet).toHaveLength(43);
+      expect(tet[0].fullName).toBe("William Brooke");
+      expect(tet.every((c) => c.country === "United Kingdom" && c.mobile === "44 20 7553 9950")).toBe(true);
+      expect(tet.some((c) => /spammer|dfgn/i.test(c.jobTitle ?? ""))).toBe(false);
+
+      const space = getCompanyContacts("theeducationspace.co.uk")!;
+      expect(space).toHaveLength(31);
+      expect(space.every((c) => c.mobile === "44 20 8249 6900" && c.company === "The Education Space")).toBe(true);
+
+      const toddle = getCompanyContacts("toddleapp.com")!;
+      expect(toddle).toHaveLength(1);
+      expect(toddle[0]).toMatchObject({ company: "Toddle Learning Solutions", mobile: null });
+
+      for (const d of ["tet.co.uk", "theeducationspace.co.uk", "toddleapp.com"]) expect(alwaysShowContactIcons(d)).toBe(true);
+      expect(alwaysShowContactIcons(null, "Teachers Talk Radio")).toBe(true);
+    });
+
+    it("does not attach the unrelated 'TOP Marks' rows to either Top Marks exhibitor", () => {
+      expect(getCompanyContacts("topmarks.ai")).toBeNull();
+      expect(getCompanyContacts(null, { companyName: "Top Marks", ...empty })).toBeNull();
+    });
+
+    it("wires the paper-plane to email for a directory contact (TET's Eralp Iyikan, appended)", () => {
+      const tet = getCompanyContacts("tet.co.uk", {
+        ...empty, companyName: "TET Limited", firstName: "Eralp", lastName: "Iyikan", designation: "Director",
+        email: "eralp@tet.co.uk", phone: "44 20 7553 9950", country: "United Kingdom",
+        personLinkedInUrl: "https://www.linkedin.com/in/eralp-iyikan-03031312/",
+        companyLinkedInUrl: "https://www.linkedin.com/company/tetlimited/",
+      })!;
+      expect(tet).toHaveLength(44);
+      expect(tet[43]).toMatchObject({ fullName: "Eralp Iyikan", messagingUrl: "mailto:eralp@tet.co.uk", mobile: "44 20 7553 9950" });
+    });
+  });
+
+  describe("2026-11-25 companies from Company_People_Contacts.xlsx", () => {
+    const ten = [
+      { domain: "sketchup.trimble.com", count: 100, company: "Trimble", mobile: null },
+      { domain: "truscholar.io", count: 49, company: "TruScholar", mobile: "91 84848 13210" },
+      { domain: "tts-group.co.uk", count: 91, company: "TTS Resources", mobile: "44 800 138 1370" },
+      { domain: "ui.com", count: 100, company: "Ubiquiti", mobile: null },
+      { domain: "vapeguardian.com", count: 5, company: "Vape Guardian", mobile: "44 330 133 0758" },
+      { domain: "venturedsolutions.com", count: 100, company: "VenturEd Solutions", mobile: "44 20 7237 8456" },
+      { domain: "verkada.com", count: 100, company: "Verkada", mobile: "1 650 514-2500" },
+      { domain: "very-pc.co.uk", count: 28, company: "VeryPC", mobile: "44 114 321 8609" },
+      { domain: "wiris.com", count: 73, company: "WIRIS", mobile: "34 932 804 805" },
+    ];
+
+    it.each(ten)("$domain: $count contacts of $company, own mobile rule, icons + mailto", async (entry) => {
+      const stored = (await import(`@/data/company-contacts/${entry.domain}.json`)).default as {
+        contacts: Array<{ fullName: string; company: string | null; mobile: string | null }>;
+      };
+      expect(stored.contacts).toHaveLength(entry.count);
+      expect(stored.contacts.every((c) => c.company === entry.company)).toBe(true);
+      if (entry.mobile) expect(getCompanyContacts(entry.domain)!.every((c) => c.mobile === entry.mobile)).toBe(true);
+      else expect(stored.contacts.every((c) => c.mobile === null)).toBe(true);
+      expect(alwaysShowContactIcons(entry.domain)).toBe(true);
+    });
+
+    it("imports TOPIQ by exact name without Trimble's phone number", () => {
+      const empty = { firstName: null, lastName: null, designation: null, email: null, phone: null, country: null, personLinkedInUrl: null, companyLinkedInUrl: null };
+      const topiq = getCompanyContacts(null, { companyName: "TopIQ", ...empty })!;
+      expect(topiq).toHaveLength(6);
+      expect(topiq.every((c) => c.mobile === null && c.company === "TOPIQ")).toBe(true);
+      // +1-800-874-6253 is Trimble's BETT phone; it must not appear on any company here.
+      for (const d of ["topiq", ...ten.map((t) => t.domain)]) {
+        const list = d === "topiq" ? topiq : getCompanyContacts(d)!;
+        expect(list.some((c) => c.mobile === "+1-800-874-6253")).toBe(false);
+      }
+    });
+
+    it("pruned TTS and WIRIS of unrelated overseas rows", () => {
+      const tts = getCompanyContacts("tts-group.co.uk")!;
+      expect(tts.some((c) => /ambulancias|trucks drivers|security officer|data entry|kanvaser/i.test(c.jobTitle ?? ""))).toBe(false);
+      expect(tts.find((c) => c.country === "United Arab Emirates")!.jobTitle).toMatch(/International Sales/);
+      const wiris = getCompanyContacts("wiris.com")!;
+      expect(wiris.some((c) => ["Viet Nam", "India"].includes(c.country ?? ""))).toBe(false);
+    });
+  });
+
+  describe("2026-11-25 ZAGG and Zioxi", () => {
+    it("imports 100 ZAGG and 25 Zioxi contacts, each with only its own number", () => {
+      const zagg = getCompanyContacts("zagg.com")!;
+      const zioxi = getCompanyContacts("zioxi.com")!;
+      expect(zagg).toHaveLength(100);
+      expect(zioxi).toHaveLength(25);
+      expect(zagg.every((c) => c.company === "ZAGG" && c.mobile === "+1-800-700-9244")).toBe(true);
+      expect(zioxi.every((c) => c.company === "Zioxi" && c.mobile === "44 1844 280123")).toBe(true);
+      expect(zioxi.some((c) => c.country === "Egypt")).toBe(false);
+      expect(zagg.some((c) => zioxi.some((z) => z.fullName === c.fullName))).toBe(false);
+      for (const d of ["zagg.com", "zioxi.com"]) expect(alwaysShowContactIcons(d)).toBe(true);
+    });
+
+    it("wires email + LinkedIn for the directory contacts", () => {
+      const zagg = getCompanyContacts("zagg.com", {
+        companyName: "ZAGG", firstName: "Kate", lastName: "Ryan", designation: "Channel and Events Marketing Manager",
+        email: "kate.ryan@zagg.com", phone: "+1-800-700-9244", country: "United States",
+        personLinkedInUrl: "https://www.linkedin.com/in/kate-ryan-a5a306124",
+        companyLinkedInUrl: "https://www.linkedin.com/company/zagg-international/",
+      })!;
+      expect(zagg.find((c) => c.fullName === "Kate Ryan")).toMatchObject({
+        messagingUrl: "mailto:kate.ryan@zagg.com",
+        personLinkedInUrl: "https://www.linkedin.com/in/kate-ryan-a5a306124",
+      });
+    });
+  });
+
   it("returns null for companies without an imported list", () => {
     expect(getCompanyContacts("example-no-list.com")).toBeNull();
     expect(getCompanyContacts(null)).toBeNull();

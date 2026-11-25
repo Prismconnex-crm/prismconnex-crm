@@ -1,0 +1,1006 @@
+{
+  "domain": "schoolai.com",
+  "source": "company_contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Katherine Picarde",
+      "company": "SchoolAI",
+      "jobTitle": "EdTech Sales",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cahlan Sharp",
+      "company": "SchoolAI",
+      "jobTitle": "Co-Founder",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tucker Austin",
+      "company": "SchoolAI",
+      "jobTitle": "Director of Product Marketing",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bart Palmer",
+      "company": "SchoolAI",
+      "jobTitle": "Full Stack Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matt Argubright",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Account Excecutive",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrew Bates",
+      "company": "SchoolAI",
+      "jobTitle": "Revenue Operations Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kenna Torp",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Partnership Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carrie Butler",
+      "company": "SchoolAI",
+      "jobTitle": "Deputy Director of Policy and Grant Stragegy",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jethro Jones",
+      "company": "SchoolAI",
+      "jobTitle": "Principal Product Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rudy Garcia",
+      "company": "SchoolAI",
+      "jobTitle": "Staff Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jacob Avery",
+      "company": "SchoolAI",
+      "jobTitle": "Full Stack Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Avery Balasbas",
+      "company": "SchoolAI",
+      "jobTitle": "Community Coach",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jorge Sahagun",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alicia Cawley",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Product Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chad Clegg",
+      "company": "SchoolAI",
+      "jobTitle": "Corporate Controller",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mike Powell",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Partnership Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kevin Ernst",
+      "company": "SchoolAI",
+      "jobTitle": "Principal Product Designer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Levi Gephart",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Account Executive",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cameron Kinney",
+      "company": "SchoolAI",
+      "jobTitle": "Head of Growth Marketing",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chase Lacroix",
+      "company": "SchoolAI",
+      "jobTitle": "Partnership Development",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Becca Hicks",
+      "company": "SchoolAI",
+      "jobTitle": "Head of Customer Success",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Braden Lanham",
+      "company": "SchoolAI",
+      "jobTitle": "Sr. Director, Sales Development",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bryant Robertson",
+      "company": "SchoolAI",
+      "jobTitle": "Principal Product Designer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Logan Hunt",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Jackson",
+      "company": "SchoolAI",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Caroline Tell",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Enterprise Account Executive",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Corban Anderson",
+      "company": "SchoolAI",
+      "jobTitle": "Fullstack Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hattie J. Strong",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Mid-Market Account Executive",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tori Fitka",
+      "company": "SchoolAI",
+      "jobTitle": "Community Coach",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jacob Petterle",
+      "company": "SchoolAI",
+      "jobTitle": "Senior AI/ML Engineering Lead",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carrington Haley",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Graphic Designer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ben Jensen",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Account Executive",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dylan Skinner",
+      "company": "SchoolAI",
+      "jobTitle": "Applied AI Scientist",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Marcus Kingsley",
+      "company": "SchoolAI",
+      "jobTitle": "Vice President of International Sales",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Brad Weir",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Partnerships Executive",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Miriah Peterson",
+      "company": "SchoolAI",
+      "jobTitle": "Staff data engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Maureen Young",
+      "company": "SchoolAI",
+      "jobTitle": "Curriculum Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cheska Robinson",
+      "company": "SchoolAI",
+      "jobTitle": "Community Coach",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Justin Moss",
+      "company": "SchoolAI",
+      "jobTitle": "Principal Product Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ben Norris",
+      "company": "SchoolAI",
+      "jobTitle": "Chief of Staff",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Maria Trujillo",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Product Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kasey Chambers",
+      "company": "SchoolAI",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jeremy Macdonald",
+      "company": "SchoolAI",
+      "jobTitle": "Program Manager, Education & Community",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Christy Lehman",
+      "company": "SchoolAI",
+      "jobTitle": "People & Performance",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Clint Schiffman",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Enterprise Account Executive",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nikko Love",
+      "company": "SchoolAI",
+      "jobTitle": "Staff Infrastructure Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nate Sanders",
+      "company": "SchoolAI",
+      "jobTitle": "Chief Experience Officer (CXO)",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lloyd Grubham",
+      "company": "SchoolAI",
+      "jobTitle": "Full Stack Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tyler Smith",
+      "company": "SchoolAI",
+      "jobTitle": "Software Engineer II",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rachel Beckstead",
+      "company": "SchoolAI",
+      "jobTitle": "Principal Product Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Karin Simelaro",
+      "company": "SchoolAI",
+      "jobTitle": "Chief Revenue Officer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Trevor Goertzen",
+      "company": "SchoolAI",
+      "jobTitle": "Regional Vice President",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Megan Klein",
+      "company": "SchoolAI",
+      "jobTitle": "Creative Director",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tarah Tesmer",
+      "company": "SchoolAI",
+      "jobTitle": "Sr. Community Coach",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Monson",
+      "company": "SchoolAI",
+      "jobTitle": "Head of Design",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Natali Barski",
+      "company": "SchoolAI",
+      "jobTitle": "General Counsel",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jennifer Eutsler",
+      "company": "SchoolAI",
+      "jobTitle": "Data Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jason Baddley",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Steven Bready",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Full Stack Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dustin Mcquay",
+      "company": "SchoolAI",
+      "jobTitle": "Staff Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Elizabeth Converse",
+      "company": "SchoolAI",
+      "jobTitle": "Director of Government Relations",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jarvis Pace",
+      "company": "SchoolAI",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrew Rasmussen",
+      "company": "SchoolAI",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nick Bluth",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Product Designer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Glendaliz Almonte",
+      "company": "SchoolAI",
+      "jobTitle": "VP, State and Strategic Partnerships",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mckay Perkins",
+      "company": "SchoolAI",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gavin Winkel",
+      "company": "SchoolAI",
+      "jobTitle": "Director of Revenue Operations",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nicholas Provenzano",
+      "company": "SchoolAI",
+      "jobTitle": "Sr. Manager, Champions & Advocate Program",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Talmage Morgan",
+      "company": "SchoolAI",
+      "jobTitle": "GTM Operations Lead",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ryan Boyle",
+      "company": "SchoolAI",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Parker Holladay",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Steve Wennerholm",
+      "company": "SchoolAI",
+      "jobTitle": "VP Finance",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mason Meyer",
+      "company": "SchoolAI",
+      "jobTitle": "Platform Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kevin Tiro",
+      "company": "SchoolAI",
+      "jobTitle": "Assistant",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jace Palmer",
+      "company": "SchoolAI",
+      "jobTitle": "Mid-Market Account Executive",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Donavon Harris",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Account Executive",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Fely García López",
+      "company": "SchoolAI",
+      "jobTitle": "Senior Community Coach",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nikki Muncey",
+      "company": "SchoolAI",
+      "jobTitle": "Director of Performance Marketing",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Josh Knell",
+      "company": "SchoolAI",
+      "jobTitle": "VP of Customer Experience",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sophie Carlson",
+      "company": "SchoolAI",
+      "jobTitle": "Account Executive",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carson Fairbourn",
+      "company": "SchoolAI",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ford Poulsen",
+      "company": "SchoolAI",
+      "jobTitle": "RVP Sales",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Caleb Hicks",
+      "company": "SchoolAI",
+      "jobTitle": "Founder, CEO",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Colton Taylor",
+      "company": "SchoolAI",
+      "jobTitle": "VP, Marketing - Growth & Demand",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aaron Neuenschwander",
+      "company": "SchoolAI",
+      "jobTitle": "Head of Strategic Partnerships",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Janelle Zonts",
+      "company": "SchoolAI",
+      "jobTitle": "Sr. Manager, Events & Educator Advocacy",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alyssa White",
+      "company": "SchoolAI",
+      "jobTitle": "Regional Director of Government Relations",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stephanie Howell",
+      "company": "SchoolAI",
+      "jobTitle": "Educational Strategist",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kyle Cameron",
+      "company": "SchoolAI",
+      "jobTitle": "Head of Customer Support",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alex Yoder",
+      "company": "SchoolAI",
+      "jobTitle": "Grant and RFP Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tyler Bills",
+      "company": "SchoolAI",
+      "jobTitle": "Principal Product Manager - User Growth & Adoption",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ben Guthrie",
+      "company": "SchoolAI",
+      "jobTitle": "Full-Stack Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sasha Luks-Morgan",
+      "company": "SchoolAI",
+      "jobTitle": "Policy Analyst",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Katie Ellis",
+      "company": "SchoolAI",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Haley Winterton",
+      "company": "SchoolAI",
+      "jobTitle": "Executive Assistant Office Manager",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jaden Walker",
+      "company": "SchoolAI",
+      "jobTitle": "Partnership Development Representative",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Javier Valverde",
+      "company": "SchoolAI",
+      "jobTitle": "Full-Stack Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "Peru",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Brittany Freda",
+      "company": "SchoolAI",
+      "jobTitle": "Sr. Enterprise Account Executive",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Blasia Dunham",
+      "company": "SchoolAI",
+      "jobTitle": "Community Coach (PA) @SchoolAI",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Caleb Bartholomew",
+      "company": "SchoolAI",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 801-396-0051",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

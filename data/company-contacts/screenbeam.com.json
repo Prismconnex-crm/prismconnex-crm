@@ -1,0 +1,456 @@
+{
+  "domain": "screenbeam.com",
+  "source": "company_contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Kenneth Crosley",
+      "company": "ScreenBeam",
+      "jobTitle": "Solutions Sales Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Benny Sterental",
+      "company": "ScreenBeam",
+      "jobTitle": "Latin America Business Development",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alison Sun",
+      "company": "ScreenBeam",
+      "jobTitle": "Lead Software QA Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Brian E Krisko",
+      "company": "ScreenBeam",
+      "jobTitle": "Director of Sales - North America",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carlyn Fernandez",
+      "company": "ScreenBeam",
+      "jobTitle": "Partner Relationship Manager - West",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cameron Shapiro",
+      "company": "ScreenBeam",
+      "jobTitle": "Territory Sales Manager-North Central Midwest",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mike Ehlenberger",
+      "company": "ScreenBeam",
+      "jobTitle": "Vice President | General Manager",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Flavio Calonge",
+      "company": "ScreenBeam",
+      "jobTitle": "Latin America Business Development",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Laura Nelson",
+      "company": "ScreenBeam",
+      "jobTitle": "Director, Channel and Distribution",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daryn Rank",
+      "company": "ScreenBeam",
+      "jobTitle": "Director of Business Development",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jay Taylor",
+      "company": "ScreenBeam",
+      "jobTitle": "Vice President - Technical Marketing & Bus. Development",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Lopez",
+      "company": "ScreenBeam",
+      "jobTitle": "Director of Education Strategy",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Margaret Rogers",
+      "company": "ScreenBeam",
+      "jobTitle": "Partner Relationship Manager",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jerome Moret",
+      "company": "ScreenBeam",
+      "jobTitle": "Sales Director",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bill Looney",
+      "company": "ScreenBeam",
+      "jobTitle": "Territory Sales Manager",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Johnny Lin",
+      "company": "ScreenBeam",
+      "jobTitle": "Senior Director of Sales, APAC",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Huy Pham",
+      "company": "ScreenBeam",
+      "jobTitle": "Product Application Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Eric Leong",
+      "company": "ScreenBeam",
+      "jobTitle": "Product Manager & Sr. Field Applications Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anthony Chen",
+      "company": "ScreenBeam",
+      "jobTitle": "Hardware Engineering Manager",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rockette Heil",
+      "company": "ScreenBeam",
+      "jobTitle": "Sr. Manager Sales Operations and Administration",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bobby Hsu",
+      "company": "ScreenBeam",
+      "jobTitle": "Sales Account Manager",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kerry Cheng",
+      "company": "ScreenBeam",
+      "jobTitle": "Build And Release Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vincent Nguyen",
+      "company": "ScreenBeam",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dat Nguyen",
+      "company": "ScreenBeam",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anh Huynh",
+      "company": "ScreenBeam",
+      "jobTitle": "Senior AP Specialist",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sim Mba",
+      "company": "ScreenBeam",
+      "jobTitle": "Vice President Finance",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stefanie Wittwer",
+      "company": "ScreenBeam",
+      "jobTitle": "Territory Sales Manager",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Benjamin Botteri",
+      "company": "ScreenBeam",
+      "jobTitle": "Area Sales Manager France",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "France",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Derek Nguyen",
+      "company": "ScreenBeam",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adeline Rieder",
+      "company": "ScreenBeam",
+      "jobTitle": "Sr. UX/UI Designer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Barbara Stuller",
+      "company": "ScreenBeam",
+      "jobTitle": "Sales Development Rep./ISS",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yu Yong Chen",
+      "company": "ScreenBeam",
+      "jobTitle": "APAC FAE Manager",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bo Xie",
+      "company": "ScreenBeam",
+      "jobTitle": "Product Application Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chih-Heng Yu",
+      "company": "ScreenBeam",
+      "jobTitle": "Field Application Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alexis Kouame",
+      "company": "ScreenBeam",
+      "jobTitle": "Product Applications Engineer AMS/EMEA",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Barbara Stuller",
+      "company": "ScreenBeam",
+      "jobTitle": "Business Development Specialist",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Toru Ishihara",
+      "company": "ScreenBeam",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tina R. Delos Santos",
+      "company": "ScreenBeam",
+      "jobTitle": "Sr. HR Generalist",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Edmond Zhao",
+      "company": "ScreenBeam",
+      "jobTitle": "ServiceNow Developer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Phylicia Liu",
+      "company": "ScreenBeam",
+      "jobTitle": "software engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kuan-Pei Lu",
+      "company": "ScreenBeam",
+      "jobTitle": "Sales Operations Specialist",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tuan Nguyen",
+      "company": "ScreenBeam",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Steve Benedict",
+      "company": "ScreenBeam",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Wu",
+      "company": "ScreenBeam",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Harrison",
+      "company": "ScreenBeam",
+      "jobTitle": "Country Manager UK&I",
+      "email": null,
+      "mobile": "1 800 752 7820",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

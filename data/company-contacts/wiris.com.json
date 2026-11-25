@@ -1,0 +1,736 @@
+{
+  "domain": "wiris.com",
+  "source": "Company_People_Contacts.xlsx — WIRIS rows except a Vietnam freelance writer and an India teacher (not Wiris staff).",
+  "contacts": [
+    {
+      "fullName": "Desislava Stefanova",
+      "company": "WIRIS",
+      "jobTitle": "Customer Success Manager",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Sanchez Lozano",
+      "company": "WIRIS",
+      "jobTitle": "Product Owner",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lei Zhou",
+      "company": "WIRIS",
+      "jobTitle": "Business Development Representative",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Adalid",
+      "company": "WIRIS",
+      "jobTitle": "QA Engineer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bartos Drobik",
+      "company": "WIRIS",
+      "jobTitle": "Account Executive",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kangni Tang",
+      "company": "WIRIS",
+      "jobTitle": "Key Account Manager-APAC",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Iñaki Eguiarte",
+      "company": "WIRIS",
+      "jobTitle": "Agile Specialist",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "José Antonio Gómez",
+      "company": "WIRIS",
+      "jobTitle": "Sales Lead Key Account Manager & Strategic Partners Manager - Global",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Severiano Mendez",
+      "company": "WIRIS",
+      "jobTitle": "Key Account Manager",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ekaterina Shmatova",
+      "company": "WIRIS",
+      "jobTitle": "Key Account Manager & Legal Counsel",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Coey Yu",
+      "company": "WIRIS",
+      "jobTitle": "China Country Manager",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aina Palacios",
+      "company": "WIRIS",
+      "jobTitle": "Data Analyst",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ubaldo Santos Patón",
+      "company": "WIRIS",
+      "jobTitle": "Ingeniero de desarrollo de software",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Melanie Richardson",
+      "company": "WIRIS",
+      "jobTitle": "Customer and Sales Support Agent",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alejandra Caleya",
+      "company": "WIRIS",
+      "jobTitle": "Inside Sales Agent",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michael Parrott",
+      "company": "WIRIS",
+      "jobTitle": "Machine Learning Lead",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Santiago Strella",
+      "company": "WIRIS",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Manuela Hincapie Pelaez",
+      "company": "WIRIS",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daniel Benages Marcos",
+      "company": "WIRIS",
+      "jobTitle": "QA Engineer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Guillem Vilaseca Vinadé",
+      "company": "WIRIS",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Saúl García Nolla",
+      "company": "WIRIS",
+      "jobTitle": "DevOps Engineer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Víctor Santiago Blanco",
+      "company": "WIRIS",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Enric Cormenzana",
+      "company": "WIRIS",
+      "jobTitle": "Accounting Specialist",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Franciele Eckert Salmoria",
+      "company": "WIRIS",
+      "jobTitle": "Key Account Manager - Iberia & Latam",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gaspar Pérez",
+      "company": "WIRIS",
+      "jobTitle": "Partner Manager",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Marc Gelpí Mateu",
+      "company": "WIRIS",
+      "jobTitle": "Agile Tech Lead",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sara Fernandes",
+      "company": "WIRIS",
+      "jobTitle": "Chief Revenue Officer (CRO)",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Abdou Nasr",
+      "company": "WIRIS",
+      "jobTitle": "Senior Key Account Manager",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Baptiste Garro",
+      "company": "WIRIS",
+      "jobTitle": "Data Team Lead",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lluís Garrigues",
+      "company": "WIRIS",
+      "jobTitle": "Head of Sales",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrea Gonzalez Gifra",
+      "company": "WIRIS",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Maria Blancas Muñoz",
+      "company": "WIRIS",
+      "jobTitle": "Senior Product Researcher / Designer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nicolás Cornaglia",
+      "company": "WIRIS",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Oliver Sanz",
+      "company": "WIRIS",
+      "jobTitle": "Product designer lead",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jose Antonio González Doñ",
+      "company": "WIRIS",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pablo Guerrero",
+      "company": "WIRIS",
+      "jobTitle": "Application Support Engineer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Renzo Mariotti",
+      "company": "WIRIS",
+      "jobTitle": "Product Marketing Specialist",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Victor Gonzalez",
+      "company": "WIRIS",
+      "jobTitle": "Senior Software Developer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Saioa Bikandi Alonso",
+      "company": "WIRIS",
+      "jobTitle": "Senior Product Designer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Clara Abelló Gàllego",
+      "company": "WIRIS",
+      "jobTitle": "Chief Product Officer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Enrique Muñoz López",
+      "company": "WIRIS",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carlota Clavell Pi-Sunyer",
+      "company": "WIRIS",
+      "jobTitle": "Sales Support Team Lead",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sonia Martinez Pueyo",
+      "company": "WIRIS",
+      "jobTitle": "Finance Lead",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nathan Croix",
+      "company": "WIRIS",
+      "jobTitle": "Strategic Account Specialist",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mary Nieves Sande Escandón",
+      "company": "WIRIS",
+      "jobTitle": "People Manager",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daniel Moreno Manzano",
+      "company": "WIRIS",
+      "jobTitle": "Machine Learning Engineer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aida Alsina",
+      "company": "WIRIS",
+      "jobTitle": "Digital Designer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carla Daniels",
+      "company": "WIRIS",
+      "jobTitle": "Sales Support Agent",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ricard Llobet Puerta",
+      "company": "WIRIS",
+      "jobTitle": "Data Engineer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carla Lara",
+      "company": "WIRIS",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Celeste Bernues",
+      "company": "WIRIS",
+      "jobTitle": "Operations Team Lead",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ivan Vizcaino Albalat",
+      "company": "WIRIS",
+      "jobTitle": "Accountant",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alba Reillo",
+      "company": "WIRIS",
+      "jobTitle": "Performance Marketing Lead",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sergi Alvarez Rodriguez",
+      "company": "WIRIS",
+      "jobTitle": "Software Developer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andy Buell",
+      "company": "WIRIS",
+      "jobTitle": "US Country Manager",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mireia Alenyà Sistané",
+      "company": "WIRIS",
+      "jobTitle": "Machine Learning Engineer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Xavier Ripoll Echeveste",
+      "company": "WIRIS",
+      "jobTitle": "R&D Grant Writer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Martina Baglio",
+      "company": "WIRIS",
+      "jobTitle": "Administrative Coordinator",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Oriol Parareda",
+      "company": "WIRIS",
+      "jobTitle": "Juinor QA Engineer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vicente Iranzo Maestre",
+      "company": "WIRIS",
+      "jobTitle": "DevOps Engineer & some AWS SysOps tasks",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carolina Brizzio",
+      "company": "WIRIS",
+      "jobTitle": "People Partner",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Aguilar Moseguí",
+      "company": "WIRIS",
+      "jobTitle": "IT Technician",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Raül Cambeiro",
+      "company": "WIRIS",
+      "jobTitle": "DevOps Team Lead",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Eugenia Lucía Efkhanian",
+      "company": "WIRIS",
+      "jobTitle": "Performance Marketing Graduate",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andreu Tomàs",
+      "company": "WIRIS",
+      "jobTitle": "Lead QA Engineer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonathan Guillén González",
+      "company": "WIRIS",
+      "jobTitle": "Head of Engineering",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jiang Xinyu",
+      "company": "WIRIS",
+      "jobTitle": "Back End Developer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Álvaro García Cantalejo",
+      "company": "WIRIS",
+      "jobTitle": "Full-stack Developer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lidia San Emeterio Arroyo",
+      "company": "WIRIS",
+      "jobTitle": "Customer Success Manager | Chief Customer Success Officer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sergio Martos",
+      "company": "WIRIS",
+      "jobTitle": "Development Team Lead",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carlota Corrales Llagostera",
+      "company": "WIRIS",
+      "jobTitle": "Product Designer",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stephen Benz",
+      "company": "WIRIS",
+      "jobTitle": "Support Service Agent",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Helena Rebollo",
+      "company": "WIRIS",
+      "jobTitle": "Marketing Team Lead",
+      "email": null,
+      "mobile": "34 932 804 805",
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

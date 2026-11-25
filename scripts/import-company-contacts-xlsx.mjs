@@ -51,7 +51,7 @@ const PLACEHOLDERS = new Set([
 ]);
 
 const HEADER_ALIASES = {
-  fullName: ['full name', 'name', 'person name'],
+  fullName: ['full name', 'name', 'person name', 'contact name'],
   company: ['company', 'company name'],
   jobTitle: ['job title', 'title', 'designation'],
   email: ['email', 'email id', 'email address'],
@@ -162,6 +162,11 @@ function main() {
   // company (Brisk Teaching's sheet carries three Blocksi Inc rows).
   const onlyFlag = args.indexOf('--only-company');
   const onlyCompany = onlyFlag >= 0 ? args.splice(onlyFlag, 2)[1]?.trim().toLowerCase() || null : null;
+  // --keep-blank-company: with --only-company, also keep rows whose Company cell
+  // is blank/"-" (default: skip them — in a combined file a blank row would
+  // otherwise land in every company; new_contacts_only.xlsx has one).
+  const keepBlankFlag = args.indexOf('--keep-blank-company');
+  const keepBlankCompany = keepBlankFlag >= 0 ? (args.splice(keepBlankFlag, 1), true) : false;
   const [xlsxPath, domainArg] = args;
   if (!xlsxPath || !domainArg) {
     console.error('Usage: node scripts/import-company-contacts-xlsx.mjs <path-to-xlsx> <company-domain>');
@@ -193,6 +198,10 @@ function main() {
     }
     if (onlyCompany && record.company && record.company.toLowerCase() !== onlyCompany) {
       skippedOtherCompany.push(`${record.fullName} (${record.company})`);
+      continue;
+    }
+    if (onlyCompany && !record.company && !keepBlankCompany) {
+      skippedOtherCompany.push(`${record.fullName} (no company)`);
       continue;
     }
     // A different personal LinkedIn, title or country means a different record,

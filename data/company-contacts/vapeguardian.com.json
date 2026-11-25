@@ -1,0 +1,56 @@
+{
+  "domain": "vapeguardian.com",
+  "source": "Company_People_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Simon Hassett",
+      "company": "Vape Guardian",
+      "jobTitle": "Vape Detection Solution Specialist | Founder & Managing Director",
+      "email": null,
+      "mobile": "44 330 133 0758",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jean Hassett",
+      "company": "Vape Guardian",
+      "jobTitle": "Co-Founder",
+      "email": null,
+      "mobile": "44 330 133 0758",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Raj Sandhu",
+      "company": "Vape Guardian",
+      "jobTitle": "Administrator",
+      "email": null,
+      "mobile": "44 330 133 0758",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hussain Abbas",
+      "company": "Vape Guardian",
+      "jobTitle": "Organic Marketing & Community Lead",
+      "email": null,
+      "mobile": "44 330 133 0758",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tamara Rusiecki",
+      "company": "Vape Guardian",
+      "jobTitle": "Development Specialist",
+      "email": null,
+      "mobile": "44 330 133 0758",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

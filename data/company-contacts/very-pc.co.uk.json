@@ -1,0 +1,286 @@
+{
+  "domain": "very-pc.co.uk",
+  "source": "Company_People_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Gareth Rogers",
+      "company": "VeryPC",
+      "jobTitle": "Channel Manager",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "John Levis",
+      "company": "VeryPC",
+      "jobTitle": "Software and Solutions Specialist",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrew Hopton",
+      "company": "VeryPC",
+      "jobTitle": "Managing Director",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Brothwell",
+      "company": "VeryPC",
+      "jobTitle": "Client Relations Manager",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michael Imms",
+      "company": "VeryPC",
+      "jobTitle": "Client Relationship Manager",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Edmond Egan",
+      "company": "VeryPC",
+      "jobTitle": "Technology Director",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nicole Scarfe",
+      "company": "VeryPC",
+      "jobTitle": "Social Committee Lead & Events/Volunteering Coordinator",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jacob Flint",
+      "company": "VeryPC",
+      "jobTitle": "Senior IT Support Technician",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ross Robinson",
+      "company": "VeryPC",
+      "jobTitle": "Sales Manager - OEM & Reseller",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Colin Mccarthy",
+      "company": "VeryPC",
+      "jobTitle": "Sales Manager - Business & Education",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kimberley Bailey",
+      "company": "VeryPC",
+      "jobTitle": "Marketing Manager",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Oldham",
+      "company": "VeryPC",
+      "jobTitle": "Sales Director",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emma Howe",
+      "company": "VeryPC",
+      "jobTitle": "Financial Controller",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Luke Rogers",
+      "company": "VeryPC",
+      "jobTitle": "Senior Marketing Executive",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emma Foster",
+      "company": "VeryPC",
+      "jobTitle": "Purchasing Administrator",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jake Brook",
+      "company": "VeryPC",
+      "jobTitle": "Client Relations Manager",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aneta Berisha",
+      "company": "VeryPC",
+      "jobTitle": "Customer Development Manager",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Greaves",
+      "company": "VeryPC",
+      "jobTitle": "Senior Support Technician",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Wayne Birchenough",
+      "company": "VeryPC",
+      "jobTitle": "Repairs Technician",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dylan Littlewood",
+      "company": "VeryPC",
+      "jobTitle": "DevOps Engineer",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Greaves",
+      "company": "VeryPC",
+      "jobTitle": "Senior IT Support Technician",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lee Watts",
+      "company": "VeryPC",
+      "jobTitle": "Production Manager",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chantelle Onfroy",
+      "company": "VeryPC",
+      "jobTitle": "Production Supervisor",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Holly Davies",
+      "company": "VeryPC",
+      "jobTitle": "Client Relations Manager",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Traxon",
+      "company": "VeryPC",
+      "jobTitle": "Purchasing Administrator",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Benjamin Wall",
+      "company": "VeryPC",
+      "jobTitle": "Quality Control Supervisor",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cathal Langan",
+      "company": "VeryPC",
+      "jobTitle": "Sales Account Manager",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vera Peachy",
+      "company": "VeryPC",
+      "jobTitle": "Marketing Staff",
+      "email": null,
+      "mobile": "44 114 321 8609",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

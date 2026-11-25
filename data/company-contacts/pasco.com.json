@@ -1,0 +1,996 @@
+{
+  "domain": "pasco.com",
+  "source": "company_contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Kate Hay",
+      "company": "PASCO scientific",
+      "jobTitle": "Sales Representative",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alex Lindsay",
+      "company": "PASCO scientific",
+      "jobTitle": "Regional Sales Director for Asia",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dave Mangelsdorf",
+      "company": "PASCO scientific",
+      "jobTitle": "Chief Operating Officer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Roger Palmer",
+      "company": "PASCO scientific",
+      "jobTitle": "Chemistry, Biology, and Environmental Science Product Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dan Burns",
+      "company": "PASCO scientific",
+      "jobTitle": "Physics Curriculum and Training Developer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Humberto Medina",
+      "company": "PASCO scientific",
+      "jobTitle": "Ibero-America & Canada Sales Director",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Schmidt",
+      "company": "PASCO scientific",
+      "jobTitle": "Regional Education Consultant, Southern US",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ocin Ko",
+      "company": "PASCO scientific",
+      "jobTitle": "Software Quality Assurance",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mary Janolo",
+      "company": "PASCO scientific",
+      "jobTitle": "Buyer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bruno Salvatierra",
+      "company": "PASCO scientific",
+      "jobTitle": "Events Logistics Coordinator",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Erin Wilwerding",
+      "company": "PASCO scientific",
+      "jobTitle": "Production Planner IV",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michael Varela",
+      "company": "PASCO scientific",
+      "jobTitle": "Chemistry Education Product Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Donna Amado",
+      "company": "PASCO scientific",
+      "jobTitle": "VP Engineering and Product Management",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ryan Reardon",
+      "company": "PASCO scientific",
+      "jobTitle": "Professional Technology Education (PTE)",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chris Steele",
+      "company": "PASCO scientific",
+      "jobTitle": "Enterprise Account Executive - West U.S.A",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Heidi Brennan",
+      "company": "PASCO scientific",
+      "jobTitle": "Curriculum, Professional Development, & Contracts Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Larry Hicks",
+      "company": "PASCO scientific",
+      "jobTitle": "Documentation Specialist",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Geoffrey Clarion",
+      "company": "PASCO scientific",
+      "jobTitle": "PTE: Physics Education Specialist Contractor",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carl Guettler",
+      "company": "PASCO scientific",
+      "jobTitle": "Engineering Services Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ed Phillips",
+      "company": "PASCO scientific",
+      "jobTitle": "Full Stack Web Developer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michael Paskowitz",
+      "company": "PASCO scientific",
+      "jobTitle": "Technical Support Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mary Gaston",
+      "company": "PASCO scientific",
+      "jobTitle": "Regional Account Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Isaac Martin",
+      "company": "PASCO scientific",
+      "jobTitle": "Director of US Sales",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Brett Sackett",
+      "company": "PASCO scientific",
+      "jobTitle": "Senior Director of Marketing",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sophia Guzules",
+      "company": "PASCO scientific",
+      "jobTitle": "Digital Creative Science Writer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andrea Gearhart",
+      "company": "PASCO scientific",
+      "jobTitle": "Educational Consultant",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kay Darby Mckibben",
+      "company": "PASCO scientific",
+      "jobTitle": "Retired",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stephen Tisa",
+      "company": "PASCO scientific",
+      "jobTitle": "Lead Web Developer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mike Henderson",
+      "company": "PASCO scientific",
+      "jobTitle": "Electrical Engineer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paul Stokstad",
+      "company": "PASCO scientific",
+      "jobTitle": "President",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Elisa Hoerman",
+      "company": "PASCO scientific",
+      "jobTitle": "Buyer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shawna Bardrum",
+      "company": "PASCO scientific",
+      "jobTitle": "QC Fabricator Inspector",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chris Kennedy",
+      "company": "PASCO scientific",
+      "jobTitle": "PTE",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kathryn Chall",
+      "company": "PASCO scientific",
+      "jobTitle": "Regional Education Consultant",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Eric Gardner",
+      "company": "PASCO scientific",
+      "jobTitle": "SE Account Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paul Bengs",
+      "company": "PASCO scientific",
+      "jobTitle": "Enterprise Systems Software Engineer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jennifer Hughes",
+      "company": "PASCO scientific",
+      "jobTitle": "DevOps Engineer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonathan Mullen",
+      "company": "PASCO scientific",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chris Wilhelm",
+      "company": "PASCO scientific",
+      "jobTitle": "Western Europe Sales Director",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonathan Hanna",
+      "company": "PASCO scientific",
+      "jobTitle": "Physics and Engineering Product Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rocio Moll",
+      "company": "PASCO scientific",
+      "jobTitle": "New Product Introduction Buyer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Debby Trammell",
+      "company": "PASCO scientific",
+      "jobTitle": "Document Control Specialist",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Christine Hanly",
+      "company": "PASCO scientific",
+      "jobTitle": "Senior Office Administrator",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Bounvong Bryan Manisap",
+      "company": "PASCO scientific",
+      "jobTitle": "Pasco scientific",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shari Petrie",
+      "company": "PASCO scientific",
+      "jobTitle": "Sr. Domestic Customer Service Representative",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Brenda Martin",
+      "company": "PASCO scientific",
+      "jobTitle": "Senior Graphic Designer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sara Mcgeorge",
+      "company": "PASCO scientific",
+      "jobTitle": "Human Resources Operations Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kel Jocoy",
+      "company": "PASCO scientific",
+      "jobTitle": "K-12 Science Product Resource & Training Developer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Martin Seredich",
+      "company": "PASCO scientific",
+      "jobTitle": "Saas Administrator",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Teri Polani",
+      "company": "PASCO scientific",
+      "jobTitle": "Customer Service",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Barbara Pugliese",
+      "company": "PASCO scientific",
+      "jobTitle": "Senior Curriculum and Training Specialist",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ross Yamaki",
+      "company": "PASCO scientific",
+      "jobTitle": "Software engineer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jason Sapp",
+      "company": "PASCO scientific",
+      "jobTitle": "Software Quality Assurance Engineer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Donald Hagland",
+      "company": "PASCO scientific",
+      "jobTitle": "Production And Quality Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tom Reineking",
+      "company": "PASCO scientific",
+      "jobTitle": "Electronics Engineer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adam Forgang",
+      "company": "PASCO scientific",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Janet Gomez",
+      "company": "PASCO scientific",
+      "jobTitle": "Social Media and Digital Marketing Manager at PASCO scientific",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jon Ulbrich",
+      "company": "PASCO scientific",
+      "jobTitle": "Quality Control Inspector",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Susan Strothers",
+      "company": "PASCO scientific",
+      "jobTitle": "Director of Human Resources",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pamela Emick",
+      "company": "PASCO scientific",
+      "jobTitle": "Designer II",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Christine Hanly",
+      "company": "PASCO scientific",
+      "jobTitle": "Engineering Specialist II",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cynthia Festejo",
+      "company": "PASCO scientific",
+      "jobTitle": "Accounts Payable clerk",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nancy Stowell",
+      "company": "PASCO scientific",
+      "jobTitle": "Administrative Assistant",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Scott Wild",
+      "company": "PASCO scientific",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dan Brosier",
+      "company": "PASCO scientific",
+      "jobTitle": "Programmer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Brennan Collins",
+      "company": "PASCO scientific",
+      "jobTitle": "Graphic Designer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paul Mcelhany",
+      "company": "PASCO scientific",
+      "jobTitle": "Procurement/ Purchasing Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Martina Graham",
+      "company": "PASCO scientific",
+      "jobTitle": "Engineering Services Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "John Kenney",
+      "company": "PASCO scientific",
+      "jobTitle": "Education Partnerships Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sandy Chang",
+      "company": "PASCO scientific",
+      "jobTitle": "International Customer Service Lead",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joe Balestrini",
+      "company": "PASCO scientific",
+      "jobTitle": "Retired",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jorge A. Reyes Aguero",
+      "company": "PASCO scientific",
+      "jobTitle": "Especialista en equipos de laboratorio Físico.",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "Peru",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Cheryl Zachariason",
+      "company": "PASCO scientific",
+      "jobTitle": "Senior Graphic Designer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "John Delury",
+      "company": "PASCO scientific",
+      "jobTitle": "VP of Finance",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Susan Rader",
+      "company": "PASCO scientific",
+      "jobTitle": "CNA",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Teresa Thompson",
+      "company": "PASCO scientific",
+      "jobTitle": "Accountant",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vilma Patton",
+      "company": "PASCO scientific",
+      "jobTitle": "International Customer Service Representative",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Steve Miller",
+      "company": "PASCO scientific",
+      "jobTitle": "Electronics Engineer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Al Tesser",
+      "company": "PASCO scientific",
+      "jobTitle": "Inspectore",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Brandon Pruett",
+      "company": "PASCO scientific",
+      "jobTitle": "Sales Engineer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Leah Anderson",
+      "company": "PASCO scientific",
+      "jobTitle": "Assembler",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lois Pace",
+      "company": "PASCO scientific",
+      "jobTitle": "Documentation Specialist",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Stogner",
+      "company": "PASCO scientific",
+      "jobTitle": "COO",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Charles Johnson",
+      "company": "PASCO scientific",
+      "jobTitle": "Machine shop Supervisor",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tim Desrochers",
+      "company": "PASCO scientific",
+      "jobTitle": "Software Developement Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Marian Lepard",
+      "company": "PASCO scientific",
+      "jobTitle": "Retired",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nathan Nelson",
+      "company": "PASCO scientific",
+      "jobTitle": "Electronics technican",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Margit Montgomery",
+      "company": "PASCO scientific",
+      "jobTitle": "Accounting Clerk III",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Wanita Mcmillan",
+      "company": "PASCO scientific",
+      "jobTitle": "Respit care giver",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Raffield",
+      "company": "PASCO scientific",
+      "jobTitle": "electromechanical assembler & test technician",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jacalyn Hodges",
+      "company": "PASCO scientific",
+      "jobTitle": "Retired",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Donald Conklin",
+      "company": "PASCO scientific",
+      "jobTitle": "Software Engineering Manager",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lynne Westervelt",
+      "company": "PASCO scientific",
+      "jobTitle": "Media",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Regina Lane",
+      "company": "PASCO scientific",
+      "jobTitle": "CNA",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Barbara Harmon",
+      "company": "PASCO scientific",
+      "jobTitle": "Executive Assistant",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paul Bengs",
+      "company": "PASCO scientific",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "James Van Hook",
+      "company": "PASCO scientific",
+      "jobTitle": "FINANCE",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gary Nicholson",
+      "company": "PASCO scientific",
+      "jobTitle": "Consultant",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Traci Monsion",
+      "company": "PASCO scientific",
+      "jobTitle": "Corporate Controller",
+      "email": null,
+      "mobile": "1 800-772-8700",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

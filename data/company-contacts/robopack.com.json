@@ -1,0 +1,116 @@
+{
+  "domain": "robopack.com",
+  "source": "company_contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Clint Williams",
+      "company": "Robopack",
+      "jobTitle": "Account Executive",
+      "email": null,
+      "mobile": "45 70 22 11 55",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Garreth Mc Greal",
+      "company": "Robopack",
+      "jobTitle": "Account Executive & Customer Success | France & Ireland",
+      "email": null,
+      "mobile": "45 70 22 11 55",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dean Ellerby",
+      "company": "Robopack",
+      "jobTitle": "VP Community & Product Strategy",
+      "email": null,
+      "mobile": "45 70 22 11 55",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Harjit Dhaliwal",
+      "company": "Robopack",
+      "jobTitle": "Director of Community & Events",
+      "email": null,
+      "mobile": "45 70 22 11 55",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Magnus Flansmose Madsen",
+      "company": "Robopack",
+      "jobTitle": "CTO",
+      "email": null,
+      "mobile": "45 70 22 11 55",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zander Sorenson",
+      "company": "Robopack",
+      "jobTitle": "Software Solution Specialist",
+      "email": null,
+      "mobile": "45 70 22 11 55",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nanna Lund Larsen",
+      "company": "Robopack",
+      "jobTitle": "Business Developer",
+      "email": null,
+      "mobile": "45 70 22 11 55",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anton Jesper Kristensen",
+      "company": "Robopack",
+      "jobTitle": "Compliance officer",
+      "email": null,
+      "mobile": "45 70 22 11 55",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mason Graves",
+      "company": "Robopack",
+      "jobTitle": "US Account Executive",
+      "email": null,
+      "mobile": "45 70 22 11 55",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kristian Thomsen",
+      "company": "Robopack",
+      "jobTitle": "Senior Software Developer",
+      "email": null,
+      "mobile": "45 70 22 11 55",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tobias Adler",
+      "company": "Robopack",
+      "jobTitle": "Customer Success",
+      "email": null,
+      "mobile": "45 70 22 11 55",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

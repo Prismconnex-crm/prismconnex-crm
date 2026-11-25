@@ -1,0 +1,916 @@
+{
+  "domain": "tts-group.co.uk",
+  "source": "Company_People_Contacts.xlsx — TTS Resources UK rows + the UAE Head of International Sales (91). 9 other overseas rows (drivers, security officer, data entry…) looked like unrelated people and were excluded.",
+  "contacts": [
+    {
+      "fullName": "Marie Barr",
+      "company": "TTS Resources",
+      "jobTitle": "Head of Sales (UK & International) TTS Group",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joe Harper",
+      "company": "TTS Resources",
+      "jobTitle": "Head of Product Development",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rory Hunter",
+      "company": "TTS Resources",
+      "jobTitle": "Digital Merchandiser",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ashleigh Jackson",
+      "company": "TTS Resources",
+      "jobTitle": "Category Manager - Basic Skills, English & Maths",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Martin Taylor",
+      "company": "TTS Resources",
+      "jobTitle": "Senior Vendor Management Buyer",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Simon Cadd",
+      "company": "TTS Resources",
+      "jobTitle": "IT Business Partner",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joely Smith-Williamson",
+      "company": "TTS Resources",
+      "jobTitle": "Training & Quality Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adam Hance",
+      "company": "TTS Resources",
+      "jobTitle": "Head Of Digital",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Irina Bartlett",
+      "company": "TTS Resources",
+      "jobTitle": "Category Manager for Special Needs",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pip Huyton",
+      "company": "TTS Resources",
+      "jobTitle": "Mathematics Expert Advisor",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Olivia Haslam",
+      "company": "TTS Resources",
+      "jobTitle": "Educational Outcomes Partner",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pam Cheetham",
+      "company": "TTS Resources",
+      "jobTitle": "Product Director",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Taha Noorani",
+      "company": "TTS Resources",
+      "jobTitle": "Head of International Sales - ME & APAC",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Arab Emirates",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Antonia Boulter",
+      "company": "TTS Resources",
+      "jobTitle": "Digital Marketing Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Luke Milner",
+      "company": "TTS Resources",
+      "jobTitle": "Global Product Training Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mike Bruce",
+      "company": "TTS Resources",
+      "jobTitle": "Senior Product Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Charles Furniss",
+      "company": "TTS Resources",
+      "jobTitle": "Category Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jasmine Ram",
+      "company": "TTS Resources",
+      "jobTitle": "Product Designer",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rachael Burke",
+      "company": "TTS Resources",
+      "jobTitle": "Supply buyer",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adam Brown",
+      "company": "TTS Resources",
+      "jobTitle": "Category Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Notoya Cain",
+      "company": "TTS Resources",
+      "jobTitle": "Early Years Product Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kamilla Jawed-Rogers",
+      "company": "TTS Resources",
+      "jobTitle": "Early Years Innovations Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rubi Gill",
+      "company": "TTS Resources",
+      "jobTitle": "Event Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sara Hughes",
+      "company": "TTS Resources",
+      "jobTitle": "Customer Experience Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Poppy Gravell",
+      "company": "TTS Resources",
+      "jobTitle": "Marketing Operations Administrator",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kirsty Wright",
+      "company": "TTS Resources",
+      "jobTitle": "H",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rich Metson",
+      "company": "TTS Resources",
+      "jobTitle": "Quality Assurance Compliance Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ameliyah Rimell",
+      "company": "TTS Resources",
+      "jobTitle": "Warehouse Team Member",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alessandro Cirillo",
+      "company": "TTS Resources",
+      "jobTitle": "Europe South Sales Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joshua Matthews",
+      "company": "TTS Resources",
+      "jobTitle": "Head of Global Projects",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sophie Lyall",
+      "company": "TTS Resources",
+      "jobTitle": "Human Resources Business Partner",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Callum Holmes",
+      "company": "TTS Resources",
+      "jobTitle": "Customer Services Team Lead",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Frank Doherty",
+      "company": "TTS Resources",
+      "jobTitle": "Distribution Centre Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Becky Williams",
+      "company": "TTS Resources",
+      "jobTitle": "Product Developer",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Helen Hooper",
+      "company": "TTS Resources",
+      "jobTitle": "Senior Product Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Julia Aquino",
+      "company": "TTS Resources",
+      "jobTitle": "Senior Product Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Niall Huggins",
+      "company": "TTS Resources",
+      "jobTitle": "International Demand Planner",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gemma Harvey",
+      "company": "TTS Resources",
+      "jobTitle": "Customer Sevice Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Helen Reale",
+      "company": "TTS Resources",
+      "jobTitle": "Head of Vendor Management",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Katie Hoy",
+      "company": "TTS Resources",
+      "jobTitle": "NPD Project Manager - Electronics",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jed Brown",
+      "company": "TTS Resources",
+      "jobTitle": "Lead Product Designer",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jeff Burn",
+      "company": "TTS Resources",
+      "jobTitle": "Divisional Director",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jodie Wilson",
+      "company": "TTS Resources",
+      "jobTitle": "Buyer",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jane Cameron",
+      "company": "TTS Resources",
+      "jobTitle": "Buyer",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Anne-Louise Parrott",
+      "company": "TTS Resources",
+      "jobTitle": "Supply chain buyer",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Halina Chocholek",
+      "company": "TTS Resources",
+      "jobTitle": "Team Leader",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Leanne Aram",
+      "company": "TTS Resources",
+      "jobTitle": "Finance Business Partner",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Robson",
+      "company": "TTS Resources",
+      "jobTitle": "European Sales Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Catherine Jeffrey",
+      "company": "TTS Resources",
+      "jobTitle": "Deputy Managing Director",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Megan South",
+      "company": "TTS Resources",
+      "jobTitle": "School Relationship Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jan Ward",
+      "company": "TTS Resources",
+      "jobTitle": "Marketing Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nicky Douglas",
+      "company": "TTS Resources",
+      "jobTitle": "Senior Product Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Martyna Zaborowska",
+      "company": "TTS Resources",
+      "jobTitle": "Team Leader",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jayne Alsop",
+      "company": "TTS Resources",
+      "jobTitle": "Quality Control Administrator",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Troke",
+      "company": "TTS Resources",
+      "jobTitle": "Illustrator",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gina Wright",
+      "company": "TTS Resources",
+      "jobTitle": "Key Account Advisor, Trade & Export Customer Services",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vasile Stingaciu",
+      "company": "TTS Resources",
+      "jobTitle": "Team Leader",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shelley Denby",
+      "company": "TTS Resources",
+      "jobTitle": "Sales Manager - North and South America",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Debbie Sewell",
+      "company": "TTS Resources",
+      "jobTitle": "Stock Controller",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Peter Ellse",
+      "company": "TTS Resources",
+      "jobTitle": "managing director",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Justyna Ciszewska",
+      "company": "TTS Resources",
+      "jobTitle": "Buying Assistant",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kelly Lawrence",
+      "company": "TTS Resources",
+      "jobTitle": "Product Category Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kelly Whyman",
+      "company": "TTS Resources",
+      "jobTitle": "Warehouse Employee",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paula Mitchell",
+      "company": "TTS Resources",
+      "jobTitle": "Wisdom Furniture Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jodie Chedzey",
+      "company": "TTS Resources",
+      "jobTitle": "Product Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sara Hughes",
+      "company": "TTS Resources",
+      "jobTitle": "Training and Quality Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Linda Williams",
+      "company": "TTS Resources",
+      "jobTitle": "Business Development Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Beth Neville",
+      "company": "TTS Resources",
+      "jobTitle": "Customer contact advisor",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Angela Mccabe",
+      "company": "TTS Resources",
+      "jobTitle": "business development executive",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Charlene Blewitt",
+      "company": "TTS Resources",
+      "jobTitle": "trade and export assistant",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kate Wakefield",
+      "company": "TTS Resources",
+      "jobTitle": "Divisional Director",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Undefined",
+      "company": "TTS Resources",
+      "jobTitle": "Warehouse Operative",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tequilla Worthington",
+      "company": "TTS Resources",
+      "jobTitle": "Customer Service Agent",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sylwia Grzegorczyk",
+      "company": "TTS Resources",
+      "jobTitle": "International expeditor",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Smith",
+      "company": "TTS Resources",
+      "jobTitle": "Distribution Supervisor",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lee Connor",
+      "company": "TTS Resources",
+      "jobTitle": "Electrician",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emma Gash",
+      "company": "TTS Resources",
+      "jobTitle": "Trade and Export controller",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Iwona Styk",
+      "company": "TTS Resources",
+      "jobTitle": "piker",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gemma Harvey",
+      "company": "TTS Resources",
+      "jobTitle": "UK Customer Service Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paul Gallagher",
+      "company": "TTS Resources",
+      "jobTitle": "European Account Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Teddy Otch-Imack",
+      "company": "TTS Resources",
+      "jobTitle": "Graduate",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Georgi Lee",
+      "company": "TTS Resources",
+      "jobTitle": "Advisor",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alison Ashton",
+      "company": "TTS Resources",
+      "jobTitle": "Buyer",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Steven Wardle",
+      "company": "TTS Resources",
+      "jobTitle": "warehose operative",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ian Rippin",
+      "company": "TTS Resources",
+      "jobTitle": "Sales Support Executive",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daria Modlinska",
+      "company": "TTS Resources",
+      "jobTitle": "Warehouse Operator",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Rochelle Harris",
+      "company": "TTS Resources",
+      "jobTitle": "Inventory Planning Analyst",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Daniel Cooper",
+      "company": "TTS Resources",
+      "jobTitle": "Customer Service Team Lead",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jordan Sharman",
+      "company": "TTS Resources",
+      "jobTitle": "cashier",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Amanda Youngs",
+      "company": "TTS Resources",
+      "jobTitle": "Customer Service Representative",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stephen Williams",
+      "company": "TTS Resources",
+      "jobTitle": "European International Schools Sales Manager",
+      "email": null,
+      "mobile": "44 800 138 1370",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

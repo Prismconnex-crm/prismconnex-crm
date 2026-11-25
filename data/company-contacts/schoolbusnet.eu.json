@@ -1,0 +1,106 @@
+{
+  "domain": "schoolbusnet.eu",
+  "source": "company_contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Panagiotis Vasileiou",
+      "company": "SchoolBusNet",
+      "jobTitle": "CTO, Co-Founder",
+      "email": null,
+      "mobile": "30 2109622633",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dimitris Synapidis",
+      "company": "SchoolBusNet",
+      "jobTitle": "C.E.O.",
+      "email": null,
+      "mobile": "30 2109622633",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lefteris Orfanidis",
+      "company": "SchoolBusNet",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "30 2109622633",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aldo Halimi",
+      "company": "SchoolBusNet",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "30 2109622633",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Iraklis Lionakis",
+      "company": "SchoolBusNet",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "30 2109622633",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nikolaos Karagiannis",
+      "company": "SchoolBusNet",
+      "jobTitle": "Software Engineer",
+      "email": null,
+      "mobile": "30 2109622633",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stella Fassoi",
+      "company": "SchoolBusNet",
+      "jobTitle": "Administration Manager",
+      "email": null,
+      "mobile": "30 2109622633",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Theofanis Skoulatos",
+      "company": "SchoolBusNet",
+      "jobTitle": "Operations Analyst",
+      "email": null,
+      "mobile": "30 2109622633",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stavros Petropoulos",
+      "company": "SchoolBusNet",
+      "jobTitle": "DevOps Tech Lead",
+      "email": null,
+      "mobile": "30 2109622633",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yaya Bonato",
+      "company": "SchoolBusNet",
+      "jobTitle": "Management Staff",
+      "email": null,
+      "mobile": "30 2109622633",
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "domain": "topiq",
+  "source": "Company_People_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Amit Naveh",
+      "company": "TOPIQ",
+      "jobTitle": "Co-Founder",
+      "email": null,
+      "mobile": null,
+      "country": "Israel",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sandra Pancorvo Labarthe",
+      "company": "TOPIQ",
+      "jobTitle": "Recruitment Consultant",
+      "email": null,
+      "mobile": null,
+      "country": "Peru",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Artemiy Arti",
+      "company": "TOPIQ",
+      "jobTitle": "Co-Founder / CEO",
+      "email": null,
+      "mobile": null,
+      "country": "United States",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Zoltán Engler",
+      "company": "TOPIQ",
+      "jobTitle": "topiq",
+      "email": null,
+      "mobile": null,
+      "country": "Hungary",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Miguel Lopez",
+      "company": "TOPIQ",
+      "jobTitle": "Especialista en posicionamiento web",
+      "email": null,
+      "mobile": null,
+      "country": "Spain",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Huib Van Winkoop",
+      "company": "TOPIQ",
+      "jobTitle": "creative director",
+      "email": null,
+      "mobile": null,
+      "country": "Netherlands",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

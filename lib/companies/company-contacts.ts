@@ -109,6 +109,50 @@ import phlowAcademy from "@/data/company-contacts/phlow.academy.json";
 import phoneLocker from "@/data/company-contacts/phonelocker.com.json";
 import redboxVr from "@/data/company-contacts/redboxvr.com.json";
 import revoducate from "@/data/company-contacts/revoducate.matrixlms.com.json";
+// 2026-11-24 from company_contacts.xlsx (--only-company each). "Purple" rows NOT imported
+// (Purple Innovation, US mattress retailer — not the Purple WiFi exhibitor). PWD Supplies kept
+// to its 23 UK rows; 42 government Public Works Department ("PWD") rows excluded.
+import pasco from "@/data/company-contacts/pasco.com.json";
+import pwdSupplies from "@/data/company-contacts/pwdsupplies.co.uk.json";
+import robopack from "@/data/company-contacts/robopack.com.json";
+import schoolAi from "@/data/company-contacts/schoolai.com.json";
+import schoolBusNet from "@/data/company-contacts/schoolbusnet.eu.json";
+import schoolsBroadband from "@/data/company-contacts/schoolsbroadband.co.uk.json";
+import screenBeam from "@/data/company-contacts/screenbeam.com.json";
+// 2026-11-24 from new_contacts_only.xlsx (--only-company each; Securly also
+// --keep-blank-company for Portia Hines, whose row has Company "-" amid Securly rows).
+import securly from "@/data/company-contacts/securly.com.json";
+import seesaw from "@/data/company-contacts/seesaw.com.json";
+import sendient from "@/data/company-contacts/sendient.ai.json";
+import signInApp from "@/data/company-contacts/signinapp.com.json";
+import simplyhealth from "@/data/company-contacts/simplyhealth.json";
+import skolaris from "@/data/company-contacts/skolaris.net.json";
+import skolon from "@/data/company-contacts/skolon.com.json";
+import surpass from "@/data/company-contacts/surpass.com.json";
+import switch4Schools from "@/data/company-contacts/switch4schools.com.au.json";
+import switchshop from "@/data/company-contacts/switchshop.co.uk.json";
+// 2026-11-24 from Teachers_Talk_Radio_TET_Education_Space_Toddle_TOP_Marks_Contacts.xlsx.
+// TET kept to its 43 UK rows; "TOP Marks" rows (window cleaner, electrician…) NOT imported.
+import teachersTalkRadio from "@/data/company-contacts/teacherstalkradio.json";
+import tet from "@/data/company-contacts/tet.co.uk.json";
+import educationSpace from "@/data/company-contacts/theeducationspace.co.uk.json";
+import toddle from "@/data/company-contacts/toddleapp.com.json";
+// 2026-11-25 from Company_People_Contacts.xlsx (--only-company each). TTS and WIRIS pruned of
+// unrelated overseas rows. TOPIQ's requested number (+1-800-874-6253) is Trimble's BETT phone —
+// not applied pending the owner's confirmation.
+import topiq from "@/data/company-contacts/topiq.json";
+import trimble from "@/data/company-contacts/sketchup.trimble.com.json";
+import truScholar from "@/data/company-contacts/truscholar.io.json";
+import tts from "@/data/company-contacts/tts-group.co.uk.json";
+import ubiquiti from "@/data/company-contacts/ui.com.json";
+import vapeGuardian from "@/data/company-contacts/vapeguardian.com.json";
+import venturEd from "@/data/company-contacts/venturedsolutions.com.json";
+import verkada from "@/data/company-contacts/verkada.com.json";
+import veryPc from "@/data/company-contacts/very-pc.co.uk.json";
+import wiris from "@/data/company-contacts/wiris.com.json";
+// 2026-11-25 from ZAGG_Zioxi_Contacts.xlsx (--only-company each; Zioxi minus one Egypt outlier).
+import zagg from "@/data/company-contacts/zagg.com.json";
+import zioxi from "@/data/company-contacts/zioxi.com.json";
 import communityPlaythings from "@/data/company-contacts/communityplaythings.co.uk.json";
 
 export type CompanyContact = {
@@ -243,6 +287,39 @@ const CONTACT_FILES: Record<string, ContactFile> = {
   [phoneLocker.domain]: phoneLocker as ContactFile,
   [redboxVr.domain]: redboxVr as ContactFile,
   [revoducate.domain]: revoducate as ContactFile,
+  [pasco.domain]: pasco as ContactFile,
+  [pwdSupplies.domain]: pwdSupplies as ContactFile,
+  [robopack.domain]: robopack as ContactFile,
+  [schoolAi.domain]: schoolAi as ContactFile,
+  [schoolBusNet.domain]: schoolBusNet as ContactFile,
+  [schoolsBroadband.domain]: schoolsBroadband as ContactFile,
+  [screenBeam.domain]: screenBeam as ContactFile,
+  [securly.domain]: securly as ContactFile,
+  [seesaw.domain]: seesaw as ContactFile,
+  [sendient.domain]: sendient as ContactFile,
+  [signInApp.domain]: signInApp as ContactFile,
+  [simplyhealth.domain]: simplyhealth as ContactFile,
+  [skolaris.domain]: skolaris as ContactFile,
+  [skolon.domain]: skolon as ContactFile,
+  [surpass.domain]: surpass as ContactFile,
+  [switch4Schools.domain]: switch4Schools as ContactFile,
+  [switchshop.domain]: switchshop as ContactFile,
+  [teachersTalkRadio.domain]: teachersTalkRadio as ContactFile,
+  [tet.domain]: tet as ContactFile,
+  [educationSpace.domain]: educationSpace as ContactFile,
+  [toddle.domain]: toddle as ContactFile,
+  [topiq.domain]: topiq as ContactFile,
+  [trimble.domain]: trimble as ContactFile,
+  [truScholar.domain]: truScholar as ContactFile,
+  [tts.domain]: tts as ContactFile,
+  [ubiquiti.domain]: ubiquiti as ContactFile,
+  [vapeGuardian.domain]: vapeGuardian as ContactFile,
+  [venturEd.domain]: venturEd as ContactFile,
+  [verkada.domain]: verkada as ContactFile,
+  [veryPc.domain]: veryPc as ContactFile,
+  [wiris.domain]: wiris as ContactFile,
+  [zagg.domain]: zagg as ContactFile,
+  [zioxi.domain]: zioxi as ContactFile,
 };
 
 /**
@@ -251,7 +328,48 @@ const CONTACT_FILES: Record<string, ContactFile> = {
  * contacts that have a real email. Nothing is sent automatically; contacts
  * without an email keep the inert button.
  */
-const PAPER_PLANE_MAILTO = new Set(["briskteaching.com", "iris.co.uk"]);
+const PAPER_PLANE_MAILTO = new Set([
+  "briskteaching.com",
+  "iris.co.uk",
+  // 2026-11-24 company_contacts.xlsx batch.
+  "pasco.com",
+  "pwdsupplies.co.uk",
+  "robopack.com",
+  "schoolai.com",
+  "schoolbusnet.eu",
+  "schoolsbroadband.co.uk",
+  "screenbeam.com",
+  // 2026-11-24 new_contacts_only.xlsx batch.
+  "securly.com",
+  "seesaw.com",
+  "sendient.ai",
+  "signinapp.com",
+  "simplyhealth",
+  "skolaris.net",
+  "skolon.com",
+  "surpass.com",
+  "switch4schools.com.au",
+  "switchshop.co.uk",
+  // 2026-11-24 five-company workbook.
+  "teacherstalkradio",
+  "tet.co.uk",
+  "theeducationspace.co.uk",
+  "toddleapp.com",
+  // 2026-11-25 Company_People_Contacts.xlsx.
+  "topiq",
+  "sketchup.trimble.com",
+  "truscholar.io",
+  "tts-group.co.uk",
+  "ui.com",
+  "vapeguardian.com",
+  "venturedsolutions.com",
+  "verkada.com",
+  "very-pc.co.uk",
+  "wiris.com",
+  // 2026-11-25 ZAGG_Zioxi_Contacts.xlsx.
+  "zagg.com",
+  "zioxi.com",
+]);
 
 /**
  * Company name shown on every contact row, replacing the sheet's value — used
@@ -396,6 +514,37 @@ const MOBILE_OVERRIDES: Record<string, string> = {
   "pearltrees.com": "+33 143 489 462",
   "phonelocker.com": "+44 203 161 8121",
   "redboxvr.com": "+44 1253 804802",
+  // 2026-11-24 company_contacts.xlsx — owner-supplied, match the BETT directory phones.
+  "pasco.com": "1 800-772-8700",
+  "pwdsupplies.co.uk": "44 800 999 5683",
+  "robopack.com": "45 70 22 11 55",
+  "schoolai.com": "1 801-396-0051",
+  "schoolbusnet.eu": "30 2109622633",
+  "schoolsbroadband.co.uk": "44 1133 222 333",
+  "screenbeam.com": "1 800 752 7820",
+  // 2026-11-24 new_contacts_only.xlsx — owner-supplied, match the BETT directory phones.
+  "securly.com": "44 808 164 9773",
+  "seesaw.com": "1 855 673 3729",
+  "sendient.ai": "44 1926 811777",
+  "signinapp.com": "44 333 016 3551",
+  "skolaris.net": "420 777 267 735",
+  "surpass.com": "44 1274 203 250",
+  "switch4schools.com.au": "61 7 3186 9417",
+  "switchshop.co.uk": "44 1438 831870",
+  // 2026-11-24 five-company workbook — owner-supplied, match the BETT directory phones.
+  "tet.co.uk": "44 20 7553 9950",
+  "theeducationspace.co.uk": "44 20 8249 6900",
+  // 2026-11-25 Company_People_Contacts.xlsx — owner-supplied, match the BETT directory phones.
+  "truscholar.io": "91 84848 13210",
+  "tts-group.co.uk": "44 800 138 1370",
+  "vapeguardian.com": "44 330 133 0758",
+  "venturedsolutions.com": "44 20 7237 8456",
+  "verkada.com": "1 650 514-2500",
+  "very-pc.co.uk": "44 114 321 8609",
+  "wiris.com": "34 932 804 805",
+  // 2026-11-25 ZAGG_Zioxi_Contacts.xlsx — owner-supplied, match the BETT directory phones.
+  "zagg.com": "+1-800-700-9244",
+  "zioxi.com": "44 1844 280123",
 };
 
 /** The show directory's own named contact, as stored on EventExhibitor. */
@@ -423,6 +572,12 @@ const NAME_FALLBACKS: Record<string, string> = {
   [nameKey("AITutoring.me")]: "aitutoring.me",
   // BETT lists NutKase with no website.
   [nameKey("NutKase")]: "nutkase",
+  // BETT lists Simplyhealth with no website (only exhibitor of that exact name).
+  [nameKey("Simplyhealth")]: "simplyhealth",
+  // BETT lists Teachers Talk Radio with no website (only exhibitor of that exact name).
+  [nameKey("Teachers Talk Radio")]: "teacherstalkradio",
+  // BETT lists TopIQ with no website (only exhibitor of that exact name).
+  [nameKey("TopIQ")]: "topiq",
 };
 
 const blank = (value: string | null | undefined) => !value || !value.trim();
@@ -582,6 +737,39 @@ const ALWAYS_SHOW_CONTACT_ICONS = new Set([
   "phonelocker.com",
   "redboxvr.com",
   "revoducate.matrixlms.com",
+  "pasco.com",
+  "pwdsupplies.co.uk",
+  "robopack.com",
+  "schoolai.com",
+  "schoolbusnet.eu",
+  "schoolsbroadband.co.uk",
+  "screenbeam.com",
+  "securly.com",
+  "seesaw.com",
+  "sendient.ai",
+  "signinapp.com",
+  "simplyhealth",
+  "skolaris.net",
+  "skolon.com",
+  "surpass.com",
+  "switch4schools.com.au",
+  "switchshop.co.uk",
+  "teacherstalkradio",
+  "tet.co.uk",
+  "theeducationspace.co.uk",
+  "toddleapp.com",
+  "topiq",
+  "sketchup.trimble.com",
+  "truscholar.io",
+  "tts-group.co.uk",
+  "ui.com",
+  "vapeguardian.com",
+  "venturedsolutions.com",
+  "verkada.com",
+  "very-pc.co.uk",
+  "wiris.com",
+  "zagg.com",
+  "zioxi.com",
 ]);
 
 export function alwaysShowContactIcons(domain: string | null, companyName?: string | null): boolean {

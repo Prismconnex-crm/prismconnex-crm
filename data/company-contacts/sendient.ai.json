@@ -1,0 +1,196 @@
+{
+  "domain": "sendient.ai",
+  "source": "new_contacts_only.xlsx",
+  "contacts": [
+    {
+      "fullName": "Ian Blackburn",
+      "company": "Sendient",
+      "jobTitle": "Managing Director",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Martin Watts",
+      "company": "Sendient",
+      "jobTitle": "Director",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Corrina Follett",
+      "company": "Sendient",
+      "jobTitle": "Account Director",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Giancarlo Duran",
+      "company": "Sendient",
+      "jobTitle": "Full Stack Engineer",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jordan Andrew Kelly",
+      "company": "Sendient",
+      "jobTitle": "Full Stack Developer",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jade Haley",
+      "company": "Sendient",
+      "jobTitle": "Executive Assistant",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Robert Vallance",
+      "company": "Sendient",
+      "jobTitle": "Senior AI Engineer",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stephen Browett",
+      "company": "Sendient",
+      "jobTitle": "AI Consultant",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Conor Mckeever",
+      "company": "Sendient",
+      "jobTitle": "Full Stack Engineer",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michael Jarvis",
+      "company": "Sendient",
+      "jobTitle": "Senior AI Full Stack Engineer",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Caroline Cook",
+      "company": "Sendient",
+      "jobTitle": "Executive Assistant",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alexander Bryant",
+      "company": "Sendient",
+      "jobTitle": "Staff Engineer",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pano Panayiotis",
+      "company": "Sendient",
+      "jobTitle": "AI Data Scientist",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chris Brummitt",
+      "company": "Sendient",
+      "jobTitle": "Full Stack Engineer",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jordan Burge",
+      "company": "Sendient",
+      "jobTitle": "DevOps Engineer",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Fraser Johnson",
+      "company": "Sendient",
+      "jobTitle": "Marketing Coordinator",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kerry Johnson",
+      "company": "Sendient",
+      "jobTitle": "Business Operations Manager",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Evie Mcgarr",
+      "company": "Sendient",
+      "jobTitle": "Marketing Coordinator",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adam Smith",
+      "company": "Sendient",
+      "jobTitle": "Head of Marketing",
+      "email": null,
+      "mobile": "44 1926 811777",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

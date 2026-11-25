@@ -1,0 +1,496 @@
+{
+  "domain": "truscholar.io",
+  "source": "Company_People_Contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Mohan Tiwari",
+      "company": "TruScholar",
+      "jobTitle": "Regional Head",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sumit Mandhan",
+      "company": "TruScholar",
+      "jobTitle": "Customer Success Executive",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Khushi Lulla",
+      "company": "TruScholar",
+      "jobTitle": "Business Development Executive",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shantanu Kuche",
+      "company": "TruScholar",
+      "jobTitle": "Full Stack Developer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Samit Singhai",
+      "company": "TruScholar",
+      "jobTitle": "Co-Founder at TruScholar",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ishan Gawande",
+      "company": "TruScholar",
+      "jobTitle": "Junior Full Stack Developer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Naim Shekh",
+      "company": "TruScholar",
+      "jobTitle": "VP - Growth & Strategy",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ca Mayur Zanwar",
+      "company": "TruScholar",
+      "jobTitle": "Co-Founder",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Namman Soni",
+      "company": "TruScholar",
+      "jobTitle": "Business Development Executive",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Kuldeep Tiwari",
+      "company": "TruScholar",
+      "jobTitle": "Senior Account Manager (Business Expansion)",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Abhishek Thele",
+      "company": "TruScholar",
+      "jobTitle": "Full Stack Developer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ajinkya Sable",
+      "company": "TruScholar",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gaurav Bhoi",
+      "company": "TruScholar",
+      "jobTitle": "AIML Engineer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nayan Kamble",
+      "company": "TruScholar",
+      "jobTitle": "Full Stack Developer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shruti Shete",
+      "company": "TruScholar",
+      "jobTitle": "Executive Management Assistant",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Manjeet Yadav",
+      "company": "TruScholar",
+      "jobTitle": "UI UX Designer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pratiksha Guha",
+      "company": "TruScholar",
+      "jobTitle": "Regional Manager",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pratik Choudhari",
+      "company": "TruScholar",
+      "jobTitle": "Full Stack Developer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Atharv Tipkari",
+      "company": "TruScholar",
+      "jobTitle": "Full-stack Developer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vineet Sen",
+      "company": "TruScholar",
+      "jobTitle": "Blockchain & Smart Contract Developer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pallavi Tarke",
+      "company": "TruScholar",
+      "jobTitle": "DevOps Engineer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adib Khan",
+      "company": "TruScholar",
+      "jobTitle": "Full Stack Developer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mayur Sawle",
+      "company": "TruScholar",
+      "jobTitle": "Digital Marketing Executive",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mujahid Iqbal Inamdar",
+      "company": "TruScholar",
+      "jobTitle": "Growth Executive",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Muskan Soomaney",
+      "company": "TruScholar",
+      "jobTitle": "B2B Sales & Growth Executive",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tanmay Pande",
+      "company": "TruScholar",
+      "jobTitle": "Customer Success Executive",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ca Neeta Zanwar",
+      "company": "TruScholar",
+      "jobTitle": "Strategic Advisor",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Harshit Kumar",
+      "company": "TruScholar",
+      "jobTitle": "Frontend Web Developer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Parikshit Karanjkar",
+      "company": "TruScholar",
+      "jobTitle": "QA Engineer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ajinkya Sable",
+      "company": "TruScholar",
+      "jobTitle": "Full Stack Developer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mahesh Tripathi",
+      "company": "TruScholar",
+      "jobTitle": "Business Associate",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Satyajit Ingole",
+      "company": "TruScholar",
+      "jobTitle": "Sales Growth Specialists",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ravi Prakash",
+      "company": "TruScholar",
+      "jobTitle": "Customer Success Executive",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Prathmesh Bahekar",
+      "company": "TruScholar",
+      "jobTitle": "UI/UX Designer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Neha Rahate",
+      "company": "TruScholar",
+      "jobTitle": "Marketing And Business Development Intern",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sharanvaibhav Shivgunde",
+      "company": "TruScholar",
+      "jobTitle": "Head - Strategic Partnerships",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sumit Nagrikar",
+      "company": "TruScholar",
+      "jobTitle": "Full-stack Developer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ruchita Thakare",
+      "company": "TruScholar",
+      "jobTitle": "Human Resources Executive",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Yash Mali",
+      "company": "TruScholar",
+      "jobTitle": "Full-Stack Developer Intern",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Vaibhav Dhanorkar",
+      "company": "TruScholar",
+      "jobTitle": "Management Trainee – Blockchain & E-Governance",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aditya Meghare",
+      "company": "TruScholar",
+      "jobTitle": "Finance and Investor Relations Associate",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Arun Mani",
+      "company": "TruScholar",
+      "jobTitle": "AVP Business Development South",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sandesh Lawhale",
+      "company": "TruScholar",
+      "jobTitle": "Full Stack Tech Intern",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aradhya Dengre",
+      "company": "TruScholar",
+      "jobTitle": "DevOps Engineer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pavan Kishor Deshmukh",
+      "company": "TruScholar",
+      "jobTitle": "Management Trainee",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Prerna Zamvar",
+      "company": "TruScholar",
+      "jobTitle": "Legal Intern",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Varun Sahu",
+      "company": "TruScholar",
+      "jobTitle": "Finance Executive",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Archana Mohod",
+      "company": "TruScholar",
+      "jobTitle": "Customer Service Specialist",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Pradnya Malamkar",
+      "company": "TruScholar",
+      "jobTitle": "DevOps Engineer",
+      "email": null,
+      "mobile": "91 84848 13210",
+      "country": "India",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "domain": "switch4schools.com.au",
+  "source": "new_contacts_only.xlsx",
+  "contacts": [
+    {
+      "fullName": "Phil Slade",
+      "company": "Switch4Schools",
+      "jobTitle": "Founder and CEO",
+      "email": null,
+      "mobile": "61 7 3186 9417",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Roshelle Weir",
+      "company": "Switch4Schools",
+      "jobTitle": "CEO (Co-founder)",
+      "email": null,
+      "mobile": "61 7 3186 9417",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sam Yang",
+      "company": "Switch4Schools",
+      "jobTitle": "Chief Technology Officer",
+      "email": null,
+      "mobile": "61 7 3186 9417",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Liam Slade",
+      "company": "Switch4Schools",
+      "jobTitle": "Chief Development Officer",
+      "email": null,
+      "mobile": "61 7 3186 9417",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Aaron West",
+      "company": "Switch4Schools",
+      "jobTitle": "CXO",
+      "email": null,
+      "mobile": "61 7 3186 9417",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Gemma Burkett",
+      "company": "Switch4Schools",
+      "jobTitle": "Community Manager",
+      "email": null,
+      "mobile": "61 7 3186 9417",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

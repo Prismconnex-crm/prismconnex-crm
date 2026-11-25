@@ -1,0 +1,686 @@
+{
+  "domain": "switchshop.co.uk",
+  "source": "new_contacts_only.xlsx",
+  "contacts": [
+    {
+      "fullName": "Ola Oladoye",
+      "company": "Switchshop Limited",
+      "jobTitle": "New Business Development Executive",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "James Penny",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Account Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Harry Kelly",
+      "company": "Switchshop Limited",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tom Glinka",
+      "company": "Switchshop Limited",
+      "jobTitle": "Director",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sarah Stoughton",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Sales Account Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matt Hawkins",
+      "company": "Switchshop Limited",
+      "jobTitle": "Account Director",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mia Welch",
+      "company": "Switchshop Limited",
+      "jobTitle": "Marketing Executive",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jake Soave",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Account Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nikesh Kotecha",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Account Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Nick Anastasiou",
+      "company": "Switchshop Limited",
+      "jobTitle": "Account Director",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Dave Crowder",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Network Engineer & SME",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chris Bell",
+      "company": "Switchshop Limited",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michael Drayson",
+      "company": "Switchshop Limited",
+      "jobTitle": "Product and Strategy",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "James Curry",
+      "company": "Switchshop Limited",
+      "jobTitle": "Director",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Andel Thomas",
+      "company": "Switchshop Limited",
+      "jobTitle": "Business Development Executive",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sylvia Wajtryt",
+      "company": "Switchshop Limited",
+      "jobTitle": "Head of Finance",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Neil Wilkinson",
+      "company": "Switchshop Limited",
+      "jobTitle": "Head of Pre-Sales",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Abbas Sadiq",
+      "company": "Switchshop Limited",
+      "jobTitle": "Enterprise Account Director",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Claire Ratcliff",
+      "company": "Switchshop Limited",
+      "jobTitle": "HR Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Luke Titmus",
+      "company": "Switchshop Limited",
+      "jobTitle": "Director Of Engineering Services",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Krystal Leggett",
+      "company": "Switchshop Limited",
+      "jobTitle": "Service Delivery Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Peter Wainwright",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Security Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adam Johnston",
+      "company": "Switchshop Limited",
+      "jobTitle": "Project Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Carl Morgan",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Network Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emily Iveson",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Operations Administrator",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Alex Hooper",
+      "company": "Switchshop Limited",
+      "jobTitle": "Server & Storage Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Leon Hyde",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Account Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Shar Tun",
+      "company": "Switchshop Limited",
+      "jobTitle": "Network Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matthew Chapman",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Network Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Connor Summerton",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Network Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hannah Noad",
+      "company": "Switchshop Limited",
+      "jobTitle": "Assistant Management Accountant",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sameer Ali",
+      "company": "Switchshop Limited",
+      "jobTitle": "Junior Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Adam Newson",
+      "company": "Switchshop Limited",
+      "jobTitle": "Network Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Beth Woodward",
+      "company": "Switchshop Limited",
+      "jobTitle": "Operations Administrator",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "Australia",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jonathan Drayson",
+      "company": "Switchshop Limited",
+      "jobTitle": "Account Director",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Louis Otto",
+      "company": "Switchshop Limited",
+      "jobTitle": "Lead Developer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Caroline Freeman",
+      "company": "Switchshop Limited",
+      "jobTitle": "Account Director - Education Specialist",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Graham Hemming",
+      "company": "Switchshop Limited",
+      "jobTitle": "Head of Project Management",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Emils Markovs",
+      "company": "Switchshop Limited",
+      "jobTitle": "Network Support Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Usama Munim",
+      "company": "Switchshop Limited",
+      "jobTitle": "2nd Line Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ross Brown",
+      "company": "Switchshop Limited",
+      "jobTitle": "Account Director",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Michael Curry",
+      "company": "Switchshop Limited",
+      "jobTitle": "Director",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Chris Penfound",
+      "company": "Switchshop Limited",
+      "jobTitle": "Operations Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ben Brooks",
+      "company": "Switchshop Limited",
+      "jobTitle": "Account Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Russell Stenson",
+      "company": "Switchshop Limited",
+      "jobTitle": "Digital Operations Manager (IT Manager)",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Matt Panton-Hunt",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Engineering Team Lead & SME",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stephen Smith",
+      "company": "Switchshop Limited",
+      "jobTitle": "Technical Project Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Laura King",
+      "company": "Switchshop Limited",
+      "jobTitle": "Service Desk Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Santjola Tabaku",
+      "company": "Switchshop Limited",
+      "jobTitle": "Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Robert Coldrey",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Network Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joel Nicholson",
+      "company": "Switchshop Limited",
+      "jobTitle": "Telephony Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Charles Hipwell",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Security Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Munir Abeid",
+      "company": "Switchshop Limited",
+      "jobTitle": "Help Desk Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Munawar Hussain",
+      "company": "Switchshop Limited",
+      "jobTitle": "IT Project Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Charlie Noad",
+      "company": "Switchshop Limited",
+      "jobTitle": "Sales Support Executive",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lukas Wieditz",
+      "company": "Switchshop Limited",
+      "jobTitle": "Senior Software Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "James Price",
+      "company": "Switchshop Limited",
+      "jobTitle": "Helpdesk Network Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Sean Davidson",
+      "company": "Switchshop Limited",
+      "jobTitle": "New Business Sales Executive",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jakub Rudzinski",
+      "company": "Switchshop Limited",
+      "jobTitle": "Junior Network Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "James Breeze",
+      "company": "Switchshop Limited",
+      "jobTitle": "Cabling Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Joe Cardy",
+      "company": "Switchshop Limited",
+      "jobTitle": "Operations Administrator",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Josh Finlay",
+      "company": "Switchshop Limited",
+      "jobTitle": "Network Engineer",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Demi Leigh Mckenna",
+      "company": "Switchshop Limited",
+      "jobTitle": "HR Officer, Finance & Operations",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Jack Ward",
+      "company": "Switchshop Limited",
+      "jobTitle": "Project Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Hannah Green",
+      "company": "Switchshop Limited",
+      "jobTitle": "Office Manager",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Mark Thomas",
+      "company": "Switchshop Limited",
+      "jobTitle": "Director",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Stefanie Varela",
+      "company": "Switchshop Limited",
+      "jobTitle": "Business Development Executive",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ricky Bennett",
+      "company": "Switchshop Limited",
+      "jobTitle": "TeleSales Executive",
+      "email": null,
+      "mobile": "44 1438 831870",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

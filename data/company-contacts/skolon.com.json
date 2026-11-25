@@ -1,0 +1,46 @@
+{
+  "domain": "skolon.com",
+  "source": "new_contacts_only.xlsx",
+  "contacts": [
+    {
+      "fullName": "Amber Lovell",
+      "company": "Skolon UK",
+      "jobTitle": "Marketing Specialist",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ryan Trussell",
+      "company": "Skolon UK",
+      "jobTitle": "Sales Executive",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Tom Webb",
+      "company": "Skolon UK",
+      "jobTitle": "UK Groups & Partnerships",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Francesca Russell-King",
+      "company": "Skolon UK",
+      "jobTitle": "Customer & Content Manager UK",
+      "email": null,
+      "mobile": null,
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

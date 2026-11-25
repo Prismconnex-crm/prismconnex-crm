@@ -1,0 +1,26 @@
+{
+  "domain": "schoolsbroadband.co.uk",
+  "source": "company_contacts.xlsx",
+  "contacts": [
+    {
+      "fullName": "Jo Jerome",
+      "company": "Schools Broadband",
+      "jobTitle": "Marketing Communications Specialist",
+      "email": null,
+      "mobile": "44 1133 222 333",
+      "country": "United Kingdom",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Lizeka Gxagxa",
+      "company": "Schools Broadband",
+      "jobTitle": "Teaching Professional",
+      "email": null,
+      "mobile": "44 1133 222 333",
+      "country": null,
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}

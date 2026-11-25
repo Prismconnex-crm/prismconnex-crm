@@ -1,0 +1,56 @@
+{
+  "domain": "skolaris.net",
+  "source": "new_contacts_only.xlsx",
+  "contacts": [
+    {
+      "fullName": "Hugh Boland",
+      "company": "Skolaris",
+      "jobTitle": "Business Development and Executive Director",
+      "email": null,
+      "mobile": "420 777 267 735",
+      "country": "Ireland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "David Dolezel",
+      "company": "Skolaris",
+      "jobTitle": "co-founder",
+      "email": null,
+      "mobile": "420 777 267 735",
+      "country": "Czech Republic",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Martin Klemsa",
+      "company": "Skolaris",
+      "jobTitle": "Head of research and development",
+      "email": null,
+      "mobile": "420 777 267 735",
+      "country": "Czech Republic",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Paul Mccusker",
+      "company": "Skolaris",
+      "jobTitle": "Website Developer",
+      "email": null,
+      "mobile": "420 777 267 735",
+      "country": "Ireland",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    },
+    {
+      "fullName": "Ramiro Mazariegos",
+      "company": "Skolaris",
+      "jobTitle": "administrador",
+      "email": null,
+      "mobile": "420 777 267 735",
+      "country": "Mexico",
+      "personLinkedInUrl": null,
+      "companyLinkedInUrl": null
+    }
+  ]
+}
